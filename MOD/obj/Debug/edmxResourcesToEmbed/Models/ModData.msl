@@ -1,0 +1,686 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MODModelStoreContainer" CdmEntityContainer="MODEntities">
+    <EntitySetMapping Name="tbl_tblAON">
+      <EntityTypeMapping TypeName="MODModel.tbl_tblAON">
+        <MappingFragment StoreEntitySet="tbl_tblAON">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+          <ScalarProperty Name="CFA_MOD_Concurrence" ColumnName="CFA_MOD_Concurrence" />
+          <ScalarProperty Name="CFA_MOD_Approval" ColumnName="CFA_MOD_Approval" />
+          <ScalarProperty Name="CNCReportdate" ColumnName="CNCReportdate" />
+          <ScalarProperty Name="CNCConclusionDate" ColumnName="CNCConclusionDate" />
+          <ScalarProperty Name="CNCBidopeningdate" ColumnName="CNCBidopeningdate" />
+          <ScalarProperty Name="CNCBenchmarkdate" ColumnName="CNCBenchmarkdate" />
+          <ScalarProperty Name="CNCConstitutiondate" ColumnName="CNCConstitutiondate" />
+          <ScalarProperty Name="TOCAcceptanceDate" ColumnName="TOCAcceptanceDate" />
+          <ScalarProperty Name="TOCReportDate" ColumnName="TOCReportDate" />
+          <ScalarProperty Name="TOCConstitutiondate" ColumnName="TOCConstitutiondate" />
+          <ScalarProperty Name="qualifiedvendors" ColumnName="qualifiedvendors" />
+          <ScalarProperty Name="reportacceptedDate" ColumnName="reportacceptedDate" />
+          <ScalarProperty Name="Reportrecievedate" ColumnName="Reportrecievedate" />
+          <ScalarProperty Name="participatingvendors" ColumnName="participatingvendors" />
+          <ScalarProperty Name="completiondate" ColumnName="completiondate" />
+          <ScalarProperty Name="commencementdate" ColumnName="commencementdate" />
+          <ScalarProperty Name="TECReportApproval" ColumnName="TECReportApproval" />
+          <ScalarProperty Name="TECResult" ColumnName="TECResult" />
+          <ScalarProperty Name="TECconstitutiondate" ColumnName="TECconstitutiondate" />
+          <ScalarProperty Name="vendors" ColumnName="vendors" />
+          <ScalarProperty Name="extendedDate" ColumnName="extendedDate" />
+          <ScalarProperty Name="dateofsubmission" ColumnName="dateofsubmission" />
+          <ScalarProperty Name="bidsubmissiondate" ColumnName="bidsubmissiondate" />
+          <ScalarProperty Name="issuancevendor" ColumnName="issuancevendor" />
+          <ScalarProperty Name="approval" ColumnName="approval" />
+          <ScalarProperty Name="collegiatevetting" ColumnName="collegiatevetting" />
+          <ScalarProperty Name="draftRFPbySHQ" ColumnName="draftRFPbySHQ" />
+          <ScalarProperty Name="naturetype" ColumnName="naturetype" />
+          <ScalarProperty Name="leadservice" ColumnName="leadservice" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="itemname" ColumnName="itemname" />
+          <ScalarProperty Name="categorization" ColumnName="categorization" />
+          <ScalarProperty Name="dateofAon" ColumnName="dateofAon" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_tblTimelineForProcurement">
+      <EntityTypeMapping TypeName="MODModel.tbl_tblTimelineForProcurement">
+        <MappingFragment StoreEntitySet="tbl_tblTimelineForProcurement">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="plannedEndDate" ColumnName="plannedEndDate" />
+          <ScalarProperty Name="PlannedStartDate" ColumnName="PlannedStartDate" />
+          <ScalarProperty Name="UnitTime" ColumnName="UnitTime" />
+          <ScalarProperty Name="TimePlanned" ColumnName="TimePlanned" />
+          <ScalarProperty Name="Stages" ColumnName="Stages" />
+          <ScalarProperty Name="AoNID" ColumnName="AoNID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_tblVendor">
+      <EntityTypeMapping TypeName="MODModel.tbl_tblVendor">
+        <MappingFragment StoreEntitySet="tbl_tblVendor">
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="VendorEmail" ColumnName="VendorEmail" />
+          <ScalarProperty Name="VendorPhone" ColumnName="VendorPhone" />
+          <ScalarProperty Name="VendorContactName" ColumnName="VendorContactName" />
+          <ScalarProperty Name="VendorAddress" ColumnName="VendorAddress" />
+          <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+          <ScalarProperty Name="VendorCategory" ColumnName="VendorCategory" />
+          <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_tblVendorCategory">
+      <EntityTypeMapping TypeName="MODModel.tbl_tblVendorCategory">
+        <MappingFragment StoreEntitySet="tbl_tblVendorCategory">
+          <ScalarProperty Name="VendorCategoryName" ColumnName="VendorCategoryName" />
+          <ScalarProperty Name="VendorCategoryID" ColumnName="VendorCategoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_department_master">
+      <EntityTypeMapping TypeName="MODModel.acq_department_master">
+        <MappingFragment StoreEntitySet="acq_department_master">
+          <ScalarProperty Name="deptt_description" ColumnName="deptt_description" />
+          <ScalarProperty Name="deptt_id" ColumnName="deptt_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_section_master">
+      <EntityTypeMapping TypeName="MODModel.acq_section_master">
+        <MappingFragment StoreEntitySet="acq_section_master">
+          <ScalarProperty Name="deptt_id" ColumnName="deptt_id" />
+          <ScalarProperty Name="section_descr" ColumnName="section_descr" />
+          <ScalarProperty Name="section_id" ColumnName="section_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_mst_Project">
+      <EntityTypeMapping TypeName="MODModel.tbl_mst_Project">
+        <MappingFragment StoreEntitySet="tbl_mst_Project">
+          <ScalarProperty Name="RecInsTime" ColumnName="RecInsTime" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreateOn" ColumnName="CreateOn" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="TemplateType" ColumnName="TemplateType" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="TempleteId" ColumnName="TempleteId" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_trn_tryProject">
+      <EntityTypeMapping TypeName="MODModel.tbl_trn_tryProject">
+        <MappingFragment StoreEntitySet="tbl_trn_tryProject">
+          <ScalarProperty Name="planned_end_date" ColumnName="planned_end_date" />
+          <ScalarProperty Name="planned_start_date" ColumnName="planned_start_date" />
+          <ScalarProperty Name="Progress" ColumnName="Progress" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Responsibility" ColumnName="Responsibility" />
+          <ScalarProperty Name="ResponsibilityDepart" ColumnName="ResponsibilityDepart" />
+          <ScalarProperty Name="super_task_id" ColumnName="super_task_id" />
+          <ScalarProperty Name="Dependencies" ColumnName="Dependencies" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+          <ScalarProperty Name="TaskSlno" ColumnName="TaskSlno" />
+          <ScalarProperty Name="Template_type" ColumnName="Template_type" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="TryPojectID" ColumnName="TryPojectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_Chart2">
+      <EntityTypeMapping TypeName="MODModel.vw_Chart2">
+        <MappingFragment StoreEntitySet="vw_Chart2">
+          <ScalarProperty Name="no_of_projects" ColumnName="no_of_projects" />
+          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
+          <ScalarProperty Name="IdPrimaryKey" ColumnName="IdPrimaryKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_ChartFirst">
+      <EntityTypeMapping TypeName="MODModel.vw_ChartFirst">
+        <MappingFragment StoreEntitySet="vw_ChartFirst">
+          <ScalarProperty Name="delay_lt90" ColumnName="delay_lt90" />
+          <ScalarProperty Name="label_text" ColumnName="label_text" />
+          <ScalarProperty Name="IdPrimaryKey" ColumnName="IdPrimaryKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_Grid2">
+      <EntityTypeMapping TypeName="MODModel.vw_Grid2">
+        <MappingFragment StoreEntitySet="vw_Grid2">
+          <ScalarProperty Name="other_projects" ColumnName="other_projects" />
+          <ScalarProperty Name="navy_projects" ColumnName="navy_projects" />
+          <ScalarProperty Name="iaf_projects" ColumnName="iaf_projects" />
+          <ScalarProperty Name="army_projects" ColumnName="army_projects" />
+          <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+          <ScalarProperty Name="stage" ColumnName="stage" />
+          <ScalarProperty Name="IdPrimaryKey" ColumnName="IdPrimaryKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_GridFirst">
+      <EntityTypeMapping TypeName="MODModel.vw_GridFirst">
+        <MappingFragment StoreEntitySet="vw_GridFirst">
+          <ScalarProperty Name="avg_delay_days" ColumnName="avg_delay_days" />
+          <ScalarProperty Name="taskDescription" ColumnName="taskDescription" />
+          <ScalarProperty Name="task_id" ColumnName="task_id" />
+          <ScalarProperty Name="IdPrimaryKey" ColumnName="IdPrimaryKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="PROC_DASHBOARD_DATA" FunctionName="MODModel.Store.PROC_DASHBOARD_DATA" />
+    <FunctionImportMapping FunctionImportName="PROC_PRODUCT_DESCRITPTION" FunctionName="MODModel.Store.PROC_PRODUCT_DESCRITPTION">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MODModel.PROC_PRODUCT_DESCRITPTION_Result">
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="categorisation" ColumnName="categorisation" />
+          <ScalarProperty Name="service" ColumnName="service" />
+          <ScalarProperty Name="AoNDate" ColumnName="AoNDate" />
+          <ScalarProperty Name="scheduled_date_of_completion" ColumnName="scheduled_date_of_completion" />
+          <ScalarProperty Name="actual_no_of_days" ColumnName="actual_no_of_days" />
+          <ScalarProperty Name="scheduled_no_of_days" ColumnName="scheduled_no_of_days" />
+          <ScalarProperty Name="percent_delay" ColumnName="percent_delay" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="vw_assignofTask">
+      <EntityTypeMapping TypeName="MODModel.vw_assignofTask">
+        <MappingFragment StoreEntitySet="vw_assignofTask">
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="Progress" ColumnName="Progress" />
+          <ScalarProperty Name="ResponsibilityDepart" ColumnName="ResponsibilityDepart" />
+          <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Responsibility" ColumnName="Responsibility" />
+          <ScalarProperty Name="super_task_id" ColumnName="super_task_id" />
+          <ScalarProperty Name="Dependencies" ColumnName="Dependencies" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+          <ScalarProperty Name="TaskSlno" ColumnName="TaskSlno" />
+          <ScalarProperty Name="Template_type" ColumnName="Template_type" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="TryPojectID" ColumnName="TryPojectID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_trn_UpdateStausDummy">
+      <EntityTypeMapping TypeName="MODModel.tbl_trn_UpdateStausDummy">
+        <MappingFragment StoreEntitySet="tbl_trn_UpdateStausDummy">
+          <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ActuaEndDate" ColumnName="ActuaEndDate" />
+          <ScalarProperty Name="ActuaStartDate" ColumnName="ActuaStartDate" />
+          <ScalarProperty Name="PlannEndDate" ColumnName="PlannEndDate" />
+          <ScalarProperty Name="PlannStartDate" ColumnName="PlannStartDate" />
+          <ScalarProperty Name="TaskSlno" ColumnName="TaskSlno" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="TryPojectID" ColumnName="TryPojectID" />
+          <ScalarProperty Name="UpdateStatusTaskId" ColumnName="UpdateStatusTaskId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DASHBOARDDATA" FunctionName="MODModel.Store.PROC_DASHBOARD_DATA" />
+    <EntitySetMapping Name="temp_dashboardproject">
+      <EntityTypeMapping TypeName="MODModel.temp_dashboardproject">
+        <MappingFragment StoreEntitySet="temp_dashboardproject">
+          <ScalarProperty Name="percent_delay" ColumnName="percent_delay" />
+          <ScalarProperty Name="scheduled_no_of_days" ColumnName="scheduled_no_of_days" />
+          <ScalarProperty Name="actual_no_of_days" ColumnName="actual_no_of_days" />
+          <ScalarProperty Name="scheduled_date_of_completion" ColumnName="scheduled_date_of_completion" />
+          <ScalarProperty Name="AoNDate" ColumnName="AoNDate" />
+          <ScalarProperty Name="service" ColumnName="service" />
+          <ScalarProperty Name="categorisation" ColumnName="categorisation" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_rfp_VendorsDetails">
+      <EntityTypeMapping TypeName="MODModel.acq_rfp_VendorsDetails">
+        <MappingFragment StoreEntitySet="acq_rfp_VendorsDetails">
+          <ScalarProperty Name="type_ID" ColumnName="type_ID" />
+          <ScalarProperty Name="vendor_id" ColumnName="vendor_id" />
+          <ScalarProperty Name="rfpID" ColumnName="rfpID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_meeting_master">
+      <EntityTypeMapping TypeName="MODModel.acq_meeting_master">
+        <MappingFragment StoreEntitySet="acq_meeting_master">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Meeting_Number" ColumnName="Meeting_Number" />
+          <ScalarProperty Name="Distribution_List" ColumnName="Distribution_List" />
+          <ScalarProperty Name="officers_participated" ColumnName="officers_participated" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="Date_of_Issue_of_Minutes" ColumnName="Date_of_Issue_of_Minutes" />
+          <ScalarProperty Name="meeting_date" ColumnName="meeting_date" />
+          <ScalarProperty Name="dac_dpb" ColumnName="dac_dpb" />
+          <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_trials">
+      <EntityTypeMapping TypeName="MODModel.acq_trials">
+        <MappingFragment StoreEntitySet="acq_trials">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="remarks" ColumnName="remarks" />
+          <ScalarProperty Name="date_completion" ColumnName="date_completion" />
+          <ScalarProperty Name="date_commencement" ColumnName="date_commencement" />
+          <ScalarProperty Name="date_extension_submission_eut" ColumnName="date_extension_submission_eut" />
+          <ScalarProperty Name="trial_type" ColumnName="trial_type" />
+          <ScalarProperty Name="aonID" ColumnName="aonID" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_rfp_vendors">
+      <EntityTypeMapping TypeName="MODModel.acq_rfp_vendors">
+        <MappingFragment StoreEntitySet="acq_rfp_vendors">
+          <ScalarProperty Name="Rfp_fk_Id" ColumnName="Rfp_fk_Id" />
+          <ScalarProperty Name="rfp_id" ColumnName="rfp_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_project_master">
+      <EntityTypeMapping TypeName="MODModel.acq_project_master">
+        <MappingFragment StoreEntitySet="acq_project_master">
+          <ScalarProperty Name="System_case" ColumnName="System_case" />
+          <ScalarProperty Name="AoNForeClosureCreatedBy" ColumnName="AoNForeClosureCreatedBy" />
+          <ScalarProperty Name="AoNClosureRemarks" ColumnName="AoNClosureRemarks" />
+          <ScalarProperty Name="AoNClosureDate" ColumnName="AoNClosureDate" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="AoN_Foreclosure_meeting_id" ColumnName="AoN_Foreclosure_meeting_id" />
+          <ScalarProperty Name="AoN_validity_extended_till" ColumnName="AoN_validity_extended_till" />
+          <ScalarProperty Name="AoN_revalidation_meeting_id" ColumnName="AoN_revalidation_meeting_id" />
+          <ScalarProperty Name="AoN_validity_unit" ColumnName="AoN_validity_unit" />
+          <ScalarProperty Name="AoN_validity" ColumnName="AoN_validity" />
+          <ScalarProperty Name="Warrenty_Remarks" ColumnName="Warrenty_Remarks" />
+          <ScalarProperty Name="Warrenty_applicable" ColumnName="Warrenty_applicable" />
+          <ScalarProperty Name="AMCRemarks" ColumnName="AMCRemarks" />
+          <ScalarProperty Name="AMC_applicable" ColumnName="AMC_applicable" />
+          <ScalarProperty Name="Offset_applicable" ColumnName="Offset_applicable" />
+          <ScalarProperty Name="Option_clause_applicable" ColumnName="Option_clause_applicable" />
+          <ScalarProperty Name="IC_percentage" ColumnName="IC_percentage" />
+          <ScalarProperty Name="Any_other_aspect" ColumnName="Any_other_aspect" />
+          <ScalarProperty Name="Essential_parameters" ColumnName="Essential_parameters" />
+          <ScalarProperty Name="Trials_Required" ColumnName="Trials_Required" />
+          <ScalarProperty Name="Type_of_Acquisition" ColumnName="Type_of_Acquisition" />
+          <ScalarProperty Name="Tax_Duties" ColumnName="Tax_Duties" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Service_Lead_Service" ColumnName="Service_Lead_Service" />
+          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
+          <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
+          <ScalarProperty Name="Date_of_Accord_of_AoN" ColumnName="Date_of_Accord_of_AoN" />
+          <ScalarProperty Name="AoN_Accorded_By" ColumnName="AoN_Accorded_By" />
+          <ScalarProperty Name="DPP_DAP" ColumnName="DPP_DAP" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="aon_id" ColumnName="aon_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_project_status_timelines">
+      <EntityTypeMapping TypeName="MODModel.acq_project_status_timelines">
+        <MappingFragment StoreEntitySet="acq_project_status_timelines">
+          <ScalarProperty Name="dap_timeline" ColumnName="dap_timeline" />
+          <ScalarProperty Name="no_of_weeks" ColumnName="no_of_weeks" />
+          <ScalarProperty Name="completed_on" ColumnName="completed_on" />
+          <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+          <ScalarProperty Name="TaskSlno" ColumnName="TaskSlno" />
+          <ScalarProperty Name="Trials_Required" ColumnName="Trials_Required" />
+          <ScalarProperty Name="IC_percentage" ColumnName="IC_percentage" />
+          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Date_of_Accord_of_AoN" ColumnName="Date_of_Accord_of_AoN" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="Service_Lead_Service" ColumnName="Service_Lead_Service" />
+          <ScalarProperty Name="aon_id" ColumnName="aon_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_rfp_master">
+      <EntityTypeMapping TypeName="MODModel.acq_rfp_master">
+        <MappingFragment StoreEntitySet="acq_rfp_master">
+          <ScalarProperty Name="dateapprovalCFAfundingarrangementissueProjectMakeII" ColumnName="dateapprovalCFAfundingarrangementissueProjectMakeII" />
+          <ScalarProperty Name="dateselectionDasbySHQ_dprbMakeII" ColumnName="dateselectionDasbySHQ_dprbMakeII" />
+          <ScalarProperty Name="dateFreezingPSQRsMakeII" ColumnName="dateFreezingPSQRsMakeII" />
+          <ScalarProperty Name="datecompletionUserTrialsRedinessReviewMakeII" ColumnName="datecompletionUserTrialsRedinessReviewMakeII" />
+          <ScalarProperty Name="datecommencementUserTrialsMakeII" ColumnName="datecommencementUserTrialsMakeII" />
+          <ScalarProperty Name="datecompletionDevPrototypeMakeII" ColumnName="datecompletionDevPrototypeMakeII" />
+          <ScalarProperty Name="datecommencementDevPrototypeMakeII" ColumnName="datecommencementDevPrototypeMakeII" />
+          <ScalarProperty Name="datesubmissionrevisedcommercialoffersvendorsMakeI" ColumnName="datesubmissionrevisedcommercialoffersvendorsMakeI" />
+          <ScalarProperty Name="dateintimationvendorssubmissionrevisedMakeI" ColumnName="dateintimationvendorssubmissionrevisedMakeI" />
+          <ScalarProperty Name="datefreezingPSQRStoSQRSMakeI" ColumnName="datefreezingPSQRStoSQRSMakeI" />
+          <ScalarProperty Name="datetechnicallimitedfieldstrialsMakeI" ColumnName="datetechnicallimitedfieldstrialsMakeI" />
+          <ScalarProperty Name="datecommencementfabrication_devProMakeI" ColumnName="datecommencementfabrication_devProMakeI" />
+          <ScalarProperty Name="datefinalisationdetaileddesign" ColumnName="datefinalisationdetaileddesign" />
+          <ScalarProperty Name="datecommencementpreliminaryMakeI" ColumnName="datecommencementpreliminaryMakeI" />
+          <ScalarProperty Name="dateapprovalCFAfundingarrangementissueProjectMakeI" ColumnName="dateapprovalCFAfundingarrangementissueProjectMakeI" />
+          <ScalarProperty Name="dateselectionDasbySHQ_dprbMakeI" ColumnName="dateselectionDasbySHQ_dprbMakeI" />
+          <ScalarProperty Name="dateCulminationPSQRValid_DD" ColumnName="dateCulminationPSQRValid_DD" />
+          <ScalarProperty Name="dateCommencementPSQR" ColumnName="dateCommencementPSQR" />
+          <ScalarProperty Name="daterealisationPrototype_DD" ColumnName="daterealisationPrototype_DD" />
+          <ScalarProperty Name="dateprojectReview_DD" ColumnName="dateprojectReview_DD" />
+          <ScalarProperty Name="dateissuetrialdeveiation_DD" ColumnName="dateissuetrialdeveiation_DD" />
+          <ScalarProperty Name="datedetaildesignbySHQ_DD" ColumnName="datedetaildesignbySHQ_DD" />
+          <ScalarProperty Name="dateIdentificationDCPP_DD" ColumnName="dateIdentificationDCPP_DD" />
+          <ScalarProperty Name="dateFormulationPMT_DD" ColumnName="dateFormulationPMT_DD" />
+          <ScalarProperty Name="dateFormulationJPMT_DD" ColumnName="dateFormulationJPMT_DD" />
+          <ScalarProperty Name="dateissueProjectSenctionMake_II" ColumnName="dateissueProjectSenctionMake_II" />
+          <ScalarProperty Name="dateApprovalEoiMake_II" ColumnName="dateApprovalEoiMake_II" />
+          <ScalarProperty Name="EoiCompletionResponseMake_II" ColumnName="EoiCompletionResponseMake_II" />
+          <ScalarProperty Name="EoiReceiptDateMake_II" ColumnName="EoiReceiptDateMake_II" />
+          <ScalarProperty Name="DateIssueMake_II" ColumnName="DateIssueMake_II" />
+          <ScalarProperty Name="dateapprovalshortlistedvendorsMakeI" ColumnName="dateapprovalshortlistedvendorsMakeI" />
+          <ScalarProperty Name="dtforwardingshortlistedDPMakeI" ColumnName="dtforwardingshortlistedDPMakeI" />
+          <ScalarProperty Name="Eoi_DPRDateCompletionandResponseMakeI" ColumnName="Eoi_DPRDateCompletionandResponseMakeI" />
+          <ScalarProperty Name="Eoi_DPRReceiptDateMakeI" ColumnName="Eoi_DPRReceiptDateMakeI" />
+          <ScalarProperty Name="Eoi_DPRDateIssueMakeI" ColumnName="Eoi_DPRDateIssueMakeI" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="date_ContractSigning" ColumnName="date_ContractSigning" />
+          <ScalarProperty Name="date_approval_CFA_CCS" ColumnName="date_approval_CFA_CCS" />
+          <ScalarProperty Name="DateContractSigning" ColumnName="DateContractSigning" />
+          <ScalarProperty Name="ApproveToCSS_CFA" ColumnName="ApproveToCSS_CFA" />
+          <ScalarProperty Name="date_DCN_submissionto_CCS" ColumnName="date_DCN_submissionto_CCS" />
+          <ScalarProperty Name="date_MoF_Concurrence" ColumnName="date_MoF_Concurrence" />
+          <ScalarProperty Name="date_DCN_Sentfor_InterMinisterialConsultations" ColumnName="date_DCN_Sentfor_InterMinisterialConsultations" />
+          <ScalarProperty Name="date_Approval_CFAnote" ColumnName="date_Approval_CFAnote" />
+          <ScalarProperty Name="date_submissionto_CFA" ColumnName="date_submissionto_CFA" />
+          <ScalarProperty Name="date_Acq_approvalforsending_to_MoDFin" ColumnName="date_Acq_approvalforsending_to_MoDFin" />
+          <ScalarProperty Name="date_Submission_CFANote_DGacq" ColumnName="date_Submission_CFANote_DGacq" />
+          <ScalarProperty Name="Date_cnc_report" ColumnName="Date_cnc_report" />
+          <ScalarProperty Name="Date_cnc_conclusion" ColumnName="Date_cnc_conclusion" />
+          <ScalarProperty Name="Date_commercial_bid_opening" ColumnName="Date_commercial_bid_opening" />
+          <ScalarProperty Name="Date_cnc_benchmarking" ColumnName="Date_cnc_benchmarking" />
+          <ScalarProperty Name="Date_cnc_constitution" ColumnName="Date_cnc_constitution" />
+          <ScalarProperty Name="Date_toc_acceptance_CompetantAuth" ColumnName="Date_toc_acceptance_CompetantAuth" />
+          <ScalarProperty Name="Date_toc_report" ColumnName="Date_toc_report" />
+          <ScalarProperty Name="Date_toc_Constitution" ColumnName="Date_toc_Constitution" />
+          <ScalarProperty Name="Date_accepted_Fet" ColumnName="Date_accepted_Fet" />
+          <ScalarProperty Name="Date_received_Fet" ColumnName="Date_received_Fet" />
+          <ScalarProperty Name="date_issue_trials_directive" ColumnName="date_issue_trials_directive" />
+          <ScalarProperty Name="date_submission_eut" ColumnName="date_submission_eut" />
+          <ScalarProperty Name="date_tec_approval" ColumnName="date_tec_approval" />
+          <ScalarProperty Name="date_tec_reportsubmission" ColumnName="date_tec_reportsubmission" />
+          <ScalarProperty Name="date_tec_completion" ColumnName="date_tec_completion" />
+          <ScalarProperty Name="date_tec_commencement" ColumnName="date_tec_commencement" />
+          <ScalarProperty Name="date_tec_constitution" ColumnName="date_tec_constitution" />
+          <ScalarProperty Name="ExtendedLastDate_BidSubmission" ColumnName="ExtendedLastDate_BidSubmission" />
+          <ScalarProperty Name="date_bid_opening" ColumnName="date_bid_opening" />
+          <ScalarProperty Name="lastdate_bidsubmission" ColumnName="lastdate_bidsubmission" />
+          <ScalarProperty Name="date_prebid_replies" ColumnName="date_prebid_replies" />
+          <ScalarProperty Name="date_prebid_meeting" ColumnName="date_prebid_meeting" />
+          <ScalarProperty Name="date_issue_rfp" ColumnName="date_issue_rfp" />
+          <ScalarProperty Name="date_approval_rfp" ColumnName="date_approval_rfp" />
+          <ScalarProperty Name="date_collegiate_vetting" ColumnName="date_collegiate_vetting" />
+          <ScalarProperty Name="date_acceptanceby_adgacq" ColumnName="date_acceptanceby_adgacq" />
+          <ScalarProperty Name="date_submissionto_adgacq" ColumnName="date_submissionto_adgacq" />
+          <ScalarProperty Name="draft_rfp_date" ColumnName="draft_rfp_date" />
+          <ScalarProperty Name="type_rfp" ColumnName="type_rfp" />
+          <ScalarProperty Name="aon_id" ColumnName="aon_id" />
+          <ScalarProperty Name="rfp_id" ColumnName="rfp_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_project_status_1">
+      <EntityTypeMapping TypeName="MODModel.acq_project_status_1">
+        <MappingFragment StoreEntitySet="acq_project_status_1">
+          <ScalarProperty Name="actual_end_date" ColumnName="actual_end_date" />
+          <ScalarProperty Name="actual_start_date" ColumnName="actual_start_date" />
+          <ScalarProperty Name="planned_end_date" ColumnName="planned_end_date" />
+          <ScalarProperty Name="planned_start_date" ColumnName="planned_start_date" />
+          <ScalarProperty Name="task_id" ColumnName="task_id" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChartReportOnClicks">
+      <EntityTypeMapping TypeName="MODModel.ChartReportOnClick">
+        <MappingFragment StoreEntitySet="ChartReportOnClick">
+          <ScalarProperty Name="Trials_Required" ColumnName="Trials_Required" />
+          <ScalarProperty Name="IC_percentage" ColumnName="IC_percentage" />
+          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Date_of_Accord_of_AoN" ColumnName="Date_of_Accord_of_AoN" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="Service_Lead_Service" ColumnName="Service_Lead_Service" />
+          <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+          <ScalarProperty Name="TaskSlno" ColumnName="TaskSlno" />
+          <ScalarProperty Name="Pkey" ColumnName="Pkey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReportMileStonebyMonths">
+      <EntityTypeMapping TypeName="MODModel.ReportMileStonebyMonth">
+        <MappingFragment StoreEntitySet="ReportMileStonebyMonth">
+          <ScalarProperty Name="projects" ColumnName="projects" />
+          <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+          <ScalarProperty Name="Pkey" ColumnName="Pkey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TimeLineReport1">
+      <EntityTypeMapping TypeName="MODModel.TimeLineReport1">
+        <MappingFragment StoreEntitySet="TimeLineReport1">
+          <ScalarProperty Name="TaskSlno" ColumnName="TaskSlno" />
+          <ScalarProperty Name="dap_timeline" ColumnName="dap_timeline" />
+          <ScalarProperty Name="no_of_weeks" ColumnName="no_of_weeks" />
+          <ScalarProperty Name="completed_on" ColumnName="completed_on" />
+          <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+          <ScalarProperty Name="Trials_Required" ColumnName="Trials_Required" />
+          <ScalarProperty Name="IC_percentage" ColumnName="IC_percentage" />
+          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Date_of_Accord_of_AoN" ColumnName="Date_of_Accord_of_AoN" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="Service_Lead_Service" ColumnName="Service_Lead_Service" />
+          <ScalarProperty Name="Pkey" ColumnName="Pkey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Service_WiseReport">
+      <EntityTypeMapping TypeName="MODModel.Service_WiseReport">
+        <MappingFragment StoreEntitySet="Service_WiseReport">
+          <ScalarProperty Name="total_aon_cost" ColumnName="total_aon_cost" />
+          <ScalarProperty Name="n_projects" ColumnName="n_projects" />
+          <ScalarProperty Name="pending_in_stage" ColumnName="pending_in_stage" />
+          <ScalarProperty Name="Pkey" ColumnName="Pkey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="PROC_DASHBOARD_First_CountGrid" FunctionName="MODModel.Store.PROC_DASHBOARD_First_CountGrid">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MODModel.PROC_DASHBOARD_First_CountGrid_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="BF" ColumnName="BF" />
+          <ScalarProperty Name="Cases" ColumnName="Cases" />
+          <ScalarProperty Name="Casesdisposed" ColumnName="Casesdisposed" />
+          <ScalarProperty Name="Outstanding" ColumnName="Outstanding" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="acq_projectstage_applicability">
+      <EntityTypeMapping TypeName="MODModel.acq_projectstage_applicability">
+        <MappingFragment StoreEntitySet="acq_projectstage_applicability">
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="applicable" ColumnName="applicable" />
+          <ScalarProperty Name="stage" ColumnName="stage" />
+          <ScalarProperty Name="AoN" ColumnName="AoN" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_mst_Template">
+      <EntityTypeMapping TypeName="MODModel.tbl_mst_Template">
+        <MappingFragment StoreEntitySet="tbl_mst_Template">
+          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
+          <ScalarProperty Name="dap_timeline" ColumnName="dap_timeline" />
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="RecInsTime" ColumnName="RecInsTime" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Responsibility" ColumnName="Responsibility" />
+          <ScalarProperty Name="super_task_id" ColumnName="super_task_id" />
+          <ScalarProperty Name="Dependencies" ColumnName="Dependencies" />
+          <ScalarProperty Name="Unit_of_time" ColumnName="Unit_of_time" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+          <ScalarProperty Name="TaskSlno" ColumnName="TaskSlno" />
+          <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="temp_dashboard">
+      <EntityTypeMapping TypeName="MODModel.temp_dashboard">
+        <MappingFragment StoreEntitySet="temp_dashboard">
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="nProject" ColumnName="nProject" />
+          <ScalarProperty Name="TaskSlno" ColumnName="TaskSlno" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_project_status_pendingstage">
+      <EntityTypeMapping TypeName="MODModel.acq_project_status_pendingstage">
+        <MappingFragment StoreEntitySet="acq_project_status_pendingstage">
+          <ScalarProperty Name="System_case" ColumnName="System_case" />
+          <ScalarProperty Name="date_of_entering_this_stage" ColumnName="date_of_entering_this_stage" />
+          <ScalarProperty Name="pending_in_stage" ColumnName="pending_in_stage" />
+          <ScalarProperty Name="TaskSlno" ColumnName="TaskSlno" />
+          <ScalarProperty Name="Trials_Required" ColumnName="Trials_Required" />
+          <ScalarProperty Name="IC_percentage" ColumnName="IC_percentage" />
+          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Date_of_Accord_of_AoN" ColumnName="Date_of_Accord_of_AoN" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="Service_Lead_Service" ColumnName="Service_Lead_Service" />
+          <ScalarProperty Name="Pkey" ColumnName="Pkey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_trn_tryProject1">
+      <EntityTypeMapping TypeName="MODModel.tbl_trn_tryProject1">
+        <MappingFragment StoreEntitySet="tbl_trn_tryProject1">
+          <ScalarProperty Name="planned_end_date" ColumnName="planned_end_date" />
+          <ScalarProperty Name="planned_start_date" ColumnName="planned_start_date" />
+          <ScalarProperty Name="progress" ColumnName="progress" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="Responsibility" ColumnName="Responsibility" />
+          <ScalarProperty Name="responsibilitydepart" ColumnName="responsibilitydepart" />
+          <ScalarProperty Name="super_task_id" ColumnName="super_task_id" />
+          <ScalarProperty Name="Dependencies" ColumnName="Dependencies" />
+          <ScalarProperty Name="enddate" ColumnName="enddate" />
+          <ScalarProperty Name="startdate" ColumnName="startdate" />
+          <ScalarProperty Name="shortname" ColumnName="shortname" />
+          <ScalarProperty Name="taskdescription" ColumnName="taskdescription" />
+          <ScalarProperty Name="taskslno" ColumnName="taskslno" />
+          <ScalarProperty Name="Template_type" ColumnName="Template_type" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="TryPojectID" ColumnName="TryPojectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="temp_BF">
+      <EntityTypeMapping TypeName="MODModel.temp_BF">
+        <MappingFragment StoreEntitySet="temp_BF">
+          <ScalarProperty Name="Outstanding" ColumnName="Outstanding" />
+          <ScalarProperty Name="Casesdisposed" ColumnName="Casesdisposed" />
+          <ScalarProperty Name="Cases" ColumnName="Cases" />
+          <ScalarProperty Name="BF" ColumnName="BF" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_policy">
+      <EntityTypeMapping TypeName="MODModel.acq_policy">
+        <MappingFragment StoreEntitySet="acq_policy">
+          <ScalarProperty Name="section_id" ColumnName="section_id" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="pdfattachment" ColumnName="pdfattachment" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="tdate" ColumnName="tdate" />
+          <ScalarProperty Name="fdate" ColumnName="fdate" />
+          <ScalarProperty Name="stagid" ColumnName="stagid" />
+          <ScalarProperty Name="aon_id" ColumnName="aon_id" />
+          <ScalarProperty Name="policyid" ColumnName="policyid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_tbl_User">
+      <EntityTypeMapping TypeName="MODModel.tbl_tbl_User">
+        <MappingFragment StoreEntitySet="tbl_tbl_User">
+          <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+          <ScalarProperty Name="ExpiryTime" ColumnName="ExpiryTime" />
+          <ScalarProperty Name="LoginCount" ColumnName="LoginCount" />
+          <ScalarProperty Name="Temp_Number" ColumnName="Temp_Number" />
+          <ScalarProperty Name="Flag" ColumnName="Flag" />
+          <ScalarProperty Name="Pswd_Salt" ColumnName="Pswd_Salt" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+          <ScalarProperty Name="LoginAllowed" ColumnName="LoginAllowed" />
+          <ScalarProperty Name="RankUser" ColumnName="RankUser" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="ReportingTo" ColumnName="ReportingTo" />
+          <ScalarProperty Name="MacAddress" ColumnName="MacAddress" />
+          <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+          <ScalarProperty Name="ValidTill" ColumnName="ValidTill" />
+          <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="ExternalEmailID" ColumnName="ExternalEmailID" />
+          <ScalarProperty Name="InternalEmailID" ColumnName="InternalEmailID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

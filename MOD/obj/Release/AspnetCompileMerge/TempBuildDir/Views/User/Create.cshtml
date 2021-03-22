@@ -1,0 +1,127 @@
+﻿@model MOD.Models.UserSaveViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Create";
+}
+
+    <div class="card flex-fill w-100 p-4">
+        <div class="row mb-2 mb-xl-3">
+            <div class="col-auto d-none d-sm-block">
+                <h2 class="mb-0">Create User</h2>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("Create", "User", FormMethod.Post))
+            {
+                <div class="form-row mb-4">
+                    <div class="col">
+
+                        <label class="labeltext font-weight-bold">User Name<span class="danger">*</span>:</label>
+                        <input type="text" name="UserName" class="form-control" placeholder="User Name">
+                        @Html.ValidationMessageFor(x => x.UserName, null, new { @class = "danger" })
+                    </div>
+                    <div class="col">
+
+                        <label class="labeltext font-weight-bold">Internal Email<span class="danger">*</span>:</label>
+                        <input type="text" name="InternalEmailID" class="form-control" placeholder="Internal Email">
+                        @Html.ValidationMessageFor(x => x.InternalEmailID, null, new { @class = "danger" })
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col">
+
+                        <label class="labeltext font-weight-bold">External Email<span class="danger">*</span>:</label>
+                        <input type="text" name="ExternalEmailID" class="form-control" placeholder="External Email">
+                        @Html.ValidationMessageFor(x => x.ExternalEmailID, null, new { @class = "danger" })
+                    </div>
+                    <div class="col">
+
+                        <label class="labeltext font-weight-bold">Password<span class="danger">*</span>:</label>
+                        <input type="password" name="Password" class="form-control" placeholder="Password">
+                        @Html.ValidationMessageFor(x => x.Password, null, new { @class = "danger" })
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col">
+
+                        <label class="labeltext font-weight-bold">Phone<span class="danger">*</span>:</label>
+                        <input type="text" name="Phone" class="form-control" placeholder="Phone">
+                        @Html.ValidationMessageFor(x => x.Phone, null, new { @class = "danger" })
+                    </div>
+                    <div class="col">
+
+                        <label class="labeltext font-weight-bold">Department<span class="danger">*</span>:</label>
+                        @Html.DropDownListFor(x => x.DepartmentID, new SelectList(Model.departmentList, "deptt_id", "deptt_description"), "-Select Department-", new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(x => x.DepartmentID, null, new { @class = "danger" })
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col">
+
+                        <label class="labeltext font-weight-bold">Valid From<span class="danger">*</span>:</label>
+                        <input type="date" id="defaultRegisterFormFirstName" name="ValidFrom" class="form-control" placeholder="Valid From">
+                        @Html.ValidationMessageFor(x => x.ValidFrom, null, new { @class = "danger" })
+                    </div>
+                    <div class="col">
+
+                        <label class="labeltext font-weight-bold">Valid Till<span class="danger">*</span>:</label>
+                        <input type="date" id="defaultRegisterFormLastName" name="ValidTill" class="form-control" placeholder="Valid Till">
+                        @Html.ValidationMessageFor(x => x.ValidTill, null, new { @class = "danger" })
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col">
+
+                        <label class="labeltext font-weight-bold">Designation<span class="danger">*</span>:</label>
+                        <input type="text" id="defaultRegisterFormFirstName" name="Designation" class="form-control" placeholder="Designation">
+                        @Html.ValidationMessageFor(x => x.Designation, null, new { @class = "danger" })
+                    </div>
+                    <div class="col">
+                        <label class="labeltext font-weight-bold">Section<span class="danger">*</span>:</label>
+                        @Html.DropDownListFor(x => x.SectionID, new SelectList(Model.SectionMasterList, "section_id", "section_descr"), "--Select Section--", new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(x => x.SectionID, null, new { @class = "danger" })
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <!-- First name -->
+                        <label class="labeltext font-weight-bold">IP Address@*<span class="danger">*</span>*@:</label>
+                        <input type="text" id="defaultRegisterFormFirstName" name="IPAddress" class="form-control" placeholder="IP Address">
+                        @*@Html.ValidationMessageFor(x => x.IPAddress, null, new { @class = "danger" })*@
+                    </div>
+                    <div class="col">
+                        <!-- First name -->
+                        <label class="labeltext font-weight-bold">Rank User<span class="danger">*</span>:</label>
+                        <input type="text" id="defaultRegisterFormFirstName" name="RankUser" class="form-control" placeholder="RankUser">
+                        @Html.ValidationMessageFor(x => x.RankUser, null, new { @class = "danger" })
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <!-- First name -->
+                        <label class="labeltext labeltext font-weight-bold">Login Allowed<span class="danger">*</span>:</label>
+                        @Html.DropDownListFor(model => model.LoginAllowed, new List<SelectListItem>
+                           {
+                            new SelectListItem{ Text="Y", Value = "Y" },
+                            new SelectListItem{ Text="N", Value = "N" },
+                           }, "-Select Services-", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.LoginAllowed, null, new { @class = "danger" })
+                    </div>
+                    <div class="col">
+                        <label class="labeltext font-weight-bold">Mac Address @*<span class="danger">*</span>*@:</label>
+                        <input type="text" id="defaultRegisterFormFirstName" name="MacAddress" class="form-control" placeholder="MacAddress">
+                        @*@Html.ValidationMessageFor(x => x.MacAddress, null, new { @class = "danger" })*@
+                    </div>
+                </div>
+                <!-- Sign up button -->
+                <button class="btn btn-primary float-right" type="submit">Save User</button>
+            }
+    </div>
+
+
+  
+
+

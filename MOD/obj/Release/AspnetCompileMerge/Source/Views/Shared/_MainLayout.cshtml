@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>MOD Acquisition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="/assets/fontawesome-5.12.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="~/assets/css/theme.min.css">
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+    <script src="~/assets/js/jquery.dataTables.min.js"></script>
+    <link href="~/assets/js/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/js/jquery.dataTables.min.css" rel="stylesheet" />
+    <style>
+        .footer-bx {
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            z-index: 11;
+        }
+    </style>
+</head>
+<body>
+    <!-------------header start-------------->
+
+    <div class="container-fluid  box-shadow-sm px-3 px-lg-4" style="padding: 1px; margin-right: 0px!important;">
+        <div class="row">
+            <div class="col-6">
+                <h6 class="logo">
+                    <a href="/" title="Home" rel="home" class="header__logo" id="logo">
+                        <img class="national_emblem" src="~/assets/Uploads/emblem-dark.png" alt="national emblem">
+                        रक्षा मंत्रालय
+                        Ministry Of  DEFENCE
+
+                    </a>
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="body_content">
+        <div id="loader-wrapper" class="hidden">
+            <div id="loadermain">
+                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+
+        </div>
+        @RenderBody()
+    </div>
+</body>
+</html>
+<script src="/assets/fontawesome-5.12.1/js/all.min.js"></script>
+<script src="~/assets/js/theme.min.js"></script>
+<script src="~/WJs/jquery.min.js"></script>
+<script src="~/WJs/popper.min.js"></script>
+<script src="~/WJs/bootstrap.min.js"></script>
+<script src="~/WJs/moment.min.js"></script>
+
+<script src="~/assets/js/jquery.dataTables.min.js"></script>
+
+
+

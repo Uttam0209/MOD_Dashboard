@@ -1,0 +1,904 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MODModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MODEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_tblAON" EntityType="MODModel.tbl_tblAON" />
+    <EntitySet Name="tbl_tblTimelineForProcurement" EntityType="MODModel.tbl_tblTimelineForProcurement" />
+    <EntitySet Name="tbl_tblVendor" EntityType="MODModel.tbl_tblVendor" />
+    <EntitySet Name="tbl_tblVendorCategory" EntityType="MODModel.tbl_tblVendorCategory" />
+    <AssociationSet Name="FK_tbl_tblTimelineForProcurement_tbl_tblAON" Association="MODModel.FK_tbl_tblTimelineForProcurement_tbl_tblAON">
+      <End Role="tbl_tblAON" EntitySet="tbl_tblAON" />
+      <End Role="tbl_tblTimelineForProcurement" EntitySet="tbl_tblTimelineForProcurement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_tblVendor_tbl_tblVendorCategory" Association="MODModel.FK_tbl_tblVendor_tbl_tblVendorCategory">
+      <End Role="tbl_tblVendorCategory" EntitySet="tbl_tblVendorCategory" />
+      <End Role="tbl_tblVendor" EntitySet="tbl_tblVendor" />
+    </AssociationSet>
+    <EntitySet Name="acq_department_master" EntityType="MODModel.acq_department_master" />
+    <EntitySet Name="acq_section_master" EntityType="MODModel.acq_section_master" />
+    <AssociationSet Name="FK_acq_section_master_acq_department_master" Association="MODModel.FK_acq_section_master_acq_department_master">
+      <End Role="acq_department_master" EntitySet="acq_department_master" />
+      <End Role="acq_section_master" EntitySet="acq_section_master" />
+    </AssociationSet>
+    <EntitySet Name="tbl_mst_Project" EntityType="MODModel.tbl_mst_Project" />
+    <EntitySet Name="tbl_trn_tryProject" EntityType="MODModel.tbl_trn_tryProject" />
+    <EntitySet Name="vw_Chart2" EntityType="MODModel.vw_Chart2" />
+    <EntitySet Name="vw_ChartFirst" EntityType="MODModel.vw_ChartFirst" />
+    <EntitySet Name="vw_Grid2" EntityType="MODModel.vw_Grid2" />
+    <EntitySet Name="vw_GridFirst" EntityType="MODModel.vw_GridFirst" />
+    <FunctionImport Name="PROC_DASHBOARD_DATA" EntitySet="temp_dashboard" ReturnType="Collection(MODModel.temp_dashboard)">
+      <Parameter Name="categorisation" Mode="In" Type="String" />
+      <Parameter Name="service" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_PRODUCT_DESCRITPTION" ReturnType="Collection(MODModel.PROC_PRODUCT_DESCRITPTION_Result)">
+      <Parameter Name="taskid" Mode="In" Type="String" />
+      <Parameter Name="stageid" Mode="In" Type="String" />
+      <Parameter Name="Type" Mode="In" Type="String" />
+      <Parameter Name="Date" Mode="In" Type="DateTime" />
+      <Parameter Name="categorisation" Mode="In" Type="String" />
+      <Parameter Name="service" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="vw_assignofTask" EntityType="MODModel.vw_assignofTask" />
+    <EntitySet Name="tbl_trn_UpdateStausDummy" EntityType="MODModel.tbl_trn_UpdateStausDummy" />
+    <FunctionImport Name="DASHBOARDDATA" EntitySet="temp_dashboard" ReturnType="Collection(MODModel.temp_dashboard)">
+      <Parameter Name="categorisation" Mode="In" Type="String" />
+      <Parameter Name="service" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="temp_dashboardproject" EntityType="MODModel.temp_dashboardproject" />
+    <EntitySet Name="acq_rfp_VendorsDetails" EntityType="MODModel.acq_rfp_VendorsDetails" />
+    <AssociationSet Name="FK_acq_rfp_VendorsDetails_tbl_tblVendor" Association="MODModel.FK_acq_rfp_VendorsDetails_tbl_tblVendor">
+      <End Role="tbl_tblVendor" EntitySet="tbl_tblVendor" />
+      <End Role="acq_rfp_VendorsDetails" EntitySet="acq_rfp_VendorsDetails" />
+    </AssociationSet>
+    <EntitySet Name="acq_meeting_master" EntityType="MODModel.acq_meeting_master" />
+    <EntitySet Name="acq_trials" EntityType="MODModel.acq_trials" />
+    <EntitySet Name="acq_rfp_vendors" EntityType="MODModel.acq_rfp_vendors" />
+    <EntitySet Name="acq_project_master" EntityType="MODModel.acq_project_master" />
+    <AssociationSet Name="FK_acq_project_master_acq_meeting_master" Association="MODModel.FK_acq_project_master_acq_meeting_master">
+      <End Role="acq_meeting_master" EntitySet="acq_meeting_master" />
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+    </AssociationSet>
+    <EntitySet Name="acq_project_status_timelines" EntityType="MODModel.acq_project_status_timelines" />
+    <EntitySet Name="acq_rfp_master" EntityType="MODModel.acq_rfp_master" />
+    <AssociationSet Name="FK_acq_rfp_master_acq_project_master" Association="MODModel.FK_acq_rfp_master_acq_project_master">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+      <End Role="acq_rfp_master" EntitySet="acq_rfp_master" />
+    </AssociationSet>
+    <EntitySet Name="acq_project_status_1" EntityType="MODModel.acq_project_status_1" />
+    <EntitySet Name="ChartReportOnClicks" EntityType="MODModel.ChartReportOnClick" />
+    <EntitySet Name="ReportMileStonebyMonths" EntityType="MODModel.ReportMileStonebyMonth" />
+    <EntitySet Name="TimeLineReport1" EntityType="MODModel.TimeLineReport1" />
+    <EntitySet Name="Service_WiseReport" EntityType="MODModel.Service_WiseReport" />
+    <FunctionImport Name="PROC_DASHBOARD_First_CountGrid" ReturnType="Collection(MODModel.PROC_DASHBOARD_First_CountGrid_Result)">
+      <Parameter Name="stageid" Mode="In" Type="Decimal" />
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+      <Parameter Name="categorisation" Mode="In" Type="String" />
+      <Parameter Name="service" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="acq_projectstage_applicability" EntityType="MODModel.acq_projectstage_applicability" />
+    <EntitySet Name="tbl_mst_Template" EntityType="MODModel.tbl_mst_Template" />
+    <EntitySet Name="temp_dashboard" EntityType="MODModel.temp_dashboard" />
+    <EntitySet Name="acq_project_status_pendingstage" EntityType="MODModel.acq_project_status_pendingstage" />
+    <EntitySet Name="tbl_trn_tryProject1" EntityType="MODModel.tbl_trn_tryProject1" />
+    <EntitySet Name="temp_BF" EntityType="MODModel.temp_BF" />
+    <EntitySet Name="acq_policy" EntityType="MODModel.acq_policy" />
+    <AssociationSet Name="FK__acq_polic__aon_i__5EBF139D" Association="MODModel.FK__acq_polic__aon_i__5EBF139D">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__stagi__5DCAEF64" Association="MODModel.FK__acq_polic__stagi__5DCAEF64">
+      <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <EntitySet Name="tbl_tbl_User" EntityType="MODModel.tbl_tbl_User" />
+    <AssociationSet Name="FK_tbl_tbl_User_acq_department_master" Association="MODModel.FK_tbl_tbl_User_acq_department_master">
+      <End Role="acq_department_master" EntitySet="acq_department_master" />
+      <End Role="tbl_tbl_User" EntitySet="tbl_tbl_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_tbl_User_acq_section_master" Association="MODModel.FK_tbl_tbl_User_acq_section_master">
+      <End Role="acq_section_master" EntitySet="acq_section_master" />
+      <End Role="tbl_tbl_User" EntitySet="tbl_tbl_User" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="tbl_tblAON">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dateofAon" Type="DateTime" Precision="0" />
+    <Property Name="categorization" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="itemname" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="quantity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="cost" Type="Int32" />
+    <Property Name="leadservice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="naturetype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="draftRFPbySHQ" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="collegiatevetting" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="approval" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="issuancevendor" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="bidsubmissiondate" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="dateofsubmission" Type="DateTime" Precision="0" />
+    <Property Name="extendedDate" Type="DateTime" Precision="0" />
+    <Property Name="vendors" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="TECconstitutiondate" Type="DateTime" Precision="0" />
+    <Property Name="TECResult" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="TECReportApproval" Type="DateTime" Precision="0" />
+    <Property Name="commencementdate" Type="DateTime" Precision="0" />
+    <Property Name="completiondate" Type="DateTime" Precision="0" />
+    <Property Name="participatingvendors" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Reportrecievedate" Type="DateTime" Precision="0" />
+    <Property Name="reportacceptedDate" Type="DateTime" Precision="0" />
+    <Property Name="qualifiedvendors" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="TOCConstitutiondate" Type="DateTime" Precision="0" />
+    <Property Name="TOCReportDate" Type="DateTime" Precision="0" />
+    <Property Name="TOCAcceptanceDate" Type="DateTime" Precision="0" />
+    <Property Name="CNCConstitutiondate" Type="DateTime" Precision="0" />
+    <Property Name="CNCBenchmarkdate" Type="DateTime" Precision="0" />
+    <Property Name="CNCBidopeningdate" Type="DateTime" Precision="0" />
+    <Property Name="CNCConclusionDate" Type="DateTime" Precision="0" />
+    <Property Name="CNCReportdate" Type="DateTime" Precision="0" />
+    <Property Name="CFA_MOD_Approval" Type="DateTime" Precision="0" />
+    <Property Name="CFA_MOD_Concurrence" Type="DateTime" Precision="0" />
+    <Property Name="UniqueId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tbl_tblTimelineForProcurement" Relationship="MODModel.FK_tbl_tblTimelineForProcurement_tbl_tblAON" FromRole="tbl_tblAON" ToRole="tbl_tblTimelineForProcurement" />
+  </EntityType>
+  <EntityType Name="tbl_tblTimelineForProcurement">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AoNID" Type="Int32" />
+    <Property Name="Stages" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TimePlanned" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UnitTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PlannedStartDate" Type="DateTime" Precision="0" />
+    <Property Name="plannedEndDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tbl_tblAON" Relationship="MODModel.FK_tbl_tblTimelineForProcurement_tbl_tblAON" FromRole="tbl_tblTimelineForProcurement" ToRole="tbl_tblAON" />
+  </EntityType>
+  <EntityType Name="tbl_tblVendor">
+    <Key>
+      <PropertyRef Name="VendorId" />
+    </Key>
+    <Property Name="VendorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VendorCategory" Type="Int32" Nullable="false" />
+    <Property Name="VendorName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="VendorAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="VendorContactName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="VendorPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VendorEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tbl_tblVendorCategory" Relationship="MODModel.FK_tbl_tblVendor_tbl_tblVendorCategory" FromRole="tbl_tblVendor" ToRole="tbl_tblVendorCategory" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="acq_rfp_VendorsDetails" Relationship="MODModel.FK_acq_rfp_VendorsDetails_tbl_tblVendor" FromRole="tbl_tblVendor" ToRole="acq_rfp_VendorsDetails" />
+  </EntityType>
+  <EntityType Name="tbl_tblVendorCategory">
+    <Key>
+      <PropertyRef Name="VendorCategoryID" />
+    </Key>
+    <Property Name="VendorCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VendorCategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tbl_tblVendor" Relationship="MODModel.FK_tbl_tblVendor_tbl_tblVendorCategory" FromRole="tbl_tblVendorCategory" ToRole="tbl_tblVendor" />
+  </EntityType>
+  <Association Name="FK_tbl_tblTimelineForProcurement_tbl_tblAON">
+    <End Type="MODModel.tbl_tblAON" Role="tbl_tblAON" Multiplicity="0..1" />
+    <End Type="MODModel.tbl_tblTimelineForProcurement" Role="tbl_tblTimelineForProcurement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tblAON">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_tblTimelineForProcurement">
+        <PropertyRef Name="AoNID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_tblVendor_tbl_tblVendorCategory">
+    <End Type="MODModel.tbl_tblVendorCategory" Role="tbl_tblVendorCategory" Multiplicity="1" />
+    <End Type="MODModel.tbl_tblVendor" Role="tbl_tblVendor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tblVendorCategory">
+        <PropertyRef Name="VendorCategoryID" />
+      </Principal>
+      <Dependent Role="tbl_tblVendor">
+        <PropertyRef Name="VendorCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="acq_department_master">
+    <Key>
+      <PropertyRef Name="deptt_id" />
+    </Key>
+    <Property Name="deptt_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="deptt_description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="acq_section_master" Relationship="MODModel.FK_acq_section_master_acq_department_master" FromRole="acq_department_master" ToRole="acq_section_master" />
+    <NavigationProperty Name="tbl_tbl_User" Relationship="MODModel.FK_tbl_tbl_User_acq_department_master" FromRole="acq_department_master" ToRole="tbl_tbl_User" />
+  </EntityType>
+  <EntityType Name="acq_section_master">
+    <Key>
+      <PropertyRef Name="section_id" />
+    </Key>
+    <Property Name="section_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="section_descr" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="deptt_id" Type="Int32" />
+    <NavigationProperty Name="acq_department_master" Relationship="MODModel.FK_acq_section_master_acq_department_master" FromRole="acq_section_master" ToRole="acq_department_master" />
+    <NavigationProperty Name="tbl_tbl_User" Relationship="MODModel.FK_tbl_tbl_User_acq_section_master" FromRole="acq_section_master" ToRole="tbl_tbl_User" />
+  </EntityType>
+  <Association Name="FK_acq_section_master_acq_department_master">
+    <End Type="MODModel.acq_department_master" Role="acq_department_master" Multiplicity="0..1" />
+    <End Type="MODModel.acq_section_master" Role="acq_section_master" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_department_master">
+        <PropertyRef Name="deptt_id" />
+      </Principal>
+      <Dependent Role="acq_section_master">
+        <PropertyRef Name="deptt_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tbl_mst_Project">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TempleteId" Type="Int64" />
+    <Property Name="ProjectName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="TemplateType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="CreateOn" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="RecInsTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="tbl_trn_tryProject">
+    <Key>
+      <PropertyRef Name="super_task_id" />
+      <PropertyRef Name="ResponsibilityDepart" />
+      <PropertyRef Name="Responsibility" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="Progress" />
+    </Key>
+    <Property Name="TryPojectID" Type="Int32" />
+    <Property Name="ProjectId" Type="Int32" />
+    <Property Name="Template_type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TaskSlno" Type="Int32" />
+    <Property Name="TaskDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ShortName" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <Property Name="Dependencies" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="super_task_id" Type="Int32" Nullable="false" />
+    <Property Name="ResponsibilityDepart" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Responsibility" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Progress" Type="Int32" Nullable="false" />
+    <Property Name="planned_start_date" Type="DateTime" Precision="3" />
+    <Property Name="planned_end_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="vw_Chart2">
+    <Key>
+      <PropertyRef Name="IdPrimaryKey" />
+    </Key>
+    <Property Name="IdPrimaryKey" Type="Int64" Nullable="false" />
+    <Property Name="Categorisation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="no_of_projects" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vw_ChartFirst">
+    <Key>
+      <PropertyRef Name="IdPrimaryKey" />
+      <PropertyRef Name="label_text" />
+    </Key>
+    <Property Name="IdPrimaryKey" Type="Int64" Nullable="false" />
+    <Property Name="label_text" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="delay_lt90" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vw_Grid2">
+    <Key>
+      <PropertyRef Name="IdPrimaryKey" />
+    </Key>
+    <Property Name="IdPrimaryKey" Type="Int64" Nullable="false" />
+    <Property Name="stage" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TaskDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="army_projects" Type="Int32" />
+    <Property Name="iaf_projects" Type="Int32" />
+    <Property Name="navy_projects" Type="Int32" />
+    <Property Name="other_projects" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vw_GridFirst">
+    <Key>
+      <PropertyRef Name="IdPrimaryKey" />
+    </Key>
+    <Property Name="IdPrimaryKey" Type="Int64" Nullable="false" />
+    <Property Name="task_id" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="taskDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="avg_delay_days" Type="Int32" />
+  </EntityType>
+  <ComplexType Name="PROC_DASHBOARD_First_CountGrid_Result">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="Int32" Name="BF" Nullable="true" />
+    <Property Type="Int32" Name="Cases" Nullable="true" />
+    <Property Type="Int32" Name="Casesdisposed" Nullable="true" />
+    <Property Type="Int32" Name="Outstanding" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="PROC_PRODUCT_DESCRITPTION_Result">
+    <Property Type="Int32" Name="ProjectId" Nullable="false" />
+    <Property Type="String" Name="item_description" Nullable="true" MaxLength="2000" />
+    <Property Type="String" Name="categorisation" Nullable="true" MaxLength="32" />
+    <Property Type="String" Name="service" Nullable="true" MaxLength="32" />
+    <Property Type="DateTime" Name="AoNDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="scheduled_date_of_completion" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="actual_no_of_days" Nullable="true" />
+    <Property Type="Int32" Name="scheduled_no_of_days" Nullable="true" />
+    <Property Type="Decimal" Name="percent_delay" Nullable="true" Precision="18" Scale="0" />
+  </ComplexType>
+  <EntityType Name="vw_assignofTask">
+    <Key>
+      <PropertyRef Name="super_task_id" />
+      <PropertyRef Name="Responsibility" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="ResponsibilityDepart" />
+      <PropertyRef Name="Progress" />
+    </Key>
+    <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TryPojectID" Type="Int32" />
+    <Property Name="ProjectId" Type="Int32" />
+    <Property Name="Template_type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TaskSlno" Type="Int32" />
+    <Property Name="TaskDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <Property Name="Dependencies" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="super_task_id" Type="Int32" Nullable="false" />
+    <Property Name="Responsibility" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ProjectName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ResponsibilityDepart" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Progress" Type="Int32" Nullable="false" />
+    <Property Name="ShortName" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tbl_trn_UpdateStausDummy">
+    <Key>
+      <PropertyRef Name="UpdateStatusTaskId" />
+    </Key>
+    <Property Name="UpdateStatusTaskId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TryPojectID" Type="Int64" />
+    <Property Name="ProjectId" Type="Int64" />
+    <Property Name="TaskSlno" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="PlannStartDate" Type="DateTime" Precision="0" />
+    <Property Name="PlannEndDate" Type="DateTime" Precision="0" />
+    <Property Name="ActuaStartDate" Type="DateTime" Precision="0" />
+    <Property Name="ActuaEndDate" Type="DateTime" Precision="0" />
+    <Property Name="UserID" Type="Int64" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RecTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="temp_dashboardproject">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="item_description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="categorisation" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="service" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="AoNDate" Type="DateTime" Precision="3" />
+    <Property Name="scheduled_date_of_completion" Type="DateTime" Precision="3" />
+    <Property Name="actual_no_of_days" Type="Int32" />
+    <Property Name="scheduled_no_of_days" Type="Int32" />
+    <Property Name="percent_delay" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="acq_rfp_VendorsDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="rfpID" Type="Int32" Nullable="false" />
+    <Property Name="vendor_id" Type="Int32" Nullable="false" />
+    <Property Name="type_ID" Type="Byte" />
+    <NavigationProperty Name="tbl_tblVendor" Relationship="MODModel.FK_acq_rfp_VendorsDetails_tbl_tblVendor" FromRole="acq_rfp_VendorsDetails" ToRole="tbl_tblVendor" />
+  </EntityType>
+  <Association Name="FK_acq_rfp_VendorsDetails_tbl_tblVendor">
+    <End Type="MODModel.tbl_tblVendor" Role="tbl_tblVendor" Multiplicity="1" />
+    <End Type="MODModel.acq_rfp_VendorsDetails" Role="acq_rfp_VendorsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tblVendor">
+        <PropertyRef Name="VendorId" />
+      </Principal>
+      <Dependent Role="acq_rfp_VendorsDetails">
+        <PropertyRef Name="vendor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="acq_meeting_master">
+    <Key>
+      <PropertyRef Name="meeting_id" />
+    </Key>
+    <Property Name="meeting_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dac_dpb" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="meeting_date" Type="DateTime" Precision="3" />
+    <Property Name="Date_of_Issue_of_Minutes" Type="DateTime" Precision="3" />
+    <Property Name="Deleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="acq_project_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_meeting_master" ToRole="acq_project_master" />
+    <Property Name="officers_participated" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Distribution_List" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Meeting_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="acq_trials">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="aonID" Type="Int32" Nullable="false" />
+    <Property Name="trial_type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="date_extension_submission_eut" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="date_commencement" Type="DateTime" Precision="0" />
+    <Property Name="date_completion" Type="DateTime" Precision="0" />
+    <Property Name="remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="acq_rfp_vendors">
+    <Key>
+      <PropertyRef Name="rfp_id" />
+    </Key>
+    <Property Name="rfp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Rfp_fk_Id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="acq_project_master">
+    <Key>
+      <PropertyRef Name="aon_id" />
+    </Key>
+    <Property Name="aon_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="item_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DPP_DAP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AoN_Accorded_By" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Date_of_Accord_of_AoN" Type="DateTime" Precision="3" />
+    <Property Name="meeting_id" Type="Int32" />
+    <Property Name="Categorisation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Service_Lead_Service" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Quantity" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Cost" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Currency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Tax_Duties" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Type_of_Acquisition" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Trials_Required" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Essential_parameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Any_other_aspect" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IC_percentage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Option_clause_applicable" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Offset_applicable" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="AMC_applicable" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="AMCRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Warrenty_applicable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Warrenty_Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AoN_validity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AoN_validity_unit" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="AoN_revalidation_meeting_id" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="AoN_validity_extended_till" Type="DateTime" Precision="3" />
+    <Property Name="AoN_Foreclosure_meeting_id" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="acq_meeting_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_project_master" ToRole="acq_meeting_master" />
+    <NavigationProperty Name="acq_rfp_master" Relationship="MODModel.FK_acq_rfp_master_acq_project_master" FromRole="acq_project_master" ToRole="acq_rfp_master" />
+    <Property Name="AoNClosureDate" Type="DateTime" Precision="3" />
+    <Property Name="AoNClosureRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AoNForeClosureCreatedBy" Type="Int32" />
+    <Property Name="System_case" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="acq_policy" Relationship="MODModel.FK__acq_polic__aon_i__5EBF139D" FromRole="acq_project_master" ToRole="acq_policy" />
+  </EntityType>
+  <Association Name="FK_acq_project_master_acq_meeting_master">
+    <End Type="MODModel.acq_meeting_master" Role="acq_meeting_master" Multiplicity="0..1" />
+    <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_meeting_master">
+        <PropertyRef Name="meeting_id" />
+      </Principal>
+      <Dependent Role="acq_project_master">
+        <PropertyRef Name="meeting_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="acq_project_status_timelines">
+    <Key>
+      <PropertyRef Name="aon_id" />
+    </Key>
+    <Property Name="aon_id" Type="Int32" Nullable="false" />
+    <Property Name="Service_Lead_Service" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="item_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Date_of_Accord_of_AoN" Type="DateTime" Precision="3" />
+    <Property Name="Cost" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Categorisation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="IC_percentage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Trials_Required" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TaskSlno" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TaskDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="completed_on" Type="DateTime" Precision="3" />
+    <Property Name="no_of_weeks" Type="Int32" />
+    <Property Name="dap_timeline" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="acq_rfp_master">
+    <Key>
+      <PropertyRef Name="rfp_id" />
+    </Key>
+    <Property Name="rfp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="aon_id" Type="Int32" Nullable="false" />
+    <Property Name="type_rfp" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="draft_rfp_date" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_submissionto_adgacq" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_acceptanceby_adgacq" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_collegiate_vetting" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_approval_rfp" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_issue_rfp" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_prebid_meeting" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_prebid_replies" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="lastdate_bidsubmission" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_bid_opening" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ExtendedLastDate_BidSubmission" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="date_tec_constitution" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_tec_commencement" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_tec_completion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_tec_reportsubmission" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_tec_approval" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_submission_eut" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_issue_trials_directive" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date_received_Fet" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date_accepted_Fet" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date_toc_Constitution" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date_toc_report" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date_toc_acceptance_CompetantAuth" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date_cnc_constitution" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date_cnc_benchmarking" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date_commercial_bid_opening" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date_cnc_conclusion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date_cnc_report" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_Submission_CFANote_DGacq" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_Acq_approvalforsending_to_MoDFin" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_submissionto_CFA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_Approval_CFAnote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_DCN_Sentfor_InterMinisterialConsultations" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_MoF_Concurrence" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_DCN_submissionto_CCS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ApproveToCSS_CFA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="DateContractSigning" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_approval_CFA_CCS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="date_ContractSigning" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="acq_project_master" Relationship="MODModel.FK_acq_rfp_master_acq_project_master" FromRole="acq_rfp_master" ToRole="acq_project_master" />
+    <Property Name="Eoi_DPRDateIssueMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Eoi_DPRReceiptDateMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Eoi_DPRDateCompletionandResponseMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dtforwardingshortlistedDPMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateapprovalshortlistedvendorsMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="DateIssueMake_II" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="EoiReceiptDateMake_II" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="EoiCompletionResponseMake_II" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateApprovalEoiMake_II" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateissueProjectSenctionMake_II" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateFormulationJPMT_DD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateFormulationPMT_DD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateIdentificationDCPP_DD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datedetaildesignbySHQ_DD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateissuetrialdeveiation_DD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateprojectReview_DD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="daterealisationPrototype_DD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateCommencementPSQR" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateCulminationPSQRValid_DD" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateselectionDasbySHQ_dprbMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateapprovalCFAfundingarrangementissueProjectMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datecommencementpreliminaryMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datefinalisationdetaileddesign" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datecommencementfabrication_devProMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datetechnicallimitedfieldstrialsMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datefreezingPSQRStoSQRSMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateintimationvendorssubmissionrevisedMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datesubmissionrevisedcommercialoffersvendorsMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datecommencementDevPrototypeMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datecompletionDevPrototypeMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datecommencementUserTrialsMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="datecompletionUserTrialsRedinessReviewMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateFreezingPSQRsMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateselectionDasbySHQ_dprbMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="dateapprovalCFAfundingarrangementissueProjectMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_acq_rfp_master_acq_project_master">
+    <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="1" />
+    <End Type="MODModel.acq_rfp_master" Role="acq_rfp_master" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_project_master">
+        <PropertyRef Name="aon_id" />
+      </Principal>
+      <Dependent Role="acq_rfp_master">
+        <PropertyRef Name="aon_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="acq_project_status_1">
+    <Key>
+      <PropertyRef Name="project_id" />
+      <PropertyRef Name="task_id" />
+    </Key>
+    <Property Name="project_id" Type="Int32" Nullable="false" />
+    <Property Name="task_id" Type="Int32" Nullable="false" />
+    <Property Name="planned_start_date" Type="Int32" />
+    <Property Name="planned_end_date" Type="Int32" />
+    <Property Name="actual_start_date" Type="Int32" />
+    <Property Name="actual_end_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="ChartReportOnClick">
+    <Key>
+      <PropertyRef Name="Pkey" />
+    </Key>
+    <Property Name="Pkey" Type="Int64" Nullable="false" />
+    <Property Name="TaskSlno" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TaskDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Service_Lead_Service" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="item_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Date_of_Accord_of_AoN" Type="DateTime" Precision="3" />
+    <Property Name="Cost" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Categorisation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="IC_percentage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Trials_Required" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ReportMileStonebyMonth">
+    <Key>
+      <PropertyRef Name="Pkey" />
+    </Key>
+    <Property Name="Pkey" Type="Int64" Nullable="false" />
+    <Property Name="TaskDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="projects" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TimeLineReport1">
+    <Key>
+      <PropertyRef Name="Pkey" />
+    </Key>
+    <Property Name="Pkey" Type="Int64" Nullable="false" />
+    <Property Name="Service_Lead_Service" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="item_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Date_of_Accord_of_AoN" Type="DateTime" Precision="3" />
+    <Property Name="Cost" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Categorisation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="IC_percentage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Trials_Required" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TaskDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="completed_on" Type="DateTime" Precision="3" />
+    <Property Name="no_of_weeks" Type="Int32" />
+    <Property Name="dap_timeline" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="TaskSlno" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="Service_WiseReport">
+    <Key>
+      <PropertyRef Name="Pkey" />
+    </Key>
+    <Property Name="Pkey" Type="Int64" Nullable="false" />
+    <Property Name="pending_in_stage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="n_projects" Type="Int32" />
+    <Property Name="total_aon_cost" Type="Decimal" Precision="38" Scale="0" />
+  </EntityType>
+  <ComplexType Name="PROC_DASHBOARD_First_CountGrid_Result1">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="Int32" Name="BF" Nullable="true" />
+    <Property Type="Int32" Name="Cases" Nullable="true" />
+    <Property Type="Int32" Name="Casesdisposed" Nullable="true" />
+    <Property Type="Int32" Name="Outstanding" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="PROC_DASHBOARD_First_CountGrid_Result2">
+    <Property Type="Int32" Name="id" Nullable="true" />
+    <Property Type="Int32" Name="BF" Nullable="true" />
+    <Property Type="Int32" Name="Cases" Nullable="true" />
+    <Property Type="Int32" Name="Casesdisposed" Nullable="true" />
+    <Property Type="Int32" Name="Outstanding" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="acq_projectstage_applicability">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AoN" Type="Int32" />
+    <Property Name="stage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="applicable" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tbl_mst_Template">
+    <Key>
+      <PropertyRef Name="TemplateID" />
+    </Key>
+    <Property Name="TemplateID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TaskSlno" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TaskDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ShortName" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="Duration" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Unit_of_time" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Dependencies" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="super_task_id" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Responsibility" Type="Int64" />
+    <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="RecInsTime" Type="DateTime" Precision="3" />
+    <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="dap_timeline" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="Categorisation" Type="String" MaxLength="2550" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="acq_policy" Relationship="MODModel.FK__acq_polic__stagi__5DCAEF64" FromRole="tbl_mst_Template" ToRole="acq_policy" />
+  </EntityType>
+  <EntityType Name="temp_dashboard">
+    <Key>
+      <PropertyRef Name="TaskSlno" />
+    </Key>
+    <Property Name="TaskSlno" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="nProject" Type="Int32" />
+    <Property Name="ShortName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TaskDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="color" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="acq_project_status_pendingstage">
+    <Key>
+      <PropertyRef Name="Pkey" />
+    </Key>
+    <Property Name="Pkey" Type="Int64" Nullable="false" />
+    <Property Name="Service_Lead_Service" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="item_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Date_of_Accord_of_AoN" Type="DateTime" Precision="3" />
+    <Property Name="Cost" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Categorisation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="IC_percentage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Trials_Required" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TaskSlno" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="pending_in_stage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="date_of_entering_this_stage" Type="DateTime" Precision="3" />
+    <Property Name="System_case" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_trn_tryProject1">
+    <Key>
+      <PropertyRef Name="TryPojectID" />
+      <PropertyRef Name="isactive" />
+      <PropertyRef Name="progress" />
+    </Key>
+    <Property Name="TryPojectID" Type="Int64" Nullable="false" />
+    <Property Name="ProjectId" Type="Int32" />
+    <Property Name="Template_type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="taskslno" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="taskdescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="shortname" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="startdate" Type="DateTime" Precision="3" />
+    <Property Name="enddate" Type="DateTime" Precision="3" />
+    <Property Name="Dependencies" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="super_task_id" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="responsibilitydepart" Type="Int64" />
+    <Property Name="Responsibility" Type="Int64" />
+    <Property Name="isactive" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="progress" Type="Int32" Nullable="false" />
+    <Property Name="planned_start_date" Type="DateTime" Precision="3" />
+    <Property Name="planned_end_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="temp_BF">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="BF" Type="Int32" Nullable="false" />
+    <Property Name="Cases" Type="Int32" />
+    <Property Name="Casesdisposed" Type="Int32" />
+    <Property Name="Outstanding" Type="Int32" />
+  </EntityType>
+  <EntityType Name="acq_policy">
+    <Key>
+      <PropertyRef Name="policyid" />
+    </Key>
+    <Property Name="policyid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="aon_id" Type="Int32" Nullable="false" />
+    <Property Name="stagid" Type="Int64" Nullable="false" />
+    <Property Name="fdate" Type="DateTime" Precision="3" />
+    <Property Name="tdate" Type="DateTime" Precision="3" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="pdfattachment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="section_id" Type="Int32" />
+    <NavigationProperty Name="acq_project_master" Relationship="MODModel.FK__acq_polic__aon_i__5EBF139D" FromRole="acq_policy" ToRole="acq_project_master" />
+    <NavigationProperty Name="tbl_mst_Template" Relationship="MODModel.FK__acq_polic__stagi__5DCAEF64" FromRole="acq_policy" ToRole="tbl_mst_Template" />
+  </EntityType>
+  <Association Name="FK__acq_polic__aon_i__5EBF139D">
+    <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="1" />
+    <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_project_master">
+        <PropertyRef Name="aon_id" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="aon_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__stagi__5DCAEF64">
+    <End Type="MODModel.tbl_mst_Template" Role="tbl_mst_Template" Multiplicity="1" />
+    <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_mst_Template">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="stagid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tbl_tbl_User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="InternalEmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ExternalEmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DepartmentID" Type="Int32" />
+    <Property Name="ValidFrom" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ValidTill" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="IPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MacAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ReportingTo" Type="Int32" />
+    <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RankUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LoginAllowed" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SectionID" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="Pswd_Salt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Flag" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Temp_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LoginCount" Type="Int32" />
+    <Property Name="ExpiryTime" Type="DateTime" Precision="3" />
+    <Property Name="TokenId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="acq_department_master" Relationship="MODModel.FK_tbl_tbl_User_acq_department_master" FromRole="tbl_tbl_User" ToRole="acq_department_master" />
+    <NavigationProperty Name="acq_section_master" Relationship="MODModel.FK_tbl_tbl_User_acq_section_master" FromRole="tbl_tbl_User" ToRole="acq_section_master" />
+  </EntityType>
+  <Association Name="FK_tbl_tbl_User_acq_department_master">
+    <End Type="MODModel.acq_department_master" Role="acq_department_master" Multiplicity="0..1" />
+    <End Type="MODModel.tbl_tbl_User" Role="tbl_tbl_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_department_master">
+        <PropertyRef Name="deptt_id" />
+      </Principal>
+      <Dependent Role="tbl_tbl_User">
+        <PropertyRef Name="DepartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_tbl_User_acq_section_master">
+    <End Type="MODModel.acq_section_master" Role="acq_section_master" Multiplicity="0..1" />
+    <End Type="MODModel.tbl_tbl_User" Role="tbl_tbl_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_section_master">
+        <PropertyRef Name="section_id" />
+      </Principal>
+      <Dependent Role="tbl_tbl_User">
+        <PropertyRef Name="SectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,60 @@
+﻿@model MOD.Models.MODSaveViewModel
+
+
+    <div class="card flex-fill w-100 p-4">
+        <div class="row mb-2 mb-xl-3">
+            <div class="col-auto d-none d-sm-block">
+                <h2 class="mb-0">Aon Create</h2>
+            </div>
+        </div>
+
+        <form id="editForm">
+            <div class="form-row mb-4">
+                <input type="hidden" value="@Model.Id" />
+                <div class="col">
+                    <!-- First name -->
+                    <label class="font-weight-bold">AoN Date:</label>
+                    <input type="date" value="@Model.dateofAon" name="dateofAon" class="form-control" placeholder="Date of AoN">
+                </div>
+                <div class="col">
+                    <!-- Last name -->
+                    <label class="font-weight-bold">Item Name:</label>
+                    <input type="text" value="@Model.itemname" name="itemname" class="form-control" placeholder="Item">
+                </div>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col">
+                    <!-- First name -->
+                    <label class="font-weight-bold">Quantity:</label>
+                    <input type="text" value="@Model.quantity" name="quantity" class="form-control" placeholder="Quantity">
+                </div>
+                <div class="col">
+                    <!-- Last name -->
+                    <label class="font-weight-bold">Cost:</label>
+                    <input type="text" value="@Model.cost" name="cost" class="form-control" placeholder="Cost">
+                </div>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col">
+                    <!-- First name -->
+                    <label class="font-weight-bold">Service:</label>
+                    <input type="text" value="@Model.leadservice" name="leadservice" class="form-control" placeholder="Services/Lead Service">
+                </div>
+                <div class="col">
+                    <!-- Last name -->
+                    <label class="font-weight-bold">Nature:</label>
+                    <input type="text" value="@Model.naturetype" name="naturetype" class="form-control" placeholder="Type/Nature">
+                </div>
+            </div>
+            <!-- Sign up button -->
+            <button class="btn btn-info float-right" type="submit">Update Register</button>
+        </form>
+    </div>
+  
+
+
+  
+
+
+
+

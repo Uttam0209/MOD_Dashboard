@@ -1,0 +1,1189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MODModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="acq_department_master">
+    <Key>
+      <PropertyRef Name="deptt_id" />
+    </Key>
+    <Property Name="deptt_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="deptt_description" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="acq_meeting_master">
+    <Key>
+      <PropertyRef Name="meeting_id" />
+    </Key>
+    <Property Name="meeting_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dac_dpb" Type="varchar" MaxLength="32" />
+    <Property Name="meeting_date" Type="datetime" />
+    <Property Name="Date_of_Issue_of_Minutes" Type="datetime" />
+    <Property Name="Deleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+    <Property Name="officers_participated" Type="varchar(max)" />
+    <Property Name="Distribution_List" Type="varchar(max)" />
+    <Property Name="Meeting_Number" Type="varchar" MaxLength="100" />
+    <Property Name="Status" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="acq_policy">
+    <Key>
+      <PropertyRef Name="policyid" />
+    </Key>
+    <Property Name="policyid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="aon_id" Type="int" Nullable="false" />
+    <Property Name="stagid" Type="bigint" Nullable="false" />
+    <Property Name="fdate" Type="datetime" />
+    <Property Name="tdate" Type="datetime" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="pdfattachment" Type="varchar(max)" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="section_id" Type="int" />
+  </EntityType>
+  <EntityType Name="acq_project_master">
+    <Key>
+      <PropertyRef Name="aon_id" />
+    </Key>
+    <Property Name="aon_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="item_description" Type="varchar(max)" />
+    <Property Name="DPP_DAP" Type="varchar(max)" />
+    <Property Name="AoN_Accorded_By" Type="varchar(max)" />
+    <Property Name="Date_of_Accord_of_AoN" Type="datetime" />
+    <Property Name="meeting_id" Type="int" />
+    <Property Name="Categorisation" Type="varchar" MaxLength="200" />
+    <Property Name="Service_Lead_Service" Type="varchar" MaxLength="200" />
+    <Property Name="Quantity" Type="varchar" MaxLength="200" />
+    <Property Name="Cost" Type="varchar" MaxLength="200" />
+    <Property Name="Currency" Type="varchar" MaxLength="50" />
+    <Property Name="Tax_Duties" Type="varchar" MaxLength="50" />
+    <Property Name="Type_of_Acquisition" Type="varchar" MaxLength="200" />
+    <Property Name="Trials_Required" Type="varchar" MaxLength="200" />
+    <Property Name="Essential_parameters" Type="varchar(max)" />
+    <Property Name="Any_other_aspect" Type="varchar(max)" />
+    <Property Name="IC_percentage" Type="varchar" MaxLength="200" />
+    <Property Name="Option_clause_applicable" Type="varchar" MaxLength="200" />
+    <Property Name="Offset_applicable" Type="varchar" MaxLength="200" />
+    <Property Name="AMC_applicable" Type="varchar" MaxLength="200" />
+    <Property Name="AMCRemarks" Type="varchar(max)" />
+    <Property Name="Warrenty_applicable" Type="varchar" MaxLength="50" />
+    <Property Name="Warrenty_Remarks" Type="varchar(max)" />
+    <Property Name="AoN_validity" Type="varchar" MaxLength="50" />
+    <Property Name="AoN_validity_unit" Type="varchar" MaxLength="200" />
+    <Property Name="AoN_revalidation_meeting_id" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="AoN_validity_extended_till" Type="datetime" />
+    <Property Name="AoN_Foreclosure_meeting_id" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="AoNClosureDate" Type="datetime" />
+    <Property Name="AoNClosureRemarks" Type="nvarchar(max)" />
+    <Property Name="AoNForeClosureCreatedBy" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="System_case" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="acq_projectstage_applicability">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AoN" Type="int" />
+    <Property Name="stage" Type="nvarchar" MaxLength="200" />
+    <Property Name="applicable" Type="nvarchar" MaxLength="200" />
+    <Property Name="Remarks" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="acq_rfp_master">
+    <Key>
+      <PropertyRef Name="rfp_id" />
+    </Key>
+    <Property Name="rfp_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="aon_id" Type="int" Nullable="false" />
+    <Property Name="type_rfp" Type="varchar" MaxLength="100" />
+    <Property Name="draft_rfp_date" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_submissionto_adgacq" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_acceptanceby_adgacq" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_collegiate_vetting" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_approval_rfp" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_issue_rfp" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_prebid_meeting" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_prebid_replies" Type="nvarchar" MaxLength="200" />
+    <Property Name="lastdate_bidsubmission" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_bid_opening" Type="nvarchar" MaxLength="200" />
+    <Property Name="ExtendedLastDate_BidSubmission" Type="nvarchar" MaxLength="50" />
+    <Property Name="date_tec_constitution" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_tec_commencement" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_tec_completion" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_tec_reportsubmission" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_tec_approval" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_submission_eut" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_issue_trials_directive" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date_received_Fet" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date_accepted_Fet" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date_toc_Constitution" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date_toc_report" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date_toc_acceptance_CompetantAuth" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date_cnc_constitution" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date_cnc_benchmarking" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date_commercial_bid_opening" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date_cnc_conclusion" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date_cnc_report" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_Submission_CFANote_DGacq" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_Acq_approvalforsending_to_MoDFin" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_submissionto_CFA" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_Approval_CFAnote" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_DCN_Sentfor_InterMinisterialConsultations" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_MoF_Concurrence" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_DCN_submissionto_CCS" Type="nvarchar" MaxLength="200" />
+    <Property Name="ApproveToCSS_CFA" Type="nvarchar" MaxLength="200" />
+    <Property Name="DateContractSigning" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_approval_CFA_CCS" Type="nvarchar" MaxLength="200" />
+    <Property Name="date_ContractSigning" Type="nvarchar" MaxLength="200" />
+    <Property Name="Eoi_DPRDateIssueMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="Eoi_DPRReceiptDateMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="Eoi_DPRDateCompletionandResponseMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="dtforwardingshortlistedDPMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateapprovalshortlistedvendorsMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateselectionDasbySHQ_dprbMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateapprovalCFAfundingarrangementissueProjectMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateselectionDasbySHQ_dprbMakeII" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateapprovalCFAfundingarrangementissueProjectMakeII" Type="nvarchar" MaxLength="200" />
+    <Property Name="datecommencementpreliminaryMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="datefinalisationdetaileddesign" Type="nvarchar" MaxLength="200" />
+    <Property Name="datecommencementfabrication_devProMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="datetechnicallimitedfieldstrialsMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="datefreezingPSQRStoSQRSMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateintimationvendorssubmissionrevisedMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="datesubmissionrevisedcommercialoffersvendorsMakeI" Type="nvarchar" MaxLength="200" />
+    <Property Name="DateIssueMake_II" Type="nvarchar" MaxLength="200" />
+    <Property Name="EoiReceiptDateMake_II" Type="nvarchar" MaxLength="200" />
+    <Property Name="EoiCompletionResponseMake_II" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateApprovalEoiMake_II" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateissueProjectSenctionMake_II" Type="nvarchar" MaxLength="200" />
+    <Property Name="datecommencementDevPrototypeMakeII" Type="nvarchar" MaxLength="200" />
+    <Property Name="datecompletionDevPrototypeMakeII" Type="nvarchar" MaxLength="200" />
+    <Property Name="datecommencementUserTrialsMakeII" Type="nvarchar" MaxLength="200" />
+    <Property Name="datecompletionUserTrialsRedinessReviewMakeII" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateFreezingPSQRsMakeII" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateFormulationJPMT_DD" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateFormulationPMT_DD" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateIdentificationDCPP_DD" Type="nvarchar" MaxLength="200" />
+    <Property Name="datedetaildesignbySHQ_DD" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateissuetrialdeveiation_DD" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateprojectReview_DD" Type="nvarchar" MaxLength="200" />
+    <Property Name="daterealisationPrototype_DD" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateCommencementPSQR" Type="nvarchar" MaxLength="200" />
+    <Property Name="dateCulminationPSQRValid_DD" Type="nvarchar" MaxLength="200" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="acq_rfp_vendors">
+    <Key>
+      <PropertyRef Name="rfp_id" />
+    </Key>
+    <Property Name="rfp_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Rfp_fk_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="acq_rfp_VendorsDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="rfpID" Type="int" Nullable="false" />
+    <Property Name="vendor_id" Type="int" Nullable="false" />
+    <Property Name="type_ID" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="acq_section_master">
+    <Key>
+      <PropertyRef Name="section_id" />
+    </Key>
+    <Property Name="section_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="section_descr" Type="varchar" MaxLength="100" />
+    <Property Name="deptt_id" Type="int" />
+  </EntityType>
+  <EntityType Name="acq_trials">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="aonID" Type="int" Nullable="false" />
+    <Property Name="trial_type" Type="varchar" MaxLength="100" />
+    <Property Name="date_extension_submission_eut" Type="varchar" MaxLength="200" />
+    <Property Name="date_commencement" Type="date" />
+    <Property Name="date_completion" Type="date" />
+    <Property Name="remarks" Type="varchar(max)" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="tbl_mst_Project">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TempleteId" Type="bigint" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="500" />
+    <Property Name="TemplateType" Type="nvarchar" MaxLength="50" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="CreateOn" Type="date" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="500" />
+    <Property Name="IsActive" Type="char" MaxLength="1" />
+    <Property Name="RecInsTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tbl_mst_Template">
+    <Key>
+      <PropertyRef Name="TemplateID" />
+    </Key>
+    <Property Name="TemplateID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TaskSlno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TaskDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="ShortName" Type="nvarchar" MaxLength="2" />
+    <Property Name="Duration" Type="nvarchar" MaxLength="500" />
+    <Property Name="Unit_of_time" Type="nvarchar" MaxLength="500" />
+    <Property Name="Dependencies" Type="nvarchar" MaxLength="500" />
+    <Property Name="super_task_id" Type="nvarchar" MaxLength="500" />
+    <Property Name="Responsibility" Type="bigint" />
+    <Property Name="IsActive" Type="char" MaxLength="1" />
+    <Property Name="RecInsTime" Type="datetime" />
+    <Property Name="color" Type="nvarchar" MaxLength="50" />
+    <Property Name="dap_timeline" Type="varchar" MaxLength="2000" />
+    <Property Name="Categorisation" Type="varchar" MaxLength="2550" />
+  </EntityType>
+  <EntityType Name="tbl_tbl_User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="100" />
+    <Property Name="InternalEmailID" Type="nvarchar" MaxLength="100" />
+    <Property Name="ExternalEmailID" Type="nvarchar" MaxLength="100" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DepartmentID" Type="int" />
+    <Property Name="ValidFrom" Type="date" Nullable="false" />
+    <Property Name="ValidTill" Type="date" Nullable="false" />
+    <Property Name="IPAddress" Type="varchar" MaxLength="50" />
+    <Property Name="MacAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="ReportingTo" Type="int" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" />
+    <Property Name="RankUser" Type="varchar" MaxLength="50" />
+    <Property Name="LoginAllowed" Type="varchar" MaxLength="50" />
+    <Property Name="SectionID" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="Pswd_Salt" Type="nvarchar" MaxLength="100" />
+    <Property Name="Flag" Type="nvarchar" MaxLength="100" />
+    <Property Name="Temp_Number" Type="nvarchar" MaxLength="100" />
+    <Property Name="LoginCount" Type="int" />
+    <Property Name="ExpiryTime" Type="datetime" />
+    <Property Name="TokenId" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_tblAON">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dateofAon" Type="date" />
+    <Property Name="categorization" Type="varchar" MaxLength="50" />
+    <Property Name="itemname" Type="varchar" MaxLength="500" />
+    <Property Name="quantity" Type="varchar" MaxLength="50" />
+    <Property Name="cost" Type="int" />
+    <Property Name="leadservice" Type="varchar" MaxLength="50" />
+    <Property Name="naturetype" Type="varchar" MaxLength="50" />
+    <Property Name="draftRFPbySHQ" Type="nvarchar" MaxLength="250" />
+    <Property Name="collegiatevetting" Type="nvarchar" MaxLength="250" />
+    <Property Name="approval" Type="nvarchar" MaxLength="250" />
+    <Property Name="issuancevendor" Type="nvarchar" MaxLength="250" />
+    <Property Name="bidsubmissiondate" Type="nvarchar" MaxLength="250" />
+    <Property Name="dateofsubmission" Type="date" />
+    <Property Name="extendedDate" Type="date" />
+    <Property Name="vendors" Type="nvarchar" MaxLength="500" />
+    <Property Name="TECconstitutiondate" Type="date" />
+    <Property Name="TECResult" Type="nvarchar" MaxLength="150" />
+    <Property Name="TECReportApproval" Type="date" />
+    <Property Name="commencementdate" Type="date" />
+    <Property Name="completiondate" Type="date" />
+    <Property Name="participatingvendors" Type="nvarchar" MaxLength="500" />
+    <Property Name="Reportrecievedate" Type="date" />
+    <Property Name="reportacceptedDate" Type="date" />
+    <Property Name="qualifiedvendors" Type="nvarchar" MaxLength="500" />
+    <Property Name="TOCConstitutiondate" Type="date" />
+    <Property Name="TOCReportDate" Type="date" />
+    <Property Name="TOCAcceptanceDate" Type="date" />
+    <Property Name="CNCConstitutiondate" Type="date" />
+    <Property Name="CNCBenchmarkdate" Type="date" />
+    <Property Name="CNCBidopeningdate" Type="date" />
+    <Property Name="CNCConclusionDate" Type="date" />
+    <Property Name="CNCReportdate" Type="date" />
+    <Property Name="CFA_MOD_Approval" Type="date" />
+    <Property Name="CFA_MOD_Concurrence" Type="date" />
+    <Property Name="UniqueId" Type="varchar" MaxLength="100" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tbl_tblTimelineForProcurement">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AoNID" Type="int" />
+    <Property Name="Stages" Type="nvarchar" MaxLength="200" />
+    <Property Name="TimePlanned" Type="nvarchar" MaxLength="50" />
+    <Property Name="UnitTime" Type="nvarchar" MaxLength="50" />
+    <Property Name="PlannedStartDate" Type="date" />
+    <Property Name="plannedEndDate" Type="date" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tbl_tblVendor">
+    <Key>
+      <PropertyRef Name="VendorId" />
+    </Key>
+    <Property Name="VendorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VendorCategory" Type="int" Nullable="false" />
+    <Property Name="VendorName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="VendorAddress" Type="nvarchar" MaxLength="200" />
+    <Property Name="VendorContactName" Type="varchar" MaxLength="100" />
+    <Property Name="VendorPhone" Type="varchar" MaxLength="50" />
+    <Property Name="VendorEmail" Type="nvarchar" MaxLength="200" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="tbl_tblVendorCategory">
+    <Key>
+      <PropertyRef Name="VendorCategoryID" />
+    </Key>
+    <Property Name="VendorCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VendorCategoryName" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tbl_trn_UpdateStausDummy">
+    <Key>
+      <PropertyRef Name="UpdateStatusTaskId" />
+    </Key>
+    <Property Name="UpdateStatusTaskId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TryPojectID" Type="bigint" />
+    <Property Name="ProjectId" Type="bigint" />
+    <Property Name="TaskSlno" Type="nvarchar" MaxLength="150" />
+    <Property Name="PlannStartDate" Type="date" />
+    <Property Name="PlannEndDate" Type="date" />
+    <Property Name="ActuaStartDate" Type="date" />
+    <Property Name="ActuaEndDate" Type="date" />
+    <Property Name="UserID" Type="bigint" />
+    <Property Name="Remark" Type="nvarchar(max)" />
+    <Property Name="RecTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="temp_BF">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="BF" Type="int" Nullable="false" />
+    <Property Name="Cases" Type="int" />
+    <Property Name="Casesdisposed" Type="int" />
+    <Property Name="Outstanding" Type="int" />
+  </EntityType>
+  <EntityType Name="temp_dashboard">
+    <Key>
+      <PropertyRef Name="TaskSlno" />
+    </Key>
+    <Property Name="TaskSlno" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="nProject" Type="int" />
+    <Property Name="ShortName" Type="nvarchar" MaxLength="200" />
+    <Property Name="TaskDescription" Type="nvarchar" MaxLength="250" />
+    <Property Name="color" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="temp_dashboardproject">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="item_description" Type="nvarchar" MaxLength="250" />
+    <Property Name="categorisation" Type="nvarchar" MaxLength="250" />
+    <Property Name="service" Type="nvarchar" MaxLength="250" />
+    <Property Name="AoNDate" Type="datetime" />
+    <Property Name="scheduled_date_of_completion" Type="datetime" />
+    <Property Name="actual_no_of_days" Type="int" />
+    <Property Name="scheduled_no_of_days" Type="int" />
+    <Property Name="percent_delay" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.acq_project_status_1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="acq_project_status_1">
+    <Key>
+      <PropertyRef Name="project_id" />
+      <PropertyRef Name="task_id" />
+    </Key>
+    <Property Name="project_id" Type="int" Nullable="false" />
+    <Property Name="task_id" Type="numeric" Precision="3" Scale="1" Nullable="false" />
+    <Property Name="planned_start_date" Type="int" />
+    <Property Name="planned_end_date" Type="int" />
+    <Property Name="actual_start_date" Type="int" />
+    <Property Name="actual_end_date" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.acq_project_status_pendingstage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="acq_project_status_pendingstage">
+    <Key>
+      <PropertyRef Name="Pkey" />
+    </Key>
+    <Property Name="Pkey" Type="bigint" Nullable="false" />
+    <Property Name="Service_Lead_Service" Type="varchar" MaxLength="200" />
+    <Property Name="item_description" Type="varchar(max)" />
+    <Property Name="Date_of_Accord_of_AoN" Type="datetime" />
+    <Property Name="Cost" Type="varchar" MaxLength="200" />
+    <Property Name="Categorisation" Type="varchar" MaxLength="200" />
+    <Property Name="IC_percentage" Type="varchar" MaxLength="200" />
+    <Property Name="Trials_Required" Type="varchar" MaxLength="200" />
+    <Property Name="TaskSlno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="System_case" Type="varchar" MaxLength="50" />
+    <Property Name="pending_in_stage" Type="nvarchar" MaxLength="500" />
+    <Property Name="date_of_entering_this_stage" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.acq_project_status_timelines' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="acq_project_status_timelines">
+    <Key>
+      <PropertyRef Name="aon_id" />
+    </Key>
+    <Property Name="aon_id" Type="int" Nullable="false" />
+    <Property Name="Service_Lead_Service" Type="varchar" MaxLength="200" />
+    <Property Name="item_description" Type="varchar(max)" />
+    <Property Name="Date_of_Accord_of_AoN" Type="datetime" />
+    <Property Name="Cost" Type="varchar" MaxLength="200" />
+    <Property Name="Categorisation" Type="varchar" MaxLength="200" />
+    <Property Name="IC_percentage" Type="varchar" MaxLength="200" />
+    <Property Name="Trials_Required" Type="varchar" MaxLength="200" />
+    <Property Name="TaskSlno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TaskDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="completed_on" Type="datetime" />
+    <Property Name="no_of_weeks" Type="int" />
+    <Property Name="dap_timeline" Type="varchar" MaxLength="2000" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.ChartReportOnClick' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ChartReportOnClick">
+    <Key>
+      <PropertyRef Name="Pkey" />
+    </Key>
+    <Property Name="Pkey" Type="bigint" Nullable="false" />
+    <Property Name="TaskSlno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TaskDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="Service_Lead_Service" Type="varchar" MaxLength="200" />
+    <Property Name="item_description" Type="varchar(max)" />
+    <Property Name="Date_of_Accord_of_AoN" Type="datetime" />
+    <Property Name="Cost" Type="varchar" MaxLength="200" />
+    <Property Name="Categorisation" Type="varchar" MaxLength="200" />
+    <Property Name="IC_percentage" Type="varchar" MaxLength="200" />
+    <Property Name="Trials_Required" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.ReportMileStonebyMonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ReportMileStonebyMonth">
+    <Key>
+      <PropertyRef Name="Pkey" />
+    </Key>
+    <Property Name="Pkey" Type="bigint" Nullable="false" />
+    <Property Name="TaskDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="projects" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.Service_WiseReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Service_WiseReport">
+    <Key>
+      <PropertyRef Name="Pkey" />
+    </Key>
+    <Property Name="Pkey" Type="bigint" Nullable="false" />
+    <Property Name="pending_in_stage" Type="nvarchar" MaxLength="500" />
+    <Property Name="n_projects" Type="int" />
+    <Property Name="total_aon_cost" Type="decimal" Precision="38" Scale="0" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.tbl_trn_tryProject' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tbl_trn_tryProject">
+    <Key>
+      <PropertyRef Name="super_task_id" />
+      <PropertyRef Name="ResponsibilityDepart" />
+      <PropertyRef Name="Responsibility" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="Progress" />
+    </Key>
+    <Property Name="TryPojectID" Type="int" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="Template_type" Type="varchar" MaxLength="200" />
+    <Property Name="TaskSlno" Type="int" />
+    <Property Name="TaskDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="ShortName" Type="nvarchar" MaxLength="2" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="Dependencies" Type="nvarchar" MaxLength="500" />
+    <Property Name="super_task_id" Type="int" Nullable="false" />
+    <Property Name="ResponsibilityDepart" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Responsibility" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="IsActive" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Progress" Type="int" Nullable="false" />
+    <Property Name="planned_start_date" Type="datetime" />
+    <Property Name="planned_end_date" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.tbl_trn_tryProject1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tbl_trn_tryProject1">
+    <Key>
+      <PropertyRef Name="TryPojectID" />
+      <PropertyRef Name="isactive" />
+      <PropertyRef Name="progress" />
+    </Key>
+    <Property Name="TryPojectID" Type="bigint" Nullable="false" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="Template_type" Type="varchar" MaxLength="200" />
+    <Property Name="taskslno" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="taskdescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="shortname" Type="nvarchar" MaxLength="2" />
+    <Property Name="startdate" Type="datetime" />
+    <Property Name="enddate" Type="datetime" />
+    <Property Name="Dependencies" Type="nvarchar" MaxLength="500" />
+    <Property Name="super_task_id" Type="nvarchar" MaxLength="500" />
+    <Property Name="responsibilitydepart" Type="bigint" />
+    <Property Name="Responsibility" Type="bigint" />
+    <Property Name="isactive" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="progress" Type="int" Nullable="false" />
+    <Property Name="planned_start_date" Type="datetime" />
+    <Property Name="planned_end_date" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.TimeLineReport1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TimeLineReport1">
+    <Key>
+      <PropertyRef Name="Pkey" />
+    </Key>
+    <Property Name="Pkey" Type="bigint" Nullable="false" />
+    <Property Name="Service_Lead_Service" Type="varchar" MaxLength="200" />
+    <Property Name="item_description" Type="varchar(max)" />
+    <Property Name="Date_of_Accord_of_AoN" Type="datetime" />
+    <Property Name="Cost" Type="varchar" MaxLength="200" />
+    <Property Name="Categorisation" Type="varchar" MaxLength="200" />
+    <Property Name="IC_percentage" Type="varchar" MaxLength="200" />
+    <Property Name="Trials_Required" Type="varchar" MaxLength="200" />
+    <Property Name="TaskDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="completed_on" Type="datetime" />
+    <Property Name="no_of_weeks" Type="int" />
+    <Property Name="dap_timeline" Type="varchar" MaxLength="2000" />
+    <Property Name="TaskSlno" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.vw_assignofTask' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_assignofTask">
+    <Key>
+      <PropertyRef Name="super_task_id" />
+      <PropertyRef Name="Responsibility" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="ResponsibilityDepart" />
+      <PropertyRef Name="Progress" />
+    </Key>
+    <Property Name="UserName" Type="nvarchar" MaxLength="100" />
+    <Property Name="TryPojectID" Type="int" />
+    <Property Name="ProjectId" Type="int" />
+    <Property Name="Template_type" Type="varchar" MaxLength="200" />
+    <Property Name="TaskSlno" Type="int" />
+    <Property Name="TaskDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="Dependencies" Type="nvarchar" MaxLength="500" />
+    <Property Name="super_task_id" Type="int" Nullable="false" />
+    <Property Name="Responsibility" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="IsActive" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="500" />
+    <Property Name="ResponsibilityDepart" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Progress" Type="int" Nullable="false" />
+    <Property Name="ShortName" Type="nvarchar" MaxLength="2" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.vw_Chart2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_Chart2">
+    <Key>
+      <PropertyRef Name="IdPrimaryKey" />
+    </Key>
+    <Property Name="IdPrimaryKey" Type="bigint" Nullable="false" />
+    <Property Name="Categorisation" Type="varchar" MaxLength="200" />
+    <Property Name="no_of_projects" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.vw_ChartFirst' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_ChartFirst">
+    <Key>
+      <PropertyRef Name="IdPrimaryKey" />
+      <PropertyRef Name="label_text" />
+    </Key>
+    <Property Name="IdPrimaryKey" Type="bigint" Nullable="false" />
+    <Property Name="label_text" Type="varchar" MaxLength="7" Nullable="false" />
+    <Property Name="delay_lt90" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.vw_Grid2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_Grid2">
+    <Key>
+      <PropertyRef Name="IdPrimaryKey" />
+    </Key>
+    <Property Name="IdPrimaryKey" Type="bigint" Nullable="false" />
+    <Property Name="stage" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="TaskDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="army_projects" Type="int" />
+    <Property Name="iaf_projects" Type="int" />
+    <Property Name="navy_projects" Type="int" />
+    <Property Name="other_projects" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_GridFirst">
+    <Key>
+      <PropertyRef Name="IdPrimaryKey" />
+    </Key>
+    <Property Name="IdPrimaryKey" Type="bigint" Nullable="false" />
+    <Property Name="task_id" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="taskDescription" Type="nvarchar" MaxLength="500" />
+    <Property Name="avg_delay_days" Type="int" />
+  </EntityType>
+  <Association Name="FK__acq_polic__aon_i__32767D0B">
+    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_project_master">
+        <PropertyRef Name="aon_id" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="aon_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__aon_i__336AA144">
+    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_project_master">
+        <PropertyRef Name="aon_id" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="aon_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__aon_i__345EC57D">
+    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_project_master">
+        <PropertyRef Name="aon_id" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="aon_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__aon_i__3E1D39E1">
+    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_project_master">
+        <PropertyRef Name="aon_id" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="aon_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__aon_i__3F115E1A">
+    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_project_master">
+        <PropertyRef Name="aon_id" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="aon_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__aon_i__40058253">
+    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_project_master">
+        <PropertyRef Name="aon_id" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="aon_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__stagi__3552E9B6">
+    <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_mst_Template">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="stagid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__stagi__36470DEF">
+    <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_mst_Template">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="stagid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__stagi__373B3228">
+    <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_mst_Template">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="stagid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__stagi__40F9A68C">
+    <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_mst_Template">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="stagid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__stagi__41EDCAC5">
+    <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_mst_Template">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="stagid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__acq_polic__stagi__42E1EEFE">
+    <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_mst_Template">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="stagid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_acq_project_master_acq_meeting_master">
+    <End Role="acq_meeting_master" Type="Self.acq_meeting_master" Multiplicity="0..1" />
+    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_meeting_master">
+        <PropertyRef Name="meeting_id" />
+      </Principal>
+      <Dependent Role="acq_project_master">
+        <PropertyRef Name="meeting_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_acq_rfp_VendorsDetails_tbl_tblVendor">
+    <End Role="tbl_tblVendor" Type="Self.tbl_tblVendor" Multiplicity="1" />
+    <End Role="acq_rfp_VendorsDetails" Type="Self.acq_rfp_VendorsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tblVendor">
+        <PropertyRef Name="VendorId" />
+      </Principal>
+      <Dependent Role="acq_rfp_VendorsDetails">
+        <PropertyRef Name="vendor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_acq_section_master_acq_department_master">
+    <End Role="acq_department_master" Type="Self.acq_department_master" Multiplicity="0..1" />
+    <End Role="acq_section_master" Type="Self.acq_section_master" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_department_master">
+        <PropertyRef Name="deptt_id" />
+      </Principal>
+      <Dependent Role="acq_section_master">
+        <PropertyRef Name="deptt_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_tbl_User_acq_department_master">
+    <End Role="acq_department_master" Type="Self.acq_department_master" Multiplicity="0..1" />
+    <End Role="tbl_tbl_User" Type="Self.tbl_tbl_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_department_master">
+        <PropertyRef Name="deptt_id" />
+      </Principal>
+      <Dependent Role="tbl_tbl_User">
+        <PropertyRef Name="DepartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_tbl_User_acq_section_master">
+    <End Role="acq_section_master" Type="Self.acq_section_master" Multiplicity="0..1" />
+    <End Role="tbl_tbl_User" Type="Self.tbl_tbl_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_section_master">
+        <PropertyRef Name="section_id" />
+      </Principal>
+      <Dependent Role="tbl_tbl_User">
+        <PropertyRef Name="SectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_tblTimelineForProcurement_tbl_tblAON">
+    <End Role="tbl_tblAON" Type="Self.tbl_tblAON" Multiplicity="0..1" />
+    <End Role="tbl_tblTimelineForProcurement" Type="Self.tbl_tblTimelineForProcurement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tblAON">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_tblTimelineForProcurement">
+        <PropertyRef Name="AoNID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_tblVendor_tbl_tblVendorCategory">
+    <End Role="tbl_tblVendorCategory" Type="Self.tbl_tblVendorCategory" Multiplicity="1" />
+    <End Role="tbl_tblVendor" Type="Self.tbl_tblVendor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tblVendorCategory">
+        <PropertyRef Name="VendorCategoryID" />
+      </Principal>
+      <Dependent Role="tbl_tblVendor">
+        <PropertyRef Name="VendorCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="PROC_DASHBOARD_DATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="categorisation" Type="varchar" Mode="In" />
+    <Parameter Name="service" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="PROC_DASHBOARD_First_CountGrid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="stageid" Type="decimal" Mode="In" />
+    <Parameter Name="date" Type="date" Mode="In" />
+    <Parameter Name="categorisation" Type="varchar" Mode="In" />
+    <Parameter Name="service" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="PROC_PRODUCT_DESCRITPTION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="taskid" Type="nvarchar" Mode="In" />
+    <Parameter Name="stageid" Type="nvarchar" Mode="In" />
+    <Parameter Name="Type" Type="nvarchar" Mode="In" />
+    <Parameter Name="Date" Type="datetime" Mode="In" />
+    <Parameter Name="categorisation" Type="varchar" Mode="In" />
+    <Parameter Name="service" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="MODModelStoreContainer">
+    <EntitySet Name="acq_department_master" EntityType="Self.acq_department_master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="acq_meeting_master" EntityType="Self.acq_meeting_master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="acq_policy" EntityType="Self.acq_policy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="acq_project_master" EntityType="Self.acq_project_master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="acq_projectstage_applicability" EntityType="Self.acq_projectstage_applicability" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="acq_rfp_master" EntityType="Self.acq_rfp_master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="acq_rfp_vendors" EntityType="Self.acq_rfp_vendors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="acq_rfp_VendorsDetails" EntityType="Self.acq_rfp_VendorsDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="acq_section_master" EntityType="Self.acq_section_master" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="acq_trials" EntityType="Self.acq_trials" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_mst_Project" EntityType="Self.tbl_mst_Project" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_mst_Template" EntityType="Self.tbl_mst_Template" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_tbl_User" EntityType="Self.tbl_tbl_User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_tblAON" EntityType="Self.tbl_tblAON" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_tblTimelineForProcurement" EntityType="Self.tbl_tblTimelineForProcurement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_tblVendor" EntityType="Self.tbl_tblVendor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_tblVendorCategory" EntityType="Self.tbl_tblVendorCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_trn_UpdateStausDummy" EntityType="Self.tbl_trn_UpdateStausDummy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="temp_BF" EntityType="Self.temp_BF" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="temp_dashboard" EntityType="Self.temp_dashboard" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="temp_dashboardproject" EntityType="Self.temp_dashboardproject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="acq_project_status_1" EntityType="Self.acq_project_status_1" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [acq_project_status_1].[project_id] AS [project_id], 
+    [acq_project_status_1].[task_id] AS [task_id], 
+    [acq_project_status_1].[planned_start_date] AS [planned_start_date], 
+    [acq_project_status_1].[planned_end_date] AS [planned_end_date], 
+    [acq_project_status_1].[actual_start_date] AS [actual_start_date], 
+    [acq_project_status_1].[actual_end_date] AS [actual_end_date]
+    FROM [dbo].[acq_project_status_1] AS [acq_project_status_1]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="acq_project_status_pendingstage" EntityType="Self.acq_project_status_pendingstage" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [acq_project_status_pendingstage].[Pkey] AS [Pkey], 
+    [acq_project_status_pendingstage].[Service_Lead_Service] AS [Service_Lead_Service], 
+    [acq_project_status_pendingstage].[item_description] AS [item_description], 
+    [acq_project_status_pendingstage].[Date_of_Accord_of_AoN] AS [Date_of_Accord_of_AoN], 
+    [acq_project_status_pendingstage].[Cost] AS [Cost], 
+    [acq_project_status_pendingstage].[Categorisation] AS [Categorisation], 
+    [acq_project_status_pendingstage].[IC_percentage] AS [IC_percentage], 
+    [acq_project_status_pendingstage].[Trials_Required] AS [Trials_Required], 
+    [acq_project_status_pendingstage].[TaskSlno] AS [TaskSlno], 
+    [acq_project_status_pendingstage].[System_case] AS [System_case], 
+    [acq_project_status_pendingstage].[pending_in_stage] AS [pending_in_stage], 
+    [acq_project_status_pendingstage].[date_of_entering_this_stage] AS [date_of_entering_this_stage]
+    FROM [dbo].[acq_project_status_pendingstage] AS [acq_project_status_pendingstage]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="acq_project_status_timelines" EntityType="Self.acq_project_status_timelines" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [acq_project_status_timelines].[aon_id] AS [aon_id], 
+    [acq_project_status_timelines].[Service_Lead_Service] AS [Service_Lead_Service], 
+    [acq_project_status_timelines].[item_description] AS [item_description], 
+    [acq_project_status_timelines].[Date_of_Accord_of_AoN] AS [Date_of_Accord_of_AoN], 
+    [acq_project_status_timelines].[Cost] AS [Cost], 
+    [acq_project_status_timelines].[Categorisation] AS [Categorisation], 
+    [acq_project_status_timelines].[IC_percentage] AS [IC_percentage], 
+    [acq_project_status_timelines].[Trials_Required] AS [Trials_Required], 
+    [acq_project_status_timelines].[TaskSlno] AS [TaskSlno], 
+    [acq_project_status_timelines].[TaskDescription] AS [TaskDescription], 
+    [acq_project_status_timelines].[completed_on] AS [completed_on], 
+    [acq_project_status_timelines].[no_of_weeks] AS [no_of_weeks], 
+    [acq_project_status_timelines].[dap_timeline] AS [dap_timeline]
+    FROM [dbo].[acq_project_status_timelines] AS [acq_project_status_timelines]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ChartReportOnClick" EntityType="Self.ChartReportOnClick" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ChartReportOnClick].[Pkey] AS [Pkey], 
+    [ChartReportOnClick].[TaskSlno] AS [TaskSlno], 
+    [ChartReportOnClick].[TaskDescription] AS [TaskDescription], 
+    [ChartReportOnClick].[Service_Lead_Service] AS [Service_Lead_Service], 
+    [ChartReportOnClick].[item_description] AS [item_description], 
+    [ChartReportOnClick].[Date_of_Accord_of_AoN] AS [Date_of_Accord_of_AoN], 
+    [ChartReportOnClick].[Cost] AS [Cost], 
+    [ChartReportOnClick].[Categorisation] AS [Categorisation], 
+    [ChartReportOnClick].[IC_percentage] AS [IC_percentage], 
+    [ChartReportOnClick].[Trials_Required] AS [Trials_Required]
+    FROM [dbo].[ChartReportOnClick] AS [ChartReportOnClick]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ReportMileStonebyMonth" EntityType="Self.ReportMileStonebyMonth" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ReportMileStonebyMonth].[Pkey] AS [Pkey], 
+    [ReportMileStonebyMonth].[TaskDescription] AS [TaskDescription], 
+    [ReportMileStonebyMonth].[projects] AS [projects]
+    FROM [dbo].[ReportMileStonebyMonth] AS [ReportMileStonebyMonth]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Service_WiseReport" EntityType="Self.Service_WiseReport" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Service_WiseReport].[Pkey] AS [Pkey], 
+    [Service_WiseReport].[pending_in_stage] AS [pending_in_stage], 
+    [Service_WiseReport].[n_projects] AS [n_projects], 
+    [Service_WiseReport].[total_aon_cost] AS [total_aon_cost]
+    FROM [dbo].[Service_WiseReport] AS [Service_WiseReport]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tbl_trn_tryProject" EntityType="Self.tbl_trn_tryProject" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl_trn_tryProject].[TryPojectID] AS [TryPojectID], 
+    [tbl_trn_tryProject].[ProjectId] AS [ProjectId], 
+    [tbl_trn_tryProject].[Template_type] AS [Template_type], 
+    [tbl_trn_tryProject].[TaskSlno] AS [TaskSlno], 
+    [tbl_trn_tryProject].[TaskDescription] AS [TaskDescription], 
+    [tbl_trn_tryProject].[ShortName] AS [ShortName], 
+    [tbl_trn_tryProject].[StartDate] AS [StartDate], 
+    [tbl_trn_tryProject].[EndDate] AS [EndDate], 
+    [tbl_trn_tryProject].[Dependencies] AS [Dependencies], 
+    [tbl_trn_tryProject].[super_task_id] AS [super_task_id], 
+    [tbl_trn_tryProject].[ResponsibilityDepart] AS [ResponsibilityDepart], 
+    [tbl_trn_tryProject].[Responsibility] AS [Responsibility], 
+    [tbl_trn_tryProject].[IsActive] AS [IsActive], 
+    [tbl_trn_tryProject].[Progress] AS [Progress], 
+    [tbl_trn_tryProject].[planned_start_date] AS [planned_start_date], 
+    [tbl_trn_tryProject].[planned_end_date] AS [planned_end_date]
+    FROM [dbo].[tbl_trn_tryProject] AS [tbl_trn_tryProject]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tbl_trn_tryProject1" EntityType="Self.tbl_trn_tryProject1" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl_trn_tryProject1].[TryPojectID] AS [TryPojectID], 
+    [tbl_trn_tryProject1].[ProjectId] AS [ProjectId], 
+    [tbl_trn_tryProject1].[Template_type] AS [Template_type], 
+    [tbl_trn_tryProject1].[taskslno] AS [taskslno], 
+    [tbl_trn_tryProject1].[taskdescription] AS [taskdescription], 
+    [tbl_trn_tryProject1].[shortname] AS [shortname], 
+    [tbl_trn_tryProject1].[startdate] AS [startdate], 
+    [tbl_trn_tryProject1].[enddate] AS [enddate], 
+    [tbl_trn_tryProject1].[Dependencies] AS [Dependencies], 
+    [tbl_trn_tryProject1].[super_task_id] AS [super_task_id], 
+    [tbl_trn_tryProject1].[responsibilitydepart] AS [responsibilitydepart], 
+    [tbl_trn_tryProject1].[Responsibility] AS [Responsibility], 
+    [tbl_trn_tryProject1].[isactive] AS [isactive], 
+    [tbl_trn_tryProject1].[progress] AS [progress], 
+    [tbl_trn_tryProject1].[planned_start_date] AS [planned_start_date], 
+    [tbl_trn_tryProject1].[planned_end_date] AS [planned_end_date]
+    FROM [dbo].[tbl_trn_tryProject1] AS [tbl_trn_tryProject1]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TimeLineReport1" EntityType="Self.TimeLineReport1" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TimeLineReport1].[Pkey] AS [Pkey], 
+    [TimeLineReport1].[Service_Lead_Service] AS [Service_Lead_Service], 
+    [TimeLineReport1].[item_description] AS [item_description], 
+    [TimeLineReport1].[Date_of_Accord_of_AoN] AS [Date_of_Accord_of_AoN], 
+    [TimeLineReport1].[Cost] AS [Cost], 
+    [TimeLineReport1].[Categorisation] AS [Categorisation], 
+    [TimeLineReport1].[IC_percentage] AS [IC_percentage], 
+    [TimeLineReport1].[Trials_Required] AS [Trials_Required], 
+    [TimeLineReport1].[TaskDescription] AS [TaskDescription], 
+    [TimeLineReport1].[completed_on] AS [completed_on], 
+    [TimeLineReport1].[no_of_weeks] AS [no_of_weeks], 
+    [TimeLineReport1].[dap_timeline] AS [dap_timeline], 
+    [TimeLineReport1].[TaskSlno] AS [TaskSlno]
+    FROM [dbo].[TimeLineReport1] AS [TimeLineReport1]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_assignofTask" EntityType="Self.vw_assignofTask" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_assignofTask].[UserName] AS [UserName], 
+    [vw_assignofTask].[TryPojectID] AS [TryPojectID], 
+    [vw_assignofTask].[ProjectId] AS [ProjectId], 
+    [vw_assignofTask].[Template_type] AS [Template_type], 
+    [vw_assignofTask].[TaskSlno] AS [TaskSlno], 
+    [vw_assignofTask].[TaskDescription] AS [TaskDescription], 
+    [vw_assignofTask].[StartDate] AS [StartDate], 
+    [vw_assignofTask].[EndDate] AS [EndDate], 
+    [vw_assignofTask].[Dependencies] AS [Dependencies], 
+    [vw_assignofTask].[super_task_id] AS [super_task_id], 
+    [vw_assignofTask].[Responsibility] AS [Responsibility], 
+    [vw_assignofTask].[IsActive] AS [IsActive], 
+    [vw_assignofTask].[ProjectName] AS [ProjectName], 
+    [vw_assignofTask].[ResponsibilityDepart] AS [ResponsibilityDepart], 
+    [vw_assignofTask].[Progress] AS [Progress], 
+    [vw_assignofTask].[ShortName] AS [ShortName], 
+    [vw_assignofTask].[CreatedBy] AS [CreatedBy]
+    FROM [dbo].[vw_assignofTask] AS [vw_assignofTask]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_Chart2" EntityType="Self.vw_Chart2" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_Chart2].[IdPrimaryKey] AS [IdPrimaryKey], 
+    [vw_Chart2].[Categorisation] AS [Categorisation], 
+    [vw_Chart2].[no_of_projects] AS [no_of_projects]
+    FROM [dbo].[vw_Chart2] AS [vw_Chart2]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_ChartFirst" EntityType="Self.vw_ChartFirst" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_ChartFirst].[IdPrimaryKey] AS [IdPrimaryKey], 
+    [vw_ChartFirst].[label_text] AS [label_text], 
+    [vw_ChartFirst].[delay_lt90] AS [delay_lt90]
+    FROM [dbo].[vw_ChartFirst] AS [vw_ChartFirst]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_Grid2" EntityType="Self.vw_Grid2" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_Grid2].[IdPrimaryKey] AS [IdPrimaryKey], 
+    [vw_Grid2].[stage] AS [stage], 
+    [vw_Grid2].[TaskDescription] AS [TaskDescription], 
+    [vw_Grid2].[army_projects] AS [army_projects], 
+    [vw_Grid2].[iaf_projects] AS [iaf_projects], 
+    [vw_Grid2].[navy_projects] AS [navy_projects], 
+    [vw_Grid2].[other_projects] AS [other_projects]
+    FROM [dbo].[vw_Grid2] AS [vw_Grid2]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_GridFirst" EntityType="Self.vw_GridFirst" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_GridFirst].[IdPrimaryKey] AS [IdPrimaryKey], 
+    [vw_GridFirst].[task_id] AS [task_id], 
+    [vw_GridFirst].[taskDescription] AS [taskDescription], 
+    [vw_GridFirst].[avg_delay_days] AS [avg_delay_days]
+    FROM [dbo].[vw_GridFirst] AS [vw_GridFirst]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__acq_polic__aon_i__32767D0B" Association="Self.FK__acq_polic__aon_i__32767D0B">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__aon_i__336AA144" Association="Self.FK__acq_polic__aon_i__336AA144">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__aon_i__345EC57D" Association="Self.FK__acq_polic__aon_i__345EC57D">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__aon_i__3E1D39E1" Association="Self.FK__acq_polic__aon_i__3E1D39E1">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__aon_i__3F115E1A" Association="Self.FK__acq_polic__aon_i__3F115E1A">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__aon_i__40058253" Association="Self.FK__acq_polic__aon_i__40058253">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__stagi__3552E9B6" Association="Self.FK__acq_polic__stagi__3552E9B6">
+      <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__stagi__36470DEF" Association="Self.FK__acq_polic__stagi__36470DEF">
+      <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__stagi__373B3228" Association="Self.FK__acq_polic__stagi__373B3228">
+      <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__stagi__40F9A68C" Association="Self.FK__acq_polic__stagi__40F9A68C">
+      <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__stagi__41EDCAC5" Association="Self.FK__acq_polic__stagi__41EDCAC5">
+      <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__stagi__42E1EEFE" Association="Self.FK__acq_polic__stagi__42E1EEFE">
+      <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK_acq_project_master_acq_meeting_master" Association="Self.FK_acq_project_master_acq_meeting_master">
+      <End Role="acq_meeting_master" EntitySet="acq_meeting_master" />
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+    </AssociationSet>
+    <AssociationSet Name="FK_acq_rfp_VendorsDetails_tbl_tblVendor" Association="Self.FK_acq_rfp_VendorsDetails_tbl_tblVendor">
+      <End Role="tbl_tblVendor" EntitySet="tbl_tblVendor" />
+      <End Role="acq_rfp_VendorsDetails" EntitySet="acq_rfp_VendorsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_acq_section_master_acq_department_master" Association="Self.FK_acq_section_master_acq_department_master">
+      <End Role="acq_department_master" EntitySet="acq_department_master" />
+      <End Role="acq_section_master" EntitySet="acq_section_master" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_tbl_User_acq_department_master" Association="Self.FK_tbl_tbl_User_acq_department_master">
+      <End Role="acq_department_master" EntitySet="acq_department_master" />
+      <End Role="tbl_tbl_User" EntitySet="tbl_tbl_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_tbl_User_acq_section_master" Association="Self.FK_tbl_tbl_User_acq_section_master">
+      <End Role="acq_section_master" EntitySet="acq_section_master" />
+      <End Role="tbl_tbl_User" EntitySet="tbl_tbl_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_tblTimelineForProcurement_tbl_tblAON" Association="Self.FK_tbl_tblTimelineForProcurement_tbl_tblAON">
+      <End Role="tbl_tblAON" EntitySet="tbl_tblAON" />
+      <End Role="tbl_tblTimelineForProcurement" EntitySet="tbl_tblTimelineForProcurement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_tblVendor_tbl_tblVendorCategory" Association="Self.FK_tbl_tblVendor_tbl_tblVendorCategory">
+      <End Role="tbl_tblVendorCategory" EntitySet="tbl_tblVendorCategory" />
+      <End Role="tbl_tblVendor" EntitySet="tbl_tblVendor" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

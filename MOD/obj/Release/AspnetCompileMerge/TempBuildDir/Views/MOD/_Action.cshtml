@@ -1,0 +1,119 @@
+﻿@model MOD.Models.ACQTrialSaveViewModel
+
+
+@if (Model != null)
+{
+    <div class="modal-content modalDivData">
+        <div class="modal-header">
+            @if (Model.id > 0)
+            {
+                <h5 class="modal-title" id="exampleModalLabel">Edit ACQ Trial</h5>
+            }
+            else
+            {
+                <h5 class="modal-title" id="exampleModalLabel">Save ACQ Trial</h5>    
+            }
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body ">
+            <form id="actionForm">
+                <input type="hidden" name="aonID" id="AoNIDData" />
+                <div class="form-group">
+                    <label class="labeltext labeltext font-weight-bold">Trial Type</label>
+                    @Html.DropDownListFor(model =>model.trial_type,  new  List<SelectListItem>
+                       {
+                        new SelectListItem{ Text="User Trials", Value = "User Trials" },
+                        new SelectListItem{ Text="DGQA Trials", Value = "DGQA Trials" },
+                        new SelectListItem{ Text="MET", Value = "MET" },
+                        new SelectListItem{ Text="EMI/EMC", Value = "EMI/EMC" },
+                       }, "-Select Types-", new {@class="form-control" })
+                    @Html.ValidationMessageFor(x => x.trial_type, null, new { @class = "danger" })
+                </div>
+                @if (Model.date_commencement == null)
+                {
+                    <div class="form-group">
+                        <label for="labeltext labeltext font-weight-bold font" style="font-weight:bold">Commencement Date</label>
+                        <input type="date" class="form-control" value="@Model.date_commencement" id="exampleInputPassword1" name="date_commencement">
+                    </div>
+                }
+                else if (Model.id > 0)
+                {
+                    <div class="form-group">
+                        <label for="labeltext labeltext font-weight-bold font" style="font-weight:bold">Commencement Date</label>
+                        <input type="date" class="form-control" value="@Model.date_commencement.Value.ToString("yyyy-MM-dd")" id="exampleInputPassword1" name="date_commencement">
+                    </div>
+                }
+
+                @if (Model.date_completion == null)
+                {
+                    <div class="form-group ">
+                        <label for="labeltext labeltext font-weight-bold" style="font-weight:bold">Completion Date</label>
+                        <input type="date" class="form-control" value="@Model.date_completion"  id="exampleCheck1" name="date_completion">
+                    </div>
+                }
+                else if (Model.id > 0)
+                {
+                    <div class="form-group ">
+                        <label for="labeltext labeltext font-weight-bold" style="font-weight:bold">Completion Date</label>
+                        <input type="date" class="form-control" value="@Model.date_completion.Value.ToString("yyyy-MM-dd")" id="exampleCheck1" name="date_completion">
+                    </div>
+                }
+
+                <div class="form-group ">
+                    <label for="exampleInputPassword1" style="font-weight:bold">Remarks</label>
+                    <textarea type="text" class="form-control" id="remarks" name="remarks" placeholder="Remarks">@Model.remarks</textarea>
+                </div>
+            </form>
+            <div class="errorDiv">
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="actionButton" @*onclick="submitForm()"*@ class="btn btn-primary">Save changes</button>
+            <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button> 
+        </div>
+    </div>
+}
+
+<script>
+    $("#actionButton").click(function () {
+     
+        $.ajax({
+            url: '@Url.Action("Action", "MOD")',
+            type: 'POST',
+            data: $("#actionForm").serialize()
+        })
+            .done(function (response) {
+               
+                if (response.Success == true) {
+                    location.href = '@Url.Action("Index","MOD")'
+                }
+                else if (response.Success == false) {
+
+                    alert(response.Message);
+                    //$(".errorDiv").html(response.Message);
+                }
+            });
+    });
+
+
+    function Validate() {
+
+     var trialType =   $("#trial_type").val();
+      
+        if (trialType == 0){
+            alert("Select Trail Type");
+            return false;
+            
+        }
+        var commenceDate = $("#exampleInputPassword1").val();
+        if (commenceDate == 0) {
+            alert("Select Commencement Date");
+            return false;
+        }
+    }
+</script>
+

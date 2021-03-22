@@ -1,0 +1,68 @@
+﻿@model MOD.Models.ACQTrialSaveViewModel
+@{
+    ViewBag.Title = "CreateFet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <style>
+        .danger {
+            color: red;
+        }
+
+        .labeltext {
+            font-family: Georgia, 'Times New Roman', Times, serif
+        }
+    </style>
+    @*Prevent Right Click Script*@
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
+</head>
+
+<div class="row">
+    <div class="col col-lg-12">
+        <h2 class="labeltext text-center p-3">Create Fet</h2>
+    </div>
+</div>
+<hr />
+
+@using (Html.BeginForm("CreateFet", "MOD", FormMethod.Post))
+{
+<div class="form-row mb-4">
+    <div class="col">
+        <label class="labeltext labeltext font-weight-bold">Trial Type</label>
+        @Html.DropDownListFor(model =>model.trial_type,  new  List<SelectListItem>
+           {
+            new SelectListItem{ Text="User Trials", Value = "User Trials" },
+            new SelectListItem{ Text="DGQA Trials", Value = "DGQA Trials" },
+            new SelectListItem{ Text="MET", Value = "MET" },
+            new SelectListItem{ Text="EMI/EMC", Value = "EMI/EMC" },
+           }, "-Select Types-", new {@class="form-control" })
+        @Html.ValidationMessageFor(x => x.trial_type, null, new { @class = "danger" })
+    </div>
+    <div class="col">
+        <!-- First name -->
+        <label class="labeltext font-weight-bold">Commencement Date :<span class="danger">*</span>:</label>
+        <input type="date" class="form-control" name="date_commencement">
+        @Html.ValidationMessageFor(x => x.date_commencement, null, new { @class = "danger" })
+    </div>
+</div>
+    <div class="form-row mb-4">
+        <div class="col">
+            <!-- Last name -->
+            <label class="labeltext font-weight-bold">Completion Date:</label>
+            <input type="date" class="form-control"  name="date_completion">
+        </div>
+        <div class="col">
+            <!-- First name -->
+            <label class="labeltext font-weight-bold">Remarks:</label>
+            <textarea type="text" class="form-control" name="remarks" placeholder="Remarks"></textarea>
+        </div>
+    </div>
+
+    <button class="btn btn-info float-right" type="submit">Save</button>
+}
+
+
+

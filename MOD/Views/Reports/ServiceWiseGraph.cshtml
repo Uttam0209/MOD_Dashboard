@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "ServiceWiseGraph";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <style>
+        .labeltext {
+            font-family: Georgia, 'Times New Roman', Times, serif
+        }
+
+        .form-inline {
+            display: block;
+            width: 100%
+        }
+
+        .dataTables_length {
+            float: left;
+        }
+
+        .dataTables_filter {
+            float: right;
+        }
+
+        .border-right {
+            border-right: 1px solid #dee2e6 !important;
+            font-size: 16px;
+        }
+
+        @@font-face {
+            font-family: 'Glyphicons Halflings';
+            src: url('../fonts/glyphicons-halflings-regular.eot');
+            src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+        }
+
+        /*sidebar css statrt*/
+        #sidebar-wrapper .list-group {
+            width: auto;
+        }
+
+        #sidebar-wrapper .sidebar-heading {
+            padding: 0.875rem 1.25rem;
+            font-size: 1.2rem;
+        }
+
+        #sidebar-wrapper {
+            width: 284px;
+        }
+
+            #sidebar-wrapper .sidebar-heading {
+                padding: 1.875rem 1.25rem;
+                font-size: 2rem;
+            }
+
+        .card {
+            -webkit-box-shadow: 0 0 30px 0 rgba(82,63,105,.05);
+            box-shadow: 0 0 30px 0 rgba(82,63,105,.05);
+        }
+    </style>
+    <script>
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer1", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            title: {
+                text: "Aon's"
+            },
+            axisY: {
+                title: "Aon's"
+            },
+            data: [{
+                type: "column",
+                indexLabel: "{y:10}",
+                dataPoints: @Html.Raw(ViewBag.dataPoints)
+	}]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+        }
+    }
+    </script>
+</head>
+
+
+<div class="col-md-12 justify-content-center">
+    <h2 class="text-left mt-4 p-2 text-center">Service-Wise Report on the Pending Cases at various Stages</h2>
+    <div class="mr-5">
+        <a href="@Url.Action("ServiceWiseReport","Reports")" class="btn btn-danger success mt-5">Data</a>
+        <a href="@Url.Action("ServiceWiseGraph","Reports")" class="btn btn-danger success mt-5">Graph</a>
+    </div>
+    <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+</div>
+
+<script src="~/WJs/canvasjs.min.js"></script>
+<script src="~/WJs/jquery-1.11.1.min.js"></script>
+
+
+

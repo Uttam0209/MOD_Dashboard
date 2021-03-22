@@ -1,0 +1,39 @@
+﻿@model MOD.Models.DepartmentSaveViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<head>
+    <style>
+        .danger {
+            color: red;
+        }
+    </style>
+</head>
+
+<div class="row">
+    <div class="col col-lg-12">
+        <h2 class="text-center p-3">Department Create</h2>
+    </div>
+</div>
+<hr />
+
+@using (Html.BeginForm("Create", "Department", FormMethod.Post))
+{
+    <div class="form-row mb-4">
+        <div class="col">
+            <!-- First name -->
+            <label class="font-weight-bold">Department Name:</label>
+            <input type="text" id="defaultRegisterFormFirstName" name="DepartmentName" class="form-control" placeholder="Department Name">
+            @Html.ValidationMessageFor(x => x.DepartmentName, null, new { @class = "danger" })
+        </div>
+        <div class="col">
+            <!-- Last name -->
+            <label class="font-weight-bold">Location:</label>
+            <input type="text" id="defaultRegisterFormLastName" name="Location" class="form-control" placeholder="Location">
+            @Html.ValidationMessageFor(x => x.Location, null, new { @class = "danger" })
+        </div>
+    </div>
+    <!-- Sign up button -->
+    <button class="btn btn-info float-right" type="submit">Save Department</button>
+}
+

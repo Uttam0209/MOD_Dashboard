@@ -1,0 +1,33 @@
+﻿@model IEnumerable<AeroIndia.Web.ViewModel.IndexPage.EventPageViewModel>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <header class="navbar navbar-docs navbar-expand navbar-light bg-light box-shadow-sm px-3 px-lg-4" style="padding: 1px; margin-right: 0px!important;
+" data-scroll-header="">
+            <a class="ml-3 sm-mar mr-auto" href="index.html" style="min-width: 7rem;">
+                <img src="~/assets/Uploads/@Html.DisplayFor(modelItem => item.LogoPath)" alt="GIP" width="150">
+            </a>
+            <div class="navbar-nav ml-auto d-lg-flex">
+                <div class="row">
+                    @*<div clss="col-12" style="width: 100%; text-align: right;">
+                        <a class="nav-link sm-pddn" href="tel:9871043928">
+                            <i class="fas fa-phone align-middle mt-n1 mr-2"></i>
+                            <span class="sm-none">Helpline</span>
+                            @Html.DisplayFor(modelItem => item.Helpline)
+                        </a>
+                    </div>*@
+                    @*<div class="col-12 text-right sm-pddn">
+                        <a class="nav-link sm-pddn" href="mail:uttam@gipinfosystem.com" style="padding: 2px 9px 0px 0px!important">
+                            <i class="fas fa-envelope align-middle mt-n1 mr-2"></i>
+                            <span class="sm-none">Email :-</span>
+                                @Html.DisplayFor(modelItem => item.Email)
+                        </a>
+                    </div>*@
+                </div>
+            </div>
+        </header>
+    }
+    <!-------------header end-------------->
+
+}

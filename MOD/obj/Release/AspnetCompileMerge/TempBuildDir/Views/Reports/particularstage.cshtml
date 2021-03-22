@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "particularstage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#auth").addClass("show");
+        $("#auth_ta").addClass("active");
+    });
+</script>
+
+<script>
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            title: {
+                text: ""
+            },
+            axisY: {
+                title: "Avg time taken in no of weeks",
+
+            },
+            toolTip: {
+                shared: true
+            },
+
+            dataPointWidth: 10,
+            data: [{
+                 //click: onClick,
+
+                 type: "column",
+                indexLabel: "{x}",
+                indexLabel: "{z}",
+                 dataPoints: @Html.Raw(ViewBag.DataPoints)
+            }
+            ]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+        }
+        function onClick(e) {
+            //alert(e.dataSeries.type + ", dataPoint { x:" + e.dataPoint.x + ", y: " + e.dataPoint.y + " }");
+            var stage = e.dataPoint.label;
+            var service = $("#Service_Lead_Service").val();
+            var Categorisation = $("#Categorisation").val();
+            window.location.href = "/Reports/ReportOnClick?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+        }
+    }
+</script>
+
+<div class="card flex-fill w-100 p-4">
+    <div class="row mb-2 mb-xl-3">
+        <h2 class="mb-0">Trend analysis for a particular stage</h2>
+    </div>
+
+    <form>
+        <div class="d-flex">
+
+            <div class="pl-2 pr-2 mt-2"><b>Stage</b></div>
+            <div class="col-md-3">
+                @Html.DropDownList("stage_name", new List<SelectListItem>
+                   {
+                    new SelectListItem{ Text="RFP", Value = "RFP" },
+                    new SelectListItem{ Text="TEC", Value = "TEC" },
+                    new SelectListItem{ Text="FET", Value = "FET" },
+                    new SelectListItem{ Text="GS Eval", Value = "GS Eval" },
+                    new SelectListItem{ Text="CNC", Value = "CNC" },
+                    new SelectListItem{ Text="CFA Approval", Value = "CFA Approval" },
+                   }, "-Select Stage-", new { @class = "form-control" })
+            </div>
+            <div class="pl-2 pr-2 mt-2"><b>Categorization</b></div>
+            <div class="col-md-3">
+                @Html.DropDownList("Categorisation", new List<SelectListItem>
+              {
+                new SelectListItem{ Text="Buy(Indian-IDDM)", Value = "Buy(Indian-IDDM)" },
+                new SelectListItem{ Text="Buy(Indian)", Value = "Buy(Indian)" },
+                new SelectListItem{ Text="Buy and Make(Indian)", Value = "Buy and Make(Indian)" },
+                new SelectListItem{ Text="Buy and Make", Value = "Buy and Make" },
+                new SelectListItem{ Text="Buy(Global-Manufacture in India)", Value = "Buy(Global-Manufacture in India)" },
+                new SelectListItem{ Text="Buy(Global-Manufacture in India)-IGA", Value = "Buy(Global-Manufacture in India)-IGA" },
+                new SelectListItem{ Text="Buy(Global)", Value = "Buy(Global)" },
+                new SelectListItem{ Text="Buy(Global)-IGA", Value = "Buy(Global)-IGA" },
+                new SelectListItem{ Text="Buy(Global)-FMS Route", Value = "Buy(Global)-FMS Route" },
+                new SelectListItem{ Text="Design & Development", Value = "Design & Development" },
+                new SelectListItem{ Text="IGA", Value = "IGA" },
+                new SelectListItem{ Text="Make", Value = "Make" },
+                new SelectListItem{ Text="Sp Model", Value = "Sp Model" },
+                new SelectListItem{ Text="Make-I", Value = "Make-I" },
+                new SelectListItem{ Text="Make-II", Value = "Make-II" },
+                new SelectListItem{ Text="Make-III", Value = "Make-III" },
+              }, "-Select Categorization-", new { @class = "form-control" })
+            </div>
+            <div class="pl-2 pr-2 mt-2"><b>Service/Lead Service</b></div>
+            <div class="col-md-3">
+                @Html.DropDownList("Service_Lead_Service", new List<SelectListItem>
+                   {
+                    new SelectListItem{ Text="Army", Value = "Army" },
+                    new SelectListItem{ Text="Navy", Value = "Navy" },
+                    new SelectListItem{ Text="AirForce", Value = "AirForce" },
+                    new SelectListItem{ Text="ICG", Value = "ICG" },
+                    new SelectListItem{ Text="Joint", Value = "Joint" },
+                   }, "-Select Services-", new { @class = "form-control" })
+            </div>
+            <div class=" d-flex justify-content-end">
+                <div class="pl-3 pr-3"><button type="submit" class="btn btn-primary btnFCs">Search</button></div>
+            </div>
+        </div>
+    </form>
+
+    <div class="tab mt-4">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item"><a class="nav-link active" href="#tab-1" data-toggle="tab" role="tab">Graph</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tab-2" data-toggle="tab" role="tab">Data</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-1" role="tabpanel">
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            </div>
+
+            <div class="tab-pane" id="tab-2" role="tabpanel">
+                <table class="table table-responsive table-bordered">
+                    @{int count = 1;}
+                    @if (ViewBag.Grid1 != null)
+                    {
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>Item Description</th>
+                            <th>Avg time taken in no of weeks</th>
+                        </tr>
+
+                        foreach (var iDashboard in ViewBag.Grid1)
+                        {
+                            <tr>
+                                <td>@count</td>
+                                <td>@iDashboard.item_description</td>
+                                <td>@iDashboard.no_of_weeks</td>
+                            </tr>
+                            count++;
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('ol.tabs li').click(function () {
+            var tab_id = $(this).attr('data-tab');
+
+            $('ol.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $("#" + tab_id).addClass('current');
+        })
+    })
+</script>
+
+<script src="~/WJs/canvasjs.min.js"></script>
+<script src="~/WJs/jquery-1.11.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+

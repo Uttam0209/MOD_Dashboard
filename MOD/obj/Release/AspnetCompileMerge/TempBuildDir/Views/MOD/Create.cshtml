@@ -1,0 +1,648 @@
+﻿@model MOD.Models.MODSaveViewModel
+@using MOD.Models
+   
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif, 'Segoe UI', Tahoma, Geneva, Verdana;
+        }
+
+        .nav-item {
+            font-size: 20px;
+        }
+
+        .nav-item {
+            background: #007bff;
+            border: 1px solid white;
+        }
+
+            .nav-item a {
+                color: white;
+                font-weight: 500;
+            }
+
+            .nav-item:active a {
+                color: white;
+                font-weight: 500;
+            }
+        
+
+        .table {
+            width: 50% !important;
+        }
+
+        #regtable
+        {
+            width:100%!important;
+        }
+        .header {
+            background-color: maroon;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            border-color: #31733C;
+            width: 100%;
+        }
+
+        .sidenav {
+            height: 85vh;
+            width: 250px;
+            
+            z-index: 1;
+            
+            
+            background-color: #333;
+            overflow-x: hidden;
+            padding: 60px 10px 20px 20px;
+            color: white;
+        }
+
+            .sidenav div {
+                padding: 10px 0 10px 10px;
+                font-weight: 500;
+            }
+
+                .sidenav div:hover {
+                    background-color: white;
+                    color: black;
+                }
+
+
+        .main {
+            
+            padding: 10px 10px;
+        }
+    </style>
+
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>MoD (ACQUISITION) DASH BOARD</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <div class="sidenav">
+                    <div>DASH BOARD</div>
+                    <div id="show3">
+                        AoN REGISTRATION
+                    </div>
+                    <div id="show">DATA ACQUISITION</div>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="main" style="display: none;" id="show1">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col">
+                                <ul class="nav nav-tabs">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#menu1">RFPs</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#menu2">Bids</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#menu3">TEC</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#menu4">PET/GS</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#menu5">TOC</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#menu6">CNC</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#menu7">CFA</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#menu8">DCN/Approval</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*<div class="col-md-12 d-flex">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td><label>Select</label></td>
+                                                <td style="margin-left:20px">
+                                                    Create
+                                                    <input checked="checked" id="radioCreate" name="create" value="Create" type="radio">
+                                                    Edit
+                                                    <input id="radioEdit" name="create" value="Edit" type="radio">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>*@
+                                <div class="tab-content">
+                                    <div id="menu1" class="tab-pane active">
+                                        @using (Html.BeginForm("UpdateRFPFields", "MOD", FormMethod.Post))
+                                        {
+                                            <table class="table">
+                                             
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Unique ID</label>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" id="drpUniqueId" name="drpUniqueId" required>
+                                                            <option value="0">--Select--</option>
+                                                            @foreach (var item in Model.AonList)
+                                                            {
+                                                                <option value="@item.UniqueId">@item.UniqueId</option>
+                                                            }
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Draft RFP PREP by SHQs:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" class="form-control" value="@Model.draftRFPbySHQ" id="draftRFPbySHQ" name="draftRFPbySHQ" />
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td class="form-group">
+                                                        <label for="birthday">Collegiate Vitting:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" class="form-control" value="@Model.collegiatevetting" id="collegiatevetting" name="collegiatevetting" />
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Approval:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" class="form-control" value="@Model.approval" id="approval" name="approval" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td class="form-group">
+                                                        <label for="birthday">Insurance:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" class="form-control" value="@Model.issuancevendor" id="issuancevendor" name="issuancevendor" />
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="usr">Vendors:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="text" class="form-control" value="@Model.vendors" id="vendors" name="vendors" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Bid Submmittion Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" class="form-control" value="@Model.bidsubmissiondate" id="bidsubmissiondate" name="bidsubmissiondate" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td />
+                                                    <td class="d-flex justify-content-start">
+                                                      
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                                                                    
+                                        }
+                                    </div>
+                                    <div id="menu2" class="tab-pane fade">
+                                        <form>
+                                            <table class="table">
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Date of Submission:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="dos" name="date_of_aon" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Extented Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="dos" name="date_of_aon" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="usr">Vendoros:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="text" class="form-control" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td />
+                                                    <td class="d-flex justify-content-start">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </form>
+                                    </div>
+                                    <div id="menu3" class="tab-pane fade">
+                                        <form>
+                                            <table class="table">
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Date of Constitution:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="doc" name="date_of_con" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="usr">Result of TEC:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="text" class="form-control" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Approval of TEC Report:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="tec_report" name="tec_report" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td />
+                                                    <td class="d-flex justify-content-start">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <div id="menu4" class="tab-pane fade">
+                                        <form>
+                                            <table class="table">
+                                                <tr>
+
+                                                    <td class="form-group">
+                                                        <label for="birthday">Commencement Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Commencement_Date" name="Commencement_Date" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td class="form-group">
+                                                        <label for="birthday">Completion Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Completion_Date" name="Completion_Date" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="usr">Participating vendor: </label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="text" class="form-control" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Report Recived:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Report_Recived" name="Report_Recived" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td class="form-group">
+                                                        <label for="birthday">Report Accepted:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Report_Accepted" name="Report_Accepted" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="usr">Qualified Vendor:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="text" class="form-control" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td />
+                                                    <td class="d-flex justify-content-start">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <div id="menu5" class="tab-pane fade">
+                                        <form>
+                                            <table class="table">
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Constitution Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Constitution_Date" name="Constitution_Date" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td class="form-group">
+                                                        <label for="birthday">Date of Report:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Date_of_Report" name="Date_of_Report" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Date of Acceptance:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Date_of_Acceptance" name="Date_of_Acceptance" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td />
+                                                    <td class="d-flex justify-content-start">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <div id="menu6" class="tab-pane fade">
+                                        <form>
+                                            <table class="table">
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">CNC Constitution Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="cnc_Constitution_Date" name="cnc_Constitution_Date" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Benchmark Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Benchmark_Date" name="Benchmark_Date" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Commercial Bid Opening Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Commercial_Date_Opening_Date" name="Commercial_Date_Opening_Date" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">CNC Conclusion Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="CNC_Conclusion_Date" name="CNC_Conclusion_Date" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">CNC Report Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="CNC_Report_Date" name="CNC_Report_Date" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td />
+                                                    <td class="d-flex justify-content-start">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <div id="menu7" class="tab-pane fade">
+                                        <form>
+                                            <table class="table">
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">MoD Acq Approval:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="MoD_Acq_Approval" name="MoD_Acq_Approval" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">MoD (Fin) Concurrence:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="MoD_Fin_Concurrence" name="MoD_Fin_Concurrence" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Submmition Date to CFA:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Submmition_Date_to_CFA" name="Submmition_Date_to_CFA" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Approval of CFA Note/proposal:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Approval_of_CFA_Note/proposal" name="Approval_of_CFA_Note/proposal" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td />
+                                                    <td class="d-flex justify-content-start">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <div id="menu8" class="tab-pane fade">
+                                        <form>
+                                            <table class="table">
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">DCN sent for Inter-Ministerial Constitution:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="MoD_Acq_Approval" name="MoD_Acq_Approval" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">MOF Concurrence Date:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="MoD_Fin_Concurrence" name="MoD_Fin_Concurrence" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">DCN Submmition to CCS:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Submmition_Date_to_CFA" name="Submmition_Date_to_CFA" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Approval by CFA/CCS:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Approval_of_CFA_Note/proposal" name="Approval_of_CFA_Note/proposal" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <label for="birthday">Date of contract Signing:</label>
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <input type="date" id="Approval_of_CFA_Note/proposal" name="Approval_of_CFA_Note/proposal" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td />
+                                                    <td class="d-flex justify-content-start">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#show').click(function () {
+                    $('#show1').css("display", "block");
+                    $("#show2").css("display", "none");
+
+                });
+            });</script>
+        <script>
+            $(document).ready(function () {
+                $('#show3').click(function () {
+                    $('#show2').css("display", "block");
+                    $("#show1").css("display", "none");
+
+                });
+            });</script>
+</body>
+</html>
+
+<script>
+
+    $(document).ready(function () {
+        $("#r1").hide();
+        $("#radioEdit").click(function () {
+            $(this).attr("checked", "checked");
+            $("#r1").show();
+        });
+        $("#radioCreate").click(function () {
+            $(this).attr("checked", "checked");
+            $("#r1").hide();
+        });
+
+        $("#drpUniqueId").change(function () {
+            debugger;
+            var uniqId = $(this).val();
+            GetRecords(uniqId)
+        });
+
+        $("#drpUniqueId1").change(function () {
+            var uniqId = $(this).val();
+            GetRecords(uniqId);
+        });
+    });
+
+
+    function GetRecords(uniqId)
+    {
+        $.get("/MOD/GetRecordById/" + uniqId, function (data, status) {
+            debugger;
+            var data = JSON.parse(data);
+
+            $("#dateofAon").val(data.dateofAon);
+            $("#itemname").val(data.itemname);
+            $("#quantity").val(data.quantity);
+            $("#cost").val(data.cost);
+            $("#leadservice").val(data.leadservice);
+            $("#naturetype").val(data.naturetype);
+            $("#UniqueId").val(data.UniqueId);
+
+            //document.getElementById("UniqueId").setAttribute("disabled", "disabled");
+            $("#draftRFPbySHQ").val(data.draftRFPbySHQ);
+            $("#collegiatevetting").val(data.collegiatevetting);
+            $("#approval").val(data.approval);
+            $("#issuancevendor").val(data.issuancevendor);
+            $("#vendors").val(data.vendors);
+            $("#bidsubmissiondate").val(data.bidsubmissiondate);
+        });
+    }
+</script>
+
+
+
+
