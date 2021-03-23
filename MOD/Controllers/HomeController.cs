@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using Newtonsoft.Json;
 using DDPAdmin.Services.Master;
 using System.Web.Security;
+using static MOD.MvcApplication;
 
 namespace MOD.Controllers
 {
@@ -23,6 +24,7 @@ namespace MOD.Controllers
         masterService mService = new masterService();
         string password = "p@SSword";
         GanttData ganttData = new GanttData();
+        [SessionExpire]
         public ActionResult Index(string id)
         {
 
@@ -53,11 +55,13 @@ namespace MOD.Controllers
                 return View();
             }
         }
+        [SessionExpire]
         public ActionResult Gantt(int Id)
         {
             ViewBag.DataSource = ganttData.ProjectNewData(Id);
             return View();
         }
+        [SessionExpire]
         public ActionResult Baseline(int Id)
         {
             ViewBag.DataSource = ganttData.BaselineData(Id);

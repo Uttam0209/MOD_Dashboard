@@ -96,7 +96,5 @@ namespace MOD.Models
         public string dateFreezingPSQRsMakeII { get; set; }
         public string dateselectionDasbySHQ_dprbMakeII { get; set; }
         public string dateapprovalCFAfundingarrangementissueProjectMakeII { get; set; }
-    
-        public virtual acq_project_master acq_project_master { get; set; }
     }
 }

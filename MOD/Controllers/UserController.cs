@@ -1,10 +1,9 @@
-﻿using System;
+﻿using ACQ.CoreAPI.Utility.Email;
+using MOD.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using DDPAdmin.Services.Master;
-using MOD.Models;
 
 namespace MOD.Controllers
 {
@@ -56,7 +55,12 @@ namespace MOD.Controllers
             {
                 try
                 {
+                    string GenPwd1 = model.Password;
+                    string GetSalt = GeneratedPassword.CreateSalt(10);
+                    string hashString = GeneratedPassword.GenarateHash(GenPwd1, GetSalt);
+
                     tbl_tbl_User obj = new tbl_tbl_User();
+
                     obj.UserName = model.UserName;
                     obj.InternalEmailID = model.InternalEmailID;
                     obj.ExternalEmailID = model.ExternalEmailID;
@@ -71,6 +75,7 @@ namespace MOD.Controllers
                     obj.MacAddress = model.MacAddress;
                     obj.Designation = model.Designation;
                     obj.LoginAllowed = model.LoginAllowed;
+                    obj.Pswd_Salt = hashString;
                     obj.CreatedBy = Convert.ToInt32(Session["UserID"]);
                     obj.CreatedOn = System.DateTime.Now;
                     obj.IsDeleted = false;
@@ -120,6 +125,10 @@ namespace MOD.Controllers
         [HttpPost]
         public ActionResult Update(UserSaveViewModel model)
         {
+            string GenPwd1 = model.Password;
+            string GetSalt = GeneratedPassword.CreateSalt(10);
+            string hashString = GeneratedPassword.GenarateHash(GenPwd1, GetSalt);
+         
             try
             {
                 var _updateUser = _entities.tbl_tbl_User.Where(x => x.UserId == model.UserId).FirstOrDefault();
@@ -139,6 +148,7 @@ namespace MOD.Controllers
                     _updateUser.ValidTill = Convert.ToDateTime(model.ValidTill);
                     _updateUser.Designation = model.Designation;
                     _updateUser.LoginAllowed = model.LoginAllowed;
+                    _updateUser.Pswd_Salt = hashString;
                     _updateUser.CreatedBy = Convert.ToInt32(Session["UserID"]);
                     _updateUser.CreatedOn = System.DateTime.Now;
                     _updateUser.IsDeleted = false;

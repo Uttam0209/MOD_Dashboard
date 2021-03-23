@@ -52,17 +52,8 @@
     <EntitySet Name="acq_meeting_master" EntityType="MODModel.acq_meeting_master" />
     <EntitySet Name="acq_trials" EntityType="MODModel.acq_trials" />
     <EntitySet Name="acq_rfp_vendors" EntityType="MODModel.acq_rfp_vendors" />
-    <EntitySet Name="acq_project_master" EntityType="MODModel.acq_project_master" />
-    <AssociationSet Name="FK_acq_project_master_acq_meeting_master" Association="MODModel.FK_acq_project_master_acq_meeting_master">
-      <End Role="acq_meeting_master" EntitySet="acq_meeting_master" />
-      <End Role="acq_project_master" EntitySet="acq_project_master" />
-    </AssociationSet>
     <EntitySet Name="acq_project_status_timelines" EntityType="MODModel.acq_project_status_timelines" />
     <EntitySet Name="acq_rfp_master" EntityType="MODModel.acq_rfp_master" />
-    <AssociationSet Name="FK_acq_rfp_master_acq_project_master" Association="MODModel.FK_acq_rfp_master_acq_project_master">
-      <End Role="acq_project_master" EntitySet="acq_project_master" />
-      <End Role="acq_rfp_master" EntitySet="acq_rfp_master" />
-    </AssociationSet>
     <EntitySet Name="acq_project_status_1" EntityType="MODModel.acq_project_status_1" />
     <EntitySet Name="ChartReportOnClicks" EntityType="MODModel.ChartReportOnClick" />
     <EntitySet Name="ReportMileStonebyMonths" EntityType="MODModel.ReportMileStonebyMonth" />
@@ -81,10 +72,6 @@
     <EntitySet Name="tbl_trn_tryProject1" EntityType="MODModel.tbl_trn_tryProject1" />
     <EntitySet Name="temp_BF" EntityType="MODModel.temp_BF" />
     <EntitySet Name="acq_policy" EntityType="MODModel.acq_policy" />
-    <AssociationSet Name="FK__acq_polic__aon_i__5EBF139D" Association="MODModel.FK__acq_polic__aon_i__5EBF139D">
-      <End Role="acq_project_master" EntitySet="acq_project_master" />
-      <End Role="acq_policy" EntitySet="acq_policy" />
-    </AssociationSet>
     <AssociationSet Name="FK__acq_polic__stagi__5DCAEF64" Association="MODModel.FK__acq_polic__stagi__5DCAEF64">
       <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
       <End Role="acq_policy" EntitySet="acq_policy" />
@@ -97,6 +84,15 @@
     <AssociationSet Name="FK_tbl_tbl_User_acq_section_master" Association="MODModel.FK_tbl_tbl_User_acq_section_master">
       <End Role="acq_section_master" EntitySet="acq_section_master" />
       <End Role="tbl_tbl_User" EntitySet="tbl_tbl_User" />
+    </AssociationSet>
+    <EntitySet Name="acq_project_master" EntityType="MODModel.acq_project_master" />
+    <AssociationSet Name="FK_acq_project_master_acq_meeting_master" Association="MODModel.FK_acq_project_master_acq_meeting_master">
+      <End Role="acq_meeting_master" EntitySet="acq_meeting_master" />
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+    </AssociationSet>
+    <AssociationSet Name="FK_acq_policy_acq_project_master" Association="MODModel.FK_acq_policy_acq_project_master">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="tbl_tblAON">
@@ -427,11 +423,11 @@
     <Property Name="DeletedBy" Type="Int32" />
     <Property Name="DeletedOn" Type="DateTime" Precision="3" />
     <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="acq_project_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_meeting_master" ToRole="acq_project_master" />
     <Property Name="officers_participated" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Distribution_List" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Meeting_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="acq_project_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_meeting_master" ToRole="acq_project_master" />
   </EntityType>
   <EntityType Name="acq_trials">
     <Key>
@@ -457,64 +453,6 @@
     <Property Name="rfp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Rfp_fk_Id" Type="Int32" Nullable="false" />
   </EntityType>
-  <EntityType Name="acq_project_master">
-    <Key>
-      <PropertyRef Name="aon_id" />
-    </Key>
-    <Property Name="aon_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="item_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="DPP_DAP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="AoN_Accorded_By" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Date_of_Accord_of_AoN" Type="DateTime" Precision="3" />
-    <Property Name="meeting_id" Type="Int32" />
-    <Property Name="Categorisation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Service_Lead_Service" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Quantity" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Cost" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Currency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Tax_Duties" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Type_of_Acquisition" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Trials_Required" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Essential_parameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Any_other_aspect" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="IC_percentage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Option_clause_applicable" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Offset_applicable" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="AMC_applicable" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="AMCRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Warrenty_applicable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Warrenty_Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="AoN_validity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="AoN_validity_unit" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="AoN_revalidation_meeting_id" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="AoN_validity_extended_till" Type="DateTime" Precision="3" />
-    <Property Name="AoN_Foreclosure_meeting_id" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-    <Property Name="DeletedBy" Type="Int32" />
-    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
-    <Property Name="IsDeleted" Type="Boolean" />
-    <NavigationProperty Name="acq_meeting_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_project_master" ToRole="acq_meeting_master" />
-    <NavigationProperty Name="acq_rfp_master" Relationship="MODModel.FK_acq_rfp_master_acq_project_master" FromRole="acq_project_master" ToRole="acq_rfp_master" />
-    <Property Name="AoNClosureDate" Type="DateTime" Precision="3" />
-    <Property Name="AoNClosureRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="AoNForeClosureCreatedBy" Type="Int32" />
-    <Property Name="System_case" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="acq_policy" Relationship="MODModel.FK__acq_polic__aon_i__5EBF139D" FromRole="acq_project_master" ToRole="acq_policy" />
-  </EntityType>
-  <Association Name="FK_acq_project_master_acq_meeting_master">
-    <End Type="MODModel.acq_meeting_master" Role="acq_meeting_master" Multiplicity="0..1" />
-    <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_meeting_master">
-        <PropertyRef Name="meeting_id" />
-      </Principal>
-      <Dependent Role="acq_project_master">
-        <PropertyRef Name="meeting_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="acq_project_status_timelines">
     <Key>
       <PropertyRef Name="aon_id" />
@@ -584,7 +522,6 @@
     <Property Name="DeletedBy" Type="Int32" />
     <Property Name="DeletedOn" Type="DateTime" Precision="3" />
     <Property Name="IsDeleted" Type="Boolean" />
-    <NavigationProperty Name="acq_project_master" Relationship="MODModel.FK_acq_rfp_master_acq_project_master" FromRole="acq_rfp_master" ToRole="acq_project_master" />
     <Property Name="Eoi_DPRDateIssueMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Eoi_DPRReceiptDateMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Eoi_DPRDateCompletionandResponseMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -621,18 +558,6 @@
     <Property Name="dateselectionDasbySHQ_dprbMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="dateapprovalCFAfundingarrangementissueProjectMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
   </EntityType>
-  <Association Name="FK_acq_rfp_master_acq_project_master">
-    <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="1" />
-    <End Type="MODModel.acq_rfp_master" Role="acq_rfp_master" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_project_master">
-        <PropertyRef Name="aon_id" />
-      </Principal>
-      <Dependent Role="acq_rfp_master">
-        <PropertyRef Name="aon_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="acq_project_status_1">
     <Key>
       <PropertyRef Name="project_id" />
@@ -816,21 +741,9 @@
     <Property Name="DeletedOn" Type="DateTime" Precision="3" />
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="section_id" Type="Int32" />
-    <NavigationProperty Name="acq_project_master" Relationship="MODModel.FK__acq_polic__aon_i__5EBF139D" FromRole="acq_policy" ToRole="acq_project_master" />
     <NavigationProperty Name="tbl_mst_Template" Relationship="MODModel.FK__acq_polic__stagi__5DCAEF64" FromRole="acq_policy" ToRole="tbl_mst_Template" />
+    <NavigationProperty Name="acq_project_master" Relationship="MODModel.FK_acq_policy_acq_project_master" FromRole="acq_policy" ToRole="acq_project_master" />
   </EntityType>
-  <Association Name="FK__acq_polic__aon_i__5EBF139D">
-    <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="1" />
-    <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_project_master">
-        <PropertyRef Name="aon_id" />
-      </Principal>
-      <Dependent Role="acq_policy">
-        <PropertyRef Name="aon_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__acq_polic__stagi__5DCAEF64">
     <End Type="MODModel.tbl_mst_Template" Role="tbl_mst_Template" Multiplicity="1" />
     <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
@@ -898,6 +811,82 @@
       </Principal>
       <Dependent Role="tbl_tbl_User">
         <PropertyRef Name="SectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="acq_project_master">
+    <Key>
+      <PropertyRef Name="aon_id" />
+    </Key>
+    <Property Name="aon_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="item_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DPP_DAP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AoN_Accorded_By" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Date_of_Accord_of_AoN" Type="DateTime" Precision="3" />
+    <Property Name="meeting_id" Type="Int32" />
+    <Property Name="Categorisation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Service_Lead_Service" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Quantity" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Cost" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Currency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Tax_Duties" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Type_of_Acquisition" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Trials_Required" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Essential_parameters" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Any_other_aspect" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IC_percentage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Option_clause_applicable" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Offset_applicable" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="AMC_applicable" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="AMCRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Warrenty_applicable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Warrenty_Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AoN_validity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AoN_validity_unit" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="AoN_revalidation_meeting_id" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="AoN_validity_extended_till" Type="DateTime" Precision="3" />
+    <Property Name="AoN_Foreclosure_meeting_id" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AoNClosureDate" Type="DateTime" Precision="3" />
+    <Property Name="AoNClosureRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AoNForeClosureCreatedBy" Type="Int32" />
+    <Property Name="VendorsIDs" Type="Int32" />
+    <Property Name="DirectorateId" Type="Int32" />
+    <Property Name="ResponsiblePersonLeve1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ResponsiblePersonLeve2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ResponsiblePersonLeve3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ResponsiblePersonLeve4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="System_case" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VendorsIDss" Type="Int32" />
+    <NavigationProperty Name="acq_meeting_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_project_master" ToRole="acq_meeting_master" />
+    <NavigationProperty Name="acq_policy" Relationship="MODModel.FK_acq_policy_acq_project_master" FromRole="acq_project_master" ToRole="acq_policy" />
+  </EntityType>
+  <Association Name="FK_acq_project_master_acq_meeting_master">
+    <End Type="MODModel.acq_meeting_master" Role="acq_meeting_master" Multiplicity="0..1" />
+    <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_meeting_master">
+        <PropertyRef Name="meeting_id" />
+      </Principal>
+      <Dependent Role="acq_project_master">
+        <PropertyRef Name="meeting_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_acq_policy_acq_project_master">
+    <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="1" />
+    <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_project_master">
+        <PropertyRef Name="aon_id" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="aon_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -81,10 +81,31 @@ namespace MOD.Controllers
             model.AonList = list;
             return View(model);
         }
+
         public ActionResult AonCreate()
         {
             SaveAcqProjectMasterViewModel model = new SaveAcqProjectMasterViewModel();
             model.MeetingMaster = _entities.acq_meeting_master.ToList();
+
+            // Vendor List
+            List<SaveAcqProjectMasterViewModel> venList = new List<SaveAcqProjectMasterViewModel>();
+            var vendorList = _entities.tbl_tblVendor.Where(x => x.IsDeleted == false).ToList();
+            if (vendorList != null)
+            {
+                foreach (var item in vendorList)
+                {
+                    SaveAcqProjectMasterViewModel ObjVendor = new SaveAcqProjectMasterViewModel();
+                    ObjVendor.vendorID = item.VendorId;
+                    ObjVendor.VendorName = Cipher.Decrypt(item.VendorName, password);
+                    venList.Add(ObjVendor);
+                }
+            }
+            model.VendorList = venList;
+
+            // SectionList
+            model.SectionMasterList = _entities.acq_section_master.ToList();
+            // UserList 
+            model.UserList = _entities.tbl_tbl_User.ToList();
             return View(model);
         }
 
@@ -130,6 +151,12 @@ namespace MOD.Controllers
                     obj.Currency = model.Currency;
                     obj.CreatedBy = Convert.ToInt32(Session["UserID"]); ;
                     obj.CreatedOn = System.DateTime.Now;
+                    obj.VendorsIDs = model.VendorsIDs;
+                    obj.DirectorateId = model.DirectorateId;
+                    obj.ResponsiblePersonLeve1 = model.ResponsiblePersonLeve1;
+                    obj.ResponsiblePersonLeve2 = model.ResponsiblePersonLeve2;
+                    obj.ResponsiblePersonLeve3 = model.ResponsiblePersonLeve3;
+                    obj.ResponsiblePersonLeve4 = model.ResponsiblePersonLeve4;
                     obj.IsDeleted = false;
                     obj.System_case = model.System_case;
                     _entities.acq_project_master.Add(obj);
@@ -146,10 +173,28 @@ namespace MOD.Controllers
 
         public ActionResult Edit(int ID)
         {
+            SaveAcqProjectMasterViewModel model = new SaveAcqProjectMasterViewModel();
+
+            model.SectionMasterList = _entities.acq_section_master.ToList();
+            model.UserList = _entities.tbl_tbl_User.ToList();
+            // Vendor List
+            List<SaveAcqProjectMasterViewModel> venList = new List<SaveAcqProjectMasterViewModel>();
+            var vendorList = _entities.tbl_tblVendor.Where(x => x.IsDeleted == false).ToList();
+            if (vendorList != null)
+            {
+                foreach (var item in vendorList)
+                {
+                    SaveAcqProjectMasterViewModel ObjVendor = new SaveAcqProjectMasterViewModel();
+                    ObjVendor.vendorID = item.VendorId;
+                    ObjVendor.VendorName = Cipher.Decrypt(item.VendorName, password);
+                    venList.Add(ObjVendor);
+                }
+            }
+            model.VendorList = venList;
+
             try
             {
                 var _editAonData = _entities.acq_project_master.Where(x => x.aon_id == ID).FirstOrDefault();
-                SaveAcqProjectMasterViewModel model = new SaveAcqProjectMasterViewModel();
                 model.aon_id = _editAonData.aon_id;
                 model.Date_of_Accord_of_AoN = Convert.ToDateTime(_editAonData.Date_of_Accord_of_AoN);
                 model.DPP_DAP = _editAonData.DPP_DAP;
@@ -175,6 +220,12 @@ namespace MOD.Controllers
                 model.Warrenty_Remarks = _editAonData.Warrenty_Remarks;
                 model.Remarks = _editAonData.Remarks;
                 model.Currency = _editAonData.Currency;
+                model.DirectorateId = _editAonData.DirectorateId;
+                model.VendorsIDs = _editAonData.VendorsIDs;
+                model.ResponsiblePersonLeve1 = _editAonData.ResponsiblePersonLeve1;
+                model.ResponsiblePersonLeve2 = _editAonData.ResponsiblePersonLeve2;
+                model.ResponsiblePersonLeve3 = _editAonData.ResponsiblePersonLeve3;
+                model.ResponsiblePersonLeve4 = _editAonData.ResponsiblePersonLeve4;
                 // Meeting DropDown Bind
                 model.MeetingMaster = _entities.acq_meeting_master.ToList();
                 model.System_case = _editAonData.System_case;
@@ -218,6 +269,12 @@ namespace MOD.Controllers
                     _updateAon.Warrenty_applicable = model.Warrenty_applicable;
                     _updateAon.Warrenty_Remarks = model.Warrenty_Remarks;
                     _updateAon.Currency = model.Currency;
+                    _updateAon.DirectorateId = model.DirectorateId;
+                    _updateAon.VendorsIDs = model.VendorsIDs;
+                    _updateAon.ResponsiblePersonLeve1 = model.ResponsiblePersonLeve1;
+                    _updateAon.ResponsiblePersonLeve2 = model.ResponsiblePersonLeve2;
+                    _updateAon.ResponsiblePersonLeve3 = model.ResponsiblePersonLeve3;
+                    _updateAon.ResponsiblePersonLeve4 = model.ResponsiblePersonLeve4;
                     _updateAon.CreatedBy = Convert.ToInt32(Session["UserID"]);
                     _updateAon.CreatedOn = System.DateTime.Now;
                     _updateAon.IsDeleted = false;

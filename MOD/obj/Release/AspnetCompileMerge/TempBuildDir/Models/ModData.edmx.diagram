@@ -28,11 +28,8 @@
         <EntityTypeShape EntityType="MODModel.acq_meeting_master" Width="1.5" PointX="5.375" PointY="20.75" />
         <EntityTypeShape EntityType="MODModel.acq_trials" Width="1.5" PointX="7.375" PointY="5.75" />
         <EntityTypeShape EntityType="MODModel.acq_rfp_vendors" Width="1.5" PointX="12.125" PointY="22.5" />
-        <EntityTypeShape EntityType="MODModel.acq_project_master" Width="1.5" PointX="7.625" PointY="18.375" />
-        <AssociationConnector Association="MODModel.FK_acq_project_master_acq_meeting_master" />
         <EntityTypeShape EntityType="MODModel.acq_project_status_timelines" Width="1.5" PointX="9.375" PointY="5.75" />
         <EntityTypeShape EntityType="MODModel.acq_rfp_master" Width="1.5" PointX="9.875" PointY="18.25" />
-        <AssociationConnector Association="MODModel.FK_acq_rfp_master_acq_project_master" />
         <EntityTypeShape EntityType="MODModel.acq_project_status_1" Width="1.5" PointX="7.375" PointY="10.75" />
         <EntityTypeShape EntityType="MODModel.ChartReportOnClick" Width="1.5" PointX="17.375" PointY="4.75" />
         <EntityTypeShape EntityType="MODModel.ReportMileStonebyMonth" Width="1.5" PointX="17.375" PointY="13.75" />
@@ -45,11 +42,13 @@
         <EntityTypeShape EntityType="MODModel.tbl_trn_tryProject1" Width="1.5" PointX="0.75" PointY="19.75" />
         <EntityTypeShape EntityType="MODModel.temp_BF" Width="1.5" PointX="11.375" PointY="9.75" />
         <EntityTypeShape EntityType="MODModel.acq_policy" Width="1.5" PointX="21.625" PointY="12" />
-        <AssociationConnector Association="MODModel.FK__acq_polic__aon_i__5EBF139D" />
         <AssociationConnector Association="MODModel.FK__acq_polic__stagi__5DCAEF64" />
         <EntityTypeShape EntityType="MODModel.tbl_tbl_User" Width="1.5" PointX="14.875" PointY="0.75" />
         <AssociationConnector Association="MODModel.FK_tbl_tbl_User_acq_department_master" />
         <AssociationConnector Association="MODModel.FK_tbl_tbl_User_acq_section_master" />
+        <EntityTypeShape EntityType="MODModel.acq_project_master" Width="1.5" PointX="7.625" PointY="17.625" />
+        <AssociationConnector Association="MODModel.FK_acq_project_master_acq_meeting_master" />
+        <AssociationConnector Association="MODModel.FK_acq_policy_acq_project_master" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

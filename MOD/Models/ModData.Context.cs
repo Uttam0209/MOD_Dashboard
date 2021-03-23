@@ -46,7 +46,6 @@ namespace MOD.Models
         public virtual DbSet<acq_meeting_master> acq_meeting_master { get; set; }
         public virtual DbSet<acq_trials> acq_trials { get; set; }
         public virtual DbSet<acq_rfp_vendors> acq_rfp_vendors { get; set; }
-        public virtual DbSet<acq_project_master> acq_project_master { get; set; }
         public virtual DbSet<acq_project_status_timelines> acq_project_status_timelines { get; set; }
         public virtual DbSet<acq_rfp_master> acq_rfp_master { get; set; }
         public virtual DbSet<acq_project_status_1> acq_project_status_1 { get; set; }
@@ -62,6 +61,7 @@ namespace MOD.Models
         public virtual DbSet<temp_BF> temp_BF { get; set; }
         public virtual DbSet<acq_policy> acq_policy { get; set; }
         public virtual DbSet<tbl_tbl_User> tbl_tbl_User { get; set; }
+        public virtual DbSet<acq_project_master> acq_project_master { get; set; }
     
         public virtual ObjectResult<temp_dashboard> PROC_DASHBOARD_DATA(string categorisation, string service)
         {

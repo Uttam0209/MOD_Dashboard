@@ -1590,6 +1590,7 @@
     <Compile Include="Models\DetailCharts.cs" />
     <Compile Include="Models\Ecnryption.cs" />
     <Compile Include="Models\GanttData.cs" />
+    <Compile Include="Models\GeneratedPassword.cs" />
     <Compile Include="Models\Grid1.cs" />
     <Compile Include="Models\Grid2.cs" />
     <Compile Include="Models\ModData.Context.cs">

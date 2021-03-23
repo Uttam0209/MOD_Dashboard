@@ -14,32 +14,32 @@ namespace MOD.Controllers
         {
             return View();
         }
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Login(UserLogin login)
         {
-            //using (var _context = new MODEntities())
-            //{
+            using (var _context = new MODEntities())
+            {
 
-            //    var isValid = _context.tbl_tbl_User.Where(x => x.InternalEmailID == login.InternalEmailID && x.Password == login.Password).FirstOrDefault();
-            //    if(isValid != null)
-            //    {
-            //        FormsAuthentication.SetAuthCookie(login.InternalEmailID, false);
-            //        Session["UserID"] = isValid.UserId;
-            //        Session["UserName"] = isValid.UserName;
-            //        Session["SectionID"] = isValid.SectionID;
-            //        EmailHelper.SendEmail("no-replyacqdashboard@mod.in", "Hi test email");
-            //        return RedirectToAction("Index", "Home");
-            //    }
-            //    else
-            //    {
-            //        //ModelState.AddModelError("", "Invalid UserName and Password");
-            //        TempData["Message"] = "Login Failed.User Name or Password Doesn't Exist.";
-            //        return View();
-            //    }
-            //}
+                var isValid = _context.tbl_tbl_User.Where(x => x.InternalEmailID == login.InternalEmailID && x.Password == login.Password).FirstOrDefault();
+                if (isValid != null)
+                {
+                    FormsAuthentication.SetAuthCookie(login.InternalEmailID, false);
+                    Session["UserID"] = isValid.UserId;
+                    Session["UserName"] = isValid.UserName;
+                    Session["SectionID"] = isValid.SectionID;
+                    EmailHelper.SendEmail("no-replyacqdashboard@mod.in", "Hi test email");
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    //ModelState.AddModelError("", "Invalid UserName and Password");
+                    TempData["Message"] = "Login Failed.User Name or Password Doesn't Exist.";
+                    return View();
+                }
+            }
 
-            return View();
+            
         }
         public ActionResult ChangePassword()
         {

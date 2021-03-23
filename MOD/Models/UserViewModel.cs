@@ -65,6 +65,12 @@ namespace MOD.Models
         public int? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public bool? IsDeleted { get; set; }
+        public string Pswd_Salt { get; set; }
+        public string Flag { get; set; }
+        public string Temp_Number { get; set; }
+        public int? LoginCount { get; set; }
+        public DateTime? ExpiryTime { get; set; }
+        public string TokenId { get; set; }
 
         public List<acq_department_master> departmentList { get; set; }
         public List<acq_section_master> SectionMasterList { get; set; }

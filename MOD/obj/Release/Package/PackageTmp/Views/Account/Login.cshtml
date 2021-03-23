@@ -27,7 +27,7 @@
 </head>
 <body>
 
-    <!--<div class="navbar-custom topnav-navbar topnav-navbar-dark" style="height: 95px;">
+    <div class="navbar-custom topnav-navbar topnav-navbar-dark" style="height: 95px;">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-3">
@@ -52,7 +52,7 @@
     <div class="login_bg">
         @using (Html.BeginForm("Login", "Account", FormMethod.Post))
         {
-            //@Html.AntiForgeryToken()
+            @Html.AntiForgeryToken()
             <div class="account-pages mt-5 mb-5">
                 <div class="container">
                     <div class="alert alert-danger alert-dismissible text-center bg-danger text-white border-0 fade show" role="alert">
@@ -66,22 +66,22 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <!-- Logo-->
-                                <!--<div class="card-header pt-4 pb-4 text-center bg-primary">
+                                <div class="card-header pt-4 pb-4 text-center bg-primary">
                                     <h2 class="text-light m-0"> Login <i class="fas fa-sign-in-alt"></i> </h2>
                                 </div>
 
                                 <div class="card-body p-4">
                                     <form action="#">
                                         <div class="form-group" data-validate="Valid email is required: ex@abc.xyz">
-                                            <label for="emailaddress">Email address</label>-->
+                                            <label for="emailaddress">Email address</label>
                                             @*<input class="form-control" type="text" name="InternalEmailID" required="" placeholder="Enter your email">*@
-                                            <!--<input class="form-control" type="text" type="text" name="InternalEmailID" placeholder="Email">
+                                            <input class="form-control" type="text" type="text" name="InternalEmailID" placeholder="Email">
                                             @Html.ValidationMessageFor(x => x.InternalEmailID, null, new { @class = "danger" })
                                         </div>
 
                                         <div class="form-group wrap-input100 rs1 validate-input" data-validate="Password is required">
                                             <label for="password">Password</label>
-                                            <div class="input-group input-group-merge">-->
+                                            <div class="input-group input-group-merge">
                                                 @*<input type="password" id="Password" class="form-control input100" placeholder="Enter your password">*@
                                                 <input class="form-control input100" type="password" name="Password" placeholder="Password">
                                                 <div class="input-group-append" data-password="false">
@@ -101,8 +101,8 @@
                                             <a href="#" class="text-muted font-16">Forget Password?</a>
                                         </div>
                                     </form>
-                                </div>--> <!-- end card-body -->
-                            <!--</div>
+                                </div> <!-- end card-body -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
     </div>
 
     <script src="/assets/fontawesome-5.12.1/js/all.min.js"></script>
-    <script src="~/assets/js/app.js"></script>-->
+    <script src="~/assets/js/app.js"></script>
 </body>
 </html>
 

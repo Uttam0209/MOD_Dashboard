@@ -191,6 +191,19 @@ namespace MOD.Models
         public string AoNClosureRemarks { get; set; }
         public Nullable<int> AoNForeClosureCreatedBy { get; set; }
         public List<SaveAcqProjectMasterViewModel> AoNList { get; set; }
+        public IEnumerable<SaveAcqProjectMasterViewModel> VendorList { get; set; }
+        public List<acq_section_master> SectionMasterList { get; set; }
+        public List<tbl_tbl_User> UserList { get; set; }
+        public int UserId { get; set; }
         public string System_case { get; set; }
+        public int vendorID { get; set; }
+        public string VendorName { get; set; }
+
+        public Nullable<int> VendorsIDs { get; set; }
+        public Nullable<int> DirectorateId { get; set; }
+        public string ResponsiblePersonLeve1 { get; set; }
+        public string ResponsiblePersonLeve2 { get; set; }
+        public string ResponsiblePersonLeve3 { get; set; }
+        public string ResponsiblePersonLeve4 { get; set; }
     }
 }

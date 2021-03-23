@@ -80,12 +80,19 @@
     <Property Name="AoNClosureDate" Type="datetime" />
     <Property Name="AoNClosureRemarks" Type="nvarchar(max)" />
     <Property Name="AoNForeClosureCreatedBy" Type="int" />
+    <Property Name="VendorsIDs" Type="int" />
+    <Property Name="DirectorateId" Type="int" />
+    <Property Name="ResponsiblePersonLeve1" Type="nvarchar" MaxLength="50" />
+    <Property Name="ResponsiblePersonLeve2" Type="nvarchar" MaxLength="50" />
+    <Property Name="ResponsiblePersonLeve3" Type="nvarchar" MaxLength="50" />
+    <Property Name="ResponsiblePersonLeve4" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedOn" Type="datetime" />
     <Property Name="DeletedBy" Type="int" />
     <Property Name="DeletedOn" Type="datetime" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="System_case" Type="varchar" MaxLength="50" />
+    <Property Name="VendorsIDss" Type="int" />
   </EntityType>
   <EntityType Name="acq_projectstage_applicability">
     <Key>
@@ -658,78 +665,6 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
     <Property Name="taskDescription" Type="nvarchar" MaxLength="500" />
     <Property Name="avg_delay_days" Type="int" />
   </EntityType>
-  <Association Name="FK__acq_polic__aon_i__32767D0B">
-    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
-    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_project_master">
-        <PropertyRef Name="aon_id" />
-      </Principal>
-      <Dependent Role="acq_policy">
-        <PropertyRef Name="aon_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__acq_polic__aon_i__336AA144">
-    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
-    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_project_master">
-        <PropertyRef Name="aon_id" />
-      </Principal>
-      <Dependent Role="acq_policy">
-        <PropertyRef Name="aon_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__acq_polic__aon_i__345EC57D">
-    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
-    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_project_master">
-        <PropertyRef Name="aon_id" />
-      </Principal>
-      <Dependent Role="acq_policy">
-        <PropertyRef Name="aon_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__acq_polic__aon_i__3E1D39E1">
-    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
-    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_project_master">
-        <PropertyRef Name="aon_id" />
-      </Principal>
-      <Dependent Role="acq_policy">
-        <PropertyRef Name="aon_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__acq_polic__aon_i__3F115E1A">
-    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
-    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_project_master">
-        <PropertyRef Name="aon_id" />
-      </Principal>
-      <Dependent Role="acq_policy">
-        <PropertyRef Name="aon_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__acq_polic__aon_i__40058253">
-    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
-    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_project_master">
-        <PropertyRef Name="aon_id" />
-      </Principal>
-      <Dependent Role="acq_policy">
-        <PropertyRef Name="aon_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__acq_polic__stagi__3552E9B6">
     <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
     <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
@@ -799,6 +734,18 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
       </Principal>
       <Dependent Role="acq_policy">
         <PropertyRef Name="stagid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_acq_policy_acq_project_master">
+    <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
+    <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_project_master">
+        <PropertyRef Name="aon_id" />
+      </Principal>
+      <Dependent Role="acq_policy">
+        <PropertyRef Name="aon_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1109,30 +1056,6 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
     [vw_GridFirst].[avg_delay_days] AS [avg_delay_days]
     FROM [dbo].[vw_GridFirst] AS [vw_GridFirst]</DefiningQuery>
     </EntitySet>
-    <AssociationSet Name="FK__acq_polic__aon_i__32767D0B" Association="Self.FK__acq_polic__aon_i__32767D0B">
-      <End Role="acq_project_master" EntitySet="acq_project_master" />
-      <End Role="acq_policy" EntitySet="acq_policy" />
-    </AssociationSet>
-    <AssociationSet Name="FK__acq_polic__aon_i__336AA144" Association="Self.FK__acq_polic__aon_i__336AA144">
-      <End Role="acq_project_master" EntitySet="acq_project_master" />
-      <End Role="acq_policy" EntitySet="acq_policy" />
-    </AssociationSet>
-    <AssociationSet Name="FK__acq_polic__aon_i__345EC57D" Association="Self.FK__acq_polic__aon_i__345EC57D">
-      <End Role="acq_project_master" EntitySet="acq_project_master" />
-      <End Role="acq_policy" EntitySet="acq_policy" />
-    </AssociationSet>
-    <AssociationSet Name="FK__acq_polic__aon_i__3E1D39E1" Association="Self.FK__acq_polic__aon_i__3E1D39E1">
-      <End Role="acq_project_master" EntitySet="acq_project_master" />
-      <End Role="acq_policy" EntitySet="acq_policy" />
-    </AssociationSet>
-    <AssociationSet Name="FK__acq_polic__aon_i__3F115E1A" Association="Self.FK__acq_polic__aon_i__3F115E1A">
-      <End Role="acq_project_master" EntitySet="acq_project_master" />
-      <End Role="acq_policy" EntitySet="acq_policy" />
-    </AssociationSet>
-    <AssociationSet Name="FK__acq_polic__aon_i__40058253" Association="Self.FK__acq_polic__aon_i__40058253">
-      <End Role="acq_project_master" EntitySet="acq_project_master" />
-      <End Role="acq_policy" EntitySet="acq_policy" />
-    </AssociationSet>
     <AssociationSet Name="FK__acq_polic__stagi__3552E9B6" Association="Self.FK__acq_polic__stagi__3552E9B6">
       <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
       <End Role="acq_policy" EntitySet="acq_policy" />
@@ -1155,6 +1078,10 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
     </AssociationSet>
     <AssociationSet Name="FK__acq_polic__stagi__42E1EEFE" Association="Self.FK__acq_polic__stagi__42E1EEFE">
       <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <AssociationSet Name="FK_acq_policy_acq_project_master" Association="Self.FK_acq_policy_acq_project_master">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
       <End Role="acq_policy" EntitySet="acq_policy" />
     </AssociationSet>
     <AssociationSet Name="FK_acq_project_master_acq_meeting_master" Association="Self.FK_acq_project_master_acq_meeting_master">

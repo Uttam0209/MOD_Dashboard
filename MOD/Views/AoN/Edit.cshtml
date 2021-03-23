@@ -38,21 +38,7 @@
 
                 <div class="col-md-4 mb-3">
                     <label class="labeltext font-weight-bold mb-0">AoN Date<span class="danger">*</span>:</label>
-                    @*@{
-                            string y = "", m = "", d = "";
-                            string[] date = Model.Date_of_Accord_of_AoN.Value.ToShortDateString().Split('-');
-                            y = date[2];
-                            m = date[0];
-                            d = date[1];
-                            if (Convert.ToInt32(m) < 10)
-                            {
-                                m = "0" + m;
-                            }
-                            if (Convert.ToInt32(d) < 10)
-                            {
-                                d = "0" + d;
-                            }
-                        }*@
+
                     <input type="date" id="defaultRegisterFormFirstName" name="Date_of_Accord_of_AoN" value="@Model.Date_of_Accord_of_AoN.Value.ToString("yyyy-MM-dd")" class="form-control" placeholder="Date of AoN">
                     @Html.ValidationMessageFor(x => x.Date_of_Accord_of_AoN, null, new { @class = "danger" })
                 </div>
@@ -245,6 +231,38 @@
                        }, "--Select--", new { @class = "form-control" })
                     @*@Html.ValidationMessageFor(x => x.item_description, null, new { @class = "danger" })*@
                 </div>
+                <div class="col-md-4 mb-3">
+                    <label class="labeltext font-weight-bold mb-0">Vendors:</label>
+                    @Html.DropDownListFor(m => m.VendorsIDs, new SelectList(Model.VendorList, "vendorID", "VendorName"), "-Select Vendor Category-", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.item_description, null, new { @class = "danger" })
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label class="labeltext font-weight-bold mb-0">Directorate:</label>
+                    @Html.DropDownListFor(x => x.DirectorateId, new SelectList(Model.SectionMasterList, "section_id", "section_descr"), "--Select Section--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.DirectorateId, null, new { @class = "danger" })
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label class="labeltext font-weight-bold mb-0">Responsible Person(Level-1):</label>
+                    @Html.DropDownListFor(x => x.ResponsiblePersonLeve1, new SelectList(Model.UserList, "UserId", "UserName"), "--Select User--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.UserId, null, new { @class = "danger" })
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="labeltext font-weight-bold mb-0">Level-2 Officer:</label>
+                    @Html.DropDownListFor(x => x.ResponsiblePersonLeve2, new SelectList(Model.UserList, "UserId", "UserName"), "--Select User--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.UserId, null, new { @class = "danger" })
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="labeltext font-weight-bold mb-0">Level-3 Officer:</label>
+                    @Html.DropDownListFor(x => x.ResponsiblePersonLeve3, new SelectList(Model.UserList, "UserId", "UserName"), "--Select User--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.UserId, null, new { @class = "danger" })
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="labeltext font-weight-bold mb-0">Level-4 Officer:</label>
+                    @Html.DropDownListFor(x => x.ResponsiblePersonLeve4, new SelectList(Model.UserList, "UserId", "UserName"), "--Select User--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.UserId, null, new { @class = "danger" })
+                </div>
 
             </div>
             <div class="form-row mb-1">
@@ -273,6 +291,121 @@
         }
     }
 </div>
+
+<script>
+    $("#ResponsiblePersonLeve1").change(function () {
+        var userLevel1 = $("#ResponsiblePersonLeve1").val();
+        var userLevel2 = $("#ResponsiblePersonLeve2").val();
+        var userLevel3 = $("#ResponsiblePersonLeve3").val();
+        var userLevel4 = $("#ResponsiblePersonLeve4").val();
+
+        if (userLevel1 != "" || userLevel2!="") {
+            if (userLevel1 == userLevel2) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+            }
+        }
+
+        if (userLevel3 != "") {
+            if (userLevel1 == userLevel3 || userLevel2 == userLevel3) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+            }
+        }
+        if (userLevel4 != "") {
+            if (userLevel1 == userLevel4 || userLevel2 == userLevel4 || userLevel3 == userLevel4) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+
+            }
+        }
+    });
+
+    $("#ResponsiblePersonLeve2").change(function () {
+        var userLevel1 = $("#ResponsiblePersonLeve1").val();
+        var userLevel2 = $("#ResponsiblePersonLeve2").val();
+        var userLevel3 = $("#ResponsiblePersonLeve3").val();
+        var userLevel4 = $("#ResponsiblePersonLeve4").val();
+
+        if (userLevel1 != "" || userLevel2 != "") {
+            if (userLevel1 == userLevel2) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+            }
+        }
+
+        if (userLevel3 != "") {
+            if (userLevel1 == userLevel3 || userLevel2 == userLevel3) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+            }
+        }
+        if (userLevel4 != "") {
+            if (userLevel1 == userLevel4 || userLevel2 == userLevel4 || userLevel3 == userLevel4) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+
+            }
+        }
+    });
+
+    $("#ResponsiblePersonLeve3").change(function () {
+        var userLevel1 = $("#ResponsiblePersonLeve1").val();
+        var userLevel2 = $("#ResponsiblePersonLeve2").val();
+        var userLevel3 = $("#ResponsiblePersonLeve3").val();
+        var userLevel4 = $("#ResponsiblePersonLeve4").val();
+
+        if (userLevel1 != "" || userLevel2 != "") {
+            if (userLevel1 == userLevel2) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+            }
+        }
+
+        if (userLevel3 != "") {
+            if (userLevel1 == userLevel3 || userLevel2 == userLevel3) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+            }
+        }
+        if (userLevel4 != "") {
+            if (userLevel1 == userLevel4 || userLevel2 == userLevel4 || userLevel3 == userLevel4) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+
+            }
+        }
+    });
+
+    $("#ResponsiblePersonLeve4").change(function () {
+        var userLevel1 = $("#ResponsiblePersonLeve1").val();
+        var userLevel2 = $("#ResponsiblePersonLeve2").val();
+        var userLevel3 = $("#ResponsiblePersonLeve3").val();
+        var userLevel4 = $("#ResponsiblePersonLeve4").val();
+
+        if (userLevel1 != "" || userLevel2 != "") {
+            if (userLevel1 == userLevel2) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+            }
+        }
+
+        if (userLevel3 != "") {
+            if (userLevel1 == userLevel3 || userLevel2 == userLevel3) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+            }
+        }
+        if (userLevel4 != "") {
+            if (userLevel1 == userLevel4 || userLevel2 == userLevel4 || userLevel3 == userLevel4) {
+                alert("This user is already selected.Please select another user");
+                $(this).prop("selectedIndex", 0).val();
+
+            }
+        }
+    });
+
+</script>
 
 
 

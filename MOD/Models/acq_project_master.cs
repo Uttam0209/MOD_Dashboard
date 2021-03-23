@@ -17,7 +17,6 @@ namespace MOD.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public acq_project_master()
         {
-            this.acq_rfp_master = new HashSet<acq_rfp_master>();
             this.acq_policy = new HashSet<acq_policy>();
         }
     
@@ -50,19 +49,24 @@ namespace MOD.Models
         public Nullable<System.DateTime> AoN_validity_extended_till { get; set; }
         public Nullable<decimal> AoN_Foreclosure_meeting_id { get; set; }
         public string Remarks { get; set; }
+        public Nullable<System.DateTime> AoNClosureDate { get; set; }
+        public string AoNClosureRemarks { get; set; }
+        public Nullable<int> AoNForeClosureCreatedBy { get; set; }
+        public Nullable<int> VendorsIDs { get; set; }
+        public Nullable<int> DirectorateId { get; set; }
+        public string ResponsiblePersonLeve1 { get; set; }
+        public string ResponsiblePersonLeve2 { get; set; }
+        public string ResponsiblePersonLeve3 { get; set; }
+        public string ResponsiblePersonLeve4 { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<System.DateTime> AoNClosureDate { get; set; }
-        public string AoNClosureRemarks { get; set; }
-        public Nullable<int> AoNForeClosureCreatedBy { get; set; }
         public string System_case { get; set; }
+        public Nullable<int> VendorsIDss { get; set; }
     
         public virtual acq_meeting_master acq_meeting_master { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<acq_rfp_master> acq_rfp_master { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<acq_policy> acq_policy { get; set; }
     }

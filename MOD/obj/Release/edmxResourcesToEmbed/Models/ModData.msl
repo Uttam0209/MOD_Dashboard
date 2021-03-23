@@ -309,50 +309,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="acq_project_master">
-      <EntityTypeMapping TypeName="MODModel.acq_project_master">
-        <MappingFragment StoreEntitySet="acq_project_master">
-          <ScalarProperty Name="System_case" ColumnName="System_case" />
-          <ScalarProperty Name="AoNForeClosureCreatedBy" ColumnName="AoNForeClosureCreatedBy" />
-          <ScalarProperty Name="AoNClosureRemarks" ColumnName="AoNClosureRemarks" />
-          <ScalarProperty Name="AoNClosureDate" ColumnName="AoNClosureDate" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-          <ScalarProperty Name="AoN_Foreclosure_meeting_id" ColumnName="AoN_Foreclosure_meeting_id" />
-          <ScalarProperty Name="AoN_validity_extended_till" ColumnName="AoN_validity_extended_till" />
-          <ScalarProperty Name="AoN_revalidation_meeting_id" ColumnName="AoN_revalidation_meeting_id" />
-          <ScalarProperty Name="AoN_validity_unit" ColumnName="AoN_validity_unit" />
-          <ScalarProperty Name="AoN_validity" ColumnName="AoN_validity" />
-          <ScalarProperty Name="Warrenty_Remarks" ColumnName="Warrenty_Remarks" />
-          <ScalarProperty Name="Warrenty_applicable" ColumnName="Warrenty_applicable" />
-          <ScalarProperty Name="AMCRemarks" ColumnName="AMCRemarks" />
-          <ScalarProperty Name="AMC_applicable" ColumnName="AMC_applicable" />
-          <ScalarProperty Name="Offset_applicable" ColumnName="Offset_applicable" />
-          <ScalarProperty Name="Option_clause_applicable" ColumnName="Option_clause_applicable" />
-          <ScalarProperty Name="IC_percentage" ColumnName="IC_percentage" />
-          <ScalarProperty Name="Any_other_aspect" ColumnName="Any_other_aspect" />
-          <ScalarProperty Name="Essential_parameters" ColumnName="Essential_parameters" />
-          <ScalarProperty Name="Trials_Required" ColumnName="Trials_Required" />
-          <ScalarProperty Name="Type_of_Acquisition" ColumnName="Type_of_Acquisition" />
-          <ScalarProperty Name="Tax_Duties" ColumnName="Tax_Duties" />
-          <ScalarProperty Name="Currency" ColumnName="Currency" />
-          <ScalarProperty Name="Cost" ColumnName="Cost" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Service_Lead_Service" ColumnName="Service_Lead_Service" />
-          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
-          <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
-          <ScalarProperty Name="Date_of_Accord_of_AoN" ColumnName="Date_of_Accord_of_AoN" />
-          <ScalarProperty Name="AoN_Accorded_By" ColumnName="AoN_Accorded_By" />
-          <ScalarProperty Name="DPP_DAP" ColumnName="DPP_DAP" />
-          <ScalarProperty Name="item_description" ColumnName="item_description" />
-          <ScalarProperty Name="aon_id" ColumnName="aon_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="acq_project_status_timelines">
       <EntityTypeMapping TypeName="MODModel.acq_project_status_timelines">
         <MappingFragment StoreEntitySet="acq_project_status_timelines">
@@ -679,6 +635,57 @@
           <ScalarProperty Name="InternalEmailID" ColumnName="InternalEmailID" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_project_master">
+      <EntityTypeMapping TypeName="MODModel.acq_project_master">
+        <MappingFragment StoreEntitySet="acq_project_master">
+          <ScalarProperty Name="VendorsIDss" ColumnName="VendorsIDss" />
+          <ScalarProperty Name="System_case" ColumnName="System_case" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ResponsiblePersonLeve4" ColumnName="ResponsiblePersonLeve4" />
+          <ScalarProperty Name="ResponsiblePersonLeve3" ColumnName="ResponsiblePersonLeve3" />
+          <ScalarProperty Name="ResponsiblePersonLeve2" ColumnName="ResponsiblePersonLeve2" />
+          <ScalarProperty Name="ResponsiblePersonLeve1" ColumnName="ResponsiblePersonLeve1" />
+          <ScalarProperty Name="DirectorateId" ColumnName="DirectorateId" />
+          <ScalarProperty Name="VendorsIDs" ColumnName="VendorsIDs" />
+          <ScalarProperty Name="AoNForeClosureCreatedBy" ColumnName="AoNForeClosureCreatedBy" />
+          <ScalarProperty Name="AoNClosureRemarks" ColumnName="AoNClosureRemarks" />
+          <ScalarProperty Name="AoNClosureDate" ColumnName="AoNClosureDate" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="AoN_Foreclosure_meeting_id" ColumnName="AoN_Foreclosure_meeting_id" />
+          <ScalarProperty Name="AoN_validity_extended_till" ColumnName="AoN_validity_extended_till" />
+          <ScalarProperty Name="AoN_revalidation_meeting_id" ColumnName="AoN_revalidation_meeting_id" />
+          <ScalarProperty Name="AoN_validity_unit" ColumnName="AoN_validity_unit" />
+          <ScalarProperty Name="AoN_validity" ColumnName="AoN_validity" />
+          <ScalarProperty Name="Warrenty_Remarks" ColumnName="Warrenty_Remarks" />
+          <ScalarProperty Name="Warrenty_applicable" ColumnName="Warrenty_applicable" />
+          <ScalarProperty Name="AMCRemarks" ColumnName="AMCRemarks" />
+          <ScalarProperty Name="AMC_applicable" ColumnName="AMC_applicable" />
+          <ScalarProperty Name="Offset_applicable" ColumnName="Offset_applicable" />
+          <ScalarProperty Name="Option_clause_applicable" ColumnName="Option_clause_applicable" />
+          <ScalarProperty Name="IC_percentage" ColumnName="IC_percentage" />
+          <ScalarProperty Name="Any_other_aspect" ColumnName="Any_other_aspect" />
+          <ScalarProperty Name="Essential_parameters" ColumnName="Essential_parameters" />
+          <ScalarProperty Name="Trials_Required" ColumnName="Trials_Required" />
+          <ScalarProperty Name="Type_of_Acquisition" ColumnName="Type_of_Acquisition" />
+          <ScalarProperty Name="Tax_Duties" ColumnName="Tax_Duties" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Service_Lead_Service" ColumnName="Service_Lead_Service" />
+          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
+          <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
+          <ScalarProperty Name="Date_of_Accord_of_AoN" ColumnName="Date_of_Accord_of_AoN" />
+          <ScalarProperty Name="AoN_Accorded_By" ColumnName="AoN_Accorded_By" />
+          <ScalarProperty Name="DPP_DAP" ColumnName="DPP_DAP" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="aon_id" ColumnName="aon_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
