@@ -17,69 +17,69 @@ namespace MOD
             AntiForgeryConfig.SuppressIdentityHeuristicChecks = true;
             MvcHandler.DisableMvcResponseHeader = true;
         }
-        protected void Application_Error()
-        {
-            string ipaddress = Request.UserHostAddress;
-            Exception ex = Server.GetLastError();
-            Server.ClearError();
-            Response.Redirect(String.Format("http://localhost:56924/Account/Error"));
+        //protected void Application_Error()
+        //{
+        //    string ipaddress = Request.UserHostAddress;
+        //    Exception ex = Server.GetLastError();
+        //    Server.ClearError();
+        //    Response.Redirect(String.Format("http://localhost:56924/Account/Error"));
 
-        }
-        protected void Application_BeginRequest(object sender, EventArgs e)
-        {
-            string[] headers = { "Server", "X-AspNet-Version" };
+        //}
+        //protected void Application_BeginRequest(object sender, EventArgs e)
+        //{
+        //    string[] headers = { "Server", "X-AspNet-Version" };
 
-            if (!Response.HeadersWritten)
-            {
-                Response.AddOnSendingHeaders((c) =>
-                {
-                    if (c != null && c.Response != null && c.Response.Headers != null)
-                    {
-                        foreach (string header in headers)
-                        {
-                            if (c.Response.Headers[header] != null)
-                            {
-                                c.Response.Headers.Remove(header);
-                            }
-                        }
-                    }
-                });
-            }
+        //    if (!Response.HeadersWritten)
+        //    {
+        //        Response.AddOnSendingHeaders((c) =>
+        //        {
+        //            if (c != null && c.Response != null && c.Response.Headers != null)
+        //            {
+        //                foreach (string header in headers)
+        //                {
+        //                    if (c.Response.Headers[header] != null)
+        //                    {
+        //                        c.Response.Headers.Remove(header);
+        //                    }
+        //                }
+        //            }
+        //        });
+        //    }
 
-        }
+        //}
 
-        protected void Application_EndRequest()
-        {
-            // removing excessive headers. They don't need to see this.
-            Response.Headers.Remove("header_name");
-        }
-        public class SessionExpire : ActionFilterAttribute
-        {
-            public override void OnActionExecuting(ActionExecutingContext filterContext)
-            {
-                HttpContext ctx = HttpContext.Current;
-                // check  sessions here
-                if (HttpContext.Current.Session["UserID"] == null)
-                {
-                    filterContext.Result = new RedirectResult("http://localhost:56924/Account/login");
-                    return;
-                }
-                base.OnActionExecuting(filterContext);
-            }
-        }
-        public class SessionExpireRefNo : ActionFilterAttribute
-        {
-            public override void OnActionExecuting(ActionExecutingContext filterContext)
-            {
-                HttpContext ctx = HttpContext.Current;
-                // check  sessions here
-                if (HttpContext.Current.Session["UserName"] == null)
-                {
-                    filterContext.Result = new RedirectResult("http://localhost:56924/Account/login");
-                    return;
-                }
-                base.OnActionExecuting(filterContext);
-            }
-        }
+        //protected void Application_EndRequest()
+        //{
+        //    // removing excessive headers. They don't need to see this.
+        //    Response.Headers.Remove("header_name");
+        //}
+        //public class SessionExpire : ActionFilterAttribute
+        //{
+        //    public override void OnActionExecuting(ActionExecutingContext filterContext)
+        //    {
+        //        HttpContext ctx = HttpContext.Current;
+        //        // check  sessions here
+        //        if (HttpContext.Current.Session["UserID"] == null)
+        //        {
+        //            filterContext.Result = new RedirectResult("http://localhost:56924/Account/login");
+        //            return;
+        //        }
+        //        base.OnActionExecuting(filterContext);
+        //    }
+        //}
+        //public class SessionExpireRefNo : ActionFilterAttribute
+        //{
+        //    public override void OnActionExecuting(ActionExecutingContext filterContext)
+        //    {
+        //        HttpContext ctx = HttpContext.Current;
+        //        // check  sessions here
+        //        if (HttpContext.Current.Session["UserName"] == null)
+        //        {
+        //            filterContext.Result = new RedirectResult("http://localhost:56924/Account/login");
+        //            return;
+        //        }
+        //        base.OnActionExecuting(filterContext);
+        //    }
+        //}
     }
 }

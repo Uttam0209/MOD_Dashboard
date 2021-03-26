@@ -80,7 +80,7 @@
     <Property Name="AoNClosureDate" Type="datetime" />
     <Property Name="AoNClosureRemarks" Type="nvarchar(max)" />
     <Property Name="AoNForeClosureCreatedBy" Type="int" />
-    <Property Name="VendorsIDs" Type="int" />
+    <Property Name="VendorsIDs" Type="nvarchar" MaxLength="50" />
     <Property Name="DirectorateId" Type="int" />
     <Property Name="ResponsiblePersonLeve1" Type="nvarchar" MaxLength="50" />
     <Property Name="ResponsiblePersonLeve2" Type="nvarchar" MaxLength="50" />
@@ -92,7 +92,6 @@
     <Property Name="DeletedOn" Type="datetime" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="System_case" Type="varchar" MaxLength="50" />
-    <Property Name="VendorsIDss" Type="int" />
   </EntityType>
   <EntityType Name="acq_projectstage_applicability">
     <Key>
@@ -295,7 +294,7 @@
     <Property Name="Temp_Number" Type="nvarchar" MaxLength="100" />
     <Property Name="LoginCount" Type="int" />
     <Property Name="ExpiryTime" Type="datetime" />
-    <Property Name="TokenId" Type="nvarchar(max)" />
+    <Property Name="TokenId" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="tbl_tblAON">
     <Key>

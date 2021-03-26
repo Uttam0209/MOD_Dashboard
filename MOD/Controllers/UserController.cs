@@ -39,6 +39,84 @@ namespace MOD.Controllers
             return View(model);
         }
 
+        public ActionResult EscalationmatrixIndex()
+        {
+            List<UserListViewModel> list = new List<UserListViewModel>();
+            UserListViewModel model = new UserListViewModel();
+            var userList = _entities.tbl_tbl_User.Where(x => x.IsDeleted == false && (x.DepartmentID==2 || x.DepartmentID == 3 || x.DepartmentID == 4 || x.DepartmentID == 5 || x.DepartmentID == 6)).ToList();
+            if (userList != null)
+            {
+                foreach (var item in userList)
+                {
+                    UserListViewModel obj = new UserListViewModel();
+                    obj.UserId = item.UserId;
+                    obj.UserName = item.UserName;
+                    obj.UserEmail = item.InternalEmailID;
+                    obj.Phone = item.Phone;
+                    obj.DepartmentName = item.acq_department_master.deptt_description;
+                    obj.UserTypeName = item.acq_section_master.section_descr;
+                    obj.Designation = item.Designation;
+                    obj.ValidFrom = item.ValidFrom;
+                    obj.ValidTill = item.ValidTill;
+                    //obj.IPAddress = item.IPAddress;
+                    list.Add(obj);
+                }
+                model.UserList = list;
+            }
+            return View(model);
+        }
+        public ActionResult Escalationmatrix()
+        {
+            UserSaveViewModel model = new UserSaveViewModel();
+            model.departmentList = _entities.acq_department_master.ToList();
+            model.SectionMasterList = _entities.acq_section_master.ToList();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Escalationmatrix(UserSaveViewModel model)
+        {
+            model.departmentList = _entities.acq_department_master.ToList();
+            model.SectionMasterList = _entities.acq_section_master.ToList();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string GenPwd1 = model.Password;
+                    string GetSalt = GeneratedPassword.CreateSalt(10);
+                    string hashString = GeneratedPassword.GenarateHash(GenPwd1, GetSalt);
+
+                    tbl_tbl_User obj = new tbl_tbl_User();
+
+                    obj.UserName = model.UserName;
+                    obj.InternalEmailID = model.InternalEmailID;
+                    obj.ExternalEmailID = model.ExternalEmailID;
+                    obj.Password = model.Password;
+                    obj.RankUser = model.RankUser;
+                    obj.Phone = model.Phone;
+                    obj.DepartmentID = model.DepartmentID;
+                    obj.SectionID = model.SectionID;
+                    obj.ValidFrom = Convert.ToDateTime(model.ValidFrom);
+                    obj.ValidTill = Convert.ToDateTime(model.ValidTill);
+                    obj.IPAddress = model.IPAddress;
+                    obj.MacAddress = model.MacAddress;
+                    obj.Designation = model.Designation;
+                    obj.LoginAllowed = model.LoginAllowed;
+                    obj.Pswd_Salt = hashString;
+                    obj.CreatedBy = Convert.ToInt32(Session["UserID"]);
+                    obj.CreatedOn = System.DateTime.Now;
+                    obj.IsDeleted = false;
+                    _entities.tbl_tbl_User.Add(obj);
+                    _entities.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return View(model);
+        }
+
         public ActionResult Create()
         {
             UserSaveViewModel model = new UserSaveViewModel();

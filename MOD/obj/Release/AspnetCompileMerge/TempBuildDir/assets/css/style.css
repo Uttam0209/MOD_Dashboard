@@ -71,3 +71,17 @@ body{
     background: #e5e7e8;
     padding: 8px;
 }
+
+.watermark {
+    list-style-type: none;
+    position: absolute;
+}
+
+    .watermark li {
+        position: absolute;
+        z-index: 999;
+        color: black;
+        font-size: 19px;
+        transform: rotate( -35deg );
+        width: max-content;
+    }

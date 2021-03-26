@@ -24,7 +24,7 @@ namespace MOD.Controllers
         masterService mService = new masterService();
         string password = "p@SSword";
         GanttData ganttData = new GanttData();
-        [SessionExpire]
+        //[SessionExpire]
         public ActionResult Index(string id)
         {
 
@@ -55,13 +55,13 @@ namespace MOD.Controllers
                 return View();
             }
         }
-        [SessionExpire]
+       // [SessionExpire]
         public ActionResult Gantt(int Id)
         {
             ViewBag.DataSource = ganttData.ProjectNewData(Id);
             return View();
         }
-        [SessionExpire]
+        //[SessionExpire]
         public ActionResult Baseline(int Id)
         {
             ViewBag.DataSource = ganttData.BaselineData(Id);

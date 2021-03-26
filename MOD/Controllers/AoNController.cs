@@ -151,7 +151,7 @@ namespace MOD.Controllers
                     obj.Currency = model.Currency;
                     obj.CreatedBy = Convert.ToInt32(Session["UserID"]); ;
                     obj.CreatedOn = System.DateTime.Now;
-                    obj.VendorsIDs = model.VendorsIDs;
+                    obj.VendorsIDs = model.VendorsIDs.ToString();
                     obj.DirectorateId = model.DirectorateId;
                     obj.ResponsiblePersonLeve1 = model.ResponsiblePersonLeve1;
                     obj.ResponsiblePersonLeve2 = model.ResponsiblePersonLeve2;
@@ -221,7 +221,7 @@ namespace MOD.Controllers
                 model.Remarks = _editAonData.Remarks;
                 model.Currency = _editAonData.Currency;
                 model.DirectorateId = _editAonData.DirectorateId;
-                model.VendorsIDs = _editAonData.VendorsIDs;
+                model.VendorsIDs = Convert.ToInt16(_editAonData.VendorsIDs);
                 model.ResponsiblePersonLeve1 = _editAonData.ResponsiblePersonLeve1;
                 model.ResponsiblePersonLeve2 = _editAonData.ResponsiblePersonLeve2;
                 model.ResponsiblePersonLeve3 = _editAonData.ResponsiblePersonLeve3;
@@ -270,7 +270,7 @@ namespace MOD.Controllers
                     _updateAon.Warrenty_Remarks = model.Warrenty_Remarks;
                     _updateAon.Currency = model.Currency;
                     _updateAon.DirectorateId = model.DirectorateId;
-                    _updateAon.VendorsIDs = model.VendorsIDs;
+                    _updateAon.VendorsIDs = model.VendorsIDs.ToString();
                     _updateAon.ResponsiblePersonLeve1 = model.ResponsiblePersonLeve1;
                     _updateAon.ResponsiblePersonLeve2 = model.ResponsiblePersonLeve2;
                     _updateAon.ResponsiblePersonLeve3 = model.ResponsiblePersonLeve3;

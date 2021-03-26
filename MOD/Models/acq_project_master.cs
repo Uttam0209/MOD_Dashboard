@@ -52,7 +52,7 @@ namespace MOD.Models
         public Nullable<System.DateTime> AoNClosureDate { get; set; }
         public string AoNClosureRemarks { get; set; }
         public Nullable<int> AoNForeClosureCreatedBy { get; set; }
-        public Nullable<int> VendorsIDs { get; set; }
+        public string VendorsIDs { get; set; }
         public Nullable<int> DirectorateId { get; set; }
         public string ResponsiblePersonLeve1 { get; set; }
         public string ResponsiblePersonLeve2 { get; set; }
@@ -64,7 +64,6 @@ namespace MOD.Models
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public string System_case { get; set; }
-        public Nullable<int> VendorsIDss { get; set; }
     
         public virtual acq_meeting_master acq_meeting_master { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

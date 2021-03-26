@@ -641,7 +641,6 @@
     <EntitySetMapping Name="acq_project_master">
       <EntityTypeMapping TypeName="MODModel.acq_project_master">
         <MappingFragment StoreEntitySet="acq_project_master">
-          <ScalarProperty Name="VendorsIDss" ColumnName="VendorsIDss" />
           <ScalarProperty Name="System_case" ColumnName="System_case" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />

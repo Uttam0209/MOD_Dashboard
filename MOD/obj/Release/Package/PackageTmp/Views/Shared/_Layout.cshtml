@@ -20,12 +20,16 @@
 </head>
 
 <body>
+   
     @if (@Session["UserName"] != null)
     {
-        @*<p id="bg-text">@Session["UserName"] </p>*@
-        @*<p id="bg-text1">@Session["UserName"] </p>*@
-        @*<p id="bg-text2">@Session["UserName"] </p>*@
+    <ul class="watermark">
+        <li style="left: 376px; top:107px;">@Session["UserName"] </li>
+        <li style="left: 690px; top: 309px;">@Session["UserName"] </li>
+        <li style=" left: 1075px; top: 600px; top: 600px; ">@Session["UserName"] </li>
+    </ul>
     }
+
 
     <div class="wrapper">
         <nav id="sidebar" class="sidebar">
@@ -75,6 +79,10 @@
                                                         <span class="align-middle">AON</span>
                                                     </a>
                                                     <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar" style="">
+                                                        @if ((int)HttpContext.Current.Session["SectionID"] == 12 || (int)HttpContext.Current.Session["SectionID"] == 1)
+                                                        {
+                                                            <li class="sidebar-item"><a class="sidebar-link" id="meeting_master" href="@Url.Action("EscalationmatrixIndex", "User")">Escalation matrix</a></li>
+                                                        }
                                                         <li class="sidebar-item"><a class="sidebar-link" id="meeting_master" href="@Url.Action("Index","AcquisitionMeetingMaster")">Meeting Master</a></li>
                                                         <li class="sidebar-item"><a class="sidebar-link" id="aon_reg" href="@Url.Action("Index","AoN")">AON Registration</a></li>
                                                         <li class="sidebar-item"><a class="sidebar-link" id="AonForC" href="@Url.Action("AoNForeClosure","AoN")">AoN ForeClosure</a></li>
@@ -82,6 +90,8 @@
                                                 </li>
                                             }
                                         }
+
+
 
                                         <li class="sidebar-item">
                                             <a href="@Url.Action("Dashboard","Home")" class="sidebar-link collapsed" aria-expanded="false">
@@ -196,13 +206,13 @@
                                         </div>
 
                                         <!-- item-->
-                                        <a href="http://localhost:56924/Account/ResetPwd" class="dropdown-item notify-item">
+                                        <a href="@Url.Action("ChangePassword","Account")" " class="dropdown-item notify-item">
                                             <i class="fas fa-key mr-1"></i>
                                             <span>Change Password</span>
                                         </a>
 
                                         <!-- item-->
-                                        <a href="http://localhost:56924/Account/Logout" class="dropdown-item notify-item">
+                                        <a href="@Url.Action("Login","Account")" class="dropdown-item notify-item">
                                             <i class="fas fa-sign-out-alt mr-1"></i>
                                             <span>Logout</span>
                                         </a>

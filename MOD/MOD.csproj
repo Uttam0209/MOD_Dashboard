@@ -1875,6 +1875,8 @@
     <Content Include="Views\acq_policy\Create.cshtml" />
     <Content Include="Views\acq_policy\Edit.cshtml" />
     <Content Include="Views\acq_policy\Index.cshtml" />
+    <Content Include="Views\User\Escalationmatrix.cshtml" />
+    <Content Include="Views\User\EscalationmatrixIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

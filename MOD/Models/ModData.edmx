@@ -85,7 +85,7 @@
           <Property Name="AoNClosureDate" Type="datetime" />
           <Property Name="AoNClosureRemarks" Type="nvarchar(max)" />
           <Property Name="AoNForeClosureCreatedBy" Type="int" />
-          <Property Name="VendorsIDs" Type="int" />
+          <Property Name="VendorsIDs" Type="nvarchar" MaxLength="50" />
           <Property Name="DirectorateId" Type="int" />
           <Property Name="ResponsiblePersonLeve1" Type="nvarchar" MaxLength="50" />
           <Property Name="ResponsiblePersonLeve2" Type="nvarchar" MaxLength="50" />
@@ -97,7 +97,6 @@
           <Property Name="DeletedOn" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="System_case" Type="varchar" MaxLength="50" />
-          <Property Name="VendorsIDss" Type="int" />
         </EntityType>
         <EntityType Name="acq_projectstage_applicability">
           <Key>
@@ -300,7 +299,7 @@
           <Property Name="Temp_Number" Type="nvarchar" MaxLength="100" />
           <Property Name="LoginCount" Type="int" />
           <Property Name="ExpiryTime" Type="datetime" />
-          <Property Name="TokenId" Type="nvarchar(max)" />
+          <Property Name="TokenId" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="tbl_tblAON">
           <Key>
@@ -1908,7 +1907,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <Property Name="Temp_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LoginCount" Type="Int32" />
           <Property Name="ExpiryTime" Type="DateTime" Precision="3" />
-          <Property Name="TokenId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TokenId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="acq_department_master" Relationship="MODModel.FK_tbl_tbl_User_acq_department_master" FromRole="tbl_tbl_User" ToRole="acq_department_master" />
           <NavigationProperty Name="acq_section_master" Relationship="MODModel.FK_tbl_tbl_User_acq_section_master" FromRole="tbl_tbl_User" ToRole="acq_section_master" />
         </EntityType>
@@ -1972,7 +1971,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <Property Name="AoNClosureDate" Type="DateTime" Precision="3" />
           <Property Name="AoNClosureRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AoNForeClosureCreatedBy" Type="Int32" />
-          <Property Name="VendorsIDs" Type="Int32" />
+          <Property Name="VendorsIDs" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DirectorateId" Type="Int32" />
           <Property Name="ResponsiblePersonLeve1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ResponsiblePersonLeve2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1984,7 +1983,6 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="System_case" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="VendorsIDss" Type="Int32" />
           <NavigationProperty Name="acq_meeting_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_project_master" ToRole="acq_meeting_master" />
           <NavigationProperty Name="acq_policy" Relationship="MODModel.FK_acq_policy_acq_project_master" FromRole="acq_project_master" ToRole="acq_policy" />
         </EntityType>
@@ -2658,7 +2656,6 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <EntitySetMapping Name="acq_project_master">
             <EntityTypeMapping TypeName="MODModel.acq_project_master">
               <MappingFragment StoreEntitySet="acq_project_master">
-                <ScalarProperty Name="VendorsIDss" ColumnName="VendorsIDss" />
                 <ScalarProperty Name="System_case" ColumnName="System_case" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
