@@ -14,6 +14,12 @@ namespace MOD.Models
     
     public partial class acq_rfp_master
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public acq_rfp_master()
+        {
+            this.acq_rfp_vendors = new HashSet<acq_rfp_vendors>();
+        }
+    
         public int rfp_id { get; set; }
         public int aon_id { get; set; }
         public string type_rfp { get; set; }
@@ -96,5 +102,8 @@ namespace MOD.Models
         public string dateFreezingPSQRsMakeII { get; set; }
         public string dateselectionDasbySHQ_dprbMakeII { get; set; }
         public string dateapprovalCFAfundingarrangementissueProjectMakeII { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<acq_rfp_vendors> acq_rfp_vendors { get; set; }
     }
 }

@@ -50,32 +50,35 @@
         <div class="d-flex">
             <div class="col-md-3 pl-0">
                 <div class="mb-1"><b>Service/Lead Service</b></div>
-                <select class="form-control" id="Service_Lead_Service" name="Service_Lead_Service">
-                    <option value="">--Select Service--</option>
-                    @foreach (var item1 in @ViewBag.Service)
-                    {
-                        <option value="@item1">@item1</option>
-                    }
-                </select>
+                @*<select class="form-control" id="Service_Lead_Service" name="Service_Lead_Service">
+            <option value="">--Select Service--</option>
+            @foreach (var item1 in @ViewBag.Service)
+            {
+                <option value="@item1">@item1</option>
+            }
+        </select>*@
+           
+                @Html.DropDownList("Service_Lead_Service", new SelectList(ViewBag.ServicesData, "Value", "Text"), "-Select Services-", new { @class = "form-control" })
             </div>
             <div class="col-md-3 pl-0">
                 <div class="mb-1"><b>System Case</b></div>
-                    @Html.DropDownListFor(model => model.System_case, new List<SelectListItem>
-                       {
-                        new SelectListItem{ Text="Y", Value = "Y" },
-                        new SelectListItem{ Text="N", Value = "N" },
-                       }, "-Select Services-", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(x => x.System_case, null, new { @class = "danger" })
-                </div>
+                @Html.DropDownListFor(model => model.System_case, new List<SelectListItem>
+                   {
+                    new SelectListItem{ Text="Y", Value = "Y" },
+                    new SelectListItem{ Text="N", Value = "N" },
+                   }, "-Select Type-", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.System_case, null, new { @class = "danger" })
+            </div>
             <div class="col-md-3 pl-0">
                 <div class="mb-1"><b>Stages</b></div>
-                <select class="form-control" id="pending_in_stage" name="pending_in_stage">
-                    <option value="">--Select stage--</option>
-                    @foreach (var item in @ViewBag.stage)
-                    {
-                        <option value="@item">@item</option>
-                    }
-                </select>
+                @Html.DropDownList("pending_in_stage", new SelectList(ViewBag.stage, "Value", "Text"), "-Select stage-", new { @class = "form-control" })
+                @*<select class="form-control" id="pending_in_stage" name="pending_in_stage">
+            <option value="">--Select stage--</option>
+            @foreach (var item in @ViewBag.stage)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>*@
             </div>
             <div class="pt-3 d-flex justify-content-end">
                 <div class="pl-3 d-flex pr-3"><button type="submit" class="btn btn-primary btnFCs">Search</button></div>
@@ -118,20 +121,20 @@
                                 @{ int count = 1;}
                                 @foreach (var aonList in Model.AonList)
                                 {
-                                <tr>
+                                    <tr>
 
-                                    <th scope="row">@count</th>
-                                    <td class="text-wrap">@aonList.Service_Lead_Service</td>
-                                    <td>@aonList.item_description</td>
-                                    <td>@aonList.Date_of_Accord_of_AoN.Value.ToString("dd-MMM-yyyy")</td>
-                                    <td>@aonList.Cost</td>
-                                    <td>@aonList.Categorisation</td>
-                                    <td>@aonList.IC_percentage</td>
-                                    <td>@aonList.Trials_Required</td>
-                                    <td>@aonList.pending_in_stage</td>
-                                    <td>@aonList.date_of_entering_this_stage.Value.ToString("dd-MMM-yyyy")</td>
-                                    <td>@aonList.System_case</td>
-                                </tr>
+                                        <th scope="row">@count</th>
+                                        <td class="text-wrap">@aonList.Service_Lead_Service</td>
+                                        <td>@aonList.item_description</td>
+                                        <td>@aonList.Date_of_Accord_of_AoN.Value.ToString("dd-MMM-yyyy")</td>
+                                        <td>@aonList.Cost</td>
+                                        <td>@aonList.Categorisation</td>
+                                        <td>@aonList.IC_percentage</td>
+                                        <td>@aonList.Trials_Required</td>
+                                        <td>@aonList.pending_in_stage</td>
+                                        <td>@aonList.date_of_entering_this_stage.Value.ToString("dd-MMM-yyyy")</td>
+                                        <td>@aonList.System_case</td>
+                                    </tr>
                                     count++;
                                 }
                             </tbody>
@@ -150,7 +153,6 @@
     </div>
 </div>
 
-
 <script>
     $(document).ready(function () {
 
@@ -167,8 +169,8 @@
     })
 </script>
 
-<script src="~/WJs/canvasjs.min.js"></script>
-<script src="~/WJs/jquery-1.11.1.min.js"></script>
+<script src="~/assets/js/canvasjs.min.js"></script>
+<script src="~/assets/js/jquery-3.6.0.min.js"></script>
 
 <script>
     $(document).ready(function () {

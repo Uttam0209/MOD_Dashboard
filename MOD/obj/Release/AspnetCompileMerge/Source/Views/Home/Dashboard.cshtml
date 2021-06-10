@@ -1,10 +1,12 @@
-﻿
+﻿@*@model MOD.Models.Cipher*@
+    
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<script>
         document.addEventListener('contextmenu', event => event.preventDefault());
     </script>*@
+
 <style>
     #CasesTable_filter {
         display: none;
@@ -153,12 +155,11 @@
     }
 </style>
 
-
-  <script>
-      $(document).ready(function () {
-          $("#sidebar").addClass("collapsed");
-      });
-  </script>
+<script>
+    $(document).ready(function () {
+        $("#sidebar").addClass("collapsed");
+    });
+</script>
 
 <div class="card flex-fill w-100 p-4">
     <div class="row mb-2 mb-xl-3">
@@ -171,25 +172,28 @@
         <div class="row">
             <div class="col-md-3">
                 <label for="text-input">Categorization</label>
-                @Html.DropDownList("Categorisation", new List<SelectListItem>
-              {
-                new SelectListItem{ Text="Buy(Indian-IDDM)", Value = "Buy(Indian-IDDM)" },
-                new SelectListItem{ Text="Buy(Indian)", Value = "Buy(Indian)" },
-                new SelectListItem{ Text="Buy and Make(Indian)", Value = "Buy and Make(Indian)" },
-                new SelectListItem{ Text="Buy and Make", Value = "Buy and Make" },
-                new SelectListItem{ Text="Buy(Global-Manufacture in India)", Value = "Buy(Global-Manufacture in India)" },
-                new SelectListItem{ Text="Buy(Global-Manufacture in India)-IGA", Value = "Buy(Global-Manufacture in India)-IGA" },
-                new SelectListItem{ Text="Buy(Global)", Value = "Buy(Global)" },
-                new SelectListItem{ Text="Buy(Global)-IGA", Value = "Buy(Global)-IGA" },
-                new SelectListItem{ Text="Buy(Global)-FMS Route", Value = "Buy(Global)-FMS Route" },
-                new SelectListItem{ Text="Design & Development", Value = "Design & Development" },
-                new SelectListItem{ Text="IGA", Value = "IGA" },
-                new SelectListItem{ Text="Make", Value = "Make" },
-                new SelectListItem{ Text="Sp Model", Value = "Sp Model" },
-                new SelectListItem{ Text="Make-I", Value = "Make-I" },
-                new SelectListItem{ Text="Make-II", Value = "Make-II" },
-                new SelectListItem{ Text="Make-III", Value = "Make-III" },
-              }, "-Select Categorization-", new { @class = "form-control" })
+               
+                 @Html.DropDownList("Categorisation", new SelectList(ViewBag.catData, "Value", "Text") , "-Select Categorization-", new { @class = "form-control" }) 
+                
+                @*@Html.DropDownList("Categorisation", new List<SelectListItem>
+        {
+          new SelectListItem{ Text="Buy(Indian-IDDM)", Value = "Buy(Indian-IDDM)" },
+          new SelectListItem{ Text="Buy(Indian)", Value = "Buy(Indian)" },
+          new SelectListItem{ Text="Buy and Make(Indian)", Value = "Buy and Make(Indian)" },
+          new SelectListItem{ Text="Buy and Make", Value = "Buy and Make" },
+          new SelectListItem{ Text="Buy(Global-Manufacture in India)", Value = "Buy(Global-Manufacture in India)" },
+          new SelectListItem{ Text="Buy(Global-Manufacture in India)-IGA", Value = "Buy(Global-Manufacture in India)-IGA" },
+          new SelectListItem{ Text="Buy(Global)", Value = "Buy(Global)" },
+          new SelectListItem{ Text="Buy(Global)-IGA", Value = "Buy(Global)-IGA" },
+          new SelectListItem{ Text="Buy(Global)-FMS Route", Value = "Buy(Global)-FMS Route" },
+          new SelectListItem{ Text="Design & Development", Value = "Design & Development" },
+          new SelectListItem{ Text="IGA", Value = "IGA" },
+          new SelectListItem{ Text="Make", Value = "Make" },
+          new SelectListItem{ Text="Sp Model", Value = "Sp Model" },
+          new SelectListItem{ Text="Make-I", Value = "Make-I" },
+          new SelectListItem{ Text="Make-II", Value = "Make-II" },
+          new SelectListItem{ Text="Make-III", Value = "Make-III" },
+        }, "-Select Categorization-", new { @class = "form-control" })*@
             </div>
 
             <div class="col-md-3">
@@ -203,7 +207,8 @@
                                {
                                 //new SelectListItem{ Text="Army", Value = "Army" },
                                 //new SelectListItem{ Text="Navy", Value = "Navy" },
-                                new SelectListItem{ Text="AirForce", Value = "AirForce" },
+                                new SelectListItem{ Text="AirForce", Value = "we7UgF5Z8pqVMgkg0Ww4gA==" },
+                                //new SelectListItem{ Text="AirForce", Value = "AirForce" },
                                 //new SelectListItem{ Text="ICG", Value = "ICG" },
                                 //new SelectListItem{ Text="Joint", Value = "Joint" },
                                }, "-Select Services-", new { @class = "form-control" })
@@ -214,7 +219,8 @@
                         <div>
                             @Html.DropDownList("Service_Lead_Service", new List<SelectListItem>
                        {
-                           new SelectListItem{ Text="Army", Value = "Army" },
+                           new SelectListItem{ Text="Army", Value = "PBDErM+YNXOGIZddicAk+A==" },
+                           //new SelectListItem{ Text="Army", Value = "Army" },
                            //new SelectListItem{ Text="Navy", Value = "Navy" },
                            //new SelectListItem{ Text="AirForce", Value = "AirForce" },
                            //new SelectListItem{ Text="ICG", Value = "ICG" },
@@ -228,7 +234,8 @@
                             @Html.DropDownList("Service_Lead_Service", new List<SelectListItem>
                        {
                            //new SelectListItem{ Text="Army", Value = "Army" },
-                           new SelectListItem{ Text="Navy", Value = "Navy" },
+                          // new SelectListItem{ Text="Navy", Value = "Navy" },
+                           new SelectListItem{ Text="Navy", Value = "IfZZWiZYMLHUo92/oiVXRw==" },
                            //new SelectListItem{ Text="AirForce", Value = "AirForce" },
                            //new SelectListItem{ Text="ICG", Value = "ICG" },
                            //new SelectListItem{ Text="Joint", Value = "Joint" },
@@ -238,14 +245,15 @@
                     else
                     {
                         <div>
-                            @Html.DropDownList("Service_Lead_Service", new List<SelectListItem>
+                            @Html.DropDownList("Service_Lead_Service", new SelectList(ViewBag.ServicesData, "Value", "Text"), "-Select Services-", new { @class = "form-control" })
+                            @*@Html.DropDownList("Service_Lead_Service", new List<SelectListItem>
                                {
-                                new SelectListItem{ Text="Army", Value = "Army" },
-                                new SelectListItem{ Text="Navy", Value = "Navy" },
-                                new SelectListItem{ Text="AirForce", Value = "AirForce" },
-                                new SelectListItem{ Text="ICG", Value = "ICG" },
-                                new SelectListItem{ Text="Joint", Value = "Joint" },
-                               }, "-Select Services-", new { @class = "form-control" })
+                                new SelectListItem{ Text="Army", Value = "PBDErM+YNXOGIZddicAk+A==" },
+                                new SelectListItem{ Text="Navy", Value = "IfZZWiZYMLHUo92/oiVXRw==" },
+                                new SelectListItem{ Text="AirForce", Value = "we7UgF5Z8pqVMgkg0Ww4gA==" },
+                                new SelectListItem{ Text="ICG", Value = "m9U2JUiMuhMB/5OEuhaHZg==" },
+                                new SelectListItem{ Text="Joint", Value = "ahJJoymhe4OZ6JbY6syyWA==" },
+                               }, "-Select Services-", new { @class = "form-control" })*@
                         </div>
                     }
                 }
@@ -258,7 +266,7 @@
 
             <div class="col-md-3 navbar-text mt-3 hidden">
                 <button type="submit" class="btn btn-primary btn-lg btnFCs">Search</button>
-                <a href="@Url.Action("Dashboard","Home")" type="submit" class="btn btn-outline-primary btn-lg btnFCs">Reset</a>
+                <a href="@Url.Action("Dashboard", "Home")" type="submit" class="btn btn-outline-primary btn-lg btnFCs">Reset</a>
             </div>
         </div>
     </form>
@@ -323,7 +331,7 @@
                                     <th><b>AoN Date</b></th>
                                     <th><b>Actual Days</b></th>
                                     @*<th><b>Scheduled Days</b></th>
-        <th><b>Percent Delay</b></th>*@
+                                        <th><b>Percent Delay</b></th>*@
                                 </tr>
                             </thead>
                         </table>
@@ -332,7 +340,7 @@
             </div>
         </div>
     </div>
-    
+
     @*Create A PopUp Modal For DeleteConfirmation*@
     <div class="modal fade show" id="DeleteConfirmation" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document" style="z-index:1200!important;">
@@ -383,7 +391,7 @@
             "paging": false,
             "jQueryUI": true,
             "ajax": {
-                "url": "/Home/GetCasesTable?id=" + id + "&Categorisation=" + cat + "&Service_Lead_Service=" + service + "&myDate=" + date,
+                "url": "/HCasesTable?id=" + id + "&Categorisation =" + cat + "&Service_Lead_Service=" + service + "&myDate=" + date,
                 "type": "GET",
                 "datatype": "json",
             },
@@ -418,7 +426,10 @@
             "paging": false,
             "jQueryUI": true,
             "ajax": {
-                "url": "/Home/GetProjectDasboardDetails?id=" + mID + "&mTaskSlno=" + stage + "&id5=" + id5 + "&Categorisation=" + cat + "&Service_Lead_Service=" + service,
+                @*@{                    
+                    string CatID = DDPAdmin.Services.Master.Cipher.Encrypt(cat, "p@SSword");
+                 }*@
+                "url": "/HDasboardDetails?id=" + mID + "&mTaskSlno=" + stage + "&id5=" + id5 + "&Categorisation=" + cat + "&Service_Lead_Service=" + service,
                 "type": "GET",
                 "datatype": "json"
             },
@@ -428,7 +439,7 @@
                         return i++;
                     }
                 },
-                 {
+                {
                     "data": "ProjectId", "render": function (data) {
                         /**/
                         return "<a class='btn btn-danger btn-sm' style = 'margin-left:5px' onclick = 'DeleteNodalComp(" + data + ")' > <i class='fa fa-eye'></i></a > ";
@@ -450,7 +461,7 @@
                 { "data": "actual_no_of_days" },
                 //{ "data": "scheduled_no_of_days" },
                 //{ "data": "percent_delay" },
-               
+
             ],
             "language": {
                 "emptyTable": "No data found"
@@ -465,7 +476,7 @@
         var selectedCategory = $(this).children("option:selected").val();
         if (selectedCategory != "Select Month") {
             var MonthId = $(this).val();
-            $.getJSON("/Home/GetMonthWiseChart", { id: MonthId });
+            $.getJSON("/HMonthWiseChart", { id: MonthId });
         }
     });
 </script>
@@ -475,7 +486,7 @@
         alert("myfunction");
         var labledate = document.getElementById("myDate").value;
         document.getElementById("dateid").innerHTML = labledate;
-        var url = "/Home/GetMonthWiseChart?monthid=" + id + "&mdate=" + labledate;
+        var url = "/HMonthWiseChart?monthid=" + id + "&mdate=" + labledate;
         $.ajax({
             url: url,
             data: { myDate },

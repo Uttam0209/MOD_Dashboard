@@ -55,8 +55,8 @@
           </Key>
           <Property Name="aon_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="item_description" Type="varchar(max)" />
-          <Property Name="DPP_DAP" Type="varchar(max)" />
-          <Property Name="AoN_Accorded_By" Type="varchar(max)" />
+          <Property Name="DPP_DAP" Type="varchar" MaxLength="32" />
+          <Property Name="AoN_Accorded_By" Type="varchar" MaxLength="32" />
           <Property Name="Date_of_Accord_of_AoN" Type="datetime" />
           <Property Name="meeting_id" Type="int" />
           <Property Name="Categorisation" Type="varchar" MaxLength="200" />
@@ -85,18 +85,19 @@
           <Property Name="AoNClosureDate" Type="datetime" />
           <Property Name="AoNClosureRemarks" Type="nvarchar(max)" />
           <Property Name="AoNForeClosureCreatedBy" Type="int" />
-          <Property Name="VendorsIDs" Type="nvarchar" MaxLength="50" />
-          <Property Name="DirectorateId" Type="int" />
-          <Property Name="ResponsiblePersonLeve1" Type="nvarchar" MaxLength="50" />
-          <Property Name="ResponsiblePersonLeve2" Type="nvarchar" MaxLength="50" />
-          <Property Name="ResponsiblePersonLeve3" Type="nvarchar" MaxLength="50" />
-          <Property Name="ResponsiblePersonLeve4" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedOn" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="System_case" Type="varchar" MaxLength="50" />
+          <Property Name="VendorsIDs" Type="nvarchar" MaxLength="50" />
+          <Property Name="DirectorateId" Type="int" />
+          <Property Name="ResponsiblePersonLeve1" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResponsiblePersonLeve2" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResponsiblePersonLeve3" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResponsiblePersonLeve4" Type="nvarchar" MaxLength="50" />
+          <Property Name="AovType" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="acq_projectstage_applicability">
           <Key>
@@ -155,31 +156,15 @@
           <Property Name="date_approval_CFA_CCS" Type="nvarchar" MaxLength="200" />
           <Property Name="date_ContractSigning" Type="nvarchar" MaxLength="200" />
           <Property Name="Eoi_DPRDateIssueMakeI" Type="nvarchar" MaxLength="200" />
-          <Property Name="Eoi_DPRReceiptDateMakeI" Type="nvarchar" MaxLength="200" />
+          <Property Name="Eoi_DPRReceiptDateMakeI" Type="nchar" MaxLength="10" />
           <Property Name="Eoi_DPRDateCompletionandResponseMakeI" Type="nvarchar" MaxLength="200" />
           <Property Name="dtforwardingshortlistedDPMakeI" Type="nvarchar" MaxLength="200" />
           <Property Name="dateapprovalshortlistedvendorsMakeI" Type="nvarchar" MaxLength="200" />
-          <Property Name="dateselectionDasbySHQ_dprbMakeI" Type="nvarchar" MaxLength="200" />
-          <Property Name="dateapprovalCFAfundingarrangementissueProjectMakeI" Type="nvarchar" MaxLength="200" />
-          <Property Name="dateselectionDasbySHQ_dprbMakeII" Type="nvarchar" MaxLength="200" />
-          <Property Name="dateapprovalCFAfundingarrangementissueProjectMakeII" Type="nvarchar" MaxLength="200" />
-          <Property Name="datecommencementpreliminaryMakeI" Type="nvarchar" MaxLength="200" />
-          <Property Name="datefinalisationdetaileddesign" Type="nvarchar" MaxLength="200" />
-          <Property Name="datecommencementfabrication_devProMakeI" Type="nvarchar" MaxLength="200" />
-          <Property Name="datetechnicallimitedfieldstrialsMakeI" Type="nvarchar" MaxLength="200" />
-          <Property Name="datefreezingPSQRStoSQRSMakeI" Type="nvarchar" MaxLength="200" />
-          <Property Name="dateintimationvendorssubmissionrevisedMakeI" Type="nvarchar" MaxLength="200" />
-          <Property Name="datesubmissionrevisedcommercialoffersvendorsMakeI" Type="nvarchar" MaxLength="200" />
           <Property Name="DateIssueMake_II" Type="nvarchar" MaxLength="200" />
           <Property Name="EoiReceiptDateMake_II" Type="nvarchar" MaxLength="200" />
           <Property Name="EoiCompletionResponseMake_II" Type="nvarchar" MaxLength="200" />
           <Property Name="dateApprovalEoiMake_II" Type="nvarchar" MaxLength="200" />
           <Property Name="dateissueProjectSenctionMake_II" Type="nvarchar" MaxLength="200" />
-          <Property Name="datecommencementDevPrototypeMakeII" Type="nvarchar" MaxLength="200" />
-          <Property Name="datecompletionDevPrototypeMakeII" Type="nvarchar" MaxLength="200" />
-          <Property Name="datecommencementUserTrialsMakeII" Type="nvarchar" MaxLength="200" />
-          <Property Name="datecompletionUserTrialsRedinessReviewMakeII" Type="nvarchar" MaxLength="200" />
-          <Property Name="dateFreezingPSQRsMakeII" Type="nvarchar" MaxLength="200" />
           <Property Name="dateFormulationJPMT_DD" Type="nvarchar" MaxLength="200" />
           <Property Name="dateFormulationPMT_DD" Type="nvarchar" MaxLength="200" />
           <Property Name="dateIdentificationDCPP_DD" Type="nvarchar" MaxLength="200" />
@@ -194,6 +179,22 @@
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedOn" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="dateselectionDasbySHQ_dprbMakeI" Type="nvarchar" MaxLength="200" />
+          <Property Name="dateapprovalCFAfundingarrangementissueProjectMakeI" Type="nvarchar" MaxLength="200" />
+          <Property Name="datecommencementpreliminaryMakeI" Type="nvarchar" MaxLength="200" />
+          <Property Name="datefinalisationdetaileddesign" Type="nvarchar" MaxLength="200" />
+          <Property Name="datecommencementfabrication_devProMakeI" Type="nvarchar" MaxLength="200" />
+          <Property Name="datetechnicallimitedfieldstrialsMakeI" Type="nvarchar" MaxLength="200" />
+          <Property Name="datefreezingPSQRStoSQRSMakeI" Type="nvarchar" MaxLength="200" />
+          <Property Name="dateintimationvendorssubmissionrevisedMakeI" Type="nvarchar" MaxLength="200" />
+          <Property Name="datesubmissionrevisedcommercialoffersvendorsMakeI" Type="nvarchar" MaxLength="200" />
+          <Property Name="datecommencementDevPrototypeMakeII" Type="nvarchar" MaxLength="200" />
+          <Property Name="datecompletionDevPrototypeMakeII" Type="nvarchar" MaxLength="200" />
+          <Property Name="datecommencementUserTrialsMakeII" Type="nvarchar" MaxLength="200" />
+          <Property Name="datecompletionUserTrialsRedinessReviewMakeII" Type="nvarchar" MaxLength="200" />
+          <Property Name="dateFreezingPSQRsMakeII" Type="nvarchar" MaxLength="200" />
+          <Property Name="dateselectionDasbySHQ_dprbMakeII" Type="nvarchar" MaxLength="200" />
+          <Property Name="dateapprovalCFAfundingarrangementissueProjectMakeII" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="acq_rfp_vendors">
           <Key>
@@ -218,6 +219,7 @@
           <Property Name="section_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="section_descr" Type="varchar" MaxLength="100" />
           <Property Name="deptt_id" Type="int" />
+          <Property Name="ServiceType" Type="int" />
         </EntityType>
         <EntityType Name="acq_trials">
           <Key>
@@ -235,6 +237,31 @@
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedOn" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_master_formMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="From_menu" Type="nvarchar" MaxLength="200" />
+          <Property Name="ActionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Controller" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="char" MaxLength="1" />
+          <Property Name="RecTime" Type="datetime" />
+          <Property Name="MenuId" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Master_Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FormMenuID" Type="int" />
+          <Property Name="FormName" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsActive" Type="char" MaxLength="1" />
+          <Property Name="RecTime" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tbl_mst_Project">
           <Key>
@@ -298,8 +325,9 @@
           <Property Name="Flag" Type="nvarchar" MaxLength="100" />
           <Property Name="Temp_Number" Type="nvarchar" MaxLength="100" />
           <Property Name="LoginCount" Type="int" />
-          <Property Name="ExpiryTime" Type="datetime" />
+          <Property Name="ExpiryTime" Type="date" />
           <Property Name="TokenId" Type="nvarchar" MaxLength="200" />
+          <Property Name="DSCSerialno" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="tbl_tblAON">
           <Key>
@@ -382,6 +410,24 @@
           <Property Name="VendorCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="VendorCategoryName" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="tbl_trn_OTP">
+          <Key>
+            <PropertyRef Name="OtpID" />
+          </Key>
+          <Property Name="OtpID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="15" />
+          <Property Name="OTPMobile" Type="nvarchar" MaxLength="6" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailOTP" Type="nvarchar" MaxLength="6" />
+          <Property Name="OTPCategory" Type="nvarchar" MaxLength="50" />
+          <Property Name="OTPVerified" Type="char" MaxLength="1" />
+          <Property Name="StartTime" Type="datetime" />
+          <Property Name="ExpiryTime" Type="datetime" />
+          <Property Name="Comp_RefrenceNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="ReclnsTime" Type="datetime" />
+          <Property Name="OtpCount" Type="int" />
+          <Property Name="ExpiryOtpTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="tbl_trn_UpdateStausDummy">
           <Key>
             <PropertyRef Name="UpdateStatusTaskId" />
@@ -433,7 +479,7 @@
           <Property Name="percent_delay" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.acq_project_status_1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.acq_project_status_1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="acq_project_status_1">
           <Key>
             <PropertyRef Name="project_id" />
@@ -447,7 +493,7 @@ warning 6002: The table/view 'mod.dbo.acq_project_status_1' does not have a prim
           <Property Name="actual_end_date" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.acq_project_status_pendingstage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.acq_project_status_pendingstage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="acq_project_status_pendingstage">
           <Key>
             <PropertyRef Name="Pkey" />
@@ -466,7 +512,7 @@ warning 6002: The table/view 'mod.dbo.acq_project_status_pendingstage' does not 
           <Property Name="date_of_entering_this_stage" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.acq_project_status_timelines' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.acq_project_status_timelines' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="acq_project_status_timelines">
           <Key>
             <PropertyRef Name="aon_id" />
@@ -486,7 +532,7 @@ warning 6002: The table/view 'mod.dbo.acq_project_status_timelines' does not hav
           <Property Name="dap_timeline" Type="varchar" MaxLength="2000" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.ChartReportOnClick' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.ChartReportOnClick' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ChartReportOnClick">
           <Key>
             <PropertyRef Name="Pkey" />
@@ -503,7 +549,7 @@ warning 6002: The table/view 'mod.dbo.ChartReportOnClick' does not have a primar
           <Property Name="Trials_Required" Type="varchar" MaxLength="200" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.ReportMileStonebyMonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.ReportMileStonebyMonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ReportMileStonebyMonth">
           <Key>
             <PropertyRef Name="Pkey" />
@@ -513,7 +559,7 @@ warning 6002: The table/view 'mod.dbo.ReportMileStonebyMonth' does not have a pr
           <Property Name="projects" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.Service_WiseReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.Service_WiseReport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Service_WiseReport">
           <Key>
             <PropertyRef Name="Pkey" />
@@ -524,7 +570,7 @@ warning 6002: The table/view 'mod.dbo.Service_WiseReport' does not have a primar
           <Property Name="total_aon_cost" Type="decimal" Precision="38" Scale="0" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.tbl_trn_tryProject' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.tbl_trn_tryProject' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_trn_tryProject">
           <Key>
             <PropertyRef Name="super_task_id" />
@@ -551,7 +597,7 @@ warning 6002: The table/view 'mod.dbo.tbl_trn_tryProject' does not have a primar
           <Property Name="planned_end_date" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.tbl_trn_tryProject1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.tbl_trn_tryProject1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_trn_tryProject1">
           <Key>
             <PropertyRef Name="TryPojectID" />
@@ -576,7 +622,7 @@ warning 6002: The table/view 'mod.dbo.tbl_trn_tryProject1' does not have a prima
           <Property Name="planned_end_date" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.TimeLineReport1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.TimeLineReport1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TimeLineReport1">
           <Key>
             <PropertyRef Name="Pkey" />
@@ -596,7 +642,7 @@ warning 6002: The table/view 'mod.dbo.TimeLineReport1' does not have a primary k
           <Property Name="TaskSlno" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.vw_assignofTask' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.vw_assignofTask' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_assignofTask">
           <Key>
             <PropertyRef Name="super_task_id" />
@@ -624,7 +670,7 @@ warning 6002: The table/view 'mod.dbo.vw_assignofTask' does not have a primary k
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.vw_Chart2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.vw_Chart2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_Chart2">
           <Key>
             <PropertyRef Name="IdPrimaryKey" />
@@ -634,7 +680,7 @@ warning 6002: The table/view 'mod.dbo.vw_Chart2' does not have a primary key def
           <Property Name="no_of_projects" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.vw_ChartFirst' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.vw_ChartFirst' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ChartFirst">
           <Key>
             <PropertyRef Name="IdPrimaryKey" />
@@ -645,7 +691,7 @@ warning 6002: The table/view 'mod.dbo.vw_ChartFirst' does not have a primary key
           <Property Name="delay_lt90" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.vw_Grid2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.vw_Grid2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_Grid2">
           <Key>
             <PropertyRef Name="IdPrimaryKey" />
@@ -659,7 +705,7 @@ warning 6002: The table/view 'mod.dbo.vw_Grid2' does not have a primary key defi
           <Property Name="other_projects" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'mod_db_new.dbo.vw_GridFirst' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_GridFirst">
           <Key>
             <PropertyRef Name="IdPrimaryKey" />
@@ -669,79 +715,33 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <Property Name="taskDescription" Type="nvarchar" MaxLength="500" />
           <Property Name="avg_delay_days" Type="int" />
         </EntityType>
-        <Association Name="FK__acq_polic__stagi__3552E9B6">
-          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
-          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_mst_Template">
-              <PropertyRef Name="TemplateID" />
-            </Principal>
-            <Dependent Role="acq_policy">
-              <PropertyRef Name="stagid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__acq_polic__stagi__36470DEF">
-          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
-          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_mst_Template">
-              <PropertyRef Name="TemplateID" />
-            </Principal>
-            <Dependent Role="acq_policy">
-              <PropertyRef Name="stagid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__acq_polic__stagi__373B3228">
-          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
-          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_mst_Template">
-              <PropertyRef Name="TemplateID" />
-            </Principal>
-            <Dependent Role="acq_policy">
-              <PropertyRef Name="stagid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__acq_polic__stagi__40F9A68C">
-          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
-          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_mst_Template">
-              <PropertyRef Name="TemplateID" />
-            </Principal>
-            <Dependent Role="acq_policy">
-              <PropertyRef Name="stagid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__acq_polic__stagi__41EDCAC5">
-          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
-          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_mst_Template">
-              <PropertyRef Name="TemplateID" />
-            </Principal>
-            <Dependent Role="acq_policy">
-              <PropertyRef Name="stagid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__acq_polic__stagi__42E1EEFE">
-          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
-          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_mst_Template">
-              <PropertyRef Name="TemplateID" />
-            </Principal>
-            <Dependent Role="acq_policy">
-              <PropertyRef Name="stagid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_acq_policy_acq_project_master">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_userDetail">
+          <Key>
+            <PropertyRef Name="deptt_id" />
+          </Key>
+          <Property Name="deptt_id" Type="int" Nullable="false" />
+          <Property Name="deptt_description" Type="varchar" MaxLength="100" />
+          <Property Name="section_id" Type="int" />
+          <Property Name="section_descr" Type="varchar" MaxLength="100" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="InternalEmailID" Type="nvarchar" MaxLength="100" />
+          <Property Name="ExternalEmailID" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="Pswd_Salt" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="Flag" Type="nvarchar" MaxLength="100" />
+          <Property Name="SrNo" Type="int" />
+          <Property Name="MemberID" Type="int" />
+          <Property Name="IsActive" Type="char" MaxLength="1" />
+          <Property Name="IPAddress" Type="varchar" MaxLength="50" />
+          <Property Name="MacAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="DSCSerialno" Type="nvarchar" MaxLength="200" />
+          <Property Name="Temp_Number" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__acq_polic__aon_i__540C7B00">
           <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
           <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
           <ReferentialConstraint>
@@ -750,6 +750,102 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
             </Principal>
             <Dependent Role="acq_policy">
               <PropertyRef Name="aon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__acq_polic__aon_i__55009F39">
+          <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
+          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acq_project_master">
+              <PropertyRef Name="aon_id" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="aon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__acq_polic__aon_i__55F4C372">
+          <End Role="acq_project_master" Type="Self.acq_project_master" Multiplicity="1" />
+          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acq_project_master">
+              <PropertyRef Name="aon_id" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="aon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__acq_polic__stagi__11158940">
+          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_mst_Template">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="stagid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__acq_polic__stagi__1209AD79">
+          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_mst_Template">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="stagid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__acq_polic__stagi__12FDD1B2">
+          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_mst_Template">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="stagid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__acq_polic__stagi__37703C52">
+          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_mst_Template">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="stagid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__acq_polic__stagi__3864608B">
+          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_mst_Template">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="stagid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__acq_polic__stagi__395884C4">
+          <End Role="tbl_mst_Template" Type="Self.tbl_mst_Template" Multiplicity="1" />
+          <End Role="acq_policy" Type="Self.acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_mst_Template">
+              <PropertyRef Name="TemplateID" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="stagid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -762,6 +858,18 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
             </Principal>
             <Dependent Role="acq_project_master">
               <PropertyRef Name="meeting_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_acq_rfp_vendors_acq_rfp_master">
+          <End Role="acq_rfp_master" Type="Self.acq_rfp_master" Multiplicity="1" />
+          <End Role="acq_rfp_vendors" Type="Self.acq_rfp_vendors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acq_rfp_master">
+              <PropertyRef Name="rfp_id" />
+            </Principal>
+            <Dependent Role="acq_rfp_vendors">
+              <PropertyRef Name="Rfp_fk_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -837,6 +945,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="prc_Getvendcatwise_report" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PROC_DASHBOARD_DATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="categorisation" Type="varchar" Mode="In" />
           <Parameter Name="service" Type="varchar" Mode="In" />
@@ -866,6 +975,8 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <EntitySet Name="acq_rfp_VendorsDetails" EntityType="Self.acq_rfp_VendorsDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="acq_section_master" EntityType="Self.acq_section_master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="acq_trials" EntityType="Self.acq_trials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_master_formMenu" EntityType="Self.tbl_master_formMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Master_Role" EntityType="Self.tbl_Master_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_mst_Project" EntityType="Self.tbl_mst_Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_mst_Template" EntityType="Self.tbl_mst_Template" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_tbl_User" EntityType="Self.tbl_tbl_User" Schema="dbo" store:Type="Tables" />
@@ -873,6 +984,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <EntitySet Name="tbl_tblTimelineForProcurement" EntityType="Self.tbl_tblTimelineForProcurement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_tblVendor" EntityType="Self.tbl_tblVendor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_tblVendorCategory" EntityType="Self.tbl_tblVendorCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_trn_OTP" EntityType="Self.tbl_trn_OTP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_trn_UpdateStausDummy" EntityType="Self.tbl_trn_UpdateStausDummy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="temp_BF" EntityType="Self.temp_BF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="temp_dashboard" EntityType="Self.temp_dashboard" Schema="dbo" store:Type="Tables" />
@@ -1060,37 +1172,72 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
     [vw_GridFirst].[avg_delay_days] AS [avg_delay_days]
     FROM [dbo].[vw_GridFirst] AS [vw_GridFirst]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__acq_polic__stagi__3552E9B6" Association="Self.FK__acq_polic__stagi__3552E9B6">
-            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
-            <End Role="acq_policy" EntitySet="acq_policy" />
-          </AssociationSet>
-          <AssociationSet Name="FK__acq_polic__stagi__36470DEF" Association="Self.FK__acq_polic__stagi__36470DEF">
-            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
-            <End Role="acq_policy" EntitySet="acq_policy" />
-          </AssociationSet>
-          <AssociationSet Name="FK__acq_polic__stagi__373B3228" Association="Self.FK__acq_polic__stagi__373B3228">
-            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
-            <End Role="acq_policy" EntitySet="acq_policy" />
-          </AssociationSet>
-          <AssociationSet Name="FK__acq_polic__stagi__40F9A68C" Association="Self.FK__acq_polic__stagi__40F9A68C">
-            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
-            <End Role="acq_policy" EntitySet="acq_policy" />
-          </AssociationSet>
-          <AssociationSet Name="FK__acq_polic__stagi__41EDCAC5" Association="Self.FK__acq_polic__stagi__41EDCAC5">
-            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
-            <End Role="acq_policy" EntitySet="acq_policy" />
-          </AssociationSet>
-          <AssociationSet Name="FK__acq_polic__stagi__42E1EEFE" Association="Self.FK__acq_polic__stagi__42E1EEFE">
-            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
-            <End Role="acq_policy" EntitySet="acq_policy" />
-          </AssociationSet>
-          <AssociationSet Name="FK_acq_policy_acq_project_master" Association="Self.FK_acq_policy_acq_project_master">
+          <EntitySet Name="vw_userDetail" EntityType="Self.vw_userDetail" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_userDetail].[deptt_id] AS [deptt_id], 
+    [vw_userDetail].[deptt_description] AS [deptt_description], 
+    [vw_userDetail].[section_id] AS [section_id], 
+    [vw_userDetail].[section_descr] AS [section_descr], 
+    [vw_userDetail].[UserId] AS [UserId], 
+    [vw_userDetail].[UserName] AS [UserName], 
+    [vw_userDetail].[InternalEmailID] AS [InternalEmailID], 
+    [vw_userDetail].[ExternalEmailID] AS [ExternalEmailID], 
+    [vw_userDetail].[Password] AS [Password], 
+    [vw_userDetail].[Pswd_Salt] AS [Pswd_Salt], 
+    [vw_userDetail].[IsDeleted] AS [IsDeleted], 
+    [vw_userDetail].[Flag] AS [Flag], 
+    [vw_userDetail].[SrNo] AS [SrNo], 
+    [vw_userDetail].[MemberID] AS [MemberID], 
+    [vw_userDetail].[IsActive] AS [IsActive], 
+    [vw_userDetail].[IPAddress] AS [IPAddress], 
+    [vw_userDetail].[MacAddress] AS [MacAddress], 
+    [vw_userDetail].[DSCSerialno] AS [DSCSerialno], 
+    [vw_userDetail].[Temp_Number] AS [Temp_Number]
+    FROM [dbo].[vw_userDetail] AS [vw_userDetail]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__acq_polic__aon_i__540C7B00" Association="Self.FK__acq_polic__aon_i__540C7B00">
             <End Role="acq_project_master" EntitySet="acq_project_master" />
+            <End Role="acq_policy" EntitySet="acq_policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__acq_polic__aon_i__55009F39" Association="Self.FK__acq_polic__aon_i__55009F39">
+            <End Role="acq_project_master" EntitySet="acq_project_master" />
+            <End Role="acq_policy" EntitySet="acq_policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__acq_polic__aon_i__55F4C372" Association="Self.FK__acq_polic__aon_i__55F4C372">
+            <End Role="acq_project_master" EntitySet="acq_project_master" />
+            <End Role="acq_policy" EntitySet="acq_policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__acq_polic__stagi__11158940" Association="Self.FK__acq_polic__stagi__11158940">
+            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+            <End Role="acq_policy" EntitySet="acq_policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__acq_polic__stagi__1209AD79" Association="Self.FK__acq_polic__stagi__1209AD79">
+            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+            <End Role="acq_policy" EntitySet="acq_policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__acq_polic__stagi__12FDD1B2" Association="Self.FK__acq_polic__stagi__12FDD1B2">
+            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+            <End Role="acq_policy" EntitySet="acq_policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__acq_polic__stagi__37703C52" Association="Self.FK__acq_polic__stagi__37703C52">
+            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+            <End Role="acq_policy" EntitySet="acq_policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__acq_polic__stagi__3864608B" Association="Self.FK__acq_polic__stagi__3864608B">
+            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
+            <End Role="acq_policy" EntitySet="acq_policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__acq_polic__stagi__395884C4" Association="Self.FK__acq_polic__stagi__395884C4">
+            <End Role="tbl_mst_Template" EntitySet="tbl_mst_Template" />
             <End Role="acq_policy" EntitySet="acq_policy" />
           </AssociationSet>
           <AssociationSet Name="FK_acq_project_master_acq_meeting_master" Association="Self.FK_acq_project_master_acq_meeting_master">
             <End Role="acq_meeting_master" EntitySet="acq_meeting_master" />
             <End Role="acq_project_master" EntitySet="acq_project_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_acq_rfp_vendors_acq_rfp_master" Association="Self.FK_acq_rfp_vendors_acq_rfp_master">
+            <End Role="acq_rfp_master" EntitySet="acq_rfp_master" />
+            <End Role="acq_rfp_vendors" EntitySet="acq_rfp_vendors" />
           </AssociationSet>
           <AssociationSet Name="FK_acq_rfp_VendorsDetails_tbl_tblVendor" Association="Self.FK_acq_rfp_VendorsDetails_tbl_tblVendor">
             <End Role="tbl_tblVendor" EntitySet="tbl_tblVendor" />
@@ -1206,15 +1353,32 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
             <End Role="acq_section_master" EntitySet="acq_section_master" />
             <End Role="tbl_tbl_User" EntitySet="tbl_tbl_User" />
           </AssociationSet>
+          <AssociationSet Name="FK_acq_rfp_vendors_acq_rfp_master" Association="MODModel.FK_acq_rfp_vendors_acq_rfp_master">
+            <End Role="acq_rfp_master" EntitySet="acq_rfp_master" />
+            <End Role="acq_rfp_vendors" EntitySet="acq_rfp_vendors" />
+          </AssociationSet>
+          <FunctionImport Name="prc_Getvendcatwise_report" ReturnType="Collection(MODModel.prc_Getvendcatwise_report_Result)" />
+          <EntitySet Name="vw_userDetail" EntityType="MODModel.vw_userDetail" />
           <EntitySet Name="acq_project_master" EntityType="MODModel.acq_project_master" />
           <AssociationSet Name="FK_acq_project_master_acq_meeting_master" Association="MODModel.FK_acq_project_master_acq_meeting_master">
             <End Role="acq_meeting_master" EntitySet="acq_meeting_master" />
             <End Role="acq_project_master" EntitySet="acq_project_master" />
           </AssociationSet>
-          <AssociationSet Name="FK_acq_policy_acq_project_master" Association="MODModel.FK_acq_policy_acq_project_master">
+          <AssociationSet Name="FK__acq_polic__aon_i__540C7B00" Association="MODModel.FK__acq_polic__aon_i__540C7B00">
             <End Role="acq_project_master" EntitySet="acq_project_master" />
             <End Role="acq_policy" EntitySet="acq_policy" />
           </AssociationSet>
+          <AssociationSet Name="FK__acq_polic__aon_i__55009F39" Association="MODModel.FK__acq_polic__aon_i__55009F39">
+            <End Role="acq_project_master" EntitySet="acq_project_master" />
+            <End Role="acq_policy" EntitySet="acq_policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__acq_polic__aon_i__55F4C372" Association="MODModel.FK__acq_polic__aon_i__55F4C372">
+            <End Role="acq_project_master" EntitySet="acq_project_master" />
+            <End Role="acq_policy" EntitySet="acq_policy" />
+          </AssociationSet>
+          <EntitySet Name="tbl_Master_Role" EntityType="MODModel.tbl_Master_Role" />
+          <EntitySet Name="tbl_master_formMenu" EntityType="MODModel.tbl_master_formMenu" />
+          <EntitySet Name="tbl_trn_OTP" EntityType="MODModel.tbl_trn_OTP" />
           </EntityContainer>
         <EntityType Name="tbl_tblAON">
           <Key>
@@ -1344,6 +1508,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <Property Name="deptt_id" Type="Int32" />
           <NavigationProperty Name="acq_department_master" Relationship="MODModel.FK_acq_section_master_acq_department_master" FromRole="acq_section_master" ToRole="acq_department_master" />
           <NavigationProperty Name="tbl_tbl_User" Relationship="MODModel.FK_tbl_tbl_User_acq_section_master" FromRole="acq_section_master" ToRole="tbl_tbl_User" />
+          <Property Name="ServiceType" Type="Int32" />
         </EntityType>
         <Association Name="FK_acq_section_master_acq_department_master">
           <End Type="MODModel.acq_department_master" Role="acq_department_master" Multiplicity="0..1" />
@@ -1573,6 +1738,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           </Key>
           <Property Name="rfp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rfp_fk_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="acq_rfp_master" Relationship="MODModel.FK_acq_rfp_vendors_acq_rfp_master" FromRole="acq_rfp_vendors" ToRole="acq_rfp_master" />
         </EntityType>
         <EntityType Name="acq_project_status_timelines">
           <Key>
@@ -1644,7 +1810,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="Eoi_DPRDateIssueMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Eoi_DPRReceiptDateMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Eoi_DPRReceiptDateMakeI" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Eoi_DPRDateCompletionandResponseMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="dtforwardingshortlistedDPMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="dateapprovalshortlistedvendorsMakeI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -1678,6 +1844,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <Property Name="dateFreezingPSQRsMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="dateselectionDasbySHQ_dprbMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="dateapprovalCFAfundingarrangementissueProjectMakeII" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="acq_rfp_vendors" Relationship="MODModel.FK_acq_rfp_vendors_acq_rfp_master" FromRole="acq_rfp_master" ToRole="acq_rfp_vendors" />
         </EntityType>
         <EntityType Name="acq_project_status_1">
           <Key>
@@ -1863,8 +2030,10 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="section_id" Type="Int32" />
           <NavigationProperty Name="tbl_mst_Template" Relationship="MODModel.FK__acq_polic__stagi__5DCAEF64" FromRole="acq_policy" ToRole="tbl_mst_Template" />
-          <NavigationProperty Name="acq_project_master" Relationship="MODModel.FK_acq_policy_acq_project_master" FromRole="acq_policy" ToRole="acq_project_master" />
-        </EntityType>
+          <NavigationProperty Name="acq_project_master" Relationship="MODModel.FK__acq_polic__aon_i__540C7B00" FromRole="acq_policy" ToRole="acq_project_master" />
+          <NavigationProperty Name="acq_project_master1" Relationship="MODModel.FK__acq_polic__aon_i__55009F39" FromRole="acq_policy" ToRole="acq_project_master" />
+          <NavigationProperty Name="acq_project_master2" Relationship="MODModel.FK__acq_polic__aon_i__55F4C372" FromRole="acq_policy" ToRole="acq_project_master" />
+          </EntityType>
         <Association Name="FK__acq_polic__stagi__5DCAEF64">
           <End Type="MODModel.tbl_mst_Template" Role="tbl_mst_Template" Multiplicity="1" />
           <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
@@ -1906,10 +2075,11 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <Property Name="Flag" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Temp_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LoginCount" Type="Int32" />
-          <Property Name="ExpiryTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpiryTime" Type="DateTime" Precision="0" />
           <Property Name="TokenId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="acq_department_master" Relationship="MODModel.FK_tbl_tbl_User_acq_department_master" FromRole="tbl_tbl_User" ToRole="acq_department_master" />
           <NavigationProperty Name="acq_section_master" Relationship="MODModel.FK_tbl_tbl_User_acq_section_master" FromRole="tbl_tbl_User" ToRole="acq_section_master" />
+          <Property Name="DSCSerialno" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_tbl_tbl_User_acq_department_master">
           <End Type="MODModel.acq_department_master" Role="acq_department_master" Multiplicity="0..1" />
@@ -1935,14 +2105,59 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_acq_rfp_vendors_acq_rfp_master">
+          <End Type="MODModel.acq_rfp_master" Role="acq_rfp_master" Multiplicity="1" />
+          <End Type="MODModel.acq_rfp_vendors" Role="acq_rfp_vendors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acq_rfp_master">
+              <PropertyRef Name="rfp_id" />
+            </Principal>
+            <Dependent Role="acq_rfp_vendors">
+              <PropertyRef Name="Rfp_fk_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="prc_Getvendcatwise_report_Result">
+          <Property Type="Byte" Name="stage" Nullable="true" />
+          <Property Type="String" Name="TaskDescription" Nullable="true" MaxLength="500" />
+          <Property Type="Decimal" Name="PSU" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="Indian_Private_MSME" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="Foreign_OEM" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="Indian_Private__Non_MSME" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="Other" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+        <EntityType Name="vw_userDetail">
+          <Key>
+            <PropertyRef Name="deptt_id" />
+          </Key>
+          <Property Name="deptt_id" Type="Int32" Nullable="false" />
+          <Property Name="deptt_description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="section_id" Type="Int32" />
+          <Property Name="section_descr" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="InternalEmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ExternalEmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Pswd_Salt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="Flag" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SrNo" Type="Int32" />
+          <Property Name="MemberID" Type="Int32" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MacAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DSCSerialno" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Temp_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="acq_project_master">
           <Key>
             <PropertyRef Name="aon_id" />
           </Key>
           <Property Name="aon_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="item_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DPP_DAP" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="AoN_Accorded_By" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DPP_DAP" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="AoN_Accorded_By" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="Date_of_Accord_of_AoN" Type="DateTime" Precision="3" />
           <Property Name="meeting_id" Type="Int32" />
           <Property Name="Categorisation" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -1971,20 +2186,23 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <Property Name="AoNClosureDate" Type="DateTime" Precision="3" />
           <Property Name="AoNClosureRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AoNForeClosureCreatedBy" Type="Int32" />
-          <Property Name="VendorsIDs" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DirectorateId" Type="Int32" />
-          <Property Name="ResponsiblePersonLeve1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ResponsiblePersonLeve2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ResponsiblePersonLeve3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ResponsiblePersonLeve4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="System_case" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VendorsIDs" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DirectorateId" Type="Int32" />
+          <Property Name="ResponsiblePersonLeve1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResponsiblePersonLeve2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResponsiblePersonLeve3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResponsiblePersonLeve4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AovType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="acq_meeting_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_project_master" ToRole="acq_meeting_master" />
-          <NavigationProperty Name="acq_policy" Relationship="MODModel.FK_acq_policy_acq_project_master" FromRole="acq_project_master" ToRole="acq_policy" />
+          <NavigationProperty Name="acq_policy" Relationship="MODModel.FK__acq_polic__aon_i__540C7B00" FromRole="acq_project_master" ToRole="acq_policy" />
+          <NavigationProperty Name="acq_policy1" Relationship="MODModel.FK__acq_polic__aon_i__55009F39" FromRole="acq_project_master" ToRole="acq_policy" />
+          <NavigationProperty Name="acq_policy2" Relationship="MODModel.FK__acq_polic__aon_i__55F4C372" FromRole="acq_project_master" ToRole="acq_policy" />
         </EntityType>
         <Association Name="FK_acq_project_master_acq_meeting_master">
           <End Type="MODModel.acq_meeting_master" Role="acq_meeting_master" Multiplicity="0..1" />
@@ -1998,7 +2216,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_acq_policy_acq_project_master">
+        <Association Name="FK__acq_polic__aon_i__540C7B00">
           <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="1" />
           <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2010,6 +2228,73 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__acq_polic__aon_i__55009F39">
+          <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="1" />
+          <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acq_project_master">
+              <PropertyRef Name="aon_id" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="aon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__acq_polic__aon_i__55F4C372">
+          <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="1" />
+          <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acq_project_master">
+              <PropertyRef Name="aon_id" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="aon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_Master_Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FormMenuID" Type="Int32" />
+          <Property Name="FormName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RecTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_master_formMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="From_menu" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RecTime" Type="DateTime" Precision="3" />
+          <Property Name="MenuId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_trn_OTP">
+          <Key>
+            <PropertyRef Name="OtpID" />
+          </Key>
+          <Property Name="OtpID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="OTPMobile" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailOTP" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="OTPCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OTPVerified" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpiryTime" Type="DateTime" Precision="3" />
+          <Property Name="Comp_RefrenceNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ReclnsTime" Type="DateTime" Precision="3" />
+          <Property Name="OtpCount" Type="Int32" />
+          <Property Name="ExpiryOtpTime" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2112,6 +2397,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <EntitySetMapping Name="acq_section_master">
             <EntityTypeMapping TypeName="MODModel.acq_section_master">
               <MappingFragment StoreEntitySet="acq_section_master">
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
                 <ScalarProperty Name="deptt_id" ColumnName="deptt_id" />
                 <ScalarProperty Name="section_descr" ColumnName="section_descr" />
                 <ScalarProperty Name="section_id" ColumnName="section_id" />
@@ -2623,6 +2909,7 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
           <EntitySetMapping Name="tbl_tbl_User">
             <EntityTypeMapping TypeName="MODModel.tbl_tbl_User">
               <MappingFragment StoreEntitySet="tbl_tbl_User">
+                <ScalarProperty Name="DSCSerialno" ColumnName="DSCSerialno" />
                 <ScalarProperty Name="TokenId" ColumnName="TokenId" />
                 <ScalarProperty Name="ExpiryTime" ColumnName="ExpiryTime" />
                 <ScalarProperty Name="LoginCount" ColumnName="LoginCount" />
@@ -2653,21 +2940,60 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="prc_Getvendcatwise_report" FunctionName="MODModel.Store.prc_Getvendcatwise_report">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MODModel.prc_Getvendcatwise_report_Result">
+                <ScalarProperty Name="stage" ColumnName="stage" />
+                <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+                <ScalarProperty Name="PSU" ColumnName="PSU" />
+                <ScalarProperty Name="Indian_Private_MSME" ColumnName="Indian Private-MSME" />
+                <ScalarProperty Name="Foreign_OEM" ColumnName="Foreign OEM" />
+                <ScalarProperty Name="Indian_Private__Non_MSME" ColumnName="Indian Private- Non MSME" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="vw_userDetail">
+            <EntityTypeMapping TypeName="MODModel.vw_userDetail">
+              <MappingFragment StoreEntitySet="vw_userDetail">
+                <ScalarProperty Name="Temp_Number" ColumnName="Temp_Number" />
+                <ScalarProperty Name="DSCSerialno" ColumnName="DSCSerialno" />
+                <ScalarProperty Name="MacAddress" ColumnName="MacAddress" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="SrNo" ColumnName="SrNo" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Pswd_Salt" ColumnName="Pswd_Salt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ExternalEmailID" ColumnName="ExternalEmailID" />
+                <ScalarProperty Name="InternalEmailID" ColumnName="InternalEmailID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="section_descr" ColumnName="section_descr" />
+                <ScalarProperty Name="section_id" ColumnName="section_id" />
+                <ScalarProperty Name="deptt_description" ColumnName="deptt_description" />
+                <ScalarProperty Name="deptt_id" ColumnName="deptt_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="acq_project_master">
             <EntityTypeMapping TypeName="MODModel.acq_project_master">
               <MappingFragment StoreEntitySet="acq_project_master">
-                <ScalarProperty Name="System_case" ColumnName="System_case" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="AovType" ColumnName="AovType" />
                 <ScalarProperty Name="ResponsiblePersonLeve4" ColumnName="ResponsiblePersonLeve4" />
                 <ScalarProperty Name="ResponsiblePersonLeve3" ColumnName="ResponsiblePersonLeve3" />
                 <ScalarProperty Name="ResponsiblePersonLeve2" ColumnName="ResponsiblePersonLeve2" />
                 <ScalarProperty Name="ResponsiblePersonLeve1" ColumnName="ResponsiblePersonLeve1" />
                 <ScalarProperty Name="DirectorateId" ColumnName="DirectorateId" />
                 <ScalarProperty Name="VendorsIDs" ColumnName="VendorsIDs" />
+                <ScalarProperty Name="System_case" ColumnName="System_case" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="AoNForeClosureCreatedBy" ColumnName="AoNForeClosureCreatedBy" />
                 <ScalarProperty Name="AoNClosureRemarks" ColumnName="AoNClosureRemarks" />
                 <ScalarProperty Name="AoNClosureDate" ColumnName="AoNClosureDate" />
@@ -2700,6 +3026,52 @@ warning 6002: The table/view 'mod.dbo.vw_GridFirst' does not have a primary key 
                 <ScalarProperty Name="DPP_DAP" ColumnName="DPP_DAP" />
                 <ScalarProperty Name="item_description" ColumnName="item_description" />
                 <ScalarProperty Name="aon_id" ColumnName="aon_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Master_Role">
+            <EntityTypeMapping TypeName="MODModel.tbl_Master_Role">
+              <MappingFragment StoreEntitySet="tbl_Master_Role">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="FormMenuID" ColumnName="FormMenuID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_master_formMenu">
+            <EntityTypeMapping TypeName="MODModel.tbl_master_formMenu">
+              <MappingFragment StoreEntitySet="tbl_master_formMenu">
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="From_menu" ColumnName="From_menu" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_trn_OTP">
+            <EntityTypeMapping TypeName="MODModel.tbl_trn_OTP">
+              <MappingFragment StoreEntitySet="tbl_trn_OTP">
+                <ScalarProperty Name="ExpiryOtpTime" ColumnName="ExpiryOtpTime" />
+                <ScalarProperty Name="OtpCount" ColumnName="OtpCount" />
+                <ScalarProperty Name="ReclnsTime" ColumnName="ReclnsTime" />
+                <ScalarProperty Name="Comp_RefrenceNo" ColumnName="Comp_RefrenceNo" />
+                <ScalarProperty Name="ExpiryTime" ColumnName="ExpiryTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="OTPVerified" ColumnName="OTPVerified" />
+                <ScalarProperty Name="OTPCategory" ColumnName="OTPCategory" />
+                <ScalarProperty Name="EmailOTP" ColumnName="EmailOTP" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="OTPMobile" ColumnName="OTPMobile" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="OtpID" ColumnName="OtpID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

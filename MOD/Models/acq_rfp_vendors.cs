@@ -16,5 +16,7 @@ namespace MOD.Models
     {
         public int rfp_id { get; set; }
         public int Rfp_fk_Id { get; set; }
+    
+        public virtual acq_rfp_master acq_rfp_master { get; set; }
     }
 }

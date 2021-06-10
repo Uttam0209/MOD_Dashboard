@@ -2107,16 +2107,16 @@
    </div>
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
 
             </div>
         </div>
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalEditLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="exampleEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalEditLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content modalDivData">
                     <div class="modal-header">
@@ -2172,9 +2172,10 @@
             </div>
         </div>
 
-        <script src="~/Scripts/chosen.jquery.min.js"></script>
-        <link href="~/Content/Chosen/chosen.min.css" rel="stylesheet" />
-        <script>
+<script src="~/assets/js/chosen.jquery.min.js"></script>
+<link href="~/assets/css/chosen.min.css" rel="stylesheet" />
+
+<script>
 
     $(".data-btn").click(function () {
         $.ajax({
@@ -3876,7 +3877,7 @@
         if (type == 1) {
             $.ajax({
                 type: "POST",
-                url: "/MOD/Delete?ID=" + NodalCompID,
+                url: "/MODDelete?ID=" + NodalCompID,
                 success: function (result) {
                        $(selfObj).closest('tr').remove();
                 }

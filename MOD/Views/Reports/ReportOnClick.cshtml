@@ -4,8 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<head>
-    <style type="text/css">
+<style type="text/css">
         .Table {
             display: table;
         }
@@ -34,9 +33,8 @@
             padding-left: 5px;
             padding-right: 5px;
         }
-    </style>
-    <style>
-        .danger {
+
+               .danger {
             color: red;
         }
 
@@ -95,11 +93,12 @@
                 font-size: 2rem;
             }
     </style>
-    @*Prevent Right Click Script*@
-    <script>
-        document.addEventListener('contextmenu', event => event.preventDefault());
-    </script>
-</head>
+   
+@*Prevent Right Click Script*@
+<script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+</script>
+
 <div class="row">
     <div class="col-md-12">
         <h3 class="well text-capitalize p-3 text-center">Stage wise cycle time analysis</h3>
@@ -115,7 +114,6 @@
                         <th>Categorisation</th>
                         <th>Stage Name</th>
                         <th>No of Weeks</th>
-                        
                     </tr>
                 </thead>
 
@@ -126,7 +124,7 @@
                         <tr>
                             <td>@count</td>
                             <td>
-                                <a href="/WReports/NewReports?id=@item.aon_id">
+                                <a   href="/WReports/NewReports?id=@item.aon_id">
                                     <span> @item.item_description</span>
                                 </a>
                            </td>

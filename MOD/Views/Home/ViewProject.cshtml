@@ -3,9 +3,10 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+<script src="~/assets/js/moment.min.js"></script>
+<script src="~/Content/cdnfile/bootstrap-multiselect.js"></script>
+<link href="~/Content/cdnfile/bootstrap-multiselect.css" rel="stylesheet" />
+
 <style>
     #addbadges-modal .btn-group {
         width: 100% !important;
@@ -178,9 +179,9 @@
     });
     $("#loader-wrapper").hide();
     $('#ProjectName_check').hide();
-   
+
     $("#loader-wrapper").hide();
-    
+
     var ProjectName_err = true;
 
     var i = 1;
@@ -202,7 +203,7 @@
             },
             { "data": "TemplateType" },
             { "data": "ProjectName" },
-            
+
             {
                 "data": "StartDate", "render": function (d) {
                     return moment(d).format("DD:MM:YYYY");
@@ -257,13 +258,13 @@
             ProjectName_err = true;
         }
     }
-   
+
 
     $("#SaveNodalCompany").click(function () {
-       
+
         ProjectName_check();
-       
-        if (ProjectName_err == true ) {
+
+        if (ProjectName_err == true) {
             var data = $("#SubmitForm").serialize();
             $("#loader-wrapper").show();
             $.ajax({
@@ -279,19 +280,19 @@
                     else if (result == "Update") {
                         $("#ConfirmationMsg").modal("show");
                         $("#ModalTitleMsg").html("Record Update Sucessfully");
-                       
+
                         $("#loader-wrapper").hide();
                     }
                     else if (result == "Already") {
                         $("#ConfirmationMsg").modal("show");
                         $("#ModalTitleMsg").html("This email id already exits");
-                        
+
                         $("#loader-wrapper").hide();
                     }
                     else {
                         $("#ConfirmationMsg").modal("show");
                         $("#ModalTitleMsg").html("Record not saved");
-                       
+
                         $("#loader-wrapper").hide();
                     }
 
@@ -323,13 +324,13 @@
             type: "POST",
             url: "/Home/Gantt?Id=" + ProjectId,
             success: function (result) {
-                
+
             }
         })
     }
 
     function AddNewCategory(ProjectId) {
-        
+
         $("#loader-wrapper").hide();
         $("#form")[0].reset();
         $("#mProjectId").val(0);

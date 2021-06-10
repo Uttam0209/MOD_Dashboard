@@ -4,12 +4,12 @@
     ViewBag.Title = "ViewAoNList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <script>
-        $(document).ready(function () {
-            $("#auth").addClass("show");
-            $("#auth_gd").addClass("active");
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        $("#auth").addClass("show");
+        $("#auth_gd").addClass("active");
+    });
+</script>
 
 <script>
     window.onload = function () {
@@ -68,7 +68,7 @@
                                        {
                                         //new SelectListItem{ Text="Army", Value = "Army" },
                                         //new SelectListItem{ Text="Navy", Value = "Navy" },
-                                        new SelectListItem{ Text="AirForce", Value = "AirForce" },
+                                         new SelectListItem{ Text="AirForce", Value = "we7UgF5Z8pqVMgkg0Ww4gA==" },
                                         //new SelectListItem{ Text="ICG", Value = "ICG" },
                                         //new SelectListItem{ Text="Joint", Value = "Joint" },
                                        }, "-Select Services-", new { @class = "form-control" })
@@ -79,7 +79,7 @@
                                 <div>
                                     @Html.DropDownListFor(model => model.Service_Lead_Service, new List<SelectListItem>
                                {
-                                   new SelectListItem{ Text="Army", Value = "Army" },
+                                   new SelectListItem{ Text="Army", Value = "PBDErM+YNXOGIZddicAk+A==" },
                                    //new SelectListItem{ Text="Navy", Value = "Navy" },
                                    //new SelectListItem{ Text="AirForce", Value = "AirForce" },
                                    //new SelectListItem{ Text="ICG", Value = "ICG" },
@@ -93,7 +93,7 @@
                                     @Html.DropDownListFor(model => model.Service_Lead_Service, new List<SelectListItem>
                                {
                                    //new SelectListItem{ Text="Army", Value = "Army" },
-                                   new SelectListItem{ Text="Navy", Value = "Navy" },
+                                   new SelectListItem{ Text="Navy", Value = "IfZZWiZYMLHUo92/oiVXRw==" },
                                    //new SelectListItem{ Text="AirForce", Value = "AirForce" },
                                    //new SelectListItem{ Text="ICG", Value = "ICG" },
                                    //new SelectListItem{ Text="Joint", Value = "Joint" },
@@ -103,14 +103,15 @@
                             else
                             {
                                 <div>
-                                    @Html.DropDownListFor(model => model.Service_Lead_Service, new List<SelectListItem>
-                                       {
-                                        new SelectListItem{ Text="Army", Value = "Army" },
-                                        new SelectListItem{ Text="Navy", Value = "Navy" },
-                                        new SelectListItem{ Text="AirForce", Value = "AirForce" },
-                                        new SelectListItem{ Text="ICG", Value = "ICG" },
-                                        new SelectListItem{ Text="Joint", Value = "Joint" },
-                                       }, "-Select Services-", new { @class = "form-control" })
+                                    @Html.DropDownList("Service_Lead_Service", new SelectList(ViewBag.ServicesData, "Value", "Text"), "-Select Services-", new { @class = "form-control" })
+                                    @*@Html.DropDownListFor(model => model.Service_Lead_Service, new List<SelectListItem>
+                                        {
+                                         new SelectListItem{ Text="Army", Value = "Army" },
+                                         new SelectListItem{ Text="Navy", Value = "Navy" },
+                                         new SelectListItem{ Text="AirForce", Value = "AirForce" },
+                                         new SelectListItem{ Text="ICG", Value = "ICG" },
+                                         new SelectListItem{ Text="Joint", Value = "Joint" },
+                                        }, "-Select Services-", new { @class = "form-control" })*@
                                 </div>
                             }
                         }
@@ -118,25 +119,26 @@
 
                         <div class="pl-3 pr-3 mt-1">Category</div>
                         <div>
-                            @Html.DropDownListFor(model => model.Categorisation, new List<SelectListItem>
-                            {
-                            new SelectListItem{ Text="Buy(Indian-IDDM)", Value = "Buy(Indian-IDDM)" },
-                            new SelectListItem{ Text="Buy(Indian)", Value = "Buy(Indian)" },
-                            new SelectListItem{ Text="Buy and Make(Indian)", Value = "Buy and Make(Indian)" },
-                            new SelectListItem{ Text="Buy and Make", Value = "Buy and Make" },
-                            new SelectListItem{ Text="Buy(Global-Manufacture in India)", Value = "Buy(Global-Manufacture in India)" },
-                            new SelectListItem{ Text="Buy(Global-Manufacture in India)-IGA", Value = "Buy(Global-Manufacture in India)-IGA" },
-                            new SelectListItem{ Text="Buy(Global)", Value = "Buy(Global)" },
-                            new SelectListItem{ Text="Buy(Global)-IGA", Value = "Buy(Global)-IGA" },
-                            new SelectListItem{ Text="Buy(Global)-FMS Route", Value = "Buy(Global)-FMS Route" },
-                            new SelectListItem{ Text="Design & Development", Value = "Design & Development" },
-                            new SelectListItem{ Text="IGA", Value = "IGA" },
-                            new SelectListItem{ Text="Make", Value = "Make" },
-                            new SelectListItem{ Text="Sp Model", Value = "Sp Model" },
-                            new SelectListItem{ Text="Make-I", Value = "Make-I" },
-                            new SelectListItem{ Text="Make-II", Value = "Make-II" },
-                            new SelectListItem{ Text="Make-III", Value = "Make-III" },
-                           }, "-Select Categorization-", new { @class = "form-control" })
+                            @Html.DropDownList("Categorisation", new SelectList(ViewBag.catData, "Value", "Text"), "-Select Categorization-", new { @class = "form-control" })
+                            @*@Html.DropDownListFor(model => model.Categorisation, new List<SelectListItem>
+                                 {
+                                 new SelectListItem{ Text="Buy(Indian-IDDM)", Value = "Buy(Indian-IDDM)" },
+                                 new SelectListItem{ Text="Buy(Indian)", Value = "Buy(Indian)" },
+                                 new SelectListItem{ Text="Buy and Make(Indian)", Value = "Buy and Make(Indian)" },
+                                 new SelectListItem{ Text="Buy and Make", Value = "Buy and Make" },
+                                 new SelectListItem{ Text="Buy(Global-Manufacture in India)", Value = "Buy(Global-Manufacture in India)" },
+                                 new SelectListItem{ Text="Buy(Global-Manufacture in India)-IGA", Value = "Buy(Global-Manufacture in India)-IGA" },
+                                 new SelectListItem{ Text="Buy(Global)", Value = "Buy(Global)" },
+                                 new SelectListItem{ Text="Buy(Global)-IGA", Value = "Buy(Global)-IGA" },
+                                 new SelectListItem{ Text="Buy(Global)-FMS Route", Value = "Buy(Global)-FMS Route" },
+                                 new SelectListItem{ Text="Design & Development", Value = "Design & Development" },
+                                 new SelectListItem{ Text="IGA", Value = "IGA" },
+                                 new SelectListItem{ Text="Make", Value = "Make" },
+                                 new SelectListItem{ Text="Sp Model", Value = "Sp Model" },
+                                 new SelectListItem{ Text="Make-I", Value = "Make-I" },
+                                 new SelectListItem{ Text="Make-II", Value = "Make-II" },
+                                 new SelectListItem{ Text="Make-III", Value = "Make-III" },
+                                }, "-Select Categorization-", new { @class = "form-control" })*@
                         </div>
 
                         <div class="pl-3 pr-3"><button type="submit" class="btn btn-primary btn-lg btnFCs">Search</button></div>
@@ -157,122 +159,120 @@
             </div>
 
             <div class="tab-pane" id="tab-2" role="tabpanel">
-                @if (Model != null && Model.AonList.Count() > 0)
+                @*@if (Model != null && Model.AonList.Count() > 0)*@
                 {
-                    <div class="table-responsive" style="max-height:450px;">
-                        <table id="example" class="table table-striped table-bordered" style="width:100%; overflow-y:scroll;">
-                            <thead>
+                <div class="table-responsive" style="max-height:450px;">
+                    <table id="example" class="table table-striped table-bordered" style="width:100%; overflow-y:scroll;">
+                        <thead>
+                            <tr>
+                                <th>SL.No.</th>
+                                <th>Item Name</th>
+                                <th>Meeting Date</th>
+                                <th>AoN Accorded On</th>
+                                <th>AoN accorded by(DAC/DPB)</th>
+                                <th>Quantity</th>
+                                <th>Cost(in Crs)</th>
+                                <th>Currency</th>
+                                <th>Service</th>
+                                <th>Categorization</th>
+                                <th>AcquisitionType</th>
+
+                                <th>Tax Duties</th>
+                                <th>Trials_Required</th>
+                                <th>Essential_parameters</th>
+                                <th>Any_other_aspect</th>
+                                <th>IC_percentage</th>
+                                <th>Option_clause_applicable</th>
+                                <th>Offset_applicable</th>
+                                <th>AMC_applicable</th>
+                                <th>AMCRemarks</th>
+                                <th>Warrenty_applicable</th>
+                                <th>Warrenty_Remarks</th>
+                                <th>AoN_validity</th>
+
+                                <th>AoN_validity_unit</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int count = 1;}
+                            @foreach (var aonList in Model.AonList)
+                            {
                                 <tr>
-                                    <th>SL.No.</th>
-                                    <th>Item Name</th>
-                                    <th>Meeting Date</th>
-                                    <th>AoN Accorded On</th>
-                                    <th>AoN accorded by(DAC/DPB)</th>
-                                    <th>Quantity</th>
-                                    <th>Cost(in Crs)</th>
-                                    <th>Currency</th>
-                                    <th>Service</th>
-                                    <th>Categorization</th>
-                                    <th>AcquisitionType</th>
+                                    <th scope="row">@count</th>
+                                    <td class="text-wrap">@aonList.item_description</td>
+                                    <td>@aonList.MeetingDate.Value.ToString("dd-MMM-yyyy")</td>
+                                    <td>@aonList.Date_of_Accord_of_AoN.Value.ToString("dd-MMM-yyyy")</td>
+                                    <td>@aonList.AoNaccordedbyDACDPB</td>
+                                    <td>@aonList.Quantity</td>
+                                    <td>@aonList.Cost</td>
+                                    <td>@aonList.Currency</td>
+                                    <td>@aonList.Service_Lead_Service</td>
+                                    <td>@aonList.Categorisation</td>
+                                    <td>@aonList.Type_of_Acquisition</td>
 
-                                    <th>Tax Duties</th>
-                                    <th>Trials_Required</th>
-                                    <th>Essential_parameters</th>
-                                    <th>Any_other_aspect</th>
-                                    <th>IC_percentage</th>
-                                    <th>Option_clause_applicable</th>
-                                    <th>Offset_applicable</th>
-                                    <th>AMC_applicable</th>
-                                    <th>AMCRemarks</th>
-                                    <th>Warrenty_applicable</th>
-                                    <th>Warrenty_Remarks</th>
-                                    <th>AoN_validity</th>
+                                    <td>@aonList.Tax_Duties</td>
+                                    <td>@aonList.Trials_Required</td>
+                                    <td>@aonList.Essential_parameters</td>
+                                    <td>@aonList.Any_other_aspect</td>
+                                    <td>@aonList.IC_percentage</td>
+                                    <td>@aonList.Option_clause_applicable</td>
+                                    <td>@aonList.Offset_applicable</td>
+                                    <td>@aonList.AMC_applicable</td>
+                                    <td>@aonList.AMCRemarks</td>
+                                    <td>@aonList.Warrenty_applicable</td>
+                                    <td>@aonList.Warrenty_Remarks</td>
+                                    <td>@aonList.AoN_validity</td>
 
-                                    <th>AoN_validity_unit</th>
-                                    <th>Remarks</th>
+                                    <td>@aonList.AoN_validity_unit</td>
+                                    <td>@aonList.Remarks</td>
+                                    @*<td>@aonList.CreatedOn.Value.ToString("dd-MMM-yyyy")</td>*@
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @{ int count = 1;}
-                                @foreach (var aonList in Model.AonList)
-                                {
-                                    <tr>
-                                        <th scope="row">@count</th>
-                                        <td class="text-wrap">@aonList.item_description</td>
-                                        <td>@aonList.MeetingDate.Value.ToString("dd-MMM-yyyy")</td>
-                                        <td>@aonList.Date_of_Accord_of_AoN.Value.ToString("dd-MMM-yyyy")</td>
-                                        <td>@aonList.AoNaccordedbyDACDPB</td>
-                                        <td>@aonList.Quantity</td>
-                                        <td>@aonList.Cost</td>
-                                        <td>@aonList.Currency</td>
-                                        <td>@aonList.Service_Lead_Service</td>
-                                        <td>@aonList.Categorisation</td>
-                                        <td>@aonList.Type_of_Acquisition</td>
-
-                                        <td>@aonList.Tax_Duties</td>
-                                        <td>@aonList.Trials_Required</td>
-                                        <td>@aonList.Essential_parameters</td>
-                                        <td>@aonList.Any_other_aspect</td>
-                                        <td>@aonList.IC_percentage</td>
-                                        <td>@aonList.Option_clause_applicable</td>
-                                        <td>@aonList.Offset_applicable</td>
-                                        <td>@aonList.AMC_applicable</td>
-                                        <td>@aonList.AMCRemarks</td>
-                                        <td>@aonList.Warrenty_applicable</td>
-                                        <td>@aonList.Warrenty_Remarks</td>
-                                        <td>@aonList.AoN_validity</td>
-
-                                        <td>@aonList.AoN_validity_unit</td>
-                                        <td>@aonList.Remarks</td>
-                                        @*<td>@aonList.CreatedOn.Value.ToString("dd-MMM-yyyy")</td>*@
-                                    </tr>
-                                    count++;
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                                count++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 }
                 else
                 {
-                    <div class="alert alert-danger" role="alert">
-                        Records Not Found.
-                    </div>
+                <div class="alert alert-danger" role="alert">
+                    Records Not Found.
+                </div>
                 }
             </div>
-            
+
         </div>
     </div>
 
-    
+
 </div>
-    
-        <script>
-            $(document).ready(function () {
 
-                $('ol.tabs li').click(function () {
-                    var tab_id = $(this).attr('data-tab');
+<script>
+    $(document).ready(function () {
 
-                    $('ol.tabs li').removeClass('current');
-                    $('.tab-content').removeClass('current');
+        $('ol.tabs li').click(function () {
+            var tab_id = $(this).attr('data-tab');
 
-                    $(this).addClass('current');
-                    $("#" + tab_id).addClass('current');
-                })
+            $('ol.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
 
-            })
-        </script>
+            $(this).addClass('current');
+            $("#" + tab_id).addClass('current');
+        })
 
-        <script src="~/WJs/canvasjs.min.js"></script>
-        <script src="~/WJs/jquery-1.11.1.min.js"></script>
+    })
+</script>
 
+<script src="~/assets/js/canvasjs.min.js"></script>
+<script src="~/assets/js/jquery-3.6.0.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
 
-        <script>
-            $(document).ready(function () {
-                $('#example').DataTable();
-
-            });
-        </script>
+    });
+</script>
 
 
 

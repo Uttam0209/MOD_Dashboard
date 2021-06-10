@@ -33,5 +33,19 @@ namespace DDPAdmin.Services.Master
             tripleDES.Clear();
             return UTF8Encoding.UTF8.GetString(resultArray);
         }
+        public static string Decryptl(string input)
+        {
+            byte[] inputByteArray = new byte[input.Length];
+            input = input.Replace("%2b", "+");
+            byte[] inputArray = Convert.FromBase64String(input);
+            TripleDESCryptoServiceProvider tripleDES = new TripleDESCryptoServiceProvider();
+            tripleDES.Key = UTF8Encoding.UTF8.GetBytes("MOD_DPIT@2020*!0");
+            tripleDES.Mode = CipherMode.ECB;
+            tripleDES.Padding = PaddingMode.PKCS7;
+            ICryptoTransform cTransform = tripleDES.CreateDecryptor();
+            byte[] resultArray = cTransform.TransformFinalBlock(inputArray, 0, inputArray.Length);
+            tripleDES.Clear();
+            return UTF8Encoding.UTF8.GetString(resultArray);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace MOD.Models
 {
@@ -152,10 +153,8 @@ namespace MOD.Models
     public class SaveAcqProjectMasterViewModel
     {
         public int aon_id { get; set; }
-
         [Required(ErrorMessage = "Enter Item Description")]
         public string item_description { get; set; }
-
         public string DPP_DAP { get; set; }
         public string AoN_Accorded_By { get; set; }
         [Required(ErrorMessage = "Enter AoN Date")]
@@ -163,10 +162,15 @@ namespace MOD.Models
         public DateTime? Date_of_Accord_of_AoN { get; set; }
         [Required(ErrorMessage = "Select Meeting Date")]
         public int? meeting_id { get; set; }
+        [Required(ErrorMessage = "Select Categorisation")]
         public string Categorisation { get; set; }
+        [Required(ErrorMessage = "Select Service")]
         public string Service_Lead_Service { get; set; }
         public string Quantity { get; set; }
-        public string Cost { get; set; }
+        [Range(0.00, 999999999, ErrorMessage = "Price must be greater than 0.00")]
+        [DisplayName("Price ($)")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        public decimal Cost { get; set; }
         public string Type_of_Acquisition { get; set; }
         public string Trials_Required { get; set; }
         public string Essential_parameters { get; set; }
@@ -195,15 +199,18 @@ namespace MOD.Models
         public List<acq_section_master> SectionMasterList { get; set; }
         public List<tbl_tbl_User> UserList { get; set; }
         public int UserId { get; set; }
+        [Required(ErrorMessage = "Select System case")]
         public string System_case { get; set; }
         public int vendorID { get; set; }
         public string VendorName { get; set; }
-
+       // public int VendorsIDs { get; set; }
         public Nullable<int> VendorsIDs { get; set; }
         public Nullable<int> DirectorateId { get; set; }
         public string ResponsiblePersonLeve1 { get; set; }
         public string ResponsiblePersonLeve2 { get; set; }
         public string ResponsiblePersonLeve3 { get; set; }
         public string ResponsiblePersonLeve4 { get; set; }
+        [Required(ErrorMessage = "Select Aon Type")]
+        public string AonType { get; set; }
     }
 }

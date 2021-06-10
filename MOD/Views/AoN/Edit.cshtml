@@ -264,6 +264,16 @@
                     @Html.ValidationMessageFor(x => x.UserId, null, new { @class = "danger" })
                 </div>
 
+                <div class="col-md-4 mb-3">
+                    <label class="labeltext font-weight-bold mb-0">AoN type<span class="danger">*</span> :</label>
+                    @Html.DropDownListFor(model => model.AonType, new List<SelectListItem>
+                       {
+                          new SelectListItem{ Text="Nomination basis", Value = "Nomination basis" },
+                          new SelectListItem{ Text="Competitive Tendering", Value = "Competitive Tendering" },
+                       }, "--Select--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.AonType, null, new { @class = "danger" })
+                </div>
+
             </div>
             <div class="form-row mb-1">
                 <div class="col-md-12 mb-3">

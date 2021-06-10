@@ -11,15 +11,139 @@ using Gantt_Chart.Models;
 using Gantt_Chart.Service;
 using MOD.Models;
 using Newtonsoft.Json;
+using Ganss.XSS;
+using static MOD.MvcApplication;
+using MOD.Service;
+using System.Configuration;
 
 namespace MOD.Controllers
 {
-    [Authorize]
+    //[Authorize]
+    [SessionExpire]
+    [SessionExpireRefNo]
     public class AoNController : Controller
     {
+        private static string WebPortalUrl = ConfigurationManager.AppSettings["WebPortalUrl"].ToString();
         MODEntities _entities = new MODEntities();
+        HtmlSanitizer sanitizer = new HtmlSanitizer();
         string password = "p@SSword";
         masterService mService = new masterService();
+
+        public AoNController()
+        {
+            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+            {
+                AccountController account = new AccountController();
+                string message = account.Blockuser(System.Web.HttpContext.Current.Session["EmailID"].ToString());
+                if (message == "Blocked")
+                {
+                    System.Web.HttpContext.Current.Response.Redirect("~/LoginBlockMsg");
+                }
+            }
+            BindEncriptData();
+            EncriptServicesData();
+            BruteForce bruteForce = new BruteForce();
+            if (BruteForceAttackss.bcontroller != "")
+            {
+                if (BruteForceAttackss.bcontroller == "AoN")
+                {
+                    if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+                    {
+                        BruteForceAttackss.date = System.DateTime.Now;
+                        BruteForceAttackss.refreshcount = 1;
+                    }
+                    else
+                    {
+                        TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                        if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
+                        {
+                            if (System.Web.HttpContext.Current.Session["UserID"] != null)
+                            {
+                                List<UserViewModel> model = new List<UserViewModel>();
+                                model = bruteForce.GetUserLoginBlock(System.Web.HttpContext.Current.Session["UserID"].ToString());
+                                if (model != null)
+                                {
+                                    BruteForceAttackss.refreshcount = 0;
+                                    BruteForceAttackss.date = null;
+                                    BruteForceAttackss.bcontroller = "";
+                                    System.Web.HttpContext.Current.Response.Redirect(WebPortalUrl);
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        }
+                    }
+
+
+                }
+            }
+            else
+            {
+                BruteForceAttackss.bcontroller = "AoN";
+            }
+        }
+
+        public void BindEncriptData()
+        {
+            List<Categorisation> categorisations = new List<Categorisation>
+            {
+                new Categorisation { Text = "Buy(Indian-IDDM)",  Value = "Buy(Indian-IDDM)" },
+                new Categorisation { Text = "Buy(Indian)",  Value = "Buy(Indian)" },
+                new Categorisation { Text = "Buy and Make(Indian)",  Value = "Buy and Make(Indian)" },
+                new Categorisation { Text = "Buy(Buy and Make)",  Value = "Buy and Make" },
+                new Categorisation { Text = "Buy(Global-Manufacture in India)",  Value = "Buy(Global-Manufacture in India)" },
+                new Categorisation { Text = "Buy(Global-Manufacture in India)-IGA",  Value = "Buy(Global-Manufacture in India)-IGA" },
+                new Categorisation { Text = "Buy(Global)",  Value = "Buy(Global)" },
+                new Categorisation { Text = "Buy(Global)-IGA",  Value = "Buy(Global)-IGA" },
+                new Categorisation { Text = "Buy(Global)-FMS Route",  Value = "Buy(Global)-FMS Route" },
+                new Categorisation { Text = "Design & Development",  Value = "Design & Development" },
+                new Categorisation { Text = "IGA",  Value = "IGA" },
+                new Categorisation { Text = "Make",  Value = "Make" },
+                new Categorisation { Text = "Sp Model",  Value = "Sp Model" },
+                new Categorisation { Text = "Make-I",  Value = "Make-I" },
+                new Categorisation { Text = "Make-II",  Value = "Make-II" },
+                new Categorisation { Text = "Make-III",  Value = "Make-III" }
+            };
+
+            // Categorisation Catdata = new Categorisation();
+            List<Categorisation> Catdata = new List<Categorisation>();
+            foreach (var item in categorisations)
+            {
+                Categorisation cat1 = new Categorisation()
+                {
+                    Text = item.Text,
+                    Value = Cipher.Encrypt(item.Value, "")
+                };
+                Catdata.Add(cat1);
+            };
+            ViewBag.catData = Catdata;
+        }
+
+        public void EncriptServicesData()
+        {
+            List<Categorisation> categorisations = new List<Categorisation>
+            {
+                new Categorisation { Text = "Army",  Value = "Army" },
+                new Categorisation { Text = "Navy",  Value = "Navy" },
+                new Categorisation { Text = "AirForce",  Value = "AirForce" },
+                new Categorisation { Text = "ICG",  Value = "ICG" },
+                new Categorisation { Text = "Joint",  Value = "Joint" }
+            };
+            List<Categorisation> Catdata = new List<Categorisation>();
+            foreach (var item in categorisations)
+            {
+                Categorisation cat1 = new Categorisation()
+                {
+                    Text = item.Text,
+                    Value = Cipher.Encrypt(item.Value, "")
+                };
+                Catdata.Add(cat1);
+            };
+            ViewBag.ServicesData = Catdata;
+        }
 
         public static DataTable return_datatable(String query)
         {
@@ -36,6 +160,7 @@ namespace MOD.Controllers
             }
             return dt;
         }
+
         public static int execute_query(String query)
         {
 
@@ -54,11 +179,32 @@ namespace MOD.Controllers
                 finally { conn.Close(); }
             }
         }
+
+        //[Route("AoNIndex")]
         public ActionResult Index()
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "AON Registration".ToLower())
+                    {
+                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             MODListViewModel model = new MODListViewModel();
             List<MODListViewModel> list = new List<MODListViewModel>();
-
             var AonList = _entities.acq_project_master.Where(x => x.IsDeleted == false).ToList();
             if (AonList != null)
             {
@@ -80,10 +226,33 @@ namespace MOD.Controllers
             }
             model.AonList = list;
             return View(model);
+
+
         }
 
+        [Route("AoNCreate")]
         public ActionResult AonCreate()
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "AON Registration".ToLower())
+                    {
+                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             SaveAcqProjectMasterViewModel model = new SaveAcqProjectMasterViewModel();
             model.MeetingMaster = _entities.acq_meeting_master.ToList();
 
@@ -106,13 +275,16 @@ namespace MOD.Controllers
             model.SectionMasterList = _entities.acq_section_master.ToList();
             // UserList 
             model.UserList = _entities.tbl_tbl_User.ToList();
+            ViewBag.venderlist = _entities.tbl_tbl_User.ToList();
             return View(model);
         }
 
         [HttpPost]
+        [Route("AoNCreate")]
         public ActionResult AonCreate(SaveAcqProjectMasterViewModel model)
         {
             model.MeetingMaster = _entities.acq_meeting_master.ToList();
+            SaveAcqProjectMasterViewModel model1 = new SaveAcqProjectMasterViewModel();
             if (ModelState.IsValid)
             {
                 try
@@ -120,45 +292,45 @@ namespace MOD.Controllers
                     acq_project_master obj = new acq_project_master();
                     obj.Date_of_Accord_of_AoN = Convert.ToDateTime(model.Date_of_Accord_of_AoN);
                     obj.DPP_DAP = model.DPP_DAP;
-
                     ////Encrypted SHA Item Name
-                    string itemName = Cipher.Encrypt(model.item_description, password);
+                    string itemName = sanitizer.Sanitize(Cipher.Encrypt(model.item_description, password));
                     obj.item_description = itemName;
 
                     ////Encrypted Item Name
                     //string itemName = Encryption.Encrypt(model.item_description);
                     //obj.item_description = itemName;
-                    obj.Quantity = model.Quantity;
-                    obj.Cost = model.Cost;
-                    obj.Tax_Duties = model.Tax_Duties;
+                    obj.Quantity = sanitizer.Sanitize(model.Quantity);
+                    obj.Cost = sanitizer.Sanitize(Convert.ToDecimal(model.Cost).ToString());
+                    obj.Tax_Duties = sanitizer.Sanitize(model.Tax_Duties);
                     obj.meeting_id = model.meeting_id;
-                    obj.Service_Lead_Service = model.Service_Lead_Service;
-                    obj.Type_of_Acquisition = model.Type_of_Acquisition;
-                    obj.Categorisation = model.Categorisation;
-                    obj.Trials_Required = model.Trials_Required;
-                    obj.Essential_parameters = model.Essential_parameters;
-                    obj.Any_other_aspect = model.Any_other_aspect;
-                    obj.IC_percentage = model.IC_percentage;
-                    obj.Option_clause_applicable = model.Option_clause_applicable;
-                    obj.Offset_applicable = model.Offset_applicable;
-                    obj.AMC_applicable = model.AMC_applicable;
-                    obj.AMCRemarks = model.AMCRemarks;
-                    obj.Warrenty_applicable = model.Warrenty_applicable;
-                    obj.Warrenty_Remarks = model.Warrenty_Remarks;
-                    obj.AoN_validity = model.AoN_validity;
+                    obj.Service_Lead_Service = sanitizer.Sanitize(model.Service_Lead_Service);
+                    obj.Type_of_Acquisition = sanitizer.Sanitize(model.Type_of_Acquisition);
+                    obj.Categorisation = sanitizer.Sanitize(model.Categorisation);
+                    obj.Trials_Required = sanitizer.Sanitize(model.Trials_Required);
+                    obj.Essential_parameters = sanitizer.Sanitize(model.Essential_parameters);
+                    obj.Any_other_aspect = sanitizer.Sanitize(model.Any_other_aspect);
+                    obj.IC_percentage = sanitizer.Sanitize(model.IC_percentage);
+                    obj.Option_clause_applicable = sanitizer.Sanitize(model.Option_clause_applicable);
+                    obj.Offset_applicable = sanitizer.Sanitize(model.Offset_applicable);
+                    obj.AMC_applicable = sanitizer.Sanitize(model.AMC_applicable);
+                    obj.AMCRemarks = sanitizer.Sanitize(model.AMCRemarks);
+                    obj.Warrenty_applicable = sanitizer.Sanitize(model.Warrenty_applicable);
+                    obj.Warrenty_Remarks = sanitizer.Sanitize(model.Warrenty_Remarks);
+                    obj.AoN_validity = sanitizer.Sanitize(model.AoN_validity);
                     obj.AoN_validity_unit = model.AoN_validity_unit;
-                    obj.Remarks = model.Remarks;
-                    obj.Currency = model.Currency;
-                    obj.CreatedBy = Convert.ToInt32(Session["UserID"]); ;
+                    obj.Remarks = sanitizer.Sanitize(model.Remarks);
+                    obj.Currency = sanitizer.Sanitize(model.Currency);
+                    obj.CreatedBy = Convert.ToInt32(Session["UserID"]);
                     obj.CreatedOn = System.DateTime.Now;
-                    obj.VendorsIDs = model.VendorsIDs.ToString();
+                    obj.VendorsIDs = sanitizer.Sanitize(model.VendorsIDs.ToString());
                     obj.DirectorateId = model.DirectorateId;
-                    obj.ResponsiblePersonLeve1 = model.ResponsiblePersonLeve1;
-                    obj.ResponsiblePersonLeve2 = model.ResponsiblePersonLeve2;
-                    obj.ResponsiblePersonLeve3 = model.ResponsiblePersonLeve3;
-                    obj.ResponsiblePersonLeve4 = model.ResponsiblePersonLeve4;
+                    obj.ResponsiblePersonLeve1 = sanitizer.Sanitize(model.ResponsiblePersonLeve1);
+                    obj.ResponsiblePersonLeve2 = sanitizer.Sanitize(model.ResponsiblePersonLeve2);
+                    obj.ResponsiblePersonLeve3 = sanitizer.Sanitize(model.ResponsiblePersonLeve3);
+                    obj.ResponsiblePersonLeve4 = sanitizer.Sanitize(model.ResponsiblePersonLeve4);
                     obj.IsDeleted = false;
-                    obj.System_case = model.System_case;
+                    obj.System_case = sanitizer.Sanitize(model.System_case);
+                    obj.AovType = sanitizer.Sanitize(model.AonType);
                     _entities.acq_project_master.Add(obj);
                     _entities.SaveChanges();
                     return RedirectToAction("Index");
@@ -168,11 +340,54 @@ namespace MOD.Controllers
                     throw ex;
                 }
             }
+            else
+            {
+                model.MeetingMaster = _entities.acq_meeting_master.ToList();
+                List<SaveAcqProjectMasterViewModel> venList = new List<SaveAcqProjectMasterViewModel>();
+                var vendorList = _entities.tbl_tblVendor.Where(x => x.IsDeleted == false).ToList();
+                if (vendorList != null)
+                {
+                    foreach (var item in vendorList)
+                    {
+                        SaveAcqProjectMasterViewModel ObjVendor = new SaveAcqProjectMasterViewModel();
+                        ObjVendor.vendorID = item.VendorId;
+                        ObjVendor.VendorName = Cipher.Decrypt(item.VendorName, password);
+                        venList.Add(ObjVendor);
+                    }
+                }
+                model.VendorList = venList;
+                // SectionList
+                model.SectionMasterList = _entities.acq_section_master.ToList();
+                // UserList 
+                model.UserList = _entities.tbl_tbl_User.ToList();
+            }
+
             return View(model);
         }
 
+        [Route("AoNEdit")]
         public ActionResult Edit(int ID)
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "AON Registration".ToLower())
+                    {
+                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             SaveAcqProjectMasterViewModel model = new SaveAcqProjectMasterViewModel();
 
             model.SectionMasterList = _entities.acq_section_master.ToList();
@@ -200,7 +415,7 @@ namespace MOD.Controllers
                 model.DPP_DAP = _editAonData.DPP_DAP;
                 model.item_description = Cipher.Decrypt(_editAonData.item_description, password);
                 model.Quantity = _editAonData.Quantity;
-                model.Cost = _editAonData.Cost;
+                model.Cost = Convert.ToDecimal(_editAonData.Cost == "" || _editAonData.Cost == null ? "0" : _editAonData.Cost);
                 model.meeting_id = _editAonData.meeting_id;
                 model.Service_Lead_Service = _editAonData.Service_Lead_Service;
                 model.Type_of_Acquisition = _editAonData.Type_of_Acquisition;
@@ -221,7 +436,7 @@ namespace MOD.Controllers
                 model.Remarks = _editAonData.Remarks;
                 model.Currency = _editAonData.Currency;
                 model.DirectorateId = _editAonData.DirectorateId;
-                model.VendorsIDs = Convert.ToInt16(_editAonData.VendorsIDs);
+                model.VendorsIDs = Convert.ToInt16(_editAonData.VendorsIDs == "" ? "0" : _editAonData.VendorsIDs);
                 model.ResponsiblePersonLeve1 = _editAonData.ResponsiblePersonLeve1;
                 model.ResponsiblePersonLeve2 = _editAonData.ResponsiblePersonLeve2;
                 model.ResponsiblePersonLeve3 = _editAonData.ResponsiblePersonLeve3;
@@ -229,6 +444,7 @@ namespace MOD.Controllers
                 // Meeting DropDown Bind
                 model.MeetingMaster = _entities.acq_meeting_master.ToList();
                 model.System_case = _editAonData.System_case;
+                model.AonType = _editAonData.AovType;
                 return View(model);
             }
             catch (Exception ex)
@@ -238,6 +454,7 @@ namespace MOD.Controllers
         }
 
         [HttpPost]
+        // [Route("AoNUpdate")]
         public ActionResult Update(SaveAcqProjectMasterViewModel model)
         {
             try
@@ -246,39 +463,39 @@ namespace MOD.Controllers
                 if (_updateAon != null)
                 {
                     _updateAon.Date_of_Accord_of_AoN = Convert.ToDateTime(model.Date_of_Accord_of_AoN);
-                    _updateAon.DPP_DAP = model.DPP_DAP;
-                    _updateAon.item_description = Cipher.Encrypt(model.item_description, password);
-                    _updateAon.Quantity = model.Quantity;
-                    _updateAon.Cost = model.Cost;
+                    _updateAon.DPP_DAP = sanitizer.Sanitize(model.DPP_DAP);
+                    _updateAon.item_description = sanitizer.Sanitize(Cipher.Encrypt(model.item_description, password));
+                    _updateAon.Quantity = sanitizer.Sanitize(model.Quantity);
+                    _updateAon.Cost = sanitizer.Sanitize(model.Cost.ToString());
                     _updateAon.meeting_id = model.meeting_id;
-                    _updateAon.Service_Lead_Service = model.Service_Lead_Service;
-                    _updateAon.Type_of_Acquisition = model.Type_of_Acquisition;
-                    _updateAon.Categorisation = model.Categorisation;
-                    _updateAon.Trials_Required = model.Trials_Required;
-                    _updateAon.Essential_parameters = model.Essential_parameters;
-                    _updateAon.Any_other_aspect = model.Any_other_aspect;
-                    _updateAon.IC_percentage = model.IC_percentage;
-                    _updateAon.Option_clause_applicable = model.Option_clause_applicable;
-                    _updateAon.Offset_applicable = model.Offset_applicable;
-                    _updateAon.AMC_applicable = model.AMC_applicable;
-                    _updateAon.AoN_validity = model.AoN_validity;
-                    _updateAon.AoN_validity_unit = model.AoN_validity_unit;
-                    _updateAon.Remarks = model.Remarks;
-                    _updateAon.Tax_Duties = model.Tax_Duties;
-                    _updateAon.AMCRemarks = model.AMCRemarks;
-                    _updateAon.Warrenty_applicable = model.Warrenty_applicable;
-                    _updateAon.Warrenty_Remarks = model.Warrenty_Remarks;
-                    _updateAon.Currency = model.Currency;
+                    _updateAon.Service_Lead_Service = sanitizer.Sanitize(model.Service_Lead_Service);
+                    _updateAon.Type_of_Acquisition = sanitizer.Sanitize(model.Type_of_Acquisition);
+                    _updateAon.Categorisation = sanitizer.Sanitize(model.Categorisation);
+                    _updateAon.Trials_Required = sanitizer.Sanitize(model.Trials_Required);
+                    _updateAon.Essential_parameters = sanitizer.Sanitize(model.Essential_parameters);
+                    _updateAon.Any_other_aspect = sanitizer.Sanitize(model.Any_other_aspect);
+                    _updateAon.IC_percentage = sanitizer.Sanitize(model.IC_percentage);
+                    _updateAon.Option_clause_applicable = sanitizer.Sanitize(model.Option_clause_applicable);
+                    _updateAon.Offset_applicable = sanitizer.Sanitize(model.Offset_applicable);
+                    _updateAon.AMC_applicable = sanitizer.Sanitize(model.AMC_applicable);
+                    _updateAon.AoN_validity = sanitizer.Sanitize(model.AoN_validity);
+                    _updateAon.AoN_validity_unit = sanitizer.Sanitize(model.AoN_validity_unit);
+                    _updateAon.Remarks = sanitizer.Sanitize(model.Remarks);
+                    _updateAon.Tax_Duties = sanitizer.Sanitize(model.Tax_Duties);
+                    _updateAon.AMCRemarks = sanitizer.Sanitize(model.AMCRemarks);
+                    _updateAon.Warrenty_applicable = sanitizer.Sanitize(model.Warrenty_applicable);
+                    _updateAon.Warrenty_Remarks = sanitizer.Sanitize(model.Warrenty_Remarks);
+                    _updateAon.Currency = sanitizer.Sanitize(model.Currency);
                     _updateAon.DirectorateId = model.DirectorateId;
-                    _updateAon.VendorsIDs = model.VendorsIDs.ToString();
-                    _updateAon.ResponsiblePersonLeve1 = model.ResponsiblePersonLeve1;
-                    _updateAon.ResponsiblePersonLeve2 = model.ResponsiblePersonLeve2;
-                    _updateAon.ResponsiblePersonLeve3 = model.ResponsiblePersonLeve3;
-                    _updateAon.ResponsiblePersonLeve4 = model.ResponsiblePersonLeve4;
+                    _updateAon.VendorsIDs = sanitizer.Sanitize(model.VendorsIDs.ToString());
+                    _updateAon.ResponsiblePersonLeve1 = sanitizer.Sanitize(model.ResponsiblePersonLeve1);
+                    _updateAon.ResponsiblePersonLeve2 = sanitizer.Sanitize(model.ResponsiblePersonLeve2);
+                    _updateAon.ResponsiblePersonLeve3 = sanitizer.Sanitize(model.ResponsiblePersonLeve3);
+                    _updateAon.ResponsiblePersonLeve4 = sanitizer.Sanitize(model.ResponsiblePersonLeve4);
                     _updateAon.CreatedBy = Convert.ToInt32(Session["UserID"]);
                     _updateAon.CreatedOn = System.DateTime.Now;
                     _updateAon.IsDeleted = false;
-                    _updateAon.System_case = model.System_case;
+                    _updateAon.System_case = sanitizer.Sanitize(model.System_case);
                     _entities.SaveChanges();
                 }
             }
@@ -289,8 +506,29 @@ namespace MOD.Controllers
             return Redirect("Index");
         }
 
+        //[Route("AoNDelete")]
         public ActionResult Delete(int ID)
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower().Contains("AON Registration"))
+                    {
+                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             try
             {
                 var _deleteAoN = _entities.acq_project_master.Where(x => x.aon_id == ID).FirstOrDefault();
@@ -309,8 +547,47 @@ namespace MOD.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("AoNViewAoNList")]
         public ActionResult ViewAoNList(DateTime? StartDate, DateTime? EndDate, string Categorisation, string Service_Lead_Service)
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "AON Granted During a Given Period Category-wise Alongwith Costs".ToLower())
+                    {
+                        //if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            string Categorisation1 = null;
+            string Service_Lead_Service1 = null;
+            if (Categorisation != null & Categorisation != "")
+            {
+                Categorisation1 = Cipher.Decrypt(Categorisation, "");
+            }
+            else
+            {
+                Categorisation1 = Categorisation;
+            }
+            if (Service_Lead_Service != null & Service_Lead_Service != "")
+            {
+                Service_Lead_Service1 = Cipher.Decrypt(Service_Lead_Service, "");
+            }
+            else
+            {
+                Service_Lead_Service1 = Service_Lead_Service;
+            }
             MODListViewModel model = new MODListViewModel();
             var SectionID = Session["SectionID"];
 
@@ -331,6 +608,7 @@ namespace MOD.Controllers
                             obj.Quantity = item.Quantity;
                             obj.Service_Lead_Service = item.Service_Lead_Service;
                             obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation = Categorisation1;
                             obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
                             obj.Cost = item.Cost;
                             obj.Currency = item.Currency;
@@ -363,7 +641,7 @@ namespace MOD.Controllers
 
                         var objAonLst = new List<acq_project_master>();
                         if (!string.IsNullOrEmpty(Categorisation))
-                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Categorisation) && x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList());
+                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Categorisation1) && x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList());
 
                         //if (!string.IsNullOrEmpty(Service_Lead_Service))
                         //    objAonLst.AddRange(AonList.Where(x => x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList());
@@ -380,6 +658,7 @@ namespace MOD.Controllers
                             obj.Quantity = item.Quantity;
                             obj.Service_Lead_Service = item.Service_Lead_Service;
                             obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation =Categorisation1;
                             obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
                             obj.Cost = item.Cost;
                             obj.Currency = item.Currency;
@@ -424,6 +703,7 @@ namespace MOD.Controllers
                             obj.Quantity = item.Quantity;
                             obj.Service_Lead_Service = item.Service_Lead_Service;
                             obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation = Categorisation1;
                             obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
                             obj.Cost = item.Cost;
                             obj.Currency = item.Currency;
@@ -456,7 +736,7 @@ namespace MOD.Controllers
 
                         var objAonLst = new List<acq_project_master>();
                         if (!string.IsNullOrEmpty(Categorisation))
-                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Categorisation) && x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList());
+                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Categorisation1) && x.Service_Lead_Service.Contains(Service_Lead_Service1)).ToList());
                         //if (!string.IsNullOrEmpty(Service_Lead_Service))
                         //    objAonLst.AddRange(AonList.Where(x => x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList());
                         if (StartDate.ToString() != null && EndDate.ToString() != null)
@@ -471,6 +751,7 @@ namespace MOD.Controllers
                             obj.Quantity = item.Quantity;
                             obj.Service_Lead_Service = item.Service_Lead_Service;
                             obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation = Categorisation;
                             obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
                             obj.Cost = item.Cost;
                             obj.Currency = item.Currency;
@@ -515,6 +796,7 @@ namespace MOD.Controllers
                             obj.Quantity = item.Quantity;
                             obj.Service_Lead_Service = item.Service_Lead_Service;
                             obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation = Categorisation1;
                             obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
                             obj.Cost = item.Cost;
                             obj.Currency = item.Currency;
@@ -547,7 +829,7 @@ namespace MOD.Controllers
 
                         var objAonLst = new List<acq_project_master>();
                         if (!string.IsNullOrEmpty(Categorisation))
-                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Categorisation) && x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList());
+                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Categorisation1) && x.Service_Lead_Service.Contains(Service_Lead_Service1)).ToList());
                         //if (!string.IsNullOrEmpty(Service_Lead_Service))
                         //    objAonLst.AddRange(AonList.Where(x => x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList());
                         if (StartDate.ToString() != null && EndDate.ToString() != null)
@@ -562,6 +844,7 @@ namespace MOD.Controllers
                             obj.Quantity = item.Quantity;
                             obj.Service_Lead_Service = item.Service_Lead_Service;
                             obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation = Categorisation1;
                             obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
                             obj.Cost = item.Cost;
                             obj.Currency = item.Currency;
@@ -606,6 +889,7 @@ namespace MOD.Controllers
                             obj.Quantity = item.Quantity;
                             obj.Service_Lead_Service = item.Service_Lead_Service;
                             obj.Categorisation = item.Categorisation;
+                            //obj.Categorisation =Categorisation1;
                             obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
                             obj.Cost = item.Cost;
                             obj.Currency = item.Currency;
@@ -635,57 +919,60 @@ namespace MOD.Controllers
                 {
                     if (StartDate.ToString() != null || EndDate.ToString() != null || !string.IsNullOrEmpty(Service_Lead_Service) || !string.IsNullOrEmpty(Categorisation))
                     {
+                        if (AonList.Count() > 0)
+                        {
+                            var objAonLst = new List<acq_project_master>();
+                            if (!string.IsNullOrEmpty(Categorisation) && !string.IsNullOrEmpty(Service_Lead_Service))
+                            {
+                                objAonLst.AddRange(AonList.Where(x => x.Categorisation == Categorisation1 && x.Service_Lead_Service == Service_Lead_Service1).ToList());
+                            }
+                            else if (!string.IsNullOrEmpty(Categorisation))
+                            {
+                                objAonLst.AddRange(AonList.Where(x => x.Categorisation == Categorisation1).ToList());
+                            }
+                            else if (!string.IsNullOrEmpty(Service_Lead_Service))
+                            {
+                                objAonLst.AddRange(AonList.Where(x => x.Service_Lead_Service == Service_Lead_Service1).ToList());
+                            }
+                            else if (StartDate.ToString() != null && EndDate.ToString() != null)
+                            {
+                                objAonLst.AddRange(AonList.Where(x => x.Date_of_Accord_of_AoN >= StartDate && x.Date_of_Accord_of_AoN <= EndDate).ToList());
+                            }
 
-                        var objAonLst = new List<acq_project_master>();
-                        if (!string.IsNullOrEmpty(Categorisation) && !string.IsNullOrEmpty(Service_Lead_Service))
-                        {
-                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Categorisation) && x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList());
-                        }
-                        else if (!string.IsNullOrEmpty(Categorisation))
-                        {
-                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Categorisation)).ToList());
-                        }
-                        else if (!string.IsNullOrEmpty(Service_Lead_Service))
-                        {
-                            objAonLst.AddRange(AonList.Where(x => x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList());
-                        }
-                        else if (StartDate.ToString() != null && EndDate.ToString() != null)
-                        {
-                            objAonLst.AddRange(AonList.Where(x => x.Date_of_Accord_of_AoN >= StartDate && x.Date_of_Accord_of_AoN <= EndDate).ToList());
-                        }
 
+                            foreach (var item in objAonLst)
+                            {
+                                MODListViewModel obj = new MODListViewModel();
+                                obj.aon_id = item.aon_id;
+                                obj.item_description = Cipher.Decrypt(item.item_description, password);
+                                obj.MeetingDate = Convert.ToDateTime(item.acq_meeting_master.meeting_date);
+                                obj.Quantity = item.Quantity;
+                                obj.Service_Lead_Service = item.Service_Lead_Service;
+                                obj.Categorisation = item.Categorisation;
+                                // obj.Categorisation = Categorisation1;
+                                obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                                obj.Cost = item.Cost;
+                                obj.Currency = item.Currency;
+                                obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                                obj.AoNaccordedbyDACDPB = item.acq_meeting_master.dac_dpb;
 
-                        foreach (var item in objAonLst)
-                        {
-                            MODListViewModel obj = new MODListViewModel();
-                            obj.aon_id = item.aon_id;
-                            obj.item_description = Cipher.Decrypt(item.item_description, password);
-                            obj.MeetingDate = Convert.ToDateTime(item.acq_meeting_master.meeting_date);
-                            obj.Quantity = item.Quantity;
-                            obj.Service_Lead_Service = item.Service_Lead_Service;
-                            obj.Categorisation = item.Categorisation;
-                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
-                            obj.Cost = item.Cost;
-                            obj.Currency = item.Currency;
-                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
-                            obj.AoNaccordedbyDACDPB = item.acq_meeting_master.dac_dpb;
-
-                            obj.Tax_Duties = item.Tax_Duties;
-                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
-                            obj.Trials_Required = item.Trials_Required;
-                            obj.Essential_parameters = item.Essential_parameters;
-                            obj.Any_other_aspect = item.Any_other_aspect;
-                            obj.IC_percentage = item.IC_percentage;
-                            obj.Option_clause_applicable = item.Option_clause_applicable;
-                            obj.Offset_applicable = item.Offset_applicable;
-                            obj.AMC_applicable = item.AMC_applicable;
-                            obj.AMCRemarks = item.AMCRemarks;
-                            obj.Warrenty_applicable = item.Warrenty_applicable;
-                            obj.Warrenty_Remarks = item.Warrenty_Remarks;
-                            obj.AoN_validity = item.AoN_validity;
-                            obj.AoN_validity_unit = item.AoN_validity_unit;
-                            obj.Remarks = item.Remarks;
-                            list.Add(obj);
+                                obj.Tax_Duties = item.Tax_Duties;
+                                obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                                obj.Trials_Required = item.Trials_Required;
+                                obj.Essential_parameters = item.Essential_parameters;
+                                obj.Any_other_aspect = item.Any_other_aspect;
+                                obj.IC_percentage = item.IC_percentage;
+                                obj.Option_clause_applicable = item.Option_clause_applicable;
+                                obj.Offset_applicable = item.Offset_applicable;
+                                obj.AMC_applicable = item.AMC_applicable;
+                                obj.AMCRemarks = item.AMCRemarks;
+                                obj.Warrenty_applicable = item.Warrenty_applicable;
+                                obj.Warrenty_Remarks = item.Warrenty_Remarks;
+                                obj.AoN_validity = item.AoN_validity;
+                                obj.AoN_validity_unit = item.AoN_validity_unit;
+                                obj.Remarks = item.Remarks;
+                                list.Add(obj);
+                            }
                         }
                     }
                 }
@@ -693,19 +980,40 @@ namespace MOD.Controllers
             }
             string query = "";
 
-            if (Service_Lead_Service == "" || Service_Lead_Service == null)
-                Service_Lead_Service = "%";
+            if (Service_Lead_Service1 == "" || Service_Lead_Service1 == null)
+                Service_Lead_Service1 = "%";
 
-            if (Categorisation == "" || Categorisation == null)
-                Categorisation = "%";
+            if (Categorisation1 == "" || Categorisation1 == null)
+                Categorisation1 = "%";
 
             query = "select Financial_year," +
 " count(*) no_of_aons,sum(cast(y.cost as decimal(16, 2))) total_cost_in_crs from" +
 " (select y.*,concat('FY', CASE WHEN MONTH(y.date_of_accord_of_aon) < 4 THEN YEAR(y.date_of_accord_of_aon) - 1 ELSE" +
 " YEAR(y.date_of_accord_of_aon) END) Financial_year from acq_project_master y )y" +
-" where y.Service_Lead_Service like '" + Service_Lead_Service + "' and y.categorisation like '" + Categorisation + "'" +
+//" where y.Service_Lead_Service like '" + Service_Lead_Service1 + "' and y.categorisation like '" + Categorisation1 + "'" +
+" where y.Service_Lead_Service like ? and y.categorisation like ? " +
+
 " and  y.DeletedBy is null group by Financial_year";
 
+            //DataTable dt = return_datatable(query);
+
+            DataTable dt = new DataTable();
+            using (OleDbConnection conn = masterService.DB())
+            {
+                OleDbDataAdapter adap = new OleDbDataAdapter();
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+                // cmd.Parameters.AddWithValue("@Id", CatID);
+                cmd.Parameters.Add("@Service_Lead_Service", OleDbType.VarChar, 500);
+                cmd.Parameters["@Service_Lead_Service"].Value = Service_Lead_Service1;
+                cmd.Parameters.Add("@Categorisation", OleDbType.VarChar, 500);
+                cmd.Parameters["@Categorisation"].Value = Categorisation1;
+                cmd.Connection = conn;
+                adap.SelectCommand = cmd;
+                adap.Fill(dt);
+                conn.Close();
+            }
 
             //            if (Service_Lead_Service == "" && Categorisation == null)
             //            {
@@ -748,7 +1056,7 @@ namespace MOD.Controllers
             List<DetailCharts> dataPoints = new List<DetailCharts>();
             IEnumerable<AoNsGranted_WiseReport> Badge = null;
 
-            DataTable dt = return_datatable(query);
+
             Badge = dt.AsEnumerable().Select(x => new AoNsGranted_WiseReport
             {
                 Financial_year = x.Field<string>("Financial_year"),
@@ -772,7 +1080,7 @@ namespace MOD.Controllers
             return View();
         }
         [HttpPost]
-
+        [Route("AoNExcelupload")]
         public ActionResult excelupload(HttpPostedFileBase file)
         {
 
@@ -874,8 +1182,29 @@ namespace MOD.Controllers
             }
         }
 
+        [Route("AoNForeClosure")]
         public ActionResult AoNForeClosure()
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "AON ForeClosure".ToLower())
+                    {
+                        //if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             SaveAcqProjectMasterViewModel model = new SaveAcqProjectMasterViewModel();
             List<SaveAcqProjectMasterViewModel> list = new List<SaveAcqProjectMasterViewModel>();
             var AonList = _entities.acq_project_master.Where(x => x.IsDeleted == false).ToList();
@@ -894,6 +1223,7 @@ namespace MOD.Controllers
         }
 
         [HttpPost]
+        [Route("AoNForeClosure")]
         public ActionResult AoNForeClosure(SaveAcqProjectMasterViewModel model)
         {
             SaveAcqProjectMasterViewModel model1 = new SaveAcqProjectMasterViewModel();

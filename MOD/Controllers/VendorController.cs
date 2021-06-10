@@ -1,19 +1,105 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DDPAdmin.Services.Master;
+using Ganss.XSS;
+using Gantt_Chart.Models;
 using MOD.Models;
+using MOD.Service;
+using static MOD.MvcApplication;
 
 namespace MOD.Controllers
 {
-    [Authorize]
+   
+    [SessionExpire]
+    [SessionExpireRefNo]
     public class VendorController : Controller
     {
+        private static string WebPortalUrl = ConfigurationManager.AppSettings["WebPortalUrl"].ToString();
+        HtmlSanitizer sanitizer = new HtmlSanitizer();
         MODEntities _entities = new MODEntities();
+
+        public VendorController()
+        {
+            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+            {
+                AccountController account = new AccountController();
+                string message = account.Blockuser(System.Web.HttpContext.Current.Session["EmailID"].ToString());
+                if (message == "Blocked")
+                {
+                    System.Web.HttpContext.Current.Response.Redirect("~/LoginBlockMsg");
+                }
+            }
+            BruteForce bruteForce = new BruteForce();
+            BruteForceAttackss.bcontroller = "Vendor";
+            if (BruteForceAttackss.bcontroller != "")
+            {
+                if (BruteForceAttackss.bcontroller == "Vendor")
+                {
+                    if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+                    {
+                        BruteForceAttackss.date = System.DateTime.Now;
+                        BruteForceAttackss.refreshcount = 1;
+                    }
+                    else
+                    {
+                        TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                        if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
+                        {
+                            if (System.Web.HttpContext.Current.Session["UserID"] != null)
+                            {
+                                List<UserViewModel> model = new List<UserViewModel>();
+                                model = bruteForce.GetUserLoginBlock(System.Web.HttpContext.Current.Session["EmailID"].ToString());
+                                if (model != null)
+                                {
+                                    BruteForceAttackss.refreshcount = 0;
+                                    BruteForceAttackss.date = null;
+                                    BruteForceAttackss.bcontroller = "";
+                                    System.Web.HttpContext.Current.Response.Redirect(WebPortalUrl);
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        }
+                    }
+
+
+                }
+            }
+            else
+            {
+                BruteForceAttackss.bcontroller = "Vendor";
+            }
+        }
+        //[Route("VIndex")]
         public ActionResult Index()
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Vendor Master".ToLower())
+                    {
+                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 8 || Convert.ToInt32(Session["SectionID"]) == 9 || Convert.ToInt32(Session["SectionID"]) == 10)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             var password = "p@SSword";
             VendorListViewModel model = new VendorListViewModel();
             List<VendorListViewModel> list= new List<VendorListViewModel>();
@@ -21,7 +107,7 @@ namespace MOD.Controllers
             foreach(var item in vendorList)
             {
                 VendorListViewModel obj = new VendorListViewModel();
-                obj.VendorId = item.VendorId;
+                obj.VendorId = Cipher.Encrypt_Portal(item.VendorId.ToString());
                 obj.VendorName = Cipher.Decrypt(item.VendorName, password);
                 //obj.VendorName = Encryption.Decrypt(item.VendorName);
                 obj.VendorAddress = item.VendorAddress;
@@ -41,14 +127,37 @@ namespace MOD.Controllers
             return View(model);
         }
 
+        [Route("VCreate")]
         public ActionResult Create()
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Vendor Master".ToLower())
+                    {
+                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 8 || Convert.ToInt32(Session["SectionID"]) == 9 || Convert.ToInt32(Session["SectionID"]) == 10)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             VendorSaveViewModel model = new VendorSaveViewModel();
             model.VendorCategories =  _entities.tbl_tblVendorCategory.ToList();
             return View(model);
         }
 
+       
         [HttpPost]
+        [Route("VCreate")]
         public ActionResult Create(VendorSaveViewModel model)
         {
             model.VendorCategories = _entities.tbl_tblVendorCategory.ToList();
@@ -65,11 +174,11 @@ namespace MOD.Controllers
                     ////Encrypted Vendor Name
                     //string vendorName = Encryption.Encrypt(model.VendorName);
                     //obj.VendorName = vendorName;
-                    obj.VendorAddress = model.VendorAddress;
+                    obj.VendorAddress = sanitizer.Sanitize(model.VendorAddress);
                     obj.VendorCategory = model.VendorCategory;
-                    obj.VendorContactName = model.VendorContactName;
-                    obj.VendorPhone = model.VendorPhone;
-                    obj.VendorEmail = model.VendorEmail;
+                    obj.VendorContactName = sanitizer.Sanitize(model.VendorContactName);
+                    obj.VendorPhone = sanitizer.Sanitize(model.VendorPhone);
+                    obj.VendorEmail = sanitizer.Sanitize(model.VendorEmail);
                     obj.CreatedBy = Convert.ToInt32(Session["UserID"]);
                     obj.CreatedOn = System.DateTime.Now;
                     obj.IsDeleted = false;
@@ -85,12 +194,36 @@ namespace MOD.Controllers
             return View(model);
         }
 
-        public ActionResult Edit(int ID)
+        [Route("VEdit")]
+        public ActionResult Edit(string ID)
         {
+            int VId = 0;
+            ID = Cipher.Decrypt_Portal(ID);
+            VId = Convert.ToInt32(ID);
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Vendor Master".ToLower())
+                    {
+                        //if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 8 || Convert.ToInt32(Session["SectionID"]) == 9 || Convert.ToInt32(Session["SectionID"]) == 10)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             try
             {
                 var password = "p@SSword";
-                var _editVendor = _entities.tbl_tblVendor.Where(x => x.VendorId == ID).FirstOrDefault();
+                var _editVendor = _entities.tbl_tblVendor.Where(x => x.VendorId == VId).FirstOrDefault();
                 VendorSaveViewModel model = new VendorSaveViewModel();
                 model.VendorId = _editVendor.VendorId;
                 model.VendorName = Cipher.Decrypt(_editVendor.VendorName, password);
@@ -109,6 +242,7 @@ namespace MOD.Controllers
             }
         }
 
+        [Route("VUpdate")]
         [HttpPost]
         public ActionResult Update(VendorSaveViewModel model)
         {
@@ -121,10 +255,10 @@ namespace MOD.Controllers
                     _updateVendor.VendorCategory = model.VendorCategory;
                     //_updateVendor.VendorName = Encryption.Encrypt(model.VendorName);
                     _updateVendor.VendorName = Cipher.Encrypt(model.VendorName, password);
-                    _updateVendor.VendorAddress = model.VendorAddress;
-                    _updateVendor.VendorContactName = model.VendorContactName;
-                    _updateVendor.VendorPhone = model.VendorPhone;
-                    _updateVendor.VendorEmail = model.VendorEmail;
+                    _updateVendor.VendorAddress = sanitizer.Sanitize(model.VendorAddress);
+                    _updateVendor.VendorContactName = sanitizer.Sanitize(model.VendorContactName);
+                    _updateVendor.VendorPhone = sanitizer.Sanitize(model.VendorPhone);
+                    _updateVendor.VendorEmail = sanitizer.Sanitize(model.VendorEmail);
                     _updateVendor.CreatedBy = Convert.ToInt32(Session["UserID"]); ;
                     _updateVendor.CreatedOn = System.DateTime.Now;
                     _updateVendor.IsDeleted = false;
@@ -135,11 +269,32 @@ namespace MOD.Controllers
             {
                 throw ex;
             }
-            return Redirect("Index");
+            return RedirectToAction("Index");
+           
         }
-
+        [Route("VDelete")]
         public ActionResult Delete(int ID)
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Vendor Master".ToLower())
+                    {
+                        //if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 8 || Convert.ToInt32(Session["SectionID"]) == 9 || Convert.ToInt32(Session["SectionID"]) == 10)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             try
             {
                 var isExit = _entities.acq_rfp_VendorsDetails.Where(x => x.vendor_id == ID).FirstOrDefault();

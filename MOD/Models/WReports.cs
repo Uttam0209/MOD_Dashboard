@@ -48,4 +48,14 @@ namespace MOD.Models
         public string stage_name { get; set; }
         public int aon_id { get; set; }
     }
+    public class StageWiseDelayReport_N
+    {
+        public string Service_Lead_Service { get; set; }
+        public string item_description { get; set; }
+        public string Categorisation { get; set; }
+        public Nullable<int> no_of_weeks { get; set; }
+        public Nullable<decimal> stage { get; set; }
+        public string stage_name { get; set; }
+        public string aon_id { get; set; }
+    }
 }

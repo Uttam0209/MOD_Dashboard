@@ -3,9 +3,10 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+<script src="~/assets/js/moment.min.js"></script>
+<script src="~/Content/cdnfile/bootstrap-multiselect.js"></script>
+<link href="~/Content/cdnfile/bootstrap-multiselect.css" rel="stylesheet" />
+
 <style>
     #addbadges-modal .btn-group {
         width: 100% !important;
@@ -20,7 +21,9 @@
         border: 1px solid #dae1e7;
     }
 </style>
+
 @Html.Partial("SideMenu")
+
 <div class="container">
     <div class="row">
         <!-- Content  -->
@@ -160,12 +163,13 @@
 
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
 
     });
     $("#loader-wrapper").hide();
-   
+
     var i = 1;
     dataTable = $("#CategoryTable").DataTable({
         "scrollX": "300",
@@ -185,7 +189,7 @@
             },
             { "data": "ProjectName" },
             { "data": "TaskDescription" },
-            
+
             { "data": "UserName" },
             //{
             //    "data": "TryPojectID", "render": function (data) {
@@ -198,7 +202,7 @@
             //    "searchable": false,
             //    "width": "150px"
             //},
-          
+
 
         ],
         "language": {
@@ -271,25 +275,25 @@
                     if (result == "Saved") {
                         $("#ConfirmationMsg").modal("show");
                         $("#ModalTitleMsg").html("Saved Sucessfully");
-                        
+
                         $("#loader-wrapper").hide();
                     }
                     else if (result == "Update") {
                         $("#ConfirmationMsg").modal("show");
                         $("#ModalTitleMsg").html("Record Update Sucessfully");
-                        
+
                         $("#loader-wrapper").hide();
                     }
                     else if (result == "Already") {
                         $("#ConfirmationMsg").modal("show");
                         $("#ModalTitleMsg").html("This email id already exits");
-                       
+
                         $("#loader-wrapper").hide();
                     }
                     else {
                         $("#ConfirmationMsg").modal("show");
                         $("#ModalTitleMsg").html("Record not saved");
-                       
+
                         $("#loader-wrapper").hide();
                     }
 
@@ -308,7 +312,7 @@
         dataTable.ajax.reload();
     }
 
- 
+
 
     function AddNewCategory(TryPojectID) {
         $('#EventNamecheck').hide();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Linq;
@@ -9,15 +10,17 @@ using DDPAdmin.Services.Master;
 using Gantt_Chart.Models;
 using Gantt_Chart.Service;
 using MOD.Models;
+using MOD.Service;
 using Newtonsoft.Json;
-
+using static MOD.MvcApplication;
 
 namespace MOD.Controllers
 {
-
+    [SessionExpire]
+    [SessionExpireRefNo]
     public class WReportsController : Controller
     {
-
+        private static string WebPortalUrl = ConfigurationManager.AppSettings["WebPortalUrl"].ToString();
         masterService mService = new masterService();
         GanttData ganttData = new GanttData();
         private readonly MODEntities _entities;
@@ -25,9 +28,85 @@ namespace MOD.Controllers
 
         public WReportsController()
         {
+            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+            {
+                AccountController account = new AccountController();
+                string message = account.Blockuser(System.Web.HttpContext.Current.Session["EmailID"].ToString());
+                if (message == "Blocked")
+                {
+                    System.Web.HttpContext.Current.Response.Redirect("~/LoginBlockMsg");
+                }
+            }
             _entities = new MODEntities();
+            EncriptServicesData();
+
+            BruteForce bruteForce = new BruteForce();
+            BruteForceAttackss.bcontroller = "WReports";
+            if (BruteForceAttackss.bcontroller != "")
+            {
+                if (BruteForceAttackss.bcontroller == "WReports")
+                {
+                    if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+                    {
+                        BruteForceAttackss.date = System.DateTime.Now;
+                        BruteForceAttackss.refreshcount = 1;
+                    }
+                    else
+                    {
+                        TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                        if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 2)
+                        {
+                            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                            {
+                                List<UserViewModel> model = new List<UserViewModel>();
+                                model = bruteForce.GetUserLoginBlock(System.Web.HttpContext.Current.Session["EmailID"].ToString());
+                                if (model != null)
+                                {
+                                    BruteForceAttackss.refreshcount = 0;
+                                    BruteForceAttackss.date = null;
+                                    BruteForceAttackss.bcontroller = "";
+                                    System.Web.HttpContext.Current.Response.Redirect(WebPortalUrl);
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        }
+                    }
+
+
+                }
+            }
+            else
+            {
+                BruteForceAttackss.bcontroller = "WReports";
+            }
         }
         // GET: WReports
+        public void EncriptServicesData()
+        {
+            List<Categorisation> categorisations = new List<Categorisation>
+            {
+                new Categorisation { Text = "Army",  Value = "Army" },
+                new Categorisation { Text = "Navy",  Value = "Navy" },
+                new Categorisation { Text = "AirForce",  Value = "AirForce" },
+                new Categorisation { Text = "ICG",  Value = "ICG" },
+                new Categorisation { Text = "Joint",  Value = "Joint" }
+            };
+            List<Categorisation> Catdata = new List<Categorisation>();
+            foreach (var item in categorisations)
+            {
+                Categorisation cat1 = new Categorisation()
+                {
+                    Text = item.Text,
+                    Value = Cipher.Encrypt(item.Value, "")
+                };
+                Catdata.Add(cat1);
+            };
+            ViewBag.ServicesData = Catdata;
+        }
 
         public static DataTable return_datatable(String query)
         {
@@ -44,6 +123,7 @@ namespace MOD.Controllers
             }
             return dt;
         }
+
         public static int execute_query(String query)
         {
 
@@ -62,6 +142,7 @@ namespace MOD.Controllers
                 finally { conn.Close(); }
             }
         }
+
         //        public string GetGraph1(string id)
         //        {
         //            string query = "SELECT ISNULL(ROW_NUMBER() OVER (ORDER BY @@identity), - 1) AS Pkey, q.TaskDescription, count(*) projects"+
@@ -72,6 +153,7 @@ namespace MOD.Controllers
         //            string data = JsonConvert.SerializeObject(dt);
         //            return data;
         //        }
+
         public string GetTable1(string id)
         {
             IEnumerable<WReports1> Badge = null;
@@ -102,6 +184,7 @@ namespace MOD.Controllers
             string data = JsonConvert.SerializeObject(Badge.FirstOrDefault());
             return data;
         }
+
         public JsonResult GetTable(string id)
         {
             List<WReports> list = new List<WReports>();
@@ -152,9 +235,39 @@ namespace MOD.Controllers
 
             return Json(new { data = list }, JsonRequestBehavior.AllowGet);
         }
+
+        //[Route("WRNewReport")]
         public ActionResult NewReports(string id)
         {
-            if(id==null || id=="")
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                
+            }
+            else
+            {
+                id = Cipher.Decrypt_Portal(id);
+            }
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Case Wise Report Indicating Timelines At Various Stages And Current Status".ToLower())
+                    {
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            if (id == null || id == "")
             {
                 ViewBag.id = "";
             }
@@ -176,7 +289,7 @@ namespace MOD.Controllers
             IEnumerable<acq_project_master> projectList = null;
             if (struid == "SuperAdmin")
             {
-                projectList = _entities.acq_project_master.Where(x=>x.DeletedBy == null).ToList();
+                projectList = _entities.acq_project_master.Where(x => x.DeletedBy == null).ToList();
             }
             else
             {
@@ -199,9 +312,19 @@ namespace MOD.Controllers
             ViewBag.item_description = list;
             return View();
         }
+
+        [Route("WRChartReport")]
         public ActionResult ChartReport1(string StartDate, string EndDate, string Service_Lead_Service)
         {
-
+            string Service_Lead_Service1 = null;
+            if (Service_Lead_Service != null && Service_Lead_Service != "")
+            {
+                Service_Lead_Service1 = Cipher.Decrypt(Service_Lead_Service, "");
+            }
+            else
+            {
+                Service_Lead_Service1 = Service_Lead_Service;
+            }
             var SectionID = Session["SectionID"];
             string wherecond = "";
 
@@ -217,6 +340,8 @@ namespace MOD.Controllers
 
 
             var mStartDate = ""; var mEndDate = "";
+            Session["Fromdate"] = mStartDate;
+            Session["Todate"] = mEndDate;
             if (StartDate != null && EndDate != null)
             {
                 var userDt = StartDate;
@@ -227,47 +352,91 @@ namespace MOD.Controllers
                 mEndDate = dtByUser1.ToString("yyyy-MM-dd");
                 Session["Fromdate"] = mStartDate;
                 Session["Todate"] = mEndDate;
+
+                List<DetailCharts> dataPoints1 = new List<DetailCharts>();
+                IEnumerable<ReportMileStonebyMonth> Badge = null;
+                if (Service_Lead_Service1 == "" || Service_Lead_Service1 == null)
+                    Service_Lead_Service1 = "%";
+                string query = "SELECT ISNULL(ROW_NUMBER() OVER (ORDER BY @@identity), - 1) AS Pkey, q.TaskDescription,cast(q.Taskslno as int) Taskslno, count(*) projects" +
+                " FROM acq_project_status_1 w, tbl_mst_Template q, acq_project_master d" +
+                 " WHERE w.actual_end_date BETWEEN '" + mStartDate + "' AND '" + mEndDate + "' AND w.task_id = q.taskslno  and w.project_id = d.Aon_id and d.service_lead_service like '" + Service_Lead_Service1 + "'" + wherecond +
+                // " WHERE w.actual_end_date BETWEEN '" + mStartDate + "' AND '" + mEndDate + "' AND w.task_id = q.taskslno  and w.project_id = d.Aon_id and d.service_lead_service like ? " + wherecond +
+                " GROUP BY q.TaskSlno, q.TaskDescription order by 3";
+                DataTable dt = return_datatable(query);
+
+                Badge = dt.AsEnumerable().Select(x => new ReportMileStonebyMonth
+                {
+                    Pkey = x.Field<long>("Pkey"),
+                    TaskDescription = x.Field<string>("TaskDescription"),
+                    projects = x.Field<int>("projects"),
+
+                });
+                foreach (ReportMileStonebyMonth item in Badge)
+                {
+                    dataPoints1.Add(new DetailCharts(Convert.ToString(item.TaskDescription), Convert.ToDouble(item.projects), Convert.ToDouble(item.projects)));
+                }
+                ViewBag.DataPoints1 = JsonConvert.SerializeObject(dataPoints1);
             }
 
-            List<DetailCharts> dataPoints1 = new List<DetailCharts>();
-            IEnumerable<ReportMileStonebyMonth> Badge = null;
-            if (Service_Lead_Service == "" || Service_Lead_Service == null)
-                Service_Lead_Service = "%";
-            string query = "SELECT ISNULL(ROW_NUMBER() OVER (ORDER BY @@identity), - 1) AS Pkey, q.TaskDescription,cast(q.Taskslno as int) Taskslno, count(*) projects" +
-            " FROM acq_project_status_1 w, tbl_mst_Template q, acq_project_master d" +
-            " WHERE w.actual_end_date BETWEEN '" + mStartDate + "' AND '" + mEndDate + "' AND w.task_id = q.taskslno  and w.project_id = d.Aon_id and d.service_lead_service like '" + Service_Lead_Service + "'" + wherecond +
-            " GROUP BY q.TaskSlno, q.TaskDescription order by 3";
-            DataTable dt = return_datatable(query);
-
-            Badge = dt.AsEnumerable().Select(x => new ReportMileStonebyMonth
-            {
-                Pkey = x.Field<long>("Pkey"),
-                TaskDescription = x.Field<string>("TaskDescription"),
-                projects = x.Field<int>("projects"),
-
-            });
-            foreach (ReportMileStonebyMonth item in Badge)
-            {
-                dataPoints1.Add(new DetailCharts(Convert.ToString(item.TaskDescription), Convert.ToDouble(item.projects), Convert.ToDouble(item.projects)));
-            }
-            ViewBag.DataPoints1 = JsonConvert.SerializeObject(dataPoints1);
+            
             return View();
         }
+        // [Route("WRReport")]
         public ActionResult ReportOnClick(string id, string Service_Lead_Service)
         {
-            if(Service_Lead_Service==null || Service_Lead_Service=="")
+            if (Service_Lead_Service == null || Service_Lead_Service == "")
             {
                 Service_Lead_Service = "%";
             }
-
+            else
+            {
+                Service_Lead_Service = Cipher.Decrypt(Service_Lead_Service, "");
+            }
             IEnumerable<WReports> BadgeChart = null;
             //BadgeChart = mService.GetReportGridOnClickChart(id);
             //ViewBag.Grid1 = BadgeChart;
-            string query = "SELECT ISNULL(ROW_NUMBER() OVER (ORDER BY @@identity), - 1) AS Pkey, q.TaskSlno, q.TaskDescription, g.Service_Lead_Service, g.item_description, " +
-                "g.Date_of_Accord_of_AoN, g.Cost, g.Categorisation, g.IC_percentage," +
-" g.Trials_Required FROM acq_project_status_1 w, tbl_mst_Template q, acq_project_master g" +
-" WHERE w.project_id = g.aon_id AND q.TaskDescription = '" + id + "' and g.Service_Lead_Service like '" + Service_Lead_Service + "'  AND w.actual_end_date BETWEEN '" + Session["Fromdate"].ToString() + "' AND '" + Session["Todate"].ToString() + "' AND w.task_id = q.taskslno";
-            DataTable dt = return_datatable(query);
+            string query = "";
+            if (Session["Fromdate"].ToString() == null || Session["Fromdate"].ToString() == "")
+            {
+                query = "SELECT ISNULL(ROW_NUMBER() OVER (ORDER BY @@identity), - 1) AS Pkey, q.TaskSlno, q.TaskDescription, g.Service_Lead_Service, g.item_description, " +
+                                "g.Date_of_Accord_of_AoN, g.Cost, g.Categorisation, g.IC_percentage," +
+                " g.Trials_Required FROM acq_project_status_1 w, tbl_mst_Template q, acq_project_master g" +
+                                //" WHERE w.project_id = g.aon_id AND q.TaskDescription = '" + id + "' and g.Service_Lead_Service like '" + Service_Lead_Service + "'  AND w.actual_end_date BETWEEN '" + Session["Fromdate"].ToString() + "' AND '" + Session["Todate"].ToString() + "' AND w.task_id = q.taskslno";
+
+                                " WHERE w.project_id = g.aon_id AND q.TaskDescription = ? and g.Service_Lead_Service like ?   AND w.task_id = q.taskslno";
+
+            }
+            else
+            {
+                query = "SELECT ISNULL(ROW_NUMBER() OVER (ORDER BY @@identity), - 1) AS Pkey, q.TaskSlno, q.TaskDescription, g.Service_Lead_Service, g.item_description, " +
+                   "g.Date_of_Accord_of_AoN, g.Cost, g.Categorisation, g.IC_percentage," +
+   " g.Trials_Required FROM acq_project_status_1 w, tbl_mst_Template q, acq_project_master g" +
+                   //" WHERE w.project_id = g.aon_id AND q.TaskDescription = '" + id + "' and g.Service_Lead_Service like '" + Service_Lead_Service + "'  AND w.actual_end_date BETWEEN '" + Session["Fromdate"].ToString() + "' AND '" + Session["Todate"].ToString() + "' AND w.task_id = q.taskslno";
+
+                   " WHERE w.project_id = g.aon_id AND q.TaskDescription = ? and g.Service_Lead_Service like ?  AND w.actual_end_date BETWEEN '" + Session["Fromdate"].ToString() + "' AND '" + Session["Todate"].ToString() + "' AND w.task_id = q.taskslno";
+            }
+            // DataTable dt = return_datatable(query);
+
+            DataTable dt = new DataTable();
+            using (OleDbConnection conn = masterService.DB())
+            {
+                OleDbDataAdapter adap = new OleDbDataAdapter();
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+
+                cmd.Parameters.Add("@id", OleDbType.VarChar, 500);
+                cmd.Parameters["@id"].Value = id;
+
+                cmd.Parameters.Add("@Service_Lead_Service", OleDbType.VarChar, 500);
+                cmd.Parameters["@Service_Lead_Service"].Value = Service_Lead_Service;
+
+                cmd.Connection = conn;
+                adap.SelectCommand = cmd;
+                adap.Fill(dt);
+                conn.Close();
+            }
+
             BadgeChart = dt.AsEnumerable().Select(x => new WReports
             {
                 Pkey = x.Field<long>("Pkey"),

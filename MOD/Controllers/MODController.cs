@@ -1,24 +1,87 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DDPAdmin.Services.Master;
+using Ganss.XSS;
+using Gantt_Chart.Models;
 using Gantt_Chart.Service;
 using MOD.Models;
+using MOD.Service;
 using Newtonsoft.Json;
+using static MOD.MvcApplication;
 
 namespace MOD.Controllers
 {
-    [Authorize]
+   // [Authorize]
+    [SessionExpire]
+    [SessionExpireRefNo]
     public class MODController : Controller
     {
+        private static string WebPortalUrl = ConfigurationManager.AppSettings["WebPortalUrl"].ToString();
         MODEntities entities = new MODEntities();
         masterService mService = new masterService();
         string password = "p@SSword";
+        HtmlSanitizer sanitizer = new HtmlSanitizer();
+        public MODController()
+        {
+            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+            {
+                AccountController account = new AccountController();
+                string message = account.Blockuser(System.Web.HttpContext.Current.Session["EmailID"].ToString());
+                if (message == "Blocked")
+                {
+                    System.Web.HttpContext.Current.Response.Redirect("~/LoginBlockMsg");
+                }
+            }
+            BruteForce bruteForce = new BruteForce();
+            BruteForceAttackss.bcontroller = "MOD";
+            if (BruteForceAttackss.bcontroller != "")
+            {
+                if (BruteForceAttackss.bcontroller == "MOD")
+                {
+                    if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+                    {
+                        BruteForceAttackss.date = System.DateTime.Now;
+                        BruteForceAttackss.refreshcount = 1;
+                    }
+                    else
+                    {
+                        TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                        if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
+                        {
+                            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                            {
+                                List<UserViewModel> model = new List<UserViewModel>();
+                                model = bruteForce.GetUserLoginBlock(System.Web.HttpContext.Current.Session["EmailID"].ToString());
+                                if (model != null)
+                                {
+                                    BruteForceAttackss.refreshcount = 0;
+                                    BruteForceAttackss.date = null;
+                                    BruteForceAttackss.bcontroller = "";
+                                    System.Web.HttpContext.Current.Response.Redirect(WebPortalUrl);
+                                }
+                            }
 
+                        }
+                        else
+                        {
+                            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        }
+                    }
+
+
+                }
+            }
+            else
+            {
+                BruteForceAttackss.bcontroller = "MOD";
+            }
+        }
         public static DataTable return_datatable(String query)
         {
             OleDbDataAdapter adap = new OleDbDataAdapter();
@@ -52,10 +115,30 @@ namespace MOD.Controllers
                 finally { conn.Close(); }
             }
         }
+
+        //[Route("MOD")]
         public ActionResult Index()
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Stage Progress (Technical Manager)".ToLower())
+                    {
+                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 8 || Convert.ToInt32(Session["SectionID"]) == 9 || Convert.ToInt32(Session["SectionID"]) == 10)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
 
-           
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             List<SaveAcqRFPMasterViewModel> list = new List<SaveAcqRFPMasterViewModel>();
             SaveAcqRFPMasterViewModel model = new SaveAcqRFPMasterViewModel();
             var SectionID = Session["SectionID"];
@@ -171,7 +254,7 @@ namespace MOD.Controllers
             return View(model);
         }
 
-        [ValidateAntiForgeryToken]
+       // [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Index(SaveAcqRFPMasterViewModel model)
         {
@@ -302,80 +385,80 @@ namespace MOD.Controllers
             if (model.rfp_id == 0)
             {
                 acq_rfp_master obj = new acq_rfp_master();
-                obj.type_rfp = model.type_rfp;
+                obj.type_rfp = sanitizer.Sanitize(model.type_rfp);
                 obj.aon_id = model.aon_id;
-                obj.draft_rfp_date = model.draft_rfp_date;
-                obj.date_submissionto_adgacq = model.date_submissionto_adgacq;
-                obj.date_acceptanceby_adgacq = model.date_acceptanceby_adgacq;
-                obj.date_collegiate_vetting = model.date_collegiate_vetting;
-                obj.date_approval_rfp = model.date_approval_rfp;
-                obj.date_issue_rfp = model.date_issue_rfp;
-                obj.date_prebid_meeting = model.date_prebid_meeting;
-                obj.date_prebid_replies = model.date_prebid_replies;
-                obj.lastdate_bidsubmission = model.lastdate_bidsubmission;
-                obj.date_bid_opening = model.date_bid_opening;
-                obj.ExtendedLastDate_BidSubmission = model.ExtendedLastDate_BidSubmission;
-                obj.Date_cnc_constitution = model.Date_cnc_constitution;
-                obj.Date_cnc_benchmarking = model.Date_cnc_benchmarking;
-                obj.Date_commercial_bid_opening = model.Date_commercial_bid_opening;
-                obj.Date_cnc_conclusion = model.Date_cnc_conclusion;
-                obj.Date_cnc_report = model.Date_cnc_report;
+                obj.draft_rfp_date = sanitizer.Sanitize(model.draft_rfp_date);
+                obj.date_submissionto_adgacq = sanitizer.Sanitize(model.date_submissionto_adgacq);
+                obj.date_acceptanceby_adgacq = sanitizer.Sanitize(model.date_acceptanceby_adgacq);
+                obj.date_collegiate_vetting = sanitizer.Sanitize(model.date_collegiate_vetting);
+                obj.date_approval_rfp = sanitizer.Sanitize(model.date_approval_rfp);
+                obj.date_issue_rfp = sanitizer.Sanitize(model.date_issue_rfp);
+                obj.date_prebid_meeting = sanitizer.Sanitize(model.date_prebid_meeting);
+                obj.date_prebid_replies = sanitizer.Sanitize(model.date_prebid_replies);
+                obj.lastdate_bidsubmission = sanitizer.Sanitize(model.lastdate_bidsubmission);
+                obj.date_bid_opening = sanitizer.Sanitize(model.date_bid_opening);
+                obj.ExtendedLastDate_BidSubmission = sanitizer.Sanitize(model.ExtendedLastDate_BidSubmission);
+                obj.Date_cnc_constitution = sanitizer.Sanitize(model.Date_cnc_constitution);
+                obj.Date_cnc_benchmarking = sanitizer.Sanitize(model.Date_cnc_benchmarking);
+                obj.Date_commercial_bid_opening = sanitizer.Sanitize(model.Date_commercial_bid_opening);
+                obj.Date_cnc_conclusion = sanitizer.Sanitize(model.Date_cnc_conclusion);
+                obj.Date_cnc_report = sanitizer.Sanitize(model.Date_cnc_report);
 
-                obj.date_Submission_CFANote_DGacq = model.date_Submission_CFANote_DGacq;
-                obj.date_Acq_approvalforsending_to_MoDFin = model.date_Submission_CFANote_DGacq;
-                obj.date_submissionto_CFA = model.date_submissionto_CFA;
-                obj.date_Approval_CFAnote = model.date_Approval_CFAnote;
+                obj.date_Submission_CFANote_DGacq = sanitizer.Sanitize(model.date_Submission_CFANote_DGacq);
+                obj.date_Acq_approvalforsending_to_MoDFin = sanitizer.Sanitize(model.date_Submission_CFANote_DGacq);
+                obj.date_submissionto_CFA = sanitizer.Sanitize(model.date_submissionto_CFA);
+                obj.date_Approval_CFAnote = sanitizer.Sanitize(model.date_Approval_CFAnote);
 
-                obj.date_DCN_Sentfor_InterMinisterialConsultations = model.date_DCN_Sentfor_InterMinisterialConsultations;
-                obj.date_MoF_Concurrence = model.date_MoF_Concurrence;
-                obj.date_DCN_submissionto_CCS = model.date_DCN_submissionto_CCS;
-                obj.ApproveToCSS_CFA = model.ApproveToCSS_CFA;
-                obj.DateContractSigning = model.DateContractSigning;
+                obj.date_DCN_Sentfor_InterMinisterialConsultations = sanitizer.Sanitize(model.date_DCN_Sentfor_InterMinisterialConsultations);
+                obj.date_MoF_Concurrence = sanitizer.Sanitize(model.date_MoF_Concurrence);
+                obj.date_DCN_submissionto_CCS = sanitizer.Sanitize(model.date_DCN_submissionto_CCS);
+                obj.ApproveToCSS_CFA = sanitizer.Sanitize(model.ApproveToCSS_CFA);
+                obj.DateContractSigning = sanitizer.Sanitize(model.DateContractSigning);
 
-                obj.date_approval_CFA_CCS = model.date_approval_CFA_CCS;
-                obj.date_ContractSigning = model.date_ContractSigning;
+                obj.date_approval_CFA_CCS = sanitizer.Sanitize(model.date_approval_CFA_CCS);
+                obj.date_ContractSigning = sanitizer.Sanitize(model.date_ContractSigning);
 
-                obj.Eoi_DPRDateIssueMakeI = model.Eoi_DPRDateIssueMakeI;
-                obj.Eoi_DPRReceiptDateMakeI = model.Eoi_DPRReceiptDateMakeI;
-                obj.Eoi_DPRDateCompletionandResponseMakeI = model.Eoi_DPRDateCompletionandResponseMakeI;
-                obj.dtforwardingshortlistedDPMakeI = model.dtforwardingshortlistedDPMakeI;
-                obj.dateapprovalshortlistedvendorsMakeI = model.dateapprovalshortlistedvendorsMakeI;
+                obj.Eoi_DPRDateIssueMakeI = sanitizer.Sanitize(model.Eoi_DPRDateIssueMakeI);
+                obj.Eoi_DPRReceiptDateMakeI = sanitizer.Sanitize(model.Eoi_DPRReceiptDateMakeI);
+                obj.Eoi_DPRDateCompletionandResponseMakeI = sanitizer.Sanitize(model.Eoi_DPRDateCompletionandResponseMakeI);
+                obj.dtforwardingshortlistedDPMakeI = sanitizer.Sanitize(model.dtforwardingshortlistedDPMakeI);
+                obj.dateapprovalshortlistedvendorsMakeI = sanitizer.Sanitize(model.dateapprovalshortlistedvendorsMakeI);
 
-                obj.dateselectionDasbySHQ_dprbMakeI = model.dateselectionDasbySHQ_dprbMakeI;
-                obj.dateapprovalCFAfundingarrangementissueProjectMakeI = model.dateapprovalCFAfundingarrangementissueProjectMakeI;
+                obj.dateselectionDasbySHQ_dprbMakeI = sanitizer.Sanitize(model.dateselectionDasbySHQ_dprbMakeI);
+                obj.dateapprovalCFAfundingarrangementissueProjectMakeI = sanitizer.Sanitize(model.dateapprovalCFAfundingarrangementissueProjectMakeI);
 
-                obj.dateselectionDasbySHQ_dprbMakeII = model.dateselectionDasbySHQ_dprbMakeII;
-                obj.dateapprovalCFAfundingarrangementissueProjectMakeII = model.dateapprovalCFAfundingarrangementissueProjectMakeII;
+                obj.dateselectionDasbySHQ_dprbMakeII = sanitizer.Sanitize(model.dateselectionDasbySHQ_dprbMakeII);
+                obj.dateapprovalCFAfundingarrangementissueProjectMakeII = sanitizer.Sanitize(model.dateapprovalCFAfundingarrangementissueProjectMakeII);
 
-                obj.datecommencementpreliminaryMakeI = model.datecommencementpreliminaryMakeI;
-                obj.datefinalisationdetaileddesign = model.datefinalisationdetaileddesign;
-                obj.datecommencementfabrication_devProMakeI = model.datecommencementfabrication_devProMakeI;
-                obj.datetechnicallimitedfieldstrialsMakeI = model.datetechnicallimitedfieldstrialsMakeI;
-                obj.datefreezingPSQRStoSQRSMakeI = model.datefreezingPSQRStoSQRSMakeI;
-                obj.dateintimationvendorssubmissionrevisedMakeI = model.dateintimationvendorssubmissionrevisedMakeI;
-                obj.datesubmissionrevisedcommercialoffersvendorsMakeI = model.datesubmissionrevisedcommercialoffersvendorsMakeI;
+                obj.datecommencementpreliminaryMakeI = sanitizer.Sanitize(model.datecommencementpreliminaryMakeI);
+                obj.datefinalisationdetaileddesign = sanitizer.Sanitize(model.datefinalisationdetaileddesign);
+                obj.datecommencementfabrication_devProMakeI = sanitizer.Sanitize(model.datecommencementfabrication_devProMakeI);
+                obj.datetechnicallimitedfieldstrialsMakeI = sanitizer.Sanitize(model.datetechnicallimitedfieldstrialsMakeI);
+                obj.datefreezingPSQRStoSQRSMakeI = sanitizer.Sanitize(model.datefreezingPSQRStoSQRSMakeI);
+                obj.dateintimationvendorssubmissionrevisedMakeI = sanitizer.Sanitize(model.dateintimationvendorssubmissionrevisedMakeI);
+                obj.datesubmissionrevisedcommercialoffersvendorsMakeI = sanitizer.Sanitize(model.datesubmissionrevisedcommercialoffersvendorsMakeI);
 
-                obj.DateIssueMake_II = model.DateIssueMake_II;
-                obj.EoiReceiptDateMake_II = model.EoiReceiptDateMake_II;
-                obj.EoiCompletionResponseMake_II = model.EoiCompletionResponseMake_II;
-                obj.dateApprovalEoiMake_II = model.dateApprovalEoiMake_II;
-                obj.dateissueProjectSenctionMake_II = model.dateissueProjectSenctionMake_II;
+                obj.DateIssueMake_II = sanitizer.Sanitize(model.DateIssueMake_II);
+                obj.EoiReceiptDateMake_II = sanitizer.Sanitize(model.EoiReceiptDateMake_II);
+                obj.EoiCompletionResponseMake_II = sanitizer.Sanitize(model.EoiCompletionResponseMake_II);
+                obj.dateApprovalEoiMake_II = sanitizer.Sanitize(model.dateApprovalEoiMake_II);
+                obj.dateissueProjectSenctionMake_II = sanitizer.Sanitize(model.dateissueProjectSenctionMake_II);
 
-                obj.datecommencementDevPrototypeMakeII = model.datecommencementDevPrototypeMakeII;
-                obj.datecompletionDevPrototypeMakeII = model.datecompletionDevPrototypeMakeII;
-                obj.datecommencementUserTrialsMakeII = model.datecommencementUserTrialsMakeII;
-                obj.datecompletionUserTrialsRedinessReviewMakeII = model.datecompletionUserTrialsRedinessReviewMakeII;
-                obj.dateFreezingPSQRsMakeII = model.dateFreezingPSQRsMakeII;
+                obj.datecommencementDevPrototypeMakeII = sanitizer.Sanitize(model.datecommencementDevPrototypeMakeII);
+                obj.datecompletionDevPrototypeMakeII = sanitizer.Sanitize(model.datecompletionDevPrototypeMakeII);
+                obj.datecommencementUserTrialsMakeII = sanitizer.Sanitize(model.datecommencementUserTrialsMakeII);
+                obj.datecompletionUserTrialsRedinessReviewMakeII = sanitizer.Sanitize(model.datecompletionUserTrialsRedinessReviewMakeII);
+                obj.dateFreezingPSQRsMakeII = sanitizer.Sanitize(model.dateFreezingPSQRsMakeII);
 
-                obj.dateFormulationJPMT_DD = model.dateFormulationJPMT_DD;
-                obj.dateFormulationPMT_DD = model.dateFormulationPMT_DD;
-                obj.dateIdentificationDCPP_DD = model.dateIdentificationDCPP_DD;
-                obj.datedetaildesignbySHQ_DD = model.datedetaildesignbySHQ_DD;
-                obj.dateissuetrialdeveiation_DD = model.dateissuetrialdeveiation_DD;
-                obj.dateprojectReview_DD = model.dateprojectReview_DD;
-                obj.daterealisationPrototype_DD = model.daterealisationPrototype_DD;
-                obj.dateCommencementPSQR = model.dateCommencementPSQR;
-                obj.dateCulminationPSQRValid_DD = model.dateCulminationPSQRValid_DD;
+                obj.dateFormulationJPMT_DD = sanitizer.Sanitize(model.dateFormulationJPMT_DD);
+                obj.dateFormulationPMT_DD = sanitizer.Sanitize(model.dateFormulationPMT_DD);
+                obj.dateIdentificationDCPP_DD = sanitizer.Sanitize(model.dateIdentificationDCPP_DD);
+                obj.datedetaildesignbySHQ_DD = sanitizer.Sanitize(model.datedetaildesignbySHQ_DD);
+                obj.dateissuetrialdeveiation_DD = sanitizer.Sanitize(model.dateissuetrialdeveiation_DD);
+                obj.dateprojectReview_DD = sanitizer.Sanitize(model.dateprojectReview_DD);
+                obj.daterealisationPrototype_DD = sanitizer.Sanitize(model.daterealisationPrototype_DD);
+                obj.dateCommencementPSQR = sanitizer.Sanitize(model.dateCommencementPSQR);
+                obj.dateCulminationPSQRValid_DD = sanitizer.Sanitize(model.dateCulminationPSQRValid_DD);
 
                 obj.CreatedBy = Convert.ToInt32(Session["UserID"]);
                 obj.CreatedOn = System.DateTime.Now;
@@ -414,93 +497,92 @@ namespace MOD.Controllers
                 var _updateAon = entities.acq_rfp_master.Where(x => x.rfp_id == model.rfp_id).FirstOrDefault();
                 if (_updateAon != null)
                 {
-                    _updateAon.type_rfp = model.type_rfp;
+                    _updateAon.type_rfp = sanitizer.Sanitize(model.type_rfp);
                     _updateAon.aon_id = model.aon_id;
-                    _updateAon.draft_rfp_date = model.draft_rfp_date;
-                    _updateAon.date_submissionto_adgacq = model.date_submissionto_adgacq;
-                    _updateAon.date_acceptanceby_adgacq = model.date_acceptanceby_adgacq;
-                    _updateAon.date_collegiate_vetting = model.date_collegiate_vetting;
-                    _updateAon.date_approval_rfp = model.date_approval_rfp;
-                    _updateAon.date_issue_rfp = model.date_issue_rfp;
-                    _updateAon.date_prebid_meeting = model.date_prebid_meeting;
-                    _updateAon.date_prebid_replies = model.date_prebid_replies;
-                    _updateAon.lastdate_bidsubmission = model.lastdate_bidsubmission;
-                    _updateAon.date_bid_opening = model.date_bid_opening;
-                    _updateAon.ExtendedLastDate_BidSubmission = model.ExtendedLastDate_BidSubmission;
+                    _updateAon.draft_rfp_date = sanitizer.Sanitize(model.draft_rfp_date);
+                    _updateAon.date_submissionto_adgacq = sanitizer.Sanitize(model.date_submissionto_adgacq);
+                    _updateAon.date_acceptanceby_adgacq = sanitizer.Sanitize(model.date_acceptanceby_adgacq);
+                    _updateAon.date_collegiate_vetting = sanitizer.Sanitize(model.date_collegiate_vetting);
+                    _updateAon.date_approval_rfp = sanitizer.Sanitize(model.date_approval_rfp);
+                    _updateAon.date_issue_rfp = sanitizer.Sanitize(model.date_issue_rfp);
+                    _updateAon.date_prebid_meeting = sanitizer.Sanitize(model.date_prebid_meeting);
+                    _updateAon.date_prebid_replies = sanitizer.Sanitize(model.date_prebid_replies);
+                    _updateAon.lastdate_bidsubmission = sanitizer.Sanitize(model.lastdate_bidsubmission);
+                    _updateAon.date_bid_opening = sanitizer.Sanitize(model.date_bid_opening);
+                    _updateAon.ExtendedLastDate_BidSubmission = sanitizer.Sanitize(model.ExtendedLastDate_BidSubmission);
+                    _updateAon.date_tec_constitution = sanitizer.Sanitize(model.date_tec_constitution);
+                    _updateAon.date_tec_commencement = sanitizer.Sanitize(model.date_tec_commencement);
+                    _updateAon.date_tec_completion = sanitizer.Sanitize(model.date_tec_completion);
+                    _updateAon.date_tec_reportsubmission = sanitizer.Sanitize(model.date_tec_reportsubmission);
+                    _updateAon.date_tec_approval = sanitizer.Sanitize(model.date_tec_approval);
+                    _updateAon.Date_toc_Constitution = sanitizer.Sanitize(model.Date_toc_Constitution);
+                    _updateAon.Date_toc_report = sanitizer.Sanitize(model.Date_toc_report);
+                    _updateAon.Date_toc_acceptance_CompetantAuth = sanitizer.Sanitize(model.Date_toc_acceptance_CompetantAuth);
+                    _updateAon.Date_received_Fet = sanitizer.Sanitize(model.Date_received_Fet);
+                    _updateAon.Date_accepted_Fet = sanitizer.Sanitize(model.Date_accepted_Fet);
+                    _updateAon.Date_cnc_constitution = sanitizer.Sanitize(model.Date_cnc_constitution);
+                    _updateAon.Date_cnc_benchmarking = sanitizer.Sanitize(model.Date_cnc_benchmarking);
+                    _updateAon.Date_commercial_bid_opening = sanitizer.Sanitize(model.Date_commercial_bid_opening);
+                    _updateAon.Date_cnc_conclusion = sanitizer.Sanitize(model.Date_cnc_conclusion);
+                    _updateAon.Date_cnc_report = sanitizer.Sanitize(model.Date_cnc_report);
 
-                    _updateAon.date_tec_constitution = model.date_tec_constitution;
-                    _updateAon.date_tec_commencement = model.date_tec_commencement;
-                    _updateAon.date_tec_completion = model.date_tec_completion;
-                    _updateAon.date_tec_reportsubmission = model.date_tec_reportsubmission;
-                    _updateAon.date_tec_approval = model.date_tec_approval;
-                    _updateAon.Date_toc_Constitution = model.Date_toc_Constitution;
-                    _updateAon.Date_toc_report = model.Date_toc_report;
-                    _updateAon.Date_toc_acceptance_CompetantAuth = model.Date_toc_acceptance_CompetantAuth;
-                    _updateAon.Date_received_Fet = model.Date_received_Fet;
-                    _updateAon.Date_accepted_Fet = model.Date_accepted_Fet;
-                    _updateAon.Date_cnc_constitution = model.Date_cnc_constitution;
-                    _updateAon.Date_cnc_benchmarking = model.Date_cnc_benchmarking;
-                    _updateAon.Date_commercial_bid_opening = model.Date_commercial_bid_opening;
-                    _updateAon.Date_cnc_conclusion = model.Date_cnc_conclusion;
-                    _updateAon.Date_cnc_report = model.Date_cnc_report;
+                    _updateAon.date_Submission_CFANote_DGacq = sanitizer.Sanitize(model.date_Submission_CFANote_DGacq);
+                    _updateAon.date_Acq_approvalforsending_to_MoDFin = sanitizer.Sanitize(model.date_Submission_CFANote_DGacq);
+                    _updateAon.date_submissionto_CFA = sanitizer.Sanitize(model.date_submissionto_CFA);
+                    _updateAon.date_Approval_CFAnote = sanitizer.Sanitize(model.date_Approval_CFAnote);
 
-                    _updateAon.date_Submission_CFANote_DGacq = model.date_Submission_CFANote_DGacq;
-                    _updateAon.date_Acq_approvalforsending_to_MoDFin = model.date_Submission_CFANote_DGacq;
-                    _updateAon.date_submissionto_CFA = model.date_submissionto_CFA;
-                    _updateAon.date_Approval_CFAnote = model.date_Approval_CFAnote;
+                    _updateAon.date_DCN_Sentfor_InterMinisterialConsultations = sanitizer.Sanitize(model.date_DCN_Sentfor_InterMinisterialConsultations);
+                    _updateAon.date_MoF_Concurrence = sanitizer.Sanitize(model.date_MoF_Concurrence);
+                    _updateAon.date_DCN_submissionto_CCS = sanitizer.Sanitize(model.date_DCN_submissionto_CCS);
+                    _updateAon.ApproveToCSS_CFA = sanitizer.Sanitize(model.ApproveToCSS_CFA);
+                    _updateAon.DateContractSigning = sanitizer.Sanitize(model.DateContractSigning);
 
-                    _updateAon.date_DCN_Sentfor_InterMinisterialConsultations = model.date_DCN_Sentfor_InterMinisterialConsultations;
-                    _updateAon.date_MoF_Concurrence = model.date_MoF_Concurrence;
-                    _updateAon.date_DCN_submissionto_CCS = model.date_DCN_submissionto_CCS;
-                    _updateAon.ApproveToCSS_CFA = model.ApproveToCSS_CFA;
-                    _updateAon.DateContractSigning = model.DateContractSigning;
+                    _updateAon.date_approval_CFA_CCS = sanitizer.Sanitize(model.date_approval_CFA_CCS);
+                    _updateAon.date_ContractSigning = sanitizer.Sanitize(model.date_ContractSigning);
 
-                    _updateAon.date_approval_CFA_CCS = model.date_approval_CFA_CCS;
-                    _updateAon.date_ContractSigning = model.date_ContractSigning;
+                    _updateAon.Eoi_DPRDateIssueMakeI = sanitizer.Sanitize(model.Eoi_DPRDateIssueMakeI);
+                    _updateAon.Eoi_DPRReceiptDateMakeI = sanitizer.Sanitize(model.Eoi_DPRReceiptDateMakeI);
+                    _updateAon.Eoi_DPRDateCompletionandResponseMakeI = sanitizer.Sanitize(model.Eoi_DPRDateCompletionandResponseMakeI);
+                    _updateAon.dtforwardingshortlistedDPMakeI = sanitizer.Sanitize(model.dtforwardingshortlistedDPMakeI);
+                    _updateAon.dateapprovalshortlistedvendorsMakeI = sanitizer.Sanitize(model.dateapprovalshortlistedvendorsMakeI);
 
-                    _updateAon.Eoi_DPRDateIssueMakeI = model.Eoi_DPRDateIssueMakeI;
-                    _updateAon.Eoi_DPRReceiptDateMakeI = model.Eoi_DPRReceiptDateMakeI;
-                    _updateAon.Eoi_DPRDateCompletionandResponseMakeI = model.Eoi_DPRDateCompletionandResponseMakeI;
-                    _updateAon.dtforwardingshortlistedDPMakeI = model.dtforwardingshortlistedDPMakeI;
-                    _updateAon.dateapprovalshortlistedvendorsMakeI = model.dateapprovalshortlistedvendorsMakeI;
+                    _updateAon.dateselectionDasbySHQ_dprbMakeI = sanitizer.Sanitize(model.dateselectionDasbySHQ_dprbMakeI);
+                    _updateAon.dateapprovalCFAfundingarrangementissueProjectMakeI = sanitizer.Sanitize(model.dateapprovalCFAfundingarrangementissueProjectMakeI);
 
-                    _updateAon.dateselectionDasbySHQ_dprbMakeI = model.dateselectionDasbySHQ_dprbMakeI;
-                    _updateAon.dateapprovalCFAfundingarrangementissueProjectMakeI = model.dateapprovalCFAfundingarrangementissueProjectMakeI;
+                    _updateAon.dateselectionDasbySHQ_dprbMakeII = sanitizer.Sanitize(model.dateselectionDasbySHQ_dprbMakeII);
+                    _updateAon.dateapprovalCFAfundingarrangementissueProjectMakeII = sanitizer.Sanitize(model.dateapprovalCFAfundingarrangementissueProjectMakeII);
 
-                    _updateAon.dateselectionDasbySHQ_dprbMakeII = model.dateselectionDasbySHQ_dprbMakeII;
-                    _updateAon.dateapprovalCFAfundingarrangementissueProjectMakeII = model.dateapprovalCFAfundingarrangementissueProjectMakeII;
+                    _updateAon.datecommencementpreliminaryMakeI = sanitizer.Sanitize(model.datecommencementpreliminaryMakeI);
+                    _updateAon.datefinalisationdetaileddesign = sanitizer.Sanitize(model.datefinalisationdetaileddesign);
+                    _updateAon.datecommencementfabrication_devProMakeI = sanitizer.Sanitize(model.datecommencementfabrication_devProMakeI);
+                    _updateAon.datetechnicallimitedfieldstrialsMakeI = sanitizer.Sanitize(model.datetechnicallimitedfieldstrialsMakeI);
+                    _updateAon.datefreezingPSQRStoSQRSMakeI = sanitizer.Sanitize(model.datefreezingPSQRStoSQRSMakeI);
+                    _updateAon.dateintimationvendorssubmissionrevisedMakeI = sanitizer.Sanitize(model.dateintimationvendorssubmissionrevisedMakeI);
+                    _updateAon.datesubmissionrevisedcommercialoffersvendorsMakeI = sanitizer.Sanitize(model.datesubmissionrevisedcommercialoffersvendorsMakeI);
 
-                    _updateAon.datecommencementpreliminaryMakeI = model.datecommencementpreliminaryMakeI;
-                    _updateAon.datefinalisationdetaileddesign = model.datefinalisationdetaileddesign;
-                    _updateAon.datecommencementfabrication_devProMakeI = model.datecommencementfabrication_devProMakeI;
-                    _updateAon.datetechnicallimitedfieldstrialsMakeI = model.datetechnicallimitedfieldstrialsMakeI;
-                    _updateAon.datefreezingPSQRStoSQRSMakeI = model.datefreezingPSQRStoSQRSMakeI;
-                    _updateAon.dateintimationvendorssubmissionrevisedMakeI = model.dateintimationvendorssubmissionrevisedMakeI;
-                    _updateAon.datesubmissionrevisedcommercialoffersvendorsMakeI = model.datesubmissionrevisedcommercialoffersvendorsMakeI;
+                    _updateAon.DateIssueMake_II = sanitizer.Sanitize(model.DateIssueMake_II);
+                    _updateAon.EoiReceiptDateMake_II = sanitizer.Sanitize(model.EoiReceiptDateMake_II);
+                    _updateAon.EoiCompletionResponseMake_II = sanitizer.Sanitize(model.EoiCompletionResponseMake_II);
+                    _updateAon.dateApprovalEoiMake_II = sanitizer.Sanitize(model.dateApprovalEoiMake_II);
+                    _updateAon.dateissueProjectSenctionMake_II = sanitizer.Sanitize(model.dateissueProjectSenctionMake_II);
 
-                    _updateAon.DateIssueMake_II = model.DateIssueMake_II;
-                    _updateAon.EoiReceiptDateMake_II = model.EoiReceiptDateMake_II;
-                    _updateAon.EoiCompletionResponseMake_II = model.EoiCompletionResponseMake_II;
-                    _updateAon.dateApprovalEoiMake_II = model.dateApprovalEoiMake_II;
-                    _updateAon.dateissueProjectSenctionMake_II = model.dateissueProjectSenctionMake_II;
-
-                    _updateAon.datecommencementDevPrototypeMakeII = model.datecommencementDevPrototypeMakeII;
-                    _updateAon.datecompletionDevPrototypeMakeII = model.datecompletionDevPrototypeMakeII;
-                    _updateAon.datecommencementUserTrialsMakeII = model.datecommencementUserTrialsMakeII;
-                    _updateAon.datecompletionUserTrialsRedinessReviewMakeII = model.datecompletionUserTrialsRedinessReviewMakeII;
-                    _updateAon.dateFreezingPSQRsMakeII = model.dateFreezingPSQRsMakeII;
-
+                    _updateAon.datecommencementDevPrototypeMakeII = sanitizer.Sanitize(model.datecommencementDevPrototypeMakeII);
+                    _updateAon.datecompletionDevPrototypeMakeII = sanitizer.Sanitize(model.datecompletionDevPrototypeMakeII);
+                    _updateAon.datecommencementUserTrialsMakeII = sanitizer.Sanitize(model.datecommencementUserTrialsMakeII);
+                    _updateAon.datecompletionUserTrialsRedinessReviewMakeII = sanitizer.Sanitize(model.datecompletionUserTrialsRedinessReviewMakeII);
+                    _updateAon.dateFreezingPSQRsMakeII = sanitizer.Sanitize(model.dateFreezingPSQRsMakeII);
 
 
-                    _updateAon.dateFormulationJPMT_DD = model.dateFormulationJPMT_DD;
-                    _updateAon.dateFormulationPMT_DD = model.dateFormulationPMT_DD;
-                    _updateAon.dateIdentificationDCPP_DD = model.dateIdentificationDCPP_DD;
-                    _updateAon.datedetaildesignbySHQ_DD = model.datedetaildesignbySHQ_DD;
-                    _updateAon.dateissuetrialdeveiation_DD = model.dateissuetrialdeveiation_DD;
-                    _updateAon.dateprojectReview_DD = model.dateprojectReview_DD;
-                    _updateAon.daterealisationPrototype_DD = model.daterealisationPrototype_DD;
-                    _updateAon.dateCommencementPSQR = model.dateCommencementPSQR;
-                    _updateAon.dateCulminationPSQRValid_DD = model.dateCulminationPSQRValid_DD;
+
+                    _updateAon.dateFormulationJPMT_DD = sanitizer.Sanitize(model.dateFormulationJPMT_DD);
+                    _updateAon.dateFormulationPMT_DD = sanitizer.Sanitize(model.dateFormulationPMT_DD);
+                    _updateAon.dateIdentificationDCPP_DD = sanitizer.Sanitize(model.dateIdentificationDCPP_DD);
+                    _updateAon.datedetaildesignbySHQ_DD = sanitizer.Sanitize(model.datedetaildesignbySHQ_DD);
+                    _updateAon.dateissuetrialdeveiation_DD = sanitizer.Sanitize(model.dateissuetrialdeveiation_DD);
+                    _updateAon.dateprojectReview_DD = sanitizer.Sanitize(model.dateprojectReview_DD);
+                    _updateAon.daterealisationPrototype_DD = sanitizer.Sanitize(model.daterealisationPrototype_DD);
+                    _updateAon.dateCommencementPSQR = sanitizer.Sanitize(model.dateCommencementPSQR);
+                    _updateAon.dateCulminationPSQRValid_DD = sanitizer.Sanitize(model.dateCulminationPSQRValid_DD);
 
                     _updateAon.CreatedBy = Convert.ToInt32(Session["UserID"]);
                     _updateAon.CreatedOn = System.DateTime.Now;
@@ -580,10 +662,29 @@ namespace MOD.Controllers
             }
             return View(model1);
         }
-
+        [Route("MODProjectstageapplicability")]
         public ActionResult projectstageapplicability()
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Project Stage Applicability".ToLower())
+                    {
+                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 8 || Convert.ToInt32(Session["SectionID"]) == 9 || Convert.ToInt32(Session["SectionID"]) == 10)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
 
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             // Project List Bind
             List<applicabilityViewModel> list = new List<applicabilityViewModel>();
             applicabilityViewModel model = new applicabilityViewModel();
@@ -670,6 +771,7 @@ namespace MOD.Controllers
             return View(model);
         }
         [HttpPost]
+        [Route("MODProjectstageapplicability")]
         public ActionResult projectstageapplicability(applicabilityViewModel model)
         {
 
@@ -795,9 +897,30 @@ namespace MOD.Controllers
 
             return View(model);
         }
+        [Route("MODStageProgressAcquisitionManager")]
         public ActionResult StageProgressAcquisitionManager()
         {
             // Project List Bind
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Stage Progress (Acquisition Manager)".ToLower())
+                    {
+                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 2 || Convert.ToInt32(Session["SectionID"]) == 3 || Convert.ToInt32(Session["SectionID"]) == 4)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             List<SaveAcqRFPMasterViewModel> list = new List<SaveAcqRFPMasterViewModel>();
             SaveAcqRFPMasterViewModel model = new SaveAcqRFPMasterViewModel();
             var SectionID = Session["SectionID"];
@@ -876,6 +999,7 @@ namespace MOD.Controllers
         }
 
         [HttpPost]
+        [Route("MODStageProgressAcquisitionManager")]
         public ActionResult StageProgressAcquisitionManager(SaveAcqRFPMasterViewModel model)
         {
             List<SaveAcqRFPMasterViewModel> list = new List<SaveAcqRFPMasterViewModel>();
@@ -1510,7 +1634,7 @@ namespace MOD.Controllers
             string data = JsonConvert.SerializeObject(model);
             return data;
         }
-
+        [Route("MODAction")]
         public ActionResult Action(int? ID)
         {
             ACQTrialSaveViewModel model = new ACQTrialSaveViewModel();
@@ -1529,6 +1653,7 @@ namespace MOD.Controllers
 
 
         [HttpPost]
+        [Route("MODAction")]
         public JsonResult Action(ACQTrialSaveViewModel model)
         {
             JsonResult json = new JsonResult();
@@ -1585,6 +1710,7 @@ namespace MOD.Controllers
 
 
         [HttpPost]
+       [Route("MODDelete")]
         public ActionResult Delete(int ID)
         {
             try

@@ -41,6 +41,7 @@ namespace MOD.Models
         public Nullable<int> LoginCount { get; set; }
         public Nullable<System.DateTime> ExpiryTime { get; set; }
         public string TokenId { get; set; }
+        public string DSCSerialno { get; set; }
     
         public virtual acq_department_master acq_department_master { get; set; }
         public virtual acq_section_master acq_section_master { get; set; }

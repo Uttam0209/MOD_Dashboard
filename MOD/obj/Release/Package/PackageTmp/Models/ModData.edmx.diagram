@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f3222ed16c8647dea77eaf91e7a75321" Name="Diagram1" ZoomLevel="62">
+      <Diagram DiagramId="f3222ed16c8647dea77eaf91e7a75321" Name="Diagram1" ZoomLevel="54">
         <EntityTypeShape EntityType="MODModel.tbl_tblAON" Width="1.5" PointX="2.75" PointY="6.25" />
         <EntityTypeShape EntityType="MODModel.tbl_tblTimelineForProcurement" Width="1.5" PointX="5" PointY="9" />
         <EntityTypeShape EntityType="MODModel.tbl_tblVendor" Width="1.5" PointX="8" PointY="1" />
@@ -28,7 +28,7 @@
         <EntityTypeShape EntityType="MODModel.acq_meeting_master" Width="1.5" PointX="5.375" PointY="20.75" />
         <EntityTypeShape EntityType="MODModel.acq_trials" Width="1.5" PointX="7.375" PointY="5.75" />
         <EntityTypeShape EntityType="MODModel.acq_rfp_vendors" Width="1.5" PointX="12.125" PointY="22.5" />
-        <EntityTypeShape EntityType="MODModel.acq_project_status_timelines" Width="1.5" PointX="9.375" PointY="5.75" />
+        <EntityTypeShape EntityType="MODModel.acq_project_status_timelines" Width="1.875" PointX="9.375" PointY="5.75" />
         <EntityTypeShape EntityType="MODModel.acq_rfp_master" Width="1.5" PointX="9.875" PointY="18.25" />
         <EntityTypeShape EntityType="MODModel.acq_project_status_1" Width="1.5" PointX="7.375" PointY="10.75" />
         <EntityTypeShape EntityType="MODModel.ChartReportOnClick" Width="1.5" PointX="17.375" PointY="4.75" />
@@ -38,7 +38,7 @@
         <EntityTypeShape EntityType="MODModel.acq_projectstage_applicability" Width="1.5" PointX="11.375" PointY="12.75" />
         <EntityTypeShape EntityType="MODModel.tbl_mst_Template" Width="1.5" PointX="19.375" PointY="0.75" />
         <EntityTypeShape EntityType="MODModel.temp_dashboard" Width="1.5" PointX="5.375" PointY="13.75" />
-        <EntityTypeShape EntityType="MODModel.acq_project_status_pendingstage" Width="1.5" PointX="11.375" PointY="5.75" />
+        <EntityTypeShape EntityType="MODModel.acq_project_status_pendingstage" Width="2" PointX="11.375" PointY="5.75" />
         <EntityTypeShape EntityType="MODModel.tbl_trn_tryProject1" Width="1.5" PointX="0.75" PointY="19.75" />
         <EntityTypeShape EntityType="MODModel.temp_BF" Width="1.5" PointX="11.375" PointY="9.75" />
         <EntityTypeShape EntityType="MODModel.acq_policy" Width="1.5" PointX="21.625" PointY="12" />
@@ -46,9 +46,16 @@
         <EntityTypeShape EntityType="MODModel.tbl_tbl_User" Width="1.5" PointX="14.875" PointY="0.75" />
         <AssociationConnector Association="MODModel.FK_tbl_tbl_User_acq_department_master" />
         <AssociationConnector Association="MODModel.FK_tbl_tbl_User_acq_section_master" />
-        <EntityTypeShape EntityType="MODModel.acq_project_master" Width="1.5" PointX="7.625" PointY="17.75" />
+        <AssociationConnector Association="MODModel.FK_acq_rfp_vendors_acq_rfp_master" />
+        <EntityTypeShape EntityType="MODModel.vw_userDetail" Width="1.5" PointX="19.375" PointY="5.75" />
+        <EntityTypeShape EntityType="MODModel.acq_project_master" Width="1.5" PointX="7.625" PointY="17.5" />
         <AssociationConnector Association="MODModel.FK_acq_project_master_acq_meeting_master" />
-        <AssociationConnector Association="MODModel.FK_acq_policy_acq_project_master" />
+        <AssociationConnector Association="MODModel.FK__acq_polic__aon_i__540C7B00" />
+        <AssociationConnector Association="MODModel.FK__acq_polic__aon_i__55009F39" />
+        <AssociationConnector Association="MODModel.FK__acq_polic__aon_i__55F4C372" />
+        <EntityTypeShape EntityType="MODModel.tbl_Master_Role" Width="1.5" PointX="7.375" PointY="13.75" />
+        <EntityTypeShape EntityType="MODModel.tbl_master_formMenu" Width="1.5" PointX="19.375" PointY="17.75" />
+        <EntityTypeShape EntityType="MODModel.tbl_trn_OTP" Width="1.5" PointX="21.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

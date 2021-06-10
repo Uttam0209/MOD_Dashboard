@@ -23,6 +23,7 @@ namespace MOD.Models
         public int section_id { get; set; }
         public string section_descr { get; set; }
         public Nullable<int> deptt_id { get; set; }
+        public Nullable<int> ServiceType { get; set; }
     
         public virtual acq_department_master acq_department_master { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

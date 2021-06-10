@@ -1,8 +1,12 @@
 ﻿using DDPAdmin.Services.Master;
+using Ganss.XSS;
+using Gantt_Chart.Models;
 using Gantt_Chart.Service;
 using MOD.Models;
+using MOD.Service;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -12,14 +16,73 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static MOD.MvcApplication;
 
 namespace MOD.Controllers
 {
     public class acq_policyController : Controller
     {
+        private static string WebPortalUrl = ConfigurationManager.AppSettings["WebPortalUrl"].ToString();
+        HtmlSanitizer sanitizer = new HtmlSanitizer();
         MODEntities entities = new MODEntities();
         masterService mService = new masterService();
         string password = "p@SSword";
+
+        public acq_policyController()
+        {
+            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+            {
+                AccountController account = new AccountController();
+                string message = account.Blockuser(System.Web.HttpContext.Current.Session["EmailID"].ToString());
+                if (message == "Blocked")
+                {
+                    System.Web.HttpContext.Current.Response.Redirect("~/LoginBlockMsg");
+                }
+            }
+            BruteForce bruteForce = new BruteForce();
+            if (BruteForceAttackss.bcontroller != "")
+            {
+                if (BruteForceAttackss.bcontroller == "acq_policy")
+                {
+                    if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
+                    {
+                        BruteForceAttackss.date = System.DateTime.Now;
+                        BruteForceAttackss.refreshcount = 1;
+                    }
+                    else
+                    {
+                        TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                        if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
+                        {
+                            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
+                            {
+                                List<UserViewModel> model = new List<UserViewModel>();
+                                model = bruteForce.GetUserLoginBlock(System.Web.HttpContext.Current.Session["EmailID"].ToString());
+                                if (model != null)
+                                {
+                                    BruteForceAttackss.refreshcount = 0;
+                                    BruteForceAttackss.date = null;
+                                    BruteForceAttackss.bcontroller = "";
+                                    System.Web.HttpContext.Current.Response.Redirect(WebPortalUrl);
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        }
+                    }
+
+
+                }
+            }
+            else
+            {
+                BruteForceAttackss.bcontroller = "acq_policy";
+            }
+        }
+
         public static DataTable return_datatable(String query)
         {
             OleDbDataAdapter adap = new OleDbDataAdapter();
@@ -36,8 +99,30 @@ namespace MOD.Controllers
             return dt;
         }
         // GET: acq_policy
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult Index()
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Delay Due to Plocy Issues".ToLower())
+                    {
+                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             int SectionID = Convert.ToInt32(Session["SectionID"]);
             List<AcfpolicyviewModel> list = new List<AcfpolicyviewModel>();
             AcfpolicyviewModel model = new AcfpolicyviewModel();
@@ -62,6 +147,7 @@ namespace MOD.Controllers
             }
             return View();
         }
+
         public string createFile(string data, string filename)
         {
             string filepath = "";
@@ -74,7 +160,11 @@ namespace MOD.Controllers
             filepath = "~/Attachments/PolicyIssues/" + filename;
             return filepath;
         }
+
         [HttpPost]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        // [Route("Acq_Index")]
         public ActionResult Index(FormCollection Fc)
         {
             HttpPostedFileBase fileBase = Request.Files["file"];
@@ -87,9 +177,32 @@ namespace MOD.Controllers
             string FilePath = createFile(fileData, Filename);
             return RedirectToAction("Details");
         }
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [Route("ACreate")]
         public ActionResult Create()
         {
             // Project List Bind
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Delay Due to Plocy Issues".ToLower())
+                    {
+                      //  if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             List<AcfpolicyviewModel> list = new List<AcfpolicyviewModel>();
             AcfpolicyviewModel model = new AcfpolicyviewModel();
             var SectionID = Session["SectionID"];
@@ -183,6 +296,9 @@ namespace MOD.Controllers
             return View(model);
         }
         [HttpPost]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [Route("ACreate")]
         public ActionResult Create(AcfpolicyviewModel model)
         {
             acq_policy obj = new acq_policy();
@@ -200,7 +316,7 @@ namespace MOD.Controllers
                     string Filename = Filenamechar[0] + Filenamechar[1];
                     FilePath = createFile(fileData, Filename);
                 }
-                
+
                 using (DbContextTransaction dbTran = entities.Database.BeginTransaction())
                 {
                     try
@@ -208,7 +324,7 @@ namespace MOD.Controllers
                         int SectionID = Convert.ToInt32(Session["SectionID"]);
                         obj.fdate = model.fdate;
                         obj.tdate = model.tdate;
-                        obj.Remarks = Cipher.Encrypt(model.Remarks, password);
+                        obj.Remarks = sanitizer.Sanitize(Cipher.Encrypt(model.Remarks, password));
                         obj.aon_id = model.aon_id;
                         obj.section_id = SectionID;
                         obj.pdfattachment = FilePath;
@@ -246,8 +362,28 @@ namespace MOD.Controllers
             model.ProjectList = TempData["ProjectList"] as List<AcfpolicyviewModel>;
             return View(model);
         }
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [Route("Delete")]
         public ActionResult Delete(int ID)
         {
+            List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+            bool isAccessible = false;
+            foreach (var item in RoleList)
+            {
+                if (item.FormName.ToLower() == "Delay Due to Plocy Issues".ToLower())
+                {
+                    //if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                    {
+                        isAccessible = true;
+                    }
+                }
+            }
+
+            if (!isAccessible)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             try
             {
                 var _deleteUser = entities.acq_policy.Where(x => x.policyid == ID).FirstOrDefault();
@@ -265,8 +401,31 @@ namespace MOD.Controllers
             }
             return RedirectToAction("Index");
         }
+        [SessionExpire]
+        [SessionExpireRefNo]
+        // [Route("Edit")]
         public ActionResult Edit(int ID)
         {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Delay Due to Plocy Issues".ToLower())
+                    {
+                        //if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
             AcfpolicyviewModel model = new AcfpolicyviewModel();
             List<AcfpolicyviewModel> list = new List<AcfpolicyviewModel>();
             try
@@ -404,6 +563,9 @@ namespace MOD.Controllers
         }
 
         [HttpPost]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        // [Route("Update")]
         public ActionResult Update(AcfpolicyviewModel model)
         {
             try
@@ -413,7 +575,7 @@ namespace MOD.Controllers
                 updatePolicy.tdate = model.tdate;
                 updatePolicy.fdate = model.fdate;
                 //updatePolicy.pdfattachment = Cipher.Encrypt(model.pdfattachment, password);
-                updatePolicy.Remarks = Cipher.Encrypt(model.Remarks, password);
+                updatePolicy.Remarks = sanitizer.Sanitize(Cipher.Encrypt(model.Remarks, password));
                 updatePolicy.stagid = Convert.ToInt32(model.TaskSlno);
                 updatePolicy.IsDeleted = false;
                 entities.SaveChanges();

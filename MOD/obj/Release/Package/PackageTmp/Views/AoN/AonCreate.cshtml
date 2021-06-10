@@ -1,4 +1,6 @@
 ﻿@model MOD.Models.SaveAcqProjectMasterViewModel
+@*@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns*@
 @{
     ViewBag.Title = "AonCreate";
 }
@@ -12,6 +14,8 @@
 
     @using (Html.BeginForm("AonCreate", "AoN", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
+
         <div class="form-row mb-1">
             <div class="col-md-12 mb-3">
                 <label class="labeltext font-weight-bold mb-0">Item Name<span class="danger">*</span>:</label>
@@ -69,10 +73,10 @@
                     new SelectListItem{ Text="Inclusive Tax & Duties", Value = "Inclusive Tax & Duties" },
                     new SelectListItem{ Text="Exclusive Tax & Duties", Value = "Exclusive Tax & Duties" },
                    }, "-Select Tax-", new { @class = "form-control" })
-                @Html.ValidationMessageFor(x => x.Service_Lead_Service, null, new { @class = "danger" })
+                @Html.ValidationMessageFor(x => x.Tax_Duties, null, new { @class = "danger" })
             </div>
             <div class="col-md-4 mb-3">
-                <label class="labeltext font-weight-bold mb-0">Service:</label>
+                <label class="labeltext font-weight-bold mb-0">Service <span class="danger">*</span>:</label>
                 @Html.DropDownListFor(model => model.Service_Lead_Service, new List<SelectListItem>
                    {
                     new SelectListItem{ Text="Army", Value = "Army" },
@@ -98,7 +102,7 @@
                 @*@Html.ValidationMessageFor(x => x.Type_of_Acquisition, null, new { @class = "danger" })*@
             </div>
             <div class="col-md-4 mb-3">
-                <label class="labeltext font-weight-bold mb-0">Categorization:</label>
+                <label class="labeltext font-weight-bold mb-0">Categorization <span class="danger">*</span>:</label>
 
                 @Html.DropDownListFor(model => model.Categorisation, new List<SelectListItem>
               {
@@ -220,21 +224,32 @@
             </div>
 
             <div class="col-md-4 mb-3">
-                <label class="labeltext font-weight-bold mb-0">System Case:</label>
+                <label class="labeltext font-weight-bold mb-0">System Case <span class="danger">*</span>:</label>
                 @Html.DropDownListFor(model => model.System_case, new List<SelectListItem>
                    {
                       new SelectListItem{ Text="Y", Value = "Y" },
                       new SelectListItem{ Text="N", Value = "N" },
                    }, "--Select--", new { @class = "form-control" })
-                @*@Html.ValidationMessageFor(x => x.item_description, null, new { @class = "danger" })*@
+                @Html.ValidationMessageFor(x => x.System_case, null, new { @class = "danger" })
             </div>
 
             @*Changes in Aon Registration*@
-
             <div class="col-md-4 mb-3">
-                <label class="labeltext font-weight-bold mb-0">Vendors:</label>
-                @Html.DropDownListFor(m => m.VendorsIDs, new SelectList(Model.VendorList, "vendorID", "VendorName"), "-Select Vendor Category-", new { @class = "form-control" })
-                @Html.ValidationMessageFor(x => x.item_description, null, new { @class = "danger" })
+                <div class="col">
+                    <label class="labeltext font-weight-bold mb-0">vendors: </label>
+                    <select class="form-control" id="VendorsIDs" name="VendorsIDs">
+                        <option value="">--select vendor category--</option>
+                        @foreach (var item in Model.VendorList)
+                        {
+                            <option value="@item.vendorID">@item.VendorName</option>
+                        }
+                    </select>
+                    @*@Html.ListBoxFor(x => x.item_description,
+                new MultiSelectList(Model.VendorList, "vendorID", "VendorName")
+                , new { @class = "chzn-select", data_placeholder = "Tags..." })*@
+                    @*@Html.DropDownList("VendorsIDs", (List<SelectListItem>)Model.VendorList, new { multiple = "multiple" })*@
+                    @*@Html.EJS().MultiSelect("local").Placeholder("Select category").DataSource((IEnumerable<Model.VendorList>)ViewBag.localdata).Fields(new MultiSelectFieldSettings { Text = "VendorName", Value = "vendorID" }).Value((string[])ViewBag.val).Render()*@
+                </div>
             </div>
 
             <div class="col-md-4 mb-3">
@@ -262,7 +277,15 @@
                 @Html.DropDownListFor(x => x.ResponsiblePersonLeve4, new SelectList(Model.UserList, "UserId", "UserName"), "--Select User--", new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.UserId, null, new { @class = "danger" })
             </div>
-
+            <div class="col-md-4 mb-3">
+                <label class="labeltext font-weight-bold mb-0">AoN type<span class="danger">*</span> :</label>
+                @Html.DropDownListFor(model => model.AonType, new List<SelectListItem>
+                   {                 
+                      new SelectListItem{ Text="Nomination basis", Value = "Nomination basis" },
+                      new SelectListItem{ Text="Competitive Tendering", Value = "Competitive Tendering" },                      
+                   }, "--Select--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.AonType, null, new { @class = "danger" })
+            </div>
         </div>
         <div class="form-row mb-1">
             <div class="col-md-12 mb-3">
@@ -275,19 +298,18 @@
             <div class="col-md-12 mb-3">
                 <label class="labeltext font-weight-bold mb-0">Any Other Aspect:</label>
                 @Html.TextAreaFor(x => x.Any_other_aspect, new { @class = "form-control", @placeholder = "Any Other Aspect" })
-                @*@Html.ValidationMessageFor(x => x.Any_other_aspect, null, new { @class = "danger" })*@
-            </div>
-        </div>
-        <div class="form-row mb-1">
-            <div class="col-md-12 mb-3">
-                <label class="labeltext font-weight-bold mb-0">Remarks:</label>
-                @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control", @placeholder = "Remarks" })
-                @*@Html.ValidationMessageFor(x => x.IC_percentage, null, new { @class = "danger" })*@
+            @*@Html.ValidationMessageFor(x => x.Any_other_aspect, null, new { @class = "danger" })*@
+                        </div>
+                    </div>
+                    <div class="form-row mb-1">
+                        <div class="col-md-12 mb-3">
+                            <label class="labeltext font-weight-bold mb-0">Remarks:</label>
+                            @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control", @placeholder = "Remarks" })
+            @*@Html.ValidationMessageFor(x => x.IC_percentage, null, new { @class = "danger" })*@
             </div>
         </div>
         <button class="btn btn-primary float-right" type="submit">AoN Register</button>
     }
-
 </div>
 
 <script>
@@ -297,13 +319,13 @@
         var userLevel3 = $("#ResponsiblePersonLeve3").val();
         var userLevel4 = $("#ResponsiblePersonLeve4").val();
 
-        if (userLevel1 != "" || userLevel2!="") {
+        if (userLevel1 != "" || userLevel2 != "") {
             if (userLevel1 == userLevel2) {
                 alert("This user is already selected.Please select another user");
                 $(this).prop("selectedIndex", 0).val();
             }
         }
-       
+
         if (userLevel3 != "") {
             if (userLevel1 == userLevel3 || userLevel2 == userLevel3) {
                 alert("This user is already selected.Please select another user");
@@ -402,7 +424,11 @@
             }
         }
     });
-    
+    $(document).ready(function () {
+        $("#VendorsIDs").chosen({
+
+        });
+    });
 </script>
 
 

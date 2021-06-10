@@ -67,48 +67,53 @@
 
             <div class="pl-2 pr-2 mt-2"><b>Stage</b></div>
             <div class="col-md-3">
-                @Html.DropDownList("stage_name", new List<SelectListItem>
-                   {
-                    new SelectListItem{ Text="RFP", Value = "RFP" },
-                    new SelectListItem{ Text="TEC", Value = "TEC" },
-                    new SelectListItem{ Text="FET", Value = "FET" },
-                    new SelectListItem{ Text="GS Eval", Value = "GS Eval" },
-                    new SelectListItem{ Text="CNC", Value = "CNC" },
-                    new SelectListItem{ Text="CFA Approval", Value = "CFA Approval" },
-                   }, "-Select Stage-", new { @class = "form-control" })
+               
+                @Html.DropDownList("stage_name", new SelectList(ViewBag.StageData, "Value", "Text"), "-Select Categorization-", new { @class = "form-control" })
+                @*@Html.DropDownList("stage_name", new List<SelectListItem>
+        {
+         new SelectListItem{ Text="RFP", Value = "RFP" },
+         new SelectListItem{ Text="TEC", Value = "TEC" },
+         new SelectListItem{ Text="FET", Value = "FET" },
+         new SelectListItem{ Text="GS Eval", Value = "GS Eval" },
+         new SelectListItem{ Text="CNC", Value = "CNC" },
+         new SelectListItem{ Text="CFA Approval", Value = "CFA Approval" },
+        }, "-Select Stage-", new { @class = "form-control" })*@
             </div>
             <div class="pl-2 pr-2 mt-2"><b>Categorization</b></div>
             <div class="col-md-3">
-                @Html.DropDownList("Categorisation", new List<SelectListItem>
-              {
-                new SelectListItem{ Text="Buy(Indian-IDDM)", Value = "Buy(Indian-IDDM)" },
-                new SelectListItem{ Text="Buy(Indian)", Value = "Buy(Indian)" },
-                new SelectListItem{ Text="Buy and Make(Indian)", Value = "Buy and Make(Indian)" },
-                new SelectListItem{ Text="Buy and Make", Value = "Buy and Make" },
-                new SelectListItem{ Text="Buy(Global-Manufacture in India)", Value = "Buy(Global-Manufacture in India)" },
-                new SelectListItem{ Text="Buy(Global-Manufacture in India)-IGA", Value = "Buy(Global-Manufacture in India)-IGA" },
-                new SelectListItem{ Text="Buy(Global)", Value = "Buy(Global)" },
-                new SelectListItem{ Text="Buy(Global)-IGA", Value = "Buy(Global)-IGA" },
-                new SelectListItem{ Text="Buy(Global)-FMS Route", Value = "Buy(Global)-FMS Route" },
-                new SelectListItem{ Text="Design & Development", Value = "Design & Development" },
-                new SelectListItem{ Text="IGA", Value = "IGA" },
-                new SelectListItem{ Text="Make", Value = "Make" },
-                new SelectListItem{ Text="Sp Model", Value = "Sp Model" },
-                new SelectListItem{ Text="Make-I", Value = "Make-I" },
-                new SelectListItem{ Text="Make-II", Value = "Make-II" },
-                new SelectListItem{ Text="Make-III", Value = "Make-III" },
-              }, "-Select Categorization-", new { @class = "form-control" })
+                @Html.DropDownList("Categorisation", new SelectList(ViewBag.catData, "Value", "Text"), "-Select Categorization-", new { @class = "form-control" })
+
+                @*@Html.DropDownList("Categorisation", new List<SelectListItem>
+                    {
+                      new SelectListItem{ Text="Buy(Indian-IDDM)", Value = "Buy(Indian-IDDM)" },
+                      new SelectListItem{ Text="Buy(Indian)", Value = "Buy(Indian)" },
+                      new SelectListItem{ Text="Buy and Make(Indian)", Value = "Buy and Make(Indian)" },
+                      new SelectListItem{ Text="Buy and Make", Value = "Buy and Make" },
+                      new SelectListItem{ Text="Buy(Global-Manufacture in India)", Value = "Buy(Global-Manufacture in India)" },
+                      new SelectListItem{ Text="Buy(Global-Manufacture in India)-IGA", Value = "Buy(Global-Manufacture in India)-IGA" },
+                      new SelectListItem{ Text="Buy(Global)", Value = "Buy(Global)" },
+                      new SelectListItem{ Text="Buy(Global)-IGA", Value = "Buy(Global)-IGA" },
+                      new SelectListItem{ Text="Buy(Global)-FMS Route", Value = "Buy(Global)-FMS Route" },
+                      new SelectListItem{ Text="Design & Development", Value = "Design & Development" },
+                      new SelectListItem{ Text="IGA", Value = "IGA" },
+                      new SelectListItem{ Text="Make", Value = "Make" },
+                      new SelectListItem{ Text="Sp Model", Value = "Sp Model" },
+                      new SelectListItem{ Text="Make-I", Value = "Make-I" },
+                      new SelectListItem{ Text="Make-II", Value = "Make-II" },
+                      new SelectListItem{ Text="Make-III", Value = "Make-III" },
+                    }, "-Select Categorization-", new { @class = "form-control" })*@
             </div>
             <div class="pl-2 pr-2 mt-2"><b>Service/Lead Service</b></div>
             <div class="col-md-3">
-                @Html.DropDownList("Service_Lead_Service", new List<SelectListItem>
-                   {
-                    new SelectListItem{ Text="Army", Value = "Army" },
-                    new SelectListItem{ Text="Navy", Value = "Navy" },
-                    new SelectListItem{ Text="AirForce", Value = "AirForce" },
-                    new SelectListItem{ Text="ICG", Value = "ICG" },
-                    new SelectListItem{ Text="Joint", Value = "Joint" },
-                   }, "-Select Services-", new { @class = "form-control" })
+                @Html.DropDownList("Service_Lead_Service", new SelectList(ViewBag.ServicesData, "Value", "Text"), "-Select Services-", new { @class = "form-control" })
+                @*@Html.DropDownList("Service_Lead_Service", new List<SelectListItem>
+                    {
+                     new SelectListItem{ Text="Army", Value = "Army" },
+                     new SelectListItem{ Text="Navy", Value = "Navy" },
+                     new SelectListItem{ Text="AirForce", Value = "AirForce" },
+                     new SelectListItem{ Text="ICG", Value = "ICG" },
+                     new SelectListItem{ Text="Joint", Value = "Joint" },
+                    }, "-Select Services-", new { @class = "form-control" })*@
             </div>
             <div class=" d-flex justify-content-end">
                 <div class="pl-3 pr-3"><button type="submit" class="btn btn-primary btnFCs">Search</button></div>
@@ -168,8 +173,8 @@
     })
 </script>
 
-<script src="~/WJs/canvasjs.min.js"></script>
-<script src="~/WJs/jquery-1.11.1.min.js"></script>
+<script src="~/assets/js/canvasjs.min.js"></script>
+<script src="~/assets/js/jquery-3.6.0.min.js"></script>
 
 <script>
     $(document).ready(function () {

@@ -4,12 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <script>
-        $(document).ready(function () {
-            $("#auth").addClass("show");
-            $("#auth_swc").addClass("active");
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        $("#auth").addClass("show");
+        $("#auth_swc").addClass("active");
+    });
+</script>
 
 <script>
     window.onload = function () {
@@ -34,7 +34,7 @@
                     var stage = e.dataPoint.label;
                     var service = "AirForce";
                     var Categorisation = "";
-                    window.location.href = "/Reports/ReportOnClick?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+                    window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
 
                 },
                 type: "column",
@@ -54,7 +54,7 @@
                         var stage = e.dataPoint.label;
                         var service = "Army";
                         var Categorisation = "";
-                        window.location.href = "/Reports/ReportOnClick?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+                        window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
 
                     },
                     type: "column",
@@ -73,7 +73,7 @@
                         var stage = e.dataPoint.label;
                         var service = "Navy";
                         var Categorisation = "";
-                        window.location.href = "/Reports/ReportOnClick?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+                        window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
 
                     },
                     type: "column",
@@ -114,7 +114,7 @@
             var stage = e.dataPoint.label;
             var service = "";
             var Categorisation ="";
-            window.location.href = "/Reports/ReportOnClick?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+            window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
         }
     }
 </script>
@@ -167,27 +167,27 @@
         </div>
     </div>
 </div>
-    
 
-    <script>
-        $(document).ready(function () {
-            $('ol.tabs li').click(function () {
-                var tab_id = $(this).attr('data-tab');
 
-                $('ol.tabs li').removeClass('current');
-                $('.tab-content').removeClass('current');
+<script>
+    $(document).ready(function () {
+        $('ol.tabs li').click(function () {
+            var tab_id = $(this).attr('data-tab');
 
-                $(this).addClass('current');
-                $("#" + tab_id).addClass('current');
-            })
+            $('ol.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $("#" + tab_id).addClass('current');
         })
-    </script>
+    })
+</script>
+<script src="~/assets/js/canvasjs.min.js"></script>
+<script src="~/assets/js/jquery-3.6.0.min.js"></script>
 
-    <script src="~/WJs/canvasjs.min.js"></script>
-    <script src="~/WJs/jquery-1.11.1.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable();
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
 

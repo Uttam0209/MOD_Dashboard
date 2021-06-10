@@ -9,7 +9,7 @@ namespace MOD.Models
     public class UserListViewModel
     {
         //public List<tbl_tbl_User> UserList { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public string Phone { get; set; }
@@ -74,6 +74,7 @@ namespace MOD.Models
 
         public List<acq_department_master> departmentList { get; set; }
         public List<acq_section_master> SectionMasterList { get; set; }
+        public string Message { get; set; }
     }
 
     public class UserLogin

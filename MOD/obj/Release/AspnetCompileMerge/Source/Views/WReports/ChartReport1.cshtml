@@ -2,12 +2,12 @@
 @{
 
 }
-    <script>
-        $(document).ready(function () {
-            $("#auth").addClass("show");
-            $("#auth_ma").addClass("active");
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        $("#auth").addClass("show");
+        $("#auth_ma").addClass("active");
+    });
+</script>
 
 <script>
     window.onload = function () {
@@ -76,7 +76,7 @@
                            {
                             //new SelectListItem{ Text="Army", Value = "Army" },
                             //new SelectListItem{ Text="Navy", Value = "Navy" },
-                            new SelectListItem{ Text="AirForce", Value = "AirForce" },
+                            new SelectListItem{ Text="AirForce", Value = "we7UgF5Z8pqVMgkg0Ww4gA==" },
                             //new SelectListItem{ Text="ICG", Value = "ICG" },
                             //new SelectListItem{ Text="Joint", Value = "Joint" },
                            }, "-Select Services-", new { @class = "form-control" })
@@ -87,7 +87,7 @@
                     <div>
                         @Html.DropDownListFor(model => model.Service_Lead_Service, new List<SelectListItem>
                    {
-                       new SelectListItem{ Text="Army", Value = "Army" },
+                       new SelectListItem{ Text="Army", Value = "PBDErM+YNXOGIZddicAk+A==" },
                        //new SelectListItem{ Text="Navy", Value = "Navy" },
                        //new SelectListItem{ Text="AirForce", Value = "AirForce" },
                        //new SelectListItem{ Text="ICG", Value = "ICG" },
@@ -101,7 +101,7 @@
                         @Html.DropDownListFor(model => model.Service_Lead_Service, new List<SelectListItem>
                    {
                        //new SelectListItem{ Text="Army", Value = "Army" },
-                       new SelectListItem{ Text="Navy", Value = "Navy" },
+                      new SelectListItem{ Text="Navy", Value = "IfZZWiZYMLHUo92/oiVXRw==" },
                        //new SelectListItem{ Text="AirForce", Value = "AirForce" },
                        //new SelectListItem{ Text="ICG", Value = "ICG" },
                        //new SelectListItem{ Text="Joint", Value = "Joint" },
@@ -111,14 +111,15 @@
                 else
                 {
                     <div>
-                        @Html.DropDownListFor(model => model.Service_Lead_Service, new List<SelectListItem>
-                           {
-                            new SelectListItem{ Text="Army", Value = "Army" },
-                            new SelectListItem{ Text="Navy", Value = "Navy" },
-                            new SelectListItem{ Text="AirForce", Value = "AirForce" },
-                            new SelectListItem{ Text="ICG", Value = "ICG" },
-                            new SelectListItem{ Text="Joint", Value = "Joint" },
-                           }, "-Select Services-", new { @class = "form-control" })
+                        @Html.DropDownList("Service_Lead_Service", new SelectList(ViewBag.ServicesData, "Value", "Text"), "-Select Services-", new { @class = "form-control" })
+                        @*@Html.DropDownListFor(model => model.Service_Lead_Service, new List<SelectListItem>
+                            {
+                             new SelectListItem{ Text="Army", Value = "Army" },
+                             new SelectListItem{ Text="Navy", Value = "Navy" },
+                             new SelectListItem{ Text="AirForce", Value = "AirForce" },
+                             new SelectListItem{ Text="ICG", Value = "ICG" },
+                             new SelectListItem{ Text="Joint", Value = "Joint" },
+                            }, "-Select Services-", new { @class = "form-control" })*@
                     </div>
                 }
             }
@@ -133,11 +134,9 @@
     <div id="chartContainer1" class="mt-2" style="height: 470px; width: 100%;"></div>
 
 </div>
-      
-<script src="~/WJs/canvasjs.min.js"></script>
-<script src="~/WJs/jquery-1.11.1.min.js"></script>
 
 
-
+<script src="~/assets/js/canvasjs.min.js"></script>
+<script src="~/assets/js/jquery-3.6.0.min.js"></script>
 
 

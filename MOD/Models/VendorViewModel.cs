@@ -11,7 +11,7 @@ namespace MOD.Models
     public class VendorListViewModel
     {
         public List<tbl_tblVendor> Vendors { get; set; }
-        public int VendorId { get; set; }
+        public string VendorId { get; set; }
         public Nullable<int> VendorCategory { get; set; }
         public string VendorName { get; set; }
         public string VendorAddress { get; set; }

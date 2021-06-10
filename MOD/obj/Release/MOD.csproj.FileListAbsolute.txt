@@ -140,3 +140,295 @@ E:\MOD_Dashboard\MOD\obj\Release\MOD.csproj.CoreCompileInputs.cache
 E:\MOD_Dashboard\MOD\obj\Release\MOD.csproj.CopyComplete
 E:\MOD_Dashboard\MOD\obj\Release\MOD.dll
 E:\MOD_Dashboard\MOD\obj\Release\MOD.pdb
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\MOD.dll.config
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\MOD.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\MOD.pdb
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csc.exe
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csc.exe.config
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csc.rsp
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csi.exe
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csi.exe.config
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csi.rsp
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.Managed.Core.targets
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.Collections.Immutable.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.Reflection.Metadata.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.Security.AccessControl.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.Security.Principal.Windows.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\vbc.exe
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\vbc.exe.config
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\vbc.rsp
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\VBCSCompiler.exe
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\VBCSCompiler.exe.config
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\Microsoft.Win32.Primitives.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\netstandard.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.AppContext.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Collections.Concurrent.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Collections.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Collections.NonGeneric.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Collections.Specialized.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ComponentModel.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ComponentModel.EventBasedAsync.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ComponentModel.Primitives.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ComponentModel.TypeConverter.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Console.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Data.Common.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.Contracts.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.Debug.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.FileVersionInfo.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.Process.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.StackTrace.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.TextWriterTraceListener.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.Tools.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.TraceSource.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.Tracing.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Drawing.Primitives.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Dynamic.Runtime.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Globalization.Calendars.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Globalization.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Globalization.Extensions.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.Compression.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.Compression.ZipFile.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.FileSystem.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.FileSystem.DriveInfo.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.FileSystem.Primitives.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.FileSystem.Watcher.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.IsolatedStorage.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.MemoryMappedFiles.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.Pipes.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.UnmanagedMemoryStream.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Linq.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Linq.Expressions.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Linq.Parallel.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Linq.Queryable.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Http.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.NameResolution.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.NetworkInformation.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Ping.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Primitives.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Requests.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Security.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Sockets.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.WebHeaderCollection.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.WebSockets.Client.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.WebSockets.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ObjectModel.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Reflection.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Reflection.Extensions.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Reflection.Primitives.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Resources.Reader.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Resources.ResourceManager.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Resources.Writer.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.CompilerServices.VisualC.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Extensions.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Handles.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.InteropServices.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Numerics.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Serialization.Formatters.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Serialization.Json.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Serialization.Primitives.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Serialization.Xml.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Claims.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Cryptography.Algorithms.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Cryptography.Csp.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Cryptography.Encoding.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Cryptography.Primitives.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Cryptography.X509Certificates.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Principal.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.SecureString.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Text.Encoding.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Text.Encoding.Extensions.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Text.RegularExpressions.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.Overlapped.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.Tasks.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.Tasks.Parallel.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.Thread.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.ThreadPool.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.Timer.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ValueTuple.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.ReaderWriter.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.XDocument.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.XmlDocument.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.XmlSerializer.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.XPath.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.XPath.XDocument.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\AngleSharp.Css.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\AngleSharp.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\Antlr3.Runtime.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\HtmlSanitizer.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Text.Encoding.CodePages.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Web.Optimization.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\WebGrease.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\AngleSharp.xml
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\AngleSharp.Css.xml
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\Antlr3.Runtime.pdb
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\HtmlSanitizer.xml
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Web.Optimization.xml
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\obj\Release\MOD.csprojAssemblyReference.cache
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\obj\Release\MOD.csproj.CoreCompileInputs.cache
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\obj\Release\MOD.csproj.CopyComplete
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\obj\Release\MOD.dll
+C:\PsQuick\AoT\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\obj\Release\MOD.pdb
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\MOD.dll.config
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\MOD.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\MOD.pdb
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csc.exe
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csc.exe.config
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csc.rsp
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csi.exe
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csi.exe.config
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\csi.rsp
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.Managed.Core.targets
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.Collections.Immutable.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.Reflection.Metadata.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.Security.AccessControl.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.Security.Principal.Windows.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\vbc.exe
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\vbc.exe.config
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\vbc.rsp
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\VBCSCompiler.exe
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\roslyn\VBCSCompiler.exe.config
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\Microsoft.Win32.Primitives.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\netstandard.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.AppContext.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Collections.Concurrent.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Collections.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Collections.NonGeneric.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Collections.Specialized.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ComponentModel.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ComponentModel.EventBasedAsync.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ComponentModel.Primitives.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ComponentModel.TypeConverter.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Console.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Data.Common.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.Contracts.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.Debug.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.FileVersionInfo.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.Process.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.StackTrace.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.TextWriterTraceListener.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.Tools.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.TraceSource.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Diagnostics.Tracing.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Drawing.Primitives.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Dynamic.Runtime.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Globalization.Calendars.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Globalization.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Globalization.Extensions.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.Compression.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.Compression.ZipFile.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.FileSystem.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.FileSystem.DriveInfo.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.FileSystem.Primitives.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.FileSystem.Watcher.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.IsolatedStorage.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.MemoryMappedFiles.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.Pipes.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.IO.UnmanagedMemoryStream.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Linq.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Linq.Expressions.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Linq.Parallel.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Linq.Queryable.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Http.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.NameResolution.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.NetworkInformation.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Ping.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Primitives.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Requests.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Security.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.Sockets.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.WebHeaderCollection.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.WebSockets.Client.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Net.WebSockets.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ObjectModel.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Reflection.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Reflection.Extensions.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Reflection.Primitives.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Resources.Reader.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Resources.ResourceManager.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Resources.Writer.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.CompilerServices.VisualC.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Extensions.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Handles.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.InteropServices.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Numerics.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Serialization.Formatters.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Serialization.Json.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Serialization.Primitives.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.Serialization.Xml.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Claims.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Cryptography.Algorithms.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Cryptography.Csp.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Cryptography.Encoding.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Cryptography.Primitives.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Cryptography.X509Certificates.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.Principal.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Security.SecureString.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Text.Encoding.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Text.Encoding.Extensions.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Text.RegularExpressions.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.Overlapped.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.Tasks.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.Tasks.Parallel.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.Thread.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.ThreadPool.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Threading.Timer.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.ValueTuple.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.ReaderWriter.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.XDocument.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.XmlDocument.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.XmlSerializer.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.XPath.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Xml.XPath.XDocument.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\AngleSharp.Css.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\AngleSharp.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\Antlr3.Runtime.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\HtmlSanitizer.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Text.Encoding.CodePages.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Web.Optimization.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\WebGrease.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\AngleSharp.xml
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\AngleSharp.Css.xml
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\Antlr3.Runtime.pdb
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\HtmlSanitizer.xml
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\bin\System.Web.Optimization.xml
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\obj\Release\MOD.csprojAssemblyReference.cache
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\obj\Release\MOD.csproj.CoreCompileInputs.cache
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\obj\Release\MOD.csproj.CopyComplete
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\obj\Release\MOD.dll
+D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\obj\Release\MOD.pdb

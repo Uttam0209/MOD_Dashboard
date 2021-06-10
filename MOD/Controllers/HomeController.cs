@@ -9,65 +9,217 @@ using System.Data.SqlClient;
 using Newtonsoft.Json;
 using DDPAdmin.Services.Master;
 using System.Web.Security;
+using Ganss.XSS;
 using static MOD.MvcApplication;
+using MOD.Service;
+using System.Threading.Tasks;
+using System.Configuration;
 
 namespace MOD.Controllers
 {
-    [Authorize]
+    // [Authorize]
     public class HomeController : Controller
     {
+        HtmlSanitizer sanitizer = new HtmlSanitizer();
         private readonly MODEntities _entities;
         public HomeController()
         {
             _entities = new MODEntities();
-        }
-        masterService mService = new masterService();
-        string password = "p@SSword";
-        GanttData ganttData = new GanttData();
-        //[SessionExpire]
-        public ActionResult Index(string id)
-        {
-
-            if (id != null)
+            BindEncriptData();
+            EncriptServicesData();
+            if (System.Web.HttpContext.Current.Session["EmailID"] != null)
             {
-                Int16 mId = Convert.ToInt16(Encryption.Decrypt(Request.QueryString["id"].ToString()));
-                using (var _context = new MODEntities())
+                AccountController account = new AccountController();
+                string message = account.Blockuser(System.Web.HttpContext.Current.Session["EmailID"].ToString());
+                if (message == "Blocked")
                 {
-                    var isValid = _context.tbl_tbl_User.Where(x => x.UserId == mId).FirstOrDefault();
-                    if (isValid != null)
+                    System.Web.HttpContext.Current.Response.Redirect("~/LoginBlockMsg");
+                }
+            }
+            BruteForce bruteForce = new BruteForce();
+           
+            if (BruteForceAttackss.bcontroller != "")
+            {
+                if (BruteForceAttackss.bcontroller == "Home")
+                {
+                    if (BruteForceAttackss.refreshcount == 0 && BruteForceAttackss.date == null)
                     {
-                        FormsAuthentication.SetAuthCookie(isValid.InternalEmailID, false);
-                        Session["UserID"] = isValid.UserId;
-                        Session["UserName"] = isValid.UserName;
-                        Session["SectionID"] = isValid.SectionID;
-                        return View();
+                        BruteForceAttackss.date = System.DateTime.Now;
+                        BruteForceAttackss.refreshcount = 1;
                     }
                     else
                     {
+                        TimeSpan tt = System.DateTime.Now - BruteForceAttackss.date.Value;
+                        if (tt.TotalSeconds <= 30 && BruteForceAttackss.refreshcount > 20)
+                        {
+                            if (System.Web.HttpContext.Current.Session["UserID"] != null)
+                            {
+                                List<UserViewModel> model = new List<UserViewModel>();
+                                model = bruteForce.GetUserLoginBlock(System.Web.HttpContext.Current.Session["UserID"].ToString());
+                                if (model != null)
+                                {
+                                    BruteForceAttackss.refreshcount = 0;
+                                    BruteForceAttackss.date = null;
+                                    BruteForceAttackss.bcontroller = "";
+                                    System.Web.HttpContext.Current.Response.Redirect("http://localhost:51994/");
+                                }
+                            }
 
-                        TempData["Message"] = "Login Failed.User Name or Password Doesn't Exist.";
-                        return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            BruteForceAttackss.refreshcount = BruteForceAttackss.refreshcount + 1;
+                        }
                     }
+
+
                 }
             }
             else
             {
-                return View();
+                BruteForceAttackss.bcontroller = "Home";
             }
         }
-       // [SessionExpire]
+
+        public void BindEncriptData()
+        {
+            List<Categorisation> categorisations = new List<Categorisation>
+            {
+                new Categorisation { Text = "Buy(Indian-IDDM)",  Value = "Buy(Indian-IDDM)" },
+                new Categorisation { Text = "Buy(Indian)",  Value = "Buy(Indian)" },
+                new Categorisation { Text = "Buy and Make(Indian)",  Value = "Buy and Make(Indian)" },
+                new Categorisation { Text = "Buy(Buy and Make)",  Value = "Buy and Make" },
+                new Categorisation { Text = "Buy(Global-Manufacture in India)",  Value = "Buy(Global-Manufacture in India)" },
+                new Categorisation { Text = "Buy(Global-Manufacture in India)-IGA",  Value = "Buy(Global-Manufacture in India)-IGA" },
+                new Categorisation { Text = "Buy(Global)",  Value = "Buy(Global)" },
+                new Categorisation { Text = "Buy(Global)-IGA",  Value = "Buy(Global)-IGA" },
+                new Categorisation { Text = "Buy(Global)-FMS Route",  Value = "Buy(Global)-FMS Route" },
+                new Categorisation { Text = "Design & Development",  Value = "Design & Development" },
+                new Categorisation { Text = "IGA",  Value = "IGA" },
+                new Categorisation { Text = "Make",  Value = "Make" },
+                new Categorisation { Text = "Sp Model",  Value = "Sp Model" },
+                new Categorisation { Text = "Make-I",  Value = "Make-I" },
+                new Categorisation { Text = "Make-II",  Value = "Make-II" },
+                new Categorisation { Text = "Make-III",  Value = "Make-III" }
+            };
+
+            // Categorisation Catdata = new Categorisation();
+            List<Categorisation> Catdata = new List<Categorisation>();
+            foreach (var item in categorisations)
+            {
+                Categorisation cat1 = new Categorisation()
+                {
+                    Text = item.Text,
+                    Value = Cipher.Encrypt(item.Value, "")
+                };
+                Catdata.Add(cat1);
+            };
+            ViewBag.catData = Catdata;
+        }
+
+        public void EncriptServicesData()
+        {
+            List<Categorisation> categorisations = new List<Categorisation>
+            {
+                new Categorisation { Text = "Army",  Value = "Army" },
+                new Categorisation { Text = "Navy",  Value = "Navy" },
+                new Categorisation { Text = "AirForce",  Value = "AirForce" },
+                new Categorisation { Text = "ICG",  Value = "ICG" },
+                new Categorisation { Text = "Joint",  Value = "Joint" }
+            };
+            List<Categorisation> Catdata = new List<Categorisation>();
+            foreach (var item in categorisations)
+            {
+                Categorisation cat1 = new Categorisation()
+                {
+                    Text = item.Text,
+                    Value = Cipher.Encrypt(item.Value, "")
+                };
+                Catdata.Add(cat1);
+            };
+            ViewBag.ServicesData = Catdata;
+        }
+
+        masterService mService = new masterService();
+        string password = "p@SSword";
+        GanttData ganttData = new GanttData();
+        private static string WebPortalUrl = ConfigurationManager.AppSettings["WebPortalUrl"].ToString();
+        public ActionResult sign(string mu)
+        {
+            if (mu != null)
+            {
+                Session["UserID"] = mu;
+
+            }
+            return RedirectToAction("Index");
+        }
+        //[SessionExpire]
+        [Route("User")]
+        public ActionResult Index()
+        {
+            String id = "";
+            if (Session["UserID"] != null)
+            {
+                id = Encryption.Decryptl(Session["UserID"].ToString());
+                Session["UserID"] = id;
+                if (id != "" || Session["UserID"] != null)
+                {
+
+                    using (var _context = new MODEntities())
+                    {
+                        var isValid = _context.tbl_tbl_User.Where(x => x.InternalEmailID == id).FirstOrDefault();
+                        if (isValid != null)
+                        {
+                           // int UserId = isValid.UserId;
+                            FormsAuthentication.SetAuthCookie(isValid.InternalEmailID, false);
+                            Session["UserID"] = isValid.UserId;
+                            Session["UserName"] = isValid.UserName;
+                            Session["SectionID"] = isValid.SectionID;
+                            Session["WebPortalUrl"] = WebPortalUrl;
+                            Session["EmailID"] = isValid.InternalEmailID;
+                           
+                            List <tbl_Master_Role> list = _context.tbl_Master_Role.Where(x => x.UserID == isValid.UserId).ToList();
+                            Session["RoleList"] = list;
+                            return View();
+                        }
+                        else
+                        {
+                            TempData["Message"] = "Login Failed.User Name or Password Doesn't Exist.";
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            else
+            {
+                return Redirect(WebPortalUrl);
+            }
+        }
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [Route("HGantt")]
         public ActionResult Gantt(int Id)
         {
             ViewBag.DataSource = ganttData.ProjectNewData(Id);
             return View();
         }
-        //[SessionExpire]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [Route("HBaseline")]
         public ActionResult Baseline(int Id)
         {
             ViewBag.DataSource = ganttData.BaselineData(Id);
             return View();
         }
+
         [HttpGet]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [Route("HProjectDetail")]
         public ActionResult GetTryProjectDetails(long id)
         {
             IEnumerable<tryProjectViewModel> Badge = null;
@@ -81,11 +233,14 @@ namespace MOD.Controllers
             return Json(mTask, JsonRequestBehavior.AllowGet);
 
         }
-        public JsonResult GetCasesTable(decimal id,string Categorisation, string Service_Lead_Service,DateTime myDate)
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [Route("HCasesTable")]
+        public JsonResult GetCasesTable(decimal id, string Categorisation, string Service_Lead_Service, DateTime myDate)
         {
             List<CaseViewModel> list = new List<CaseViewModel>();
             IEnumerable<CaseViewModel> Badge = null;
-            Badge = mService.GetCasesTable(id,Categorisation, Service_Lead_Service, myDate);
+            Badge = mService.GetCasesTable(id, Categorisation, Service_Lead_Service, myDate);
             foreach (CaseViewModel item in Badge)
             {
                 CaseViewModel obj = new CaseViewModel
@@ -100,17 +255,49 @@ namespace MOD.Controllers
 
             return Json(new { data = list }, JsonRequestBehavior.AllowGet);
         }
+        [Route("HDashboard")]
+        [SessionExpire]
+        [SessionExpireRefNo]
         public ActionResult Dashboard(string Categorisation, string Service_Lead_Service)
         {
-            int id = Convert.ToInt32(1);
-            List<DashboardViewModel> list = new List<DashboardViewModel>();
-            IEnumerable<DashboardViewModel> Badge = null;
-            Badge = mService.GetDashboardDetails(Categorisation, Service_Lead_Service);
-            ViewBag.Dashboard = Badge;
-            //ViewBag.Categorisation = new SelectList(_entities.acq_project_master, "Categorisation", "Categorisation");
-            //ViewBag.Service_Lead_Service = new SelectList(_entities.acq_project_master, "Service_Lead_Service", "Service_Lead_Service");        
-            return View();
+            string Categorisation1 = null;
+            string Service = null;
+            if (Categorisation != null & Categorisation != "")
+            {
+                Categorisation1 = Cipher.Decrypt(Categorisation, "");
+            }
+            else
+            {
+                Categorisation1 = Categorisation;
+            }
+            if (Service_Lead_Service != null & Service_Lead_Service != "")
+            {
+                Service = Cipher.Decrypt(Service_Lead_Service, "");
+            }
+            else
+            {
+                Service = Service_Lead_Service;
+            }
+
+            if (Session["UserID"] != null)
+            {
+                int id = Convert.ToInt32(1);
+                List<DashboardViewModel> list = new List<DashboardViewModel>();
+                IEnumerable<DashboardViewModel> Badge = null;
+                Badge = mService.GetDashboardDetails(sanitizer.Sanitize(Categorisation1), sanitizer.Sanitize(Service));
+                ViewBag.Dashboard = Badge;
+                //ViewBag.Categorisation = new SelectList(_entities.acq_project_master, "Categorisation", "Categorisation");
+                //ViewBag.Service_Lead_Service = new SelectList(_entities.acq_project_master, "Service_Lead_Service", "Service_Lead_Service");        
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [Route("HDasboardDetails")]
         public JsonResult GetProjectDasboardDetails(string id, string mTaskSlno, string id5, string Categorisation, string Service_Lead_Service)
         {
             List<WaliTest> list = new List<WaliTest>();
@@ -119,7 +306,7 @@ namespace MOD.Controllers
             {
                 try
                 {
-                    Badge = mService.GetProjectDasboardDetails(id, mTaskSlno, id5, Categorisation,Service_Lead_Service);
+                    Badge = mService.GetProjectDasboardDetails(id, mTaskSlno, id5, Categorisation, Service_Lead_Service);
                     foreach (WaliTest item in Badge)
                     {
                         WaliTest obj = new WaliTest
@@ -149,6 +336,9 @@ namespace MOD.Controllers
             return Json(new { data = list }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [Route("HMonthWiseChart")]
         public ActionResult GetMonthWiseChart(int monthid)
         {
             long mid = Convert.ToInt64(monthid);
@@ -162,6 +352,9 @@ namespace MOD.Controllers
         }
 
         #region Charts Detasils
+        [SessionExpire]
+        [SessionExpireRefNo]
+        [Route("HDetailChart")]
         public ActionResult DetailCharts()
         {
             //first chart pie
@@ -186,7 +379,6 @@ namespace MOD.Controllers
             ViewBag.Total3 = Badge.Sum(x => x.other_projects);
             return View();
         }
-
         #endregion
 
     }

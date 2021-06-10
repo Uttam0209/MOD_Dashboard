@@ -61,7 +61,11 @@ namespace MOD.Models
         public virtual DbSet<temp_BF> temp_BF { get; set; }
         public virtual DbSet<acq_policy> acq_policy { get; set; }
         public virtual DbSet<tbl_tbl_User> tbl_tbl_User { get; set; }
+        public virtual DbSet<vw_userDetail> vw_userDetail { get; set; }
         public virtual DbSet<acq_project_master> acq_project_master { get; set; }
+        public virtual DbSet<tbl_Master_Role> tbl_Master_Role { get; set; }
+        public virtual DbSet<tbl_master_formMenu> tbl_master_formMenu { get; set; }
+        public virtual DbSet<tbl_trn_OTP> tbl_trn_OTP { get; set; }
     
         public virtual ObjectResult<temp_dashboard> PROC_DASHBOARD_DATA(string categorisation, string service)
         {
@@ -163,6 +167,11 @@ namespace MOD.Models
                 new ObjectParameter("service", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_DASHBOARD_First_CountGrid_Result>("PROC_DASHBOARD_First_CountGrid", stageidParameter, dateParameter, categorisationParameter, serviceParameter);
+        }
+    
+        public virtual ObjectResult<prc_Getvendcatwise_report_Result> prc_Getvendcatwise_report()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prc_Getvendcatwise_report_Result>("prc_Getvendcatwise_report");
         }
     }
 }
