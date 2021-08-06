@@ -32,7 +32,6 @@ namespace MOD.Models
         public virtual DbSet<tbl_tblVendor> tbl_tblVendor { get; set; }
         public virtual DbSet<tbl_tblVendorCategory> tbl_tblVendorCategory { get; set; }
         public virtual DbSet<acq_department_master> acq_department_master { get; set; }
-        public virtual DbSet<acq_section_master> acq_section_master { get; set; }
         public virtual DbSet<tbl_mst_Project> tbl_mst_Project { get; set; }
         public virtual DbSet<tbl_trn_tryProject> tbl_trn_tryProject { get; set; }
         public virtual DbSet<vw_Chart2> vw_Chart2 { get; set; }
@@ -61,11 +60,13 @@ namespace MOD.Models
         public virtual DbSet<temp_BF> temp_BF { get; set; }
         public virtual DbSet<acq_policy> acq_policy { get; set; }
         public virtual DbSet<tbl_tbl_User> tbl_tbl_User { get; set; }
-        public virtual DbSet<vw_userDetail> vw_userDetail { get; set; }
-        public virtual DbSet<acq_project_master> acq_project_master { get; set; }
         public virtual DbSet<tbl_Master_Role> tbl_Master_Role { get; set; }
         public virtual DbSet<tbl_master_formMenu> tbl_master_formMenu { get; set; }
         public virtual DbSet<tbl_trn_OTP> tbl_trn_OTP { get; set; }
+        public virtual DbSet<acq_audit_trail> acq_audit_trail { get; set; }
+        public virtual DbSet<acq_section_master> acq_section_master { get; set; }
+        public virtual DbSet<vw_userDetail> vw_userDetail { get; set; }
+        public virtual DbSet<acq_project_master> acq_project_master { get; set; }
     
         public virtual ObjectResult<temp_dashboard> PROC_DASHBOARD_DATA(string categorisation, string service)
         {
@@ -148,11 +149,11 @@ namespace MOD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<temp_dashboard>("DASHBOARDDATA", mergeOption, categorisationParameter, serviceParameter);
         }
     
-        public virtual ObjectResult<PROC_DASHBOARD_First_CountGrid_Result> PROC_DASHBOARD_First_CountGrid(Nullable<decimal> stageid, Nullable<System.DateTime> date, string categorisation, string service)
+        public virtual ObjectResult<PROC_DASHBOARD_First_CountGrid_Result> PROC_DASHBOARD_First_CountGrid(Nullable<int> stageid, Nullable<System.DateTime> date, string categorisation, string service)
         {
             var stageidParameter = stageid.HasValue ?
                 new ObjectParameter("stageid", stageid) :
-                new ObjectParameter("stageid", typeof(decimal));
+                new ObjectParameter("stageid", typeof(int));
     
             var dateParameter = date.HasValue ?
                 new ObjectParameter("date", date) :

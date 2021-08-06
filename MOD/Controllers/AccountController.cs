@@ -66,7 +66,7 @@ namespace MOD.Controllers
             //    {
             //        //ModelState.AddModelError("", "Invalid UserName and Password");
             //        TempData["Message"] = "Login Failed.User Name or Password Doesn't Exist.";
-            return Redirect("http://acq.gipinfosystems.com/login");
+            return Redirect(WebPortalUrl);
             //    }
             //}
 

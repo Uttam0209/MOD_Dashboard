@@ -330,7 +330,7 @@ namespace MOD.Controllers
                     obj.ResponsiblePersonLeve4 = sanitizer.Sanitize(model.ResponsiblePersonLeve4);
                     obj.IsDeleted = false;
                     obj.System_case = sanitizer.Sanitize(model.System_case);
-                    obj.AovType = sanitizer.Sanitize(model.AonType);
+                    //obj.AovType = sanitizer.Sanitize(model.AonType);
                     _entities.acq_project_master.Add(obj);
                     _entities.SaveChanges();
                     return RedirectToAction("Index");
@@ -444,7 +444,7 @@ namespace MOD.Controllers
                 // Meeting DropDown Bind
                 model.MeetingMaster = _entities.acq_meeting_master.ToList();
                 model.System_case = _editAonData.System_case;
-                model.AonType = _editAonData.AovType;
+                //model.AonType = _editAonData.AovType;
                 return View(model);
             }
             catch (Exception ex)

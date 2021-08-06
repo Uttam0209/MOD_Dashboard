@@ -144,6 +144,7 @@ namespace MOD.Controllers
         string password = "p@SSword";
         GanttData ganttData = new GanttData();
         private static string WebPortalUrl = ConfigurationManager.AppSettings["WebPortalUrl"].ToString();
+        private static string WebPortalUrlLogout = ConfigurationManager.AppSettings["WebPortalUrlLogout"].ToString();
         public ActionResult sign(string mu)
         {
             if (mu != null)
@@ -161,8 +162,8 @@ namespace MOD.Controllers
             if (Session["UserID"] != null)
             {
                 id = Encryption.Decryptl(Session["UserID"].ToString());
-                Session["UserID"] = id;
-                if (id != "" || Session["UserID"] != null)
+              
+                if (id != "")
                 {
 
                     using (var _context = new MODEntities())
@@ -170,33 +171,57 @@ namespace MOD.Controllers
                         var isValid = _context.tbl_tbl_User.Where(x => x.InternalEmailID == id).FirstOrDefault();
                         if (isValid != null)
                         {
-                           // int UserId = isValid.UserId;
-                            FormsAuthentication.SetAuthCookie(isValid.InternalEmailID, false);
-                            Session["UserID"] = isValid.UserId;
-                            Session["UserName"] = isValid.UserName;
-                            Session["SectionID"] = isValid.SectionID;
-                            Session["WebPortalUrl"] = WebPortalUrl;
-                            Session["EmailID"] = isValid.InternalEmailID;
+                            var IsLogout = _context.acq_audit_trail.Where(s => s.UserEmail == id).OrderByDescending(s => s.LogId).FirstOrDefault();
+                            if(IsLogout!=null)
+                            {
+                                if(IsLogout.Action!= "Logout")
+                                {
+                                    if(IsLogout.IPAddress==isValid.IPAddress)
+                                    {
+                                        // int UserId = isValid.UserId;
+                                        FormsAuthentication.SetAuthCookie(isValid.InternalEmailID, false);
+                                        Session["UserID"] = isValid.UserId;
+                                        Session["UserName"] = isValid.UserName;
+                                        Session["SectionID"] = isValid.SectionID;
+                                        Session["WebPortalUrl"] = WebPortalUrl;
+                                        Session["EmailID"] = isValid.InternalEmailID;
+
+                                        List<tbl_Master_Role> list = _context.tbl_Master_Role.Where(x => x.UserID == isValid.UserId).ToList();
+                                        Session["RoleList"] = list;
+                                        return View();
+                                    }
+                                    else
+                                    {
+                                        return Redirect(WebPortalUrlLogout);
+                                    }
+                                }
+                                else
+                                {
+                                    return Redirect(WebPortalUrlLogout);
+                                }
+                                
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
                            
-                            List <tbl_Master_Role> list = _context.tbl_Master_Role.Where(x => x.UserID == isValid.UserId).ToList();
-                            Session["RoleList"] = list;
-                            return View();
                         }
                         else
                         {
                             TempData["Message"] = "Login Failed.User Name or Password Doesn't Exist.";
-                            return RedirectToAction("Index", "Home");
+                            return Redirect(WebPortalUrlLogout);
                         }
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Account");
+                    return Redirect(WebPortalUrlLogout);
                 }
             }
             else
             {
-                return Redirect(WebPortalUrl);
+                return Redirect(WebPortalUrlLogout);
             }
         }
         [SessionExpire]

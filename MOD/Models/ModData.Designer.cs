@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\CurrentProject2020\ACQApplication\June2021\MOD DASHBOARD 09.04.2021 (1)\MOD DASHBOARD 09.04.2021\MOD_Dashboard\MOD\Models\ModData.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\ACQ\MOD_Dashboard\MOD\Models\ModData.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

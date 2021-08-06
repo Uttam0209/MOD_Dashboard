@@ -17,16 +17,16 @@ namespace MOD.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public acq_department_master()
         {
-            this.acq_section_master = new HashSet<acq_section_master>();
             this.tbl_tbl_User = new HashSet<tbl_tbl_User>();
+            this.acq_section_master = new HashSet<acq_section_master>();
         }
     
         public int deptt_id { get; set; }
         public string deptt_description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<acq_section_master> acq_section_master { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_tbl_User> tbl_tbl_User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<acq_section_master> acq_section_master { get; set; }
     }
 }

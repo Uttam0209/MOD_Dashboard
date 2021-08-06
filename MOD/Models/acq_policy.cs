@@ -30,7 +30,5 @@ namespace MOD.Models
     
         public virtual tbl_mst_Template tbl_mst_Template { get; set; }
         public virtual acq_project_master acq_project_master { get; set; }
-        public virtual acq_project_master acq_project_master1 { get; set; }
-        public virtual acq_project_master acq_project_master2 { get; set; }
     }
 }
