@@ -254,7 +254,7 @@ namespace MOD.Controllers
                 }
             }
             SaveAcqProjectMasterViewModel model = new SaveAcqProjectMasterViewModel();
-            model.MeetingMaster = _entities.acq_meeting_master.ToList();
+            model.MeetingMaster = _entities.acq_meeting_master.Where(x => x.Deleted == false).ToList();
 
             // Vendor List
             List<SaveAcqProjectMasterViewModel> venList = new List<SaveAcqProjectMasterViewModel>();
@@ -283,7 +283,7 @@ namespace MOD.Controllers
         [Route("AoNCreate")]
         public ActionResult AonCreate(SaveAcqProjectMasterViewModel model)
         {
-            model.MeetingMaster = _entities.acq_meeting_master.ToList();
+            model.MeetingMaster = _entities.acq_meeting_master.Where(x => x.Deleted == false).ToList();
             SaveAcqProjectMasterViewModel model1 = new SaveAcqProjectMasterViewModel();
             if (ModelState.IsValid)
             {
@@ -342,7 +342,7 @@ namespace MOD.Controllers
             }
             else
             {
-                model.MeetingMaster = _entities.acq_meeting_master.ToList();
+                model.MeetingMaster = _entities.acq_meeting_master.Where(x => x.Deleted == false).ToList();
                 List<SaveAcqProjectMasterViewModel> venList = new List<SaveAcqProjectMasterViewModel>();
                 var vendorList = _entities.tbl_tblVendor.Where(x => x.IsDeleted == false).ToList();
                 if (vendorList != null)
@@ -1072,6 +1072,474 @@ namespace MOD.Controllers
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
             return View(model);
         }
+
+        [Route("AoNViewAoNListyear")]
+        public ActionResult ViewAoNListyear(string Financial_year, string Service_Lead_Service)
+        {
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "AON Granted During a Given Period Category-wise Alongwith Costs".ToLower())
+                    {
+                        //if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            string Financial_year1 = null;
+            string Service_Lead_Service1 = null;
+            if (Financial_year != null & Financial_year != "")
+            {
+                Financial_year1 = Cipher.Decrypt(Financial_year, "");
+            }
+            else
+            {
+                Financial_year1 = Financial_year;
+            }
+            if (Service_Lead_Service != null & Service_Lead_Service != "")
+            {
+                Service_Lead_Service1 = Cipher.Decrypt(Service_Lead_Service, "");
+            }
+            else
+            {
+                Service_Lead_Service1 = Service_Lead_Service;
+            }
+            MODListViewModel model = new MODListViewModel();
+            var SectionID = Session["SectionID"];
+
+            if ((int)SectionID == 2 || (int)SectionID == 8)
+            {
+                var AonList = _entities.acq_project_master.Where(x => x.IsDeleted == false && x.Service_Lead_Service == "AirForce").OrderBy(x => x.Date_of_Accord_of_AoN).ToList();
+                List<MODListViewModel> list = new List<MODListViewModel>();
+                if (Financial_year == null && Service_Lead_Service == null)
+                {
+                    if (AonList != null)
+                    {
+                        foreach (var item in AonList)
+                        {
+                            MODListViewModel obj = new MODListViewModel();
+                            obj.aon_id = item.aon_id;
+                            obj.item_description = Cipher.Decrypt(item.item_description, password);
+                            obj.MeetingDate = Convert.ToDateTime(item.acq_meeting_master.meeting_date);
+                            obj.Quantity = item.Quantity;
+                            obj.Service_Lead_Service = item.Service_Lead_Service;
+                            obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation = Categorisation1;
+                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                            obj.Cost = item.Cost;
+                            obj.Currency = item.Currency;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.AoNaccordedbyDACDPB = item.acq_meeting_master.dac_dpb;
+
+                            obj.Tax_Duties = item.Tax_Duties;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.Trials_Required = item.Trials_Required;
+                            obj.Essential_parameters = item.Essential_parameters;
+                            obj.Any_other_aspect = item.Any_other_aspect;
+                            obj.IC_percentage = item.IC_percentage;
+                            obj.Option_clause_applicable = item.Option_clause_applicable;
+                            obj.Offset_applicable = item.Offset_applicable;
+                            obj.AMC_applicable = item.AMC_applicable;
+                            obj.AMCRemarks = item.AMCRemarks;
+                            obj.Warrenty_applicable = item.Warrenty_applicable;
+                            obj.Warrenty_Remarks = item.Warrenty_Remarks;
+                            obj.AoN_validity = item.AoN_validity;
+                            obj.AoN_validity_unit = item.AoN_validity_unit;
+                            obj.Remarks = item.Remarks;
+                            list.Add(obj);
+                        }
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(Financial_year) || !string.IsNullOrEmpty(Service_Lead_Service))
+                    {
+
+                        var objAonLst = new List<acq_project_master>();
+                        if (!string.IsNullOrEmpty(Financial_year))
+                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Financial_year1) && x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList());
+
+                        foreach (var item in objAonLst)
+                        {
+                            MODListViewModel obj = new MODListViewModel();
+                            obj.aon_id = item.aon_id;
+                            obj.item_description = Cipher.Decrypt(item.item_description, password);
+                            obj.MeetingDate = Convert.ToDateTime(item.acq_meeting_master.meeting_date);
+                            obj.Quantity = item.Quantity;
+                            obj.Service_Lead_Service = item.Service_Lead_Service;
+                            obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation =Categorisation1;
+                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                            obj.Cost = item.Cost;
+                            obj.Currency = item.Currency;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.AoNaccordedbyDACDPB = item.acq_meeting_master.dac_dpb;
+
+                            obj.Tax_Duties = item.Tax_Duties;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.Trials_Required = item.Trials_Required;
+                            obj.Essential_parameters = item.Essential_parameters;
+                            obj.Any_other_aspect = item.Any_other_aspect;
+                            obj.IC_percentage = item.IC_percentage;
+                            obj.Option_clause_applicable = item.Option_clause_applicable;
+                            obj.Offset_applicable = item.Offset_applicable;
+                            obj.AMC_applicable = item.AMC_applicable;
+                            obj.AMCRemarks = item.AMCRemarks;
+                            obj.Warrenty_applicable = item.Warrenty_applicable;
+                            obj.Warrenty_Remarks = item.Warrenty_Remarks;
+                            obj.AoN_validity = item.AoN_validity;
+                            obj.AoN_validity_unit = item.AoN_validity_unit;
+                            obj.Remarks = item.Remarks;
+                            list.Add(obj);
+                        }
+                    }
+                }
+                model.AonList = list;
+            }
+            else if ((int)SectionID == 3 || (int)SectionID == 9)
+            {
+                var AonList = _entities.acq_project_master.Where(x => x.IsDeleted == false && x.Service_Lead_Service == "Army").OrderBy(x => x.Date_of_Accord_of_AoN).ToList();
+                List<MODListViewModel> list = new List<MODListViewModel>();
+                if (Financial_year == null && Service_Lead_Service == null)
+                {
+                    if (AonList != null)
+                    {
+                        foreach (var item in AonList)
+                        {
+                            MODListViewModel obj = new MODListViewModel();
+                            obj.aon_id = item.aon_id;
+                            obj.item_description = Cipher.Decrypt(item.item_description, password);
+                            obj.MeetingDate = Convert.ToDateTime(item.acq_meeting_master.meeting_date);
+                            obj.Quantity = item.Quantity;
+                            obj.Service_Lead_Service = item.Service_Lead_Service;
+                            obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation = Categorisation1;
+                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                            obj.Cost = item.Cost;
+                            obj.Currency = item.Currency;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.AoNaccordedbyDACDPB = item.acq_meeting_master.dac_dpb;
+
+                            obj.Tax_Duties = item.Tax_Duties;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.Trials_Required = item.Trials_Required;
+                            obj.Essential_parameters = item.Essential_parameters;
+                            obj.Any_other_aspect = item.Any_other_aspect;
+                            obj.IC_percentage = item.IC_percentage;
+                            obj.Option_clause_applicable = item.Option_clause_applicable;
+                            obj.Offset_applicable = item.Offset_applicable;
+                            obj.AMC_applicable = item.AMC_applicable;
+                            obj.AMCRemarks = item.AMCRemarks;
+                            obj.Warrenty_applicable = item.Warrenty_applicable;
+                            obj.Warrenty_Remarks = item.Warrenty_Remarks;
+                            obj.AoN_validity = item.AoN_validity;
+                            obj.AoN_validity_unit = item.AoN_validity_unit;
+                            obj.Remarks = item.Remarks;
+                            list.Add(obj);
+                        }
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(Financial_year) || !string.IsNullOrEmpty(Service_Lead_Service))
+                    {
+
+                        var objAonLst = new List<acq_project_master>();
+                        if (!string.IsNullOrEmpty(Financial_year))
+                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Financial_year1) && x.Service_Lead_Service.Contains(Service_Lead_Service1)).ToList());
+                        
+                        foreach (var item in objAonLst)
+                        {
+                            MODListViewModel obj = new MODListViewModel();
+                            obj.aon_id = item.aon_id;
+                            obj.item_description = Cipher.Decrypt(item.item_description, password);
+                            obj.MeetingDate = Convert.ToDateTime(item.acq_meeting_master.meeting_date);
+                            obj.Quantity = item.Quantity;
+                            obj.Service_Lead_Service = item.Service_Lead_Service;
+                            obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation = Categorisation;
+                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                            obj.Cost = item.Cost;
+                            obj.Currency = item.Currency;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.AoNaccordedbyDACDPB = item.acq_meeting_master.dac_dpb;
+
+                            obj.Tax_Duties = item.Tax_Duties;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.Trials_Required = item.Trials_Required;
+                            obj.Essential_parameters = item.Essential_parameters;
+                            obj.Any_other_aspect = item.Any_other_aspect;
+                            obj.IC_percentage = item.IC_percentage;
+                            obj.Option_clause_applicable = item.Option_clause_applicable;
+                            obj.Offset_applicable = item.Offset_applicable;
+                            obj.AMC_applicable = item.AMC_applicable;
+                            obj.AMCRemarks = item.AMCRemarks;
+                            obj.Warrenty_applicable = item.Warrenty_applicable;
+                            obj.Warrenty_Remarks = item.Warrenty_Remarks;
+                            obj.AoN_validity = item.AoN_validity;
+                            obj.AoN_validity_unit = item.AoN_validity_unit;
+                            obj.Remarks = item.Remarks;
+                            list.Add(obj);
+                        }
+                    }
+                }
+                model.AonList = list;
+            }
+            else if ((int)SectionID == 4 || (int)SectionID == 10)
+            {
+                var AonList = _entities.acq_project_master.Where(x => x.IsDeleted == false && x.Service_Lead_Service == "Navy").OrderBy(x => x.Date_of_Accord_of_AoN).ToList();
+                List<MODListViewModel> list = new List<MODListViewModel>();
+                if (Financial_year == null && Service_Lead_Service == null)
+                {
+                    if (AonList != null)
+                    {
+                        foreach (var item in AonList)
+                        {
+                            MODListViewModel obj = new MODListViewModel();
+                            obj.aon_id = item.aon_id;
+                            obj.item_description = Cipher.Decrypt(item.item_description, password);
+                            obj.MeetingDate = Convert.ToDateTime(item.acq_meeting_master.meeting_date);
+                            obj.Quantity = item.Quantity;
+                            obj.Service_Lead_Service = item.Service_Lead_Service;
+                            obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation = Categorisation1;
+                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                            obj.Cost = item.Cost;
+                            obj.Currency = item.Currency;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.AoNaccordedbyDACDPB = item.acq_meeting_master.dac_dpb;
+
+                            obj.Tax_Duties = item.Tax_Duties;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.Trials_Required = item.Trials_Required;
+                            obj.Essential_parameters = item.Essential_parameters;
+                            obj.Any_other_aspect = item.Any_other_aspect;
+                            obj.IC_percentage = item.IC_percentage;
+                            obj.Option_clause_applicable = item.Option_clause_applicable;
+                            obj.Offset_applicable = item.Offset_applicable;
+                            obj.AMC_applicable = item.AMC_applicable;
+                            obj.AMCRemarks = item.AMCRemarks;
+                            obj.Warrenty_applicable = item.Warrenty_applicable;
+                            obj.Warrenty_Remarks = item.Warrenty_Remarks;
+                            obj.AoN_validity = item.AoN_validity;
+                            obj.AoN_validity_unit = item.AoN_validity_unit;
+                            obj.Remarks = item.Remarks;
+                            list.Add(obj);
+                        }
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(Financial_year) || !string.IsNullOrEmpty(Service_Lead_Service))
+                    {
+
+                        var objAonLst = new List<acq_project_master>();
+                        if (!string.IsNullOrEmpty(Financial_year))
+                            objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Financial_year1) && x.Service_Lead_Service.Contains(Service_Lead_Service1)).ToList());
+                        
+                        foreach (var item in objAonLst)
+                        {
+                            MODListViewModel obj = new MODListViewModel();
+                            obj.aon_id = item.aon_id;
+                            obj.item_description = Cipher.Decrypt(item.item_description, password);
+                            obj.MeetingDate = Convert.ToDateTime(item.acq_meeting_master.meeting_date);
+                            obj.Quantity = item.Quantity;
+                            obj.Service_Lead_Service = item.Service_Lead_Service;
+                            obj.Categorisation = item.Categorisation;
+                            // obj.Categorisation = Categorisation1;
+                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                            obj.Cost = item.Cost;
+                            obj.Currency = item.Currency;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.AoNaccordedbyDACDPB = item.acq_meeting_master.dac_dpb;
+
+                            obj.Tax_Duties = item.Tax_Duties;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.Trials_Required = item.Trials_Required;
+                            obj.Essential_parameters = item.Essential_parameters;
+                            obj.Any_other_aspect = item.Any_other_aspect;
+                            obj.IC_percentage = item.IC_percentage;
+                            obj.Option_clause_applicable = item.Option_clause_applicable;
+                            obj.Offset_applicable = item.Offset_applicable;
+                            obj.AMC_applicable = item.AMC_applicable;
+                            obj.AMCRemarks = item.AMCRemarks;
+                            obj.Warrenty_applicable = item.Warrenty_applicable;
+                            obj.Warrenty_Remarks = item.Warrenty_Remarks;
+                            obj.AoN_validity = item.AoN_validity;
+                            obj.AoN_validity_unit = item.AoN_validity_unit;
+                            obj.Remarks = item.Remarks;
+                            list.Add(obj);
+                        }
+                    }
+                }
+                model.AonList = list;
+            }
+            else
+            {
+                var AonList = _entities.acq_project_master.Where(x => x.IsDeleted == false).ToList();
+                List<MODListViewModel> list = new List<MODListViewModel>();
+                if (Financial_year == null && Service_Lead_Service == null)
+                {
+                    if (AonList != null)
+                    {
+                        foreach (var item in AonList)
+                        {
+                            MODListViewModel obj = new MODListViewModel();
+                            obj.aon_id = item.aon_id;
+                            obj.item_description = Cipher.Decrypt(item.item_description, password);
+                            obj.MeetingDate = Convert.ToDateTime(item.acq_meeting_master.meeting_date);
+                            obj.Quantity = item.Quantity;
+                            obj.Service_Lead_Service = item.Service_Lead_Service;
+                            obj.Categorisation = item.Categorisation;
+                            //obj.Categorisation =Categorisation1;
+                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                            obj.Cost = item.Cost;
+                            obj.Currency = item.Currency;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.AoNaccordedbyDACDPB = item.acq_meeting_master.dac_dpb;
+
+                            obj.Tax_Duties = item.Tax_Duties;
+                            obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                            obj.Trials_Required = item.Trials_Required;
+                            obj.Essential_parameters = item.Essential_parameters;
+                            obj.Any_other_aspect = item.Any_other_aspect;
+                            obj.IC_percentage = item.IC_percentage;
+                            obj.Option_clause_applicable = item.Option_clause_applicable;
+                            obj.Offset_applicable = item.Offset_applicable;
+                            obj.AMC_applicable = item.AMC_applicable;
+                            obj.AMCRemarks = item.AMCRemarks;
+                            obj.Warrenty_applicable = item.Warrenty_applicable;
+                            obj.Warrenty_Remarks = item.Warrenty_Remarks;
+                            obj.AoN_validity = item.AoN_validity;
+                            obj.AoN_validity_unit = item.AoN_validity_unit;
+                            obj.Remarks = item.Remarks;
+                            list.Add(obj);
+                        }
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(Service_Lead_Service) || !string.IsNullOrEmpty(Financial_year))
+                    {
+                        if (AonList.Count() > 0)
+                        {
+                            var objAonLst = new List<acq_project_master>();
+                            if (!string.IsNullOrEmpty(Financial_year) && !string.IsNullOrEmpty(Service_Lead_Service))
+                            {
+                                objAonLst.AddRange(AonList.Where(x => x.Categorisation == Financial_year1 && x.Service_Lead_Service == Service_Lead_Service1).ToList());
+                            }
+                            else if (!string.IsNullOrEmpty(Financial_year))
+                            {
+                                objAonLst.AddRange(AonList.Where(x => x.Categorisation == Financial_year1).ToList());
+                            }
+                            else if (!string.IsNullOrEmpty(Service_Lead_Service))
+                            {
+                                objAonLst.AddRange(AonList.Where(x => x.Service_Lead_Service == Service_Lead_Service1).ToList());
+                            }
+                            
+
+                            foreach (var item in objAonLst)
+                            {
+                                MODListViewModel obj = new MODListViewModel();
+                                obj.aon_id = item.aon_id;
+                                obj.item_description = Cipher.Decrypt(item.item_description, password);
+                                obj.MeetingDate = Convert.ToDateTime(item.acq_meeting_master.meeting_date);
+                                obj.Quantity = item.Quantity;
+                                obj.Service_Lead_Service = item.Service_Lead_Service;
+                                obj.Categorisation = item.Categorisation;
+                                // obj.Categorisation = Categorisation1;
+                                obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                                obj.Cost = item.Cost;
+                                obj.Currency = item.Currency;
+                                obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                                obj.AoNaccordedbyDACDPB = item.acq_meeting_master.dac_dpb;
+
+                                obj.Tax_Duties = item.Tax_Duties;
+                                obj.Type_of_Acquisition = item.Type_of_Acquisition;
+                                obj.Trials_Required = item.Trials_Required;
+                                obj.Essential_parameters = item.Essential_parameters;
+                                obj.Any_other_aspect = item.Any_other_aspect;
+                                obj.IC_percentage = item.IC_percentage;
+                                obj.Option_clause_applicable = item.Option_clause_applicable;
+                                obj.Offset_applicable = item.Offset_applicable;
+                                obj.AMC_applicable = item.AMC_applicable;
+                                obj.AMCRemarks = item.AMCRemarks;
+                                obj.Warrenty_applicable = item.Warrenty_applicable;
+                                obj.Warrenty_Remarks = item.Warrenty_Remarks;
+                                obj.AoN_validity = item.AoN_validity;
+                                obj.AoN_validity_unit = item.AoN_validity_unit;
+                                obj.Remarks = item.Remarks;
+                                list.Add(obj);
+                            }
+                        }
+                    }
+                }
+                model.AonList = list;
+            }
+            string query = "";
+
+            if (Service_Lead_Service1 == "" || Service_Lead_Service1 == null)
+                Service_Lead_Service1 = "%";
+
+            if (Financial_year1 == "" || Financial_year1 == null)
+                Financial_year1 = "%";
+
+            query = "select categorisation, count(*) no_of_aons,sum(cast(y.cost as decimal(16, 2))) total_cost_in_crs from (select y.*," +
+" concat('FY', CASE WHEN MONTH(y.date_of_accord_of_aon) < 4 THEN YEAR(y.date_of_accord_of_aon) - 1 ELSE" +
+" YEAR(y.date_of_accord_of_aon) END) Financial_year from acq_project_master y )y" +
+" where y.Service_Lead_Service like '" + Service_Lead_Service1 + "' and y.financial_year like '" + Financial_year1 + "'  and y.DeletedBy is null group by categorisation";
+
+
+            DataTable dt = new DataTable();
+            using (OleDbConnection conn = masterService.DB())
+            {
+                OleDbDataAdapter adap = new OleDbDataAdapter();
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+                // cmd.Parameters.AddWithValue("@Id", CatID);
+                cmd.Parameters.Add("@Service_Lead_Service", OleDbType.VarChar, 500);
+                cmd.Parameters["@Service_Lead_Service"].Value = Service_Lead_Service1;
+                cmd.Parameters.Add("@financial_year", OleDbType.VarChar, 500);
+                //cmd.Parameters["@financial_year"].Value = financial_year1;
+                cmd.Connection = conn;
+                adap.SelectCommand = cmd;
+                adap.Fill(dt);
+                conn.Close();
+            }
+
+           
+            List<DetailCharts> dataPoints = new List<DetailCharts>();
+            IEnumerable<AoNsGranted_WiseReport> Badge = null;
+
+
+            Badge = dt.AsEnumerable().Select(x => new AoNsGranted_WiseReport
+            {
+                Categorisation = x.Field<string>("categorisation"),
+                total_cost_in_crs = x.Field<decimal>("total_cost_in_crs"),
+                no_of_aons = x.Field<int>("no_of_aons"),
+
+            });
+            foreach (AoNsGranted_WiseReport item in Badge)
+            {
+                dataPoints.Add(new DetailCharts(Convert.ToString(item.Categorisation), Convert.ToDouble(item.total_cost_in_crs), Convert.ToDouble(item.no_of_aons)));
+            }
+
+            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            return View(model);
+        }
+
+
 
         OleDbConnection Econ;
         public ActionResult excelupload()

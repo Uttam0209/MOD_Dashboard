@@ -38,6 +38,7 @@ namespace Gantt_Chart.Models
         public string Financial_year { get; set; }
         public Nullable<int> no_of_aons { get; set; }
         public Nullable<decimal> total_cost_in_crs { get; set; }
+        public string Categorisation { get; set; }
     }
 
 }

@@ -93,6 +93,7 @@
     <Property Name="ResponsiblePersonLeve3" Type="nvarchar" MaxLength="50" />
     <Property Name="ResponsiblePersonLeve4" Type="nvarchar" MaxLength="50" />
     <Property Name="AovType" Type="varchar" MaxLength="255" />
+    <Property Name="ref_socId" Type="int" />
   </EntityType>
   <EntityType Name="acq_projectstage_applicability">
     <Key>
@@ -940,6 +941,7 @@ warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="GetselectedVendors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="prc_Getvendcatwise_report" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="PROC_DASHBOARD_DATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="categorisation" Type="varchar" Mode="In" />

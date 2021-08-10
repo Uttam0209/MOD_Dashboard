@@ -9,9 +9,12 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Gantt_Chart.Service
 {
@@ -26,55 +29,38 @@ namespace Gantt_Chart.Service
         }
         public static OleDbConnection DB()
         {
+            //OleDbConnection conn = new OleDbConnection(DecryptData(ConString));
             OleDbConnection conn = new OleDbConnection(ConString);
             conn.Open();
             return conn;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="userPassword"></param>
-        /// <returns></returns>
-        //public UserModel GetUserLogin(string userName, string userPassword)
-        //{
-        //    UserModel model = new UserModel();
+        public static string DecryptData(string strData)
+        {
+            byte[] key = { };// Key   
+            byte[] IV = { 10, 20, 30, 40, 50, 60, 70, 80 };
+            byte[] inputByteArray = new byte[strData.Length];
+            strData = strData.Replace("%2b", "+");
 
-        //    var _isUserExdfxists = _entities.tbl_mst_User.Where(x => x.UserName == userName && x.TempRefNo == userPassword && x.IsActive == "Y").FirstOrDefault();
-        //    if (_isUserExdfxists != null)
-        //    {
-        //        model.UserID = _isUserExdfxists.UserID;
-        //        model.UserName = _isUserExdfxists.UserName;
-        //        model.Password = _isUserExdfxists.Password;
-        //        model.DepartID = Convert.ToInt64(_isUserExdfxists.DepartID);
-        //    }
-        //    return model;
-        //}
+            try
+            {
+                key = Encoding.UTF8.GetBytes("W@!dghDW");
+                DESCryptoServiceProvider ObjDES = new DESCryptoServiceProvider();
+                inputByteArray = Convert.FromBase64String(strData);
 
-        //public List<UserModel> GetUser(long mDepart)
-        //{
-        //    List<UserModel> model = new List<UserModel>();
+                MemoryStream Objmst = new MemoryStream();
+                CryptoStream Objcs = new CryptoStream(Objmst, ObjDES.CreateDecryptor(key, IV), CryptoStreamMode.Write);
+                Objcs.Write(inputByteArray, 0, inputByteArray.Length);
+                Objcs.FlushFinalBlock();
 
-        //    var _isUserExdfxists = _entities.tbl_tbl_User.Where(x => x.DepartmentID == mDepart && x.IsDeleted == "Y").ToList();
-        //    if (_isUserExdfxists != null)
-        //    {
-        //        foreach (tbl_mst_User item in _isUserExdfxists)
-        //        {
-        //            UserModel list = new UserModel
-        //            {
-        //                UserID = item.UserID,
-        //                UserName = item.UserName,
-        //                IsActive = item.IsActive
-        //            };
-        //            model.Add(list);
-        //        }
-
-        //    }
-        //    return model;
-        //}
-
-      
+                Encoding encoding = Encoding.UTF8;
+                return encoding.GetString(Objmst.ToArray());
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public List<ProjectViewModel> GetProjectDetails(long id)
         {
@@ -190,8 +176,8 @@ namespace Gantt_Chart.Service
             List<DashboardViewModel> Mmodel = new List<DashboardViewModel>();
             if (Categorisation == null && Service_Lead_Service == null)
             {
-                Categorisation = "";
-                Service_Lead_Service = "";
+                Categorisation = "''";
+                Service_Lead_Service = "''";
             }
             SqlParameter param1 = new SqlParameter("@categorisation", Categorisation);
             SqlParameter param2 = new SqlParameter("@service", Service_Lead_Service);
@@ -242,6 +228,22 @@ namespace Gantt_Chart.Service
         //}
         public List<CaseViewModel> GetCasesTable(decimal id, string Categorisation, string Service_Lead_Service, DateTime myDate)
         {
+            if(Service_Lead_Service!=null || Service_Lead_Service!="")
+            {
+
+            }
+            else
+            {
+                Service_Lead_Service = "''";
+            }
+            if (Categorisation != null || Categorisation != "")
+            {
+
+            }
+            else
+            {
+                Categorisation = "''";
+            }
             List<CaseViewModel> Mmodel = new List<CaseViewModel>();
             SqlParameter param1 = new SqlParameter("@stageid", id);
             SqlParameter param2 = new SqlParameter("@date", myDate);

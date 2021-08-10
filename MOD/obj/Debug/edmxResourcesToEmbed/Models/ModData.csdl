@@ -111,6 +111,7 @@
     <EntitySet Name="tbl_Master_Role" EntityType="MODModel.tbl_Master_Role" />
     <EntitySet Name="tbl_master_formMenu" EntityType="MODModel.tbl_master_formMenu" />
     <EntitySet Name="tbl_trn_OTP" EntityType="MODModel.tbl_trn_OTP" />
+    <FunctionImport Name="GetselectedVendors" ReturnType="Collection(MODModel.GetselectedVendors_Result)" />
   </EntityContainer>
   <EntityType Name="tbl_tblAON">
     <Key>
@@ -935,6 +936,7 @@
     <NavigationProperty Name="acq_policy" Relationship="MODModel.FK__acq_polic__aon_i__540C7B00" FromRole="acq_project_master" ToRole="acq_policy" />
     <NavigationProperty Name="acq_policy1" Relationship="MODModel.FK__acq_polic__aon_i__55009F39" FromRole="acq_project_master" ToRole="acq_policy" />
     <NavigationProperty Name="acq_policy2" Relationship="MODModel.FK__acq_polic__aon_i__55F4C372" FromRole="acq_project_master" ToRole="acq_policy" />
+    <Property Name="ref_socId" Type="Int32" />
   </EntityType>
   <Association Name="FK_acq_project_master_acq_meeting_master">
     <End Type="MODModel.acq_meeting_master" Role="acq_meeting_master" Multiplicity="0..1" />
@@ -1027,4 +1029,9 @@
     <Property Name="OtpCount" Type="Int32" />
     <Property Name="ExpiryOtpTime" Type="DateTime" Precision="3" />
   </EntityType>
+  <ComplexType Name="GetselectedVendors_Result">
+    <Property Type="Int32" Name="vendorid" Nullable="false" />
+    <Property Type="String" Name="vendorname" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="selected" Nullable="true" />
+  </ComplexType>
 </Schema>

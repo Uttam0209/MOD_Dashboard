@@ -1060,7 +1060,6 @@ namespace MOD.Controllers
                 }
             }
 
-
             // Vendor DropDown List 
 
             List<SaveAcqRFPMasterViewModel> venList = new List<SaveAcqRFPMasterViewModel>();
@@ -1420,22 +1419,35 @@ namespace MOD.Controllers
                 var rfpID = entities.acq_rfp_vendors.Where(x => x.Rfp_fk_Id == model.rfp_id).FirstOrDefault();
 
                 // Vendor List
-                IEnumerable<SaveAcqRFPMasterViewModel> Badge = null;
+                List<SaveAcqRFPMasterViewModel> Badge = new List<SaveAcqRFPMasterViewModel>();
                 List<SaveAcqRFPMasterViewModel> venList = new List<SaveAcqRFPMasterViewModel>();
                 var vendorList = entities.tbl_tblVendor.Where(x => x.IsDeleted == false).ToList();
+
+                //var query=from r in 
+
+                var QUERYDATA = entities.GetselectedVendors();
+
                 string query = "select r.vendorid,r.vendorname,(select 1 from acq_rfp_vendorsdetails p where p.rfpid=1 and p.vendor_id=r.VendorId and p.type_id=1)selected from tbl_tblvendor r order by 1";
                 DataTable dt = return_datatable(query);
-                Badge = dt.AsEnumerable().Select(x => new SaveAcqRFPMasterViewModel
+
+                foreach(var quer in QUERYDATA)
                 {
-                    vendorID = x.Field<int>("VendorId"),
-                    VendorName = Cipher.Decrypt(x.Field<string>("VendorName"), password),
-                });
-                if (Badge != null)
+                    Badge.Add(new SaveAcqRFPMasterViewModel
+                    {
+                        vendorID = quer.vendorid,
+                        VendorName = Cipher.Decrypt(quer.vendorname, password),
+                    });
+                }
+                //Badge = QUERYDATA.AsEnumerable().Select(x => new SaveAcqRFPMasterViewModel
+                //{
+                    
+                //});
+                if (Badge != null && Badge.Count() > 0)
                 {
                     foreach (var item in Badge)
                     {
                         SaveAcqRFPMasterViewModel ObjVendor = new SaveAcqRFPMasterViewModel();
-                        ObjVendor.vendorID = item.vendor_id;
+                        ObjVendor.vendorID = item.vendorID;
                         ObjVendor.VendorName = item.VendorName;
                         venList.Add(ObjVendor);
                     }
@@ -1444,17 +1456,23 @@ namespace MOD.Controllers
                 model.VendorMaster = venList;
 
                 // Selected RFP Vendor
+                //var rfpVendorLastRecord = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id).LastOrDefault();
+                //int max = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id).Max(x => x.type_ID);
+                var max = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id).Max(x => x.type_ID);
 
+
+                int maxTypeid = Convert.ToInt16(max);
                 List<SaveAcqRFPMasterViewModel> BidVendorListData = new List<SaveAcqRFPMasterViewModel>();
                 if (rfpID != null)
                 {
                     var rfpVendor = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id && x.type_ID == 1).ToList();
-                    if (rfpVendor != null)
+                    if (rfpVendor != null && rfpVendor.Count()>0)
                     {
                         foreach (var item in rfpVendor)
                         {
                             SaveAcqRFPMasterViewModel ObjVendor = new SaveAcqRFPMasterViewModel();
                             ObjVendor.vendorID = item.vendor_id;
+                            ObjVendor.type_ID = item.type_ID;
                             ObjVendor.VendorName = Cipher.Decrypt(item.tbl_tblVendor.VendorName, password);
                             BidVendorListData.Add(ObjVendor);
                         }
@@ -1468,17 +1486,22 @@ namespace MOD.Controllers
                 List<SaveAcqRFPMasterViewModel> TcpBIDListData = new List<SaveAcqRFPMasterViewModel>();
                 if (rfpID != null)
                 {
-                    var bidVendor = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id && x.type_ID == 2).ToList();
-                    if (bidVendor != null)
+                    var bidVendor = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id && x.type_ID == maxTypeid).ToList();
+                    if (bidVendor != null && bidVendor.Count()>0)
                     {
                         foreach (var item in bidVendor)
                         {
                             SaveAcqRFPMasterViewModel ObjBidVendor = new SaveAcqRFPMasterViewModel();
                             ObjBidVendor.vendorID = item.vendor_id;
+                            ObjBidVendor.type_ID = item.type_ID;
                             ObjBidVendor.VendorName = Cipher.Decrypt(item.tbl_tblVendor.VendorName, password);
                             TcpBIDListData.Add(ObjBidVendor);
                         }
                     }
+                    //else
+                    //{
+                    //    TcpBIDListData = BidVendorListData;
+                    //}
                 }
                 model.SelectedBidType1 = TcpBIDListData;
 
@@ -1487,13 +1510,14 @@ namespace MOD.Controllers
                 List<SaveAcqRFPMasterViewModel> TcpVendorListData = new List<SaveAcqRFPMasterViewModel>();
                 if (rfpID != null)
                 {
-                    var tcpVendor = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id && x.type_ID == 3).ToList();
-                    if (tcpVendor != null)
+                    var tcpVendor = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id && x.type_ID == maxTypeid).ToList();
+                    if (tcpVendor != null && tcpVendor.Count()>0)
                     {
                         foreach (var item in tcpVendor)
                         {
                             SaveAcqRFPMasterViewModel ObjTCPVendor = new SaveAcqRFPMasterViewModel();
                             ObjTCPVendor.vendorID = item.vendor_id;
+                            ObjTCPVendor.type_ID = item.type_ID;
                             ObjTCPVendor.VendorName = Cipher.Decrypt(item.tbl_tblVendor.VendorName, password);
                             TcpVendorListData.Add(ObjTCPVendor);
                         }
@@ -1505,7 +1529,7 @@ namespace MOD.Controllers
                 List<SaveAcqRFPMasterViewModel> FetVendorListData = new List<SaveAcqRFPMasterViewModel>();
                 if (rfpID != null)
                 {
-                    var FetVendor = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id && x.type_ID == 4).ToList();
+                    var FetVendor = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id && x.type_ID == maxTypeid).ToList();
                 
                     if (FetVendor != null)
                     {
@@ -1513,19 +1537,40 @@ namespace MOD.Controllers
                         {
                             SaveAcqRFPMasterViewModel ObjFETVendor = new SaveAcqRFPMasterViewModel();
                             ObjFETVendor.vendorID = item.vendor_id;
+                            ObjFETVendor.type_ID = item.type_ID;
                             ObjFETVendor.VendorName = Cipher.Decrypt(item.tbl_tblVendor.VendorName, password);
                             FetVendorListData.Add(ObjFETVendor);
                         }
                     }
                 }
+                model.SelectedFetType1 = FetVendorListData;
+                // Selected Contract Vendor
+                List<SaveAcqRFPMasterViewModel> ContractListData = new List<SaveAcqRFPMasterViewModel>();
+                if (rfpID != null)
+                {
+                    var ContractVendor = entities.acq_rfp_VendorsDetails.Where(x => x.rfpID == rfpID.rfp_id && x.type_ID == maxTypeid).ToList();
 
+                    if (ContractVendor != null)
+                    {
+                        foreach (var item in ContractVendor)
+                        {
+                            SaveAcqRFPMasterViewModel ObjContVendor = new SaveAcqRFPMasterViewModel();
+                            ObjContVendor.vendorID = item.vendor_id;
+                            ObjContVendor.type_ID = item.type_ID;
+                            ObjContVendor.VendorName = Cipher.Decrypt(item.tbl_tblVendor.VendorName, password);
+                            ContractListData.Add(ObjContVendor);
+                        }
+                    }
+                }
+
+                model.ContractVendorList = ContractListData;
                 //var struid = Convert.ToInt32(Session["UserID"].ToString());
                 //var AoNID = id;
                 Session["MAoN"] = id;
 
                 //model.GetTrials = entities.acq_trials.Where(x => x.IsDeleted == false && x.CreatedBy == struid && x.aonID == AoNID).ToList();
 
-                model.SelectedFetType1 = FetVendorListData;
+               
 
                 model.type_rfp = Obj.type_rfp;
                 model.aon_id = Obj.aon_id;

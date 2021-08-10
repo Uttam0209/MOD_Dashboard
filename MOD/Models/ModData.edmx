@@ -98,6 +98,7 @@
           <Property Name="ResponsiblePersonLeve3" Type="nvarchar" MaxLength="50" />
           <Property Name="ResponsiblePersonLeve4" Type="nvarchar" MaxLength="50" />
           <Property Name="AovType" Type="varchar" MaxLength="255" />
+          <Property Name="ref_socId" Type="int" />
         </EntityType>
         <EntityType Name="acq_projectstage_applicability">
           <Key>
@@ -945,6 +946,7 @@ warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetselectedVendors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="prc_Getvendcatwise_report" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PROC_DASHBOARD_DATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="categorisation" Type="varchar" Mode="In" />
@@ -1379,6 +1381,7 @@ warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a prim
           <EntitySet Name="tbl_Master_Role" EntityType="MODModel.tbl_Master_Role" />
           <EntitySet Name="tbl_master_formMenu" EntityType="MODModel.tbl_master_formMenu" />
           <EntitySet Name="tbl_trn_OTP" EntityType="MODModel.tbl_trn_OTP" />
+          <FunctionImport Name="GetselectedVendors" ReturnType="Collection(MODModel.GetselectedVendors_Result)" />
           </EntityContainer>
         <EntityType Name="tbl_tblAON">
           <Key>
@@ -2203,6 +2206,7 @@ warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a prim
           <NavigationProperty Name="acq_policy" Relationship="MODModel.FK__acq_polic__aon_i__540C7B00" FromRole="acq_project_master" ToRole="acq_policy" />
           <NavigationProperty Name="acq_policy1" Relationship="MODModel.FK__acq_polic__aon_i__55009F39" FromRole="acq_project_master" ToRole="acq_policy" />
           <NavigationProperty Name="acq_policy2" Relationship="MODModel.FK__acq_polic__aon_i__55F4C372" FromRole="acq_project_master" ToRole="acq_policy" />
+          <Property Name="ref_socId" Type="Int32" />
         </EntityType>
         <Association Name="FK_acq_project_master_acq_meeting_master">
           <End Type="MODModel.acq_meeting_master" Role="acq_meeting_master" Multiplicity="0..1" />
@@ -2295,6 +2299,11 @@ warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a prim
           <Property Name="OtpCount" Type="Int32" />
           <Property Name="ExpiryOtpTime" Type="DateTime" Precision="3" />
         </EntityType>
+        <ComplexType Name="GetselectedVendors_Result">
+          <Property Type="Int32" Name="vendorid" Nullable="false" />
+          <Property Type="String" Name="vendorname" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="selected" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2981,6 +2990,7 @@ warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a prim
           <EntitySetMapping Name="acq_project_master">
             <EntityTypeMapping TypeName="MODModel.acq_project_master">
               <MappingFragment StoreEntitySet="acq_project_master">
+                <ScalarProperty Name="ref_socId" ColumnName="ref_socId" />
                 <ScalarProperty Name="AovType" ColumnName="AovType" />
                 <ScalarProperty Name="ResponsiblePersonLeve4" ColumnName="ResponsiblePersonLeve4" />
                 <ScalarProperty Name="ResponsiblePersonLeve3" ColumnName="ResponsiblePersonLeve3" />
@@ -3075,6 +3085,15 @@ warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetselectedVendors" FunctionName="MODModel.Store.GetselectedVendors">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MODModel.GetselectedVendors_Result">
+                <ScalarProperty Name="vendorid" ColumnName="vendorid" />
+                <ScalarProperty Name="vendorname" ColumnName="vendorname" />
+                <ScalarProperty Name="selected" ColumnName="selected" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

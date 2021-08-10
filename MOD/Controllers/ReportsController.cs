@@ -1075,9 +1075,7 @@ namespace MOD.Controllers
             string query = "select * from (select isnull(g.VendorCategoryName,'Undecided') as vendorcat,sum(cast(t.Cost as numeric)) as total_Cost from (select * from acq_project_master  where DeletedBy is null)t " +
   " left outer join tbl_tblVendor v on t.VendorsIDs=v.vendorid left outer join tbl_tblVendorCategory g on v.VendorCategory=g.VendorCategoryID where t.Service_Lead_Service like ? " +
   "group by isnull(g.VendorCategoryName,'Undecided')) m PIVOT(sum(total_Cost)  FOR vendorcat IN(" + b + "PSU" + b + "," + b + "Indian Private-MSME" + b + ", " + b + "Foreign OEM" + b + "," + b + "Indian Private-Non MSME" + b + "," + b + "Other" + b + " ," + b + "Undecided" + b + ")) AS PivotTable";
-            //and d.stage_name like '" + stage + "'
-           // DataTable dt = return_datatable(query);
-
+            
             DataTable dt = new DataTable();
             using (OleDbConnection conn = masterService.DB())
             {

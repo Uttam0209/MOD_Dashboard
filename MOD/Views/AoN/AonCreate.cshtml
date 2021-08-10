@@ -1,10 +1,11 @@
 ﻿@model MOD.Models.SaveAcqProjectMasterViewModel
 @*@using Syncfusion.EJ2
-@using Syncfusion.EJ2.DropDowns*@
+    @using Syncfusion.EJ2.DropDowns*@
 @{
     ViewBag.Title = "AonCreate";
 }
-
+<script src="~/assets/js/chosen.jquery.min.js"></script>
+<link href="~/assets/css/chosen.min.css" rel="stylesheet" />
 <div class="card flex-fill w-100 p-4">
     <div class="row mb-2 mb-xl-3">
         <div class="col-auto d-none d-sm-block">
@@ -27,7 +28,7 @@
             <div class="col-md-4 mb-3">
                 <label class="labeltext font-weight-bold mb-0">DAC/DPB Meeting<span class="danger">*</span>:</label>
                 @*@Html.DropDownListFor(x => x.meeting_id, new SelectList(Model.MeetingMaster, "meeting_id", "dac_dpb"), "-Select Meeting-", new { @class = "form-control" })*@
-                <select name="meeting_id" class="form-control">
+                <select name="meeting_id" id="meeting_id" class="form-control">
                     <option value="0">-Select-</option>
                     @foreach (var item in Model.MeetingMaster)
                     {
@@ -245,8 +246,8 @@
                         }
                     </select>
                     @*@Html.ListBoxFor(x => x.item_description,
-                new MultiSelectList(Model.VendorList, "vendorID", "VendorName")
-                , new { @class = "chzn-select", data_placeholder = "Tags..." })*@
+                        new MultiSelectList(Model.VendorList, "vendorID", "VendorName")
+                        , new { @class = "chzn-select", data_placeholder = "Tags..." })*@
                     @*@Html.DropDownList("VendorsIDs", (List<SelectListItem>)Model.VendorList, new { multiple = "multiple" })*@
                     @*@Html.EJS().MultiSelect("local").Placeholder("Select category").DataSource((IEnumerable<Model.VendorList>)ViewBag.localdata).Fields(new MultiSelectFieldSettings { Text = "VendorName", Value = "vendorID" }).Value((string[])ViewBag.val).Render()*@
                 </div>
@@ -280,9 +281,9 @@
             <div class="col-md-4 mb-3">
                 <label class="labeltext font-weight-bold mb-0">AoN type<span class="danger">*</span> :</label>
                 @Html.DropDownListFor(model => model.AonType, new List<SelectListItem>
-                   {                 
+                   {
                       new SelectListItem{ Text="Nomination basis", Value = "Nomination basis" },
-                      new SelectListItem{ Text="Competitive Tendering", Value = "Competitive Tendering" },                      
+                      new SelectListItem{ Text="Competitive Tendering", Value = "Competitive Tendering" },
                    }, "--Select--", new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.AonType, null, new { @class = "danger" })
             </div>
@@ -298,14 +299,14 @@
             <div class="col-md-12 mb-3">
                 <label class="labeltext font-weight-bold mb-0">Any Other Aspect:</label>
                 @Html.TextAreaFor(x => x.Any_other_aspect, new { @class = "form-control", @placeholder = "Any Other Aspect" })
-            @*@Html.ValidationMessageFor(x => x.Any_other_aspect, null, new { @class = "danger" })*@
-                        </div>
-                    </div>
-                    <div class="form-row mb-1">
-                        <div class="col-md-12 mb-3">
-                            <label class="labeltext font-weight-bold mb-0">Remarks:</label>
-                            @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control", @placeholder = "Remarks" })
-            @*@Html.ValidationMessageFor(x => x.IC_percentage, null, new { @class = "danger" })*@
+                @*@Html.ValidationMessageFor(x => x.Any_other_aspect, null, new { @class = "danger" })*@
+            </div>
+        </div>
+        <div class="form-row mb-1">
+            <div class="col-md-12 mb-3">
+                <label class="labeltext font-weight-bold mb-0">Remarks:</label>
+                @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control", @placeholder = "Remarks" })
+                @*@Html.ValidationMessageFor(x => x.IC_percentage, null, new { @class = "danger" })*@
             </div>
         </div>
         <button class="btn btn-primary float-right" type="submit">AoN Register</button>
@@ -428,6 +429,9 @@
         $("#VendorsIDs").chosen({
 
         });
+    });
+
+    $("#meeting_id").chosen({
     });
 </script>
 
