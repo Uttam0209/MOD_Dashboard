@@ -17,6 +17,7 @@
     <link href="~/assets/css/bootstrap-chosen.css" rel="stylesheet" />
     <link href="~/assets/css/style.css" rel="stylesheet" />
     <script src="~/assets/js/dashbordjs.js"></script>
+
     @*<script>
             document.addEventListener('contextmenu', event => event.preventDefault());
         </script>*@
@@ -112,6 +113,7 @@
                                                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
                                                         <li class="sidebar-item"><a class="sidebar-link" id="auth_sw" href="@Url.Action("ServiceWiseReport","Reports")">Service-Wise Report on the Pending Cases at various Stages</a> </li>
                                                         <li class="sidebar-item"><a class="sidebar-link" id="auth_gd" href="@Url.Action("ViewAoNList","AoN")">AoN Granted During a Given Period Category-wise Alongwith Costs</a></li>
+                                                        <li class="sidebar-item"><a class="sidebar-link" id="auth_gd" href="@Url.Action("ViewAoNListyear","AoN")">AoNs Granted - Categorization wise</a></li>
                                                         <li class="sidebar-item"><a class="sidebar-link" id="auth_cw" href="@Url.Action("NewReports","WReports")">Case wise report indicating timelines at various stages and current status</a></li>
                                                         <li class="sidebar-item"><a class="sidebar-link" id="auth_ma" href="@Url.Action("ChartReport1","WReports")">Milestones achieved during a period</a></li>
                                                         <li class="sidebar-item"><a class="sidebar-link" id="auth_ta" href="@Url.Action("particularstage","Reports")">Trend analysis for a particular stage</a></li>

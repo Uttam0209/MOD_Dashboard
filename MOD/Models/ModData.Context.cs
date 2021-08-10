@@ -14,14 +14,44 @@ namespace MOD.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    using System.Configuration;
+    using System.Text;
+    using System.Security.Cryptography;
+    using System.IO;
+
     public partial class MODEntities : DbContext
     {
         public MODEntities()
-            : base("name=MODEntities")
+            //: base(DecryptData(ConfigurationManager.ConnectionStrings["MODEntities"].ConnectionString))
+        : base("name=MODEntities")
         {
         }
-    
+        public static string DecryptData(string strData)
+        {
+            byte[] key = { };// Key   
+            byte[] IV = { 10, 20, 30, 40, 50, 60, 70, 80 };
+            byte[] inputByteArray = new byte[strData.Length];
+            strData = strData.Replace("%2b", "+");
+
+            try
+            {
+                key = Encoding.UTF8.GetBytes("W@!dghDW");
+                DESCryptoServiceProvider ObjDES = new DESCryptoServiceProvider();
+                inputByteArray = Convert.FromBase64String(strData);
+
+                MemoryStream Objmst = new MemoryStream();
+                CryptoStream Objcs = new CryptoStream(Objmst, ObjDES.CreateDecryptor(key, IV), CryptoStreamMode.Write);
+                Objcs.Write(inputByteArray, 0, inputByteArray.Length);
+                Objcs.FlushFinalBlock();
+
+                Encoding encoding = Encoding.UTF8;
+                return encoding.GetString(Objmst.ToArray());
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -173,6 +203,11 @@ namespace MOD.Models
         public virtual ObjectResult<prc_Getvendcatwise_report_Result> prc_Getvendcatwise_report()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prc_Getvendcatwise_report_Result>("prc_Getvendcatwise_report");
+        }
+    
+        public virtual ObjectResult<GetselectedVendors_Result> GetselectedVendors()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetselectedVendors_Result>("GetselectedVendors");
         }
     }
 }

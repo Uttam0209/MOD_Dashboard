@@ -50,6 +50,7 @@ namespace MOD.Models
         public DateTime? date_of_entering_this_stage { get; set; }
         public DateTime? AoNClosureDate { get; set; }
         public string System_case { get; set; }
+        public string Financial_year { get; set; }
 
 
         // Acq_rfpMaster

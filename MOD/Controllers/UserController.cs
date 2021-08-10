@@ -179,7 +179,7 @@ namespace MOD.Controllers
                     obj.UserName = model.UserName;
                     obj.InternalEmailID = model.InternalEmailID;
                     obj.ExternalEmailID = model.ExternalEmailID;
-                    obj.Password = model.Password;
+                    obj.Password = null;
                     obj.RankUser = model.RankUser;
                     obj.Phone = model.Phone;
                     obj.DepartmentID = model.DepartmentID;
@@ -190,7 +190,9 @@ namespace MOD.Controllers
                     obj.MacAddress = model.MacAddress;
                     obj.Designation = model.Designation;
                     obj.LoginAllowed = model.LoginAllowed;
-                    obj.Pswd_Salt = hashString;
+                    obj.Pswd_Salt = Encryption.Encrypt(GenPwd1);
+                    obj.Flag = "Y";
+                    obj.LoginCount = 0;
                     obj.CreatedBy = Convert.ToInt32(Session["UserID"]);
                     obj.CreatedOn = System.DateTime.Now;
                     obj.IsDeleted = false;
@@ -253,7 +255,7 @@ namespace MOD.Controllers
                     obj.UserName = model.UserName;
                     obj.InternalEmailID = model.InternalEmailID;
                     obj.ExternalEmailID = model.ExternalEmailID;
-                    obj.Password = model.Password;
+                    obj.Password = null;
                     obj.RankUser = model.RankUser;
                     obj.Phone = model.Phone;
                     obj.DepartmentID = model.DepartmentID;
@@ -264,7 +266,9 @@ namespace MOD.Controllers
                     obj.MacAddress = model.MacAddress;
                     obj.Designation = model.Designation;
                     obj.LoginAllowed = model.LoginAllowed;
-                    obj.Pswd_Salt = hashString;
+                    obj.Pswd_Salt = Encryption.Encrypt(GenPwd1);
+                    obj.Flag = "Y";
+                    obj.LoginCount = 0;
                     obj.CreatedBy = Convert.ToInt32(Session["UserID"]);
                     obj.CreatedOn = System.DateTime.Now;
                     obj.IsDeleted = false;
@@ -313,7 +317,7 @@ namespace MOD.Controllers
                 model.UserName = _editUser.UserName;
                 model.InternalEmailID = _editUser.InternalEmailID;
                 model.ExternalEmailID = _editUser.ExternalEmailID;
-                model.Password = _editUser.Password;
+                model.Password = null;
                 model.RankUser = _editUser.RankUser;
                 model.Phone = _editUser.Phone;
                 model.SectionID = _editUser.SectionID;

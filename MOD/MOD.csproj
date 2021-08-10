@@ -160,6 +160,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\bootstrap-chosen.css" />
+    <Content Include="assets\css\bootstrap-multiselect.css" />
+    <Content Include="assets\css\bootstrap-theme.min.css" />
+    <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\bootstrapv4.css" />
     <Content Include="assets\css\chosen-sprite.png" />
     <Content Include="assets\css\chosen.min.css" />
@@ -174,6 +177,7 @@
     <Content Include="assets\images\sort_asc.png" />
     <Content Include="assets\images\sort_both.png" />
     <Content Include="assets\js\app.js" />
+    <Content Include="assets\js\bootstrap-multiselect.js" />
     <Content Include="assets\js\bootstrap-select.js" />
     <Content Include="assets\js\bootstrap.bundle.min.js" />
     <Content Include="assets\js\bootstrap.min.js" />
@@ -181,6 +185,7 @@
     <Content Include="assets\js\chosen.jquery.js" />
     <Content Include="assets\js\chosen.jquery.min.js" />
     <Content Include="assets\js\dashbordjs.js" />
+    <Content Include="assets\js\jquery-3.2.1.min.js" />
     <Content Include="assets\js\jquery.dataTables.min.js" />
     <Content Include="assets\js\moment.min.js" />
     <Content Include="assets\js\popper.min.js" />
@@ -1520,6 +1525,9 @@
     <Compile Include="Models\EncryptPassword.cs" />
     <Compile Include="Models\GanttData.cs" />
     <Compile Include="Models\GeneratedPassword.cs" />
+    <Compile Include="Models\GetselectedVendors_Result.cs">
+      <DependentUpon>ModData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Grid1.cs" />
     <Compile Include="Models\Grid2.cs" />
     <Compile Include="Models\ModData.Context.cs">
@@ -1822,6 +1830,8 @@
     <Content Include="Views\Reports\VendcatwiseReport.cshtml" />
     <Content Include="Views\Reports\VendcatwiseReportDetails.cshtml" />
     <Content Include="Views\Account\LoginBlockMsg.cshtml" />
+    <Content Include="Views\Shared\_LayoutM.cshtml" />
+    <Content Include="Views\AoN\ViewAoNListyear.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

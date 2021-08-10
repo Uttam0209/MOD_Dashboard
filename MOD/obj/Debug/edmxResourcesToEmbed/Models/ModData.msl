@@ -738,6 +738,14 @@
     <EntitySetMapping Name="acq_project_master">
       <EntityTypeMapping TypeName="MODModel.acq_project_master">
         <MappingFragment StoreEntitySet="acq_project_master">
+          <ScalarProperty Name="ref_socId" ColumnName="ref_socId" />
+          <ScalarProperty Name="AovType" ColumnName="AovType" />
+          <ScalarProperty Name="ResponsiblePersonLeve4" ColumnName="ResponsiblePersonLeve4" />
+          <ScalarProperty Name="ResponsiblePersonLeve3" ColumnName="ResponsiblePersonLeve3" />
+          <ScalarProperty Name="ResponsiblePersonLeve2" ColumnName="ResponsiblePersonLeve2" />
+          <ScalarProperty Name="ResponsiblePersonLeve1" ColumnName="ResponsiblePersonLeve1" />
+          <ScalarProperty Name="DirectorateId" ColumnName="DirectorateId" />
+          <ScalarProperty Name="VendorsIDs" ColumnName="VendorsIDs" />
           <ScalarProperty Name="System_case" ColumnName="System_case" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
@@ -785,5 +793,60 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Master_Role">
+      <EntityTypeMapping TypeName="MODModel.tbl_Master_Role">
+        <MappingFragment StoreEntitySet="tbl_Master_Role">
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="FormName" ColumnName="FormName" />
+          <ScalarProperty Name="FormMenuID" ColumnName="FormMenuID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_master_formMenu">
+      <EntityTypeMapping TypeName="MODModel.tbl_master_formMenu">
+        <MappingFragment StoreEntitySet="tbl_master_formMenu">
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+          <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Controller" ColumnName="Controller" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="From_menu" ColumnName="From_menu" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_trn_OTP">
+      <EntityTypeMapping TypeName="MODModel.tbl_trn_OTP">
+        <MappingFragment StoreEntitySet="tbl_trn_OTP">
+          <ScalarProperty Name="ExpiryOtpTime" ColumnName="ExpiryOtpTime" />
+          <ScalarProperty Name="OtpCount" ColumnName="OtpCount" />
+          <ScalarProperty Name="ReclnsTime" ColumnName="ReclnsTime" />
+          <ScalarProperty Name="Comp_RefrenceNo" ColumnName="Comp_RefrenceNo" />
+          <ScalarProperty Name="ExpiryTime" ColumnName="ExpiryTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="OTPVerified" ColumnName="OTPVerified" />
+          <ScalarProperty Name="OTPCategory" ColumnName="OTPCategory" />
+          <ScalarProperty Name="EmailOTP" ColumnName="EmailOTP" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="OTPMobile" ColumnName="OTPMobile" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="OtpID" ColumnName="OtpID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetselectedVendors" FunctionName="MODModel.Store.GetselectedVendors">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MODModel.GetselectedVendors_Result">
+          <ScalarProperty Name="vendorid" ColumnName="vendorid" />
+          <ScalarProperty Name="vendorname" ColumnName="vendorname" />
+          <ScalarProperty Name="selected" ColumnName="selected" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

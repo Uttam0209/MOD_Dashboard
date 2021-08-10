@@ -58,12 +58,8 @@ namespace MOD.Models
         public string ResponsiblePersonLeve2 { get; set; }
         public string ResponsiblePersonLeve3 { get; set; }
         public string ResponsiblePersonLeve4 { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
-        public Nullable<int> DeletedBy { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-        public string System_case { get; set; }
+        public string AovType { get; set; }
+        public Nullable<int> ref_socId { get; set; }
     
         public virtual acq_meeting_master acq_meeting_master { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

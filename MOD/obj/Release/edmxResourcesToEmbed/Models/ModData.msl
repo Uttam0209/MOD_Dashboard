@@ -681,6 +681,7 @@
     <EntitySetMapping Name="acq_project_master">
       <EntityTypeMapping TypeName="MODModel.acq_project_master">
         <MappingFragment StoreEntitySet="acq_project_master">
+          <ScalarProperty Name="ref_socId" ColumnName="ref_socId" />
           <ScalarProperty Name="AovType" ColumnName="AovType" />
           <ScalarProperty Name="ResponsiblePersonLeve4" ColumnName="ResponsiblePersonLeve4" />
           <ScalarProperty Name="ResponsiblePersonLeve3" ColumnName="ResponsiblePersonLeve3" />
@@ -775,5 +776,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetselectedVendors" FunctionName="MODModel.Store.GetselectedVendors">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MODModel.GetselectedVendors_Result">
+          <ScalarProperty Name="vendorid" ColumnName="vendorid" />
+          <ScalarProperty Name="vendorname" ColumnName="vendorname" />
+          <ScalarProperty Name="selected" ColumnName="selected" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

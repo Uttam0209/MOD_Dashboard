@@ -104,6 +104,14 @@
       <End Role="acq_project_master" EntitySet="acq_project_master" />
       <End Role="acq_policy" EntitySet="acq_policy" />
     </AssociationSet>
+    <AssociationSet Name="FK__acq_polic__aon_i__55F4C372" Association="MODModel.FK__acq_polic__aon_i__55F4C372">
+      <End Role="acq_project_master" EntitySet="acq_project_master" />
+      <End Role="acq_policy" EntitySet="acq_policy" />
+    </AssociationSet>
+    <EntitySet Name="tbl_Master_Role" EntityType="MODModel.tbl_Master_Role" />
+    <EntitySet Name="tbl_master_formMenu" EntityType="MODModel.tbl_master_formMenu" />
+    <EntitySet Name="tbl_trn_OTP" EntityType="MODModel.tbl_trn_OTP" />
+    <FunctionImport Name="GetselectedVendors" ReturnType="Collection(MODModel.GetselectedVendors_Result)" />
   </EntityContainer>
   <EntityType Name="tbl_tblAON">
     <Key>
@@ -975,7 +983,10 @@
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="System_case" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="acq_meeting_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_project_master" ToRole="acq_meeting_master" />
-    <NavigationProperty Name="acq_policy" Relationship="MODModel.FK_acq_policy_acq_project_master" FromRole="acq_project_master" ToRole="acq_policy" />
+    <NavigationProperty Name="acq_policy" Relationship="MODModel.FK__acq_polic__aon_i__540C7B00" FromRole="acq_project_master" ToRole="acq_policy" />
+    <NavigationProperty Name="acq_policy1" Relationship="MODModel.FK__acq_polic__aon_i__55009F39" FromRole="acq_project_master" ToRole="acq_policy" />
+    <NavigationProperty Name="acq_policy2" Relationship="MODModel.FK__acq_polic__aon_i__55F4C372" FromRole="acq_project_master" ToRole="acq_policy" />
+    <Property Name="ref_socId" Type="Int32" />
   </EntityType>
   <Association Name="FK_acq_project_master_acq_meeting_master">
     <End Type="MODModel.acq_meeting_master" Role="acq_meeting_master" Multiplicity="0..1" />
@@ -1001,4 +1012,52 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="tbl_Master_Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FormMenuID" Type="Int32" />
+    <Property Name="FormName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="RecTime" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tbl_master_formMenu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="From_menu" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="RecTime" Type="DateTime" Precision="3" />
+    <Property Name="MenuId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tbl_trn_OTP">
+    <Key>
+      <PropertyRef Name="OtpID" />
+    </Key>
+    <Property Name="OtpID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="OTPMobile" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="EmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EmailOTP" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+    <Property Name="OTPCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OTPVerified" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="ExpiryTime" Type="DateTime" Precision="3" />
+    <Property Name="Comp_RefrenceNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ReclnsTime" Type="DateTime" Precision="3" />
+    <Property Name="OtpCount" Type="Int32" />
+    <Property Name="ExpiryOtpTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <ComplexType Name="GetselectedVendors_Result">
+    <Property Type="Int32" Name="vendorid" Nullable="false" />
+    <Property Type="String" Name="vendorname" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="selected" Nullable="true" />
+  </ComplexType>
 </Schema>

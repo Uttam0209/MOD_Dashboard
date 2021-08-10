@@ -13,14 +13,10 @@
         </div>
 
         <div class="d-flex">
-            @*<div class="col-md-5">
-                <div class="mb-1"><b>Categorization</b></div>
-                @Html.DropDownList("Categorisation", new SelectList(ViewBag.catData, "Value", "Text"), "-Select Categorization-", new { @class = "form-control" })
-               
-            </div>*@
+           
             <div class="col-md-5">
                 <div class="mb-1"><b>Service/Lead Service</b></div>
-                @Html.DropDownList("Service_Lead_Service", new SelectList(ViewBag.ServicesData, "Value", "Text"), "-Select Services-", new { @class = "form-control" })               
+                @Html.DropDownList("Service_Lead_Service", new SelectList(ViewBag.ServicesData, "Value", "Text"), "-Select Services-", new { @class = "form-control" })
             </div>
             <div class=" d-flex justify-content-end">
                 <div class="pt-4 d-flex "><button type="submit" class="btn btn-primary btnFCs">Search</button></div>
@@ -38,7 +34,7 @@
                         <th rowspan="2"> Stage</th>
                         <th colspan="7" style="text-align:center">Cost(In INR Crs) </th>
                     </tr>
-                    <tr>                       
+                    <tr>
                         <th>PSU</th>
                         <th>Indian Private MSME</th>
                         <th>Foreign OEM</th>
@@ -57,7 +53,7 @@
                             <tr>
                                 @{ int totalRowdat1 = 0; Decimal Per_cat1 = 0; Decimal Per_cat2 = 0; Decimal Per_cat3 = 0; Decimal Per_cat4 = 0; Decimal Per_cat5 = 0; Decimal Per_cat6 = 0;
                                     totalRowdat1 = Convert.ToInt32(@item1.Foreign_OEM) + Convert.ToInt32(@item1.PSU) + Convert.ToInt32(@item1.Indian_Private_MSME) + Convert.ToInt32(@item1.Indian_Private__Non_MSME) + Convert.ToInt32(@item1.Undecided);
-                                    if(@totalRowdat1>0)
+                                    if (@totalRowdat1 > 0)
                                     {
                                         Per_cat1 = Math.Round(((Convert.ToDecimal(@item1.PSU) * 100) / Convert.ToDecimal(Convert.ToInt32(@totalRowdat1))), 2);
                                         Per_cat2 = Math.Round(((Convert.ToDecimal(@item1.Indian_Private_MSME) * 100) / Convert.ToDecimal(Convert.ToInt32(@totalRowdat1))), 2);
@@ -100,7 +96,7 @@
                     </tr>
                     <tr>
                         @*<th> </th>
-                        <th></th>*@
+                            <th></th>*@
                         @*<th>Task Description</th>*@
                         <th>PSU</th>
                         <th>Indian Private MSME</th>
@@ -119,7 +115,7 @@
                         foreach (var item in @ViewBag.CatData)
                         {
                             <tr>
-                                @{ int totalRowdat = 0; 
+                                @{ int totalRowdat = 0;
                                     totalRowdat = Convert.ToInt32(@item.Foreign_OEM) + Convert.ToInt32(@item.PSU) + Convert.ToInt32(@item.Indian_Private_MSME) + Convert.ToInt32(@item.Indian_Private__Non_MSME);
 
                                     Per_cat11 = Math.Round(((Convert.ToDecimal(@item.PSU) * 100) / Convert.ToDecimal(Convert.ToInt32(@totalRowdat))), 2);
@@ -140,19 +136,19 @@
                                 <td> <a href="@Url.Action("VendcatwiseReportDetails","Reports", new {CatID = "",StageId=item.stage})">@totalRowdat</a></td>
 
                             </tr>
-                                        count++;
-                                        Foreign_OEM_Count = Foreign_OEM_Count + Convert.ToInt32(@item.Foreign_OEM);
-                                        PSU = PSU + Convert.ToInt32(@item.PSU);
-                                        Indian_Private_MSME = Indian_Private_MSME + Convert.ToInt32(@item.Indian_Private_MSME);
-                                        Indian_Private__Non_MSME = Indian_Private__Non_MSME + Convert.ToInt32(@item.Indian_Private__Non_MSME);
-                                        total_Rowdata = total_Rowdata + @totalRowdat;
-                                        Other = Other + Convert.ToInt32(@item.Other);
-                                        Per_catTotal1 = Math.Round(((Convert.ToDecimal(@PSU) * 100) / Convert.ToDecimal(Convert.ToInt32(@total_Rowdata))), 2);
-                                        Per_catTotal2 = Math.Round(((Convert.ToDecimal(@Indian_Private_MSME) * 100) / Convert.ToDecimal(Convert.ToInt32(@total_Rowdata))), 2);
-                                        Per_catTotal3 = Math.Round(((Convert.ToDecimal(@Foreign_OEM_Count) * 100) / Convert.ToDecimal(Convert.ToInt32(@total_Rowdata))), 2);
-                                        Per_catTotal4 = Math.Round(((Convert.ToDecimal(@Indian_Private__Non_MSME) * 100) / Convert.ToDecimal(Convert.ToInt32(@total_Rowdata))), 2);
-                                        Per_catTotal5 = Math.Round(((Convert.ToDecimal(@Other) * 100) / Convert.ToDecimal(Convert.ToInt32(@total_Rowdata))), 2);
-                                    }
+                            count++;
+                            Foreign_OEM_Count = Foreign_OEM_Count + Convert.ToInt32(@item.Foreign_OEM);
+                            PSU = PSU + Convert.ToInt32(@item.PSU);
+                            Indian_Private_MSME = Indian_Private_MSME + Convert.ToInt32(@item.Indian_Private_MSME);
+                            Indian_Private__Non_MSME = Indian_Private__Non_MSME + Convert.ToInt32(@item.Indian_Private__Non_MSME);
+                            total_Rowdata = total_Rowdata + @totalRowdat;
+                            Other = Other + Convert.ToInt32(@item.Other);
+                            Per_catTotal1 = Math.Round(((Convert.ToDecimal(@PSU) * 100) / Convert.ToDecimal(Convert.ToInt32(@total_Rowdata))), 2);
+                            Per_catTotal2 = Math.Round(((Convert.ToDecimal(@Indian_Private_MSME) * 100) / Convert.ToDecimal(Convert.ToInt32(@total_Rowdata))), 2);
+                            Per_catTotal3 = Math.Round(((Convert.ToDecimal(@Foreign_OEM_Count) * 100) / Convert.ToDecimal(Convert.ToInt32(@total_Rowdata))), 2);
+                            Per_catTotal4 = Math.Round(((Convert.ToDecimal(@Indian_Private__Non_MSME) * 100) / Convert.ToDecimal(Convert.ToInt32(@total_Rowdata))), 2);
+                            Per_catTotal5 = Math.Round(((Convert.ToDecimal(@Other) * 100) / Convert.ToDecimal(Convert.ToInt32(@total_Rowdata))), 2);
+                        }
                         <tr>
 
                             <td colspan="2" style="text-align:center"><b> Total</b></td>

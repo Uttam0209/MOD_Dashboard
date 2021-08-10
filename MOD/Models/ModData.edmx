@@ -103,12 +103,8 @@
           <Property Name="ResponsiblePersonLeve2" Type="nvarchar" MaxLength="50" />
           <Property Name="ResponsiblePersonLeve3" Type="nvarchar" MaxLength="50" />
           <Property Name="ResponsiblePersonLeve4" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedOn" Type="datetime" />
-          <Property Name="DeletedBy" Type="int" />
-          <Property Name="DeletedOn" Type="datetime" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="System_case" Type="varchar" MaxLength="50" />
+          <Property Name="AovType" Type="varchar" MaxLength="255" />
+          <Property Name="ref_socId" Type="int" />
         </EntityType>
         <EntityType Name="acq_projectstage_applicability">
           <Key>
@@ -918,6 +914,7 @@ warning 6002: The table/view 'mod.dbo.vw_userDetail' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetselectedVendors" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="prc_Getvendcatwise_report" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PROC_DASHBOARD_DATA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="categorisation" Type="varchar" Mode="In" />
@@ -1333,6 +1330,10 @@ warning 6002: The table/view 'mod.dbo.vw_userDetail' does not have a primary key
             <End Role="acq_project_master" EntitySet="acq_project_master" />
             <End Role="acq_policy" EntitySet="acq_policy" />
           </AssociationSet>
+          <EntitySet Name="tbl_Master_Role" EntityType="MODModel.tbl_Master_Role" />
+          <EntitySet Name="tbl_master_formMenu" EntityType="MODModel.tbl_master_formMenu" />
+          <EntitySet Name="tbl_trn_OTP" EntityType="MODModel.tbl_trn_OTP" />
+          <FunctionImport Name="GetselectedVendors" ReturnType="Collection(MODModel.GetselectedVendors_Result)" />
           </EntityContainer>
         <EntityType Name="tbl_tblAON">
           <Key>
@@ -2204,7 +2205,10 @@ warning 6002: The table/view 'mod.dbo.vw_userDetail' does not have a primary key
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="System_case" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="acq_meeting_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_project_master" ToRole="acq_meeting_master" />
-          <NavigationProperty Name="acq_policy" Relationship="MODModel.FK_acq_policy_acq_project_master" FromRole="acq_project_master" ToRole="acq_policy" />
+          <NavigationProperty Name="acq_policy" Relationship="MODModel.FK__acq_polic__aon_i__540C7B00" FromRole="acq_project_master" ToRole="acq_policy" />
+          <NavigationProperty Name="acq_policy1" Relationship="MODModel.FK__acq_polic__aon_i__55009F39" FromRole="acq_project_master" ToRole="acq_policy" />
+          <NavigationProperty Name="acq_policy2" Relationship="MODModel.FK__acq_polic__aon_i__55F4C372" FromRole="acq_project_master" ToRole="acq_policy" />
+          <Property Name="ref_socId" Type="Int32" />
         </EntityType>
         <Association Name="FK_acq_project_master_acq_meeting_master">
           <End Type="MODModel.acq_meeting_master" Role="acq_meeting_master" Multiplicity="0..1" />
@@ -2230,6 +2234,78 @@ warning 6002: The table/view 'mod.dbo.vw_userDetail' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__acq_polic__aon_i__55009F39">
+          <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="1" />
+          <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acq_project_master">
+              <PropertyRef Name="aon_id" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="aon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__acq_polic__aon_i__55F4C372">
+          <End Type="MODModel.acq_project_master" Role="acq_project_master" Multiplicity="1" />
+          <End Type="MODModel.acq_policy" Role="acq_policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acq_project_master">
+              <PropertyRef Name="aon_id" />
+            </Principal>
+            <Dependent Role="acq_policy">
+              <PropertyRef Name="aon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_Master_Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FormMenuID" Type="Int32" />
+          <Property Name="FormName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RecTime" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_master_formMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="From_menu" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RecTime" Type="DateTime" Precision="3" />
+          <Property Name="MenuId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_trn_OTP">
+          <Key>
+            <PropertyRef Name="OtpID" />
+          </Key>
+          <Property Name="OtpID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="OTPMobile" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailOTP" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="OTPCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OTPVerified" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="StartTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpiryTime" Type="DateTime" Precision="3" />
+          <Property Name="Comp_RefrenceNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ReclnsTime" Type="DateTime" Precision="3" />
+          <Property Name="OtpCount" Type="Int32" />
+          <Property Name="ExpiryOtpTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <ComplexType Name="GetselectedVendors_Result">
+          <Property Type="Int32" Name="vendorid" Nullable="false" />
+          <Property Type="String" Name="vendorname" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="selected" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2973,6 +3049,14 @@ warning 6002: The table/view 'mod.dbo.vw_userDetail' does not have a primary key
           <EntitySetMapping Name="acq_project_master">
             <EntityTypeMapping TypeName="MODModel.acq_project_master">
               <MappingFragment StoreEntitySet="acq_project_master">
+                <ScalarProperty Name="ref_socId" ColumnName="ref_socId" />
+                <ScalarProperty Name="AovType" ColumnName="AovType" />
+                <ScalarProperty Name="ResponsiblePersonLeve4" ColumnName="ResponsiblePersonLeve4" />
+                <ScalarProperty Name="ResponsiblePersonLeve3" ColumnName="ResponsiblePersonLeve3" />
+                <ScalarProperty Name="ResponsiblePersonLeve2" ColumnName="ResponsiblePersonLeve2" />
+                <ScalarProperty Name="ResponsiblePersonLeve1" ColumnName="ResponsiblePersonLeve1" />
+                <ScalarProperty Name="DirectorateId" ColumnName="DirectorateId" />
+                <ScalarProperty Name="VendorsIDs" ColumnName="VendorsIDs" />
                 <ScalarProperty Name="System_case" ColumnName="System_case" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
@@ -3020,6 +3104,61 @@ warning 6002: The table/view 'mod.dbo.vw_userDetail' does not have a primary key
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Master_Role">
+            <EntityTypeMapping TypeName="MODModel.tbl_Master_Role">
+              <MappingFragment StoreEntitySet="tbl_Master_Role">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="FormMenuID" ColumnName="FormMenuID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_master_formMenu">
+            <EntityTypeMapping TypeName="MODModel.tbl_master_formMenu">
+              <MappingFragment StoreEntitySet="tbl_master_formMenu">
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="From_menu" ColumnName="From_menu" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_trn_OTP">
+            <EntityTypeMapping TypeName="MODModel.tbl_trn_OTP">
+              <MappingFragment StoreEntitySet="tbl_trn_OTP">
+                <ScalarProperty Name="ExpiryOtpTime" ColumnName="ExpiryOtpTime" />
+                <ScalarProperty Name="OtpCount" ColumnName="OtpCount" />
+                <ScalarProperty Name="ReclnsTime" ColumnName="ReclnsTime" />
+                <ScalarProperty Name="Comp_RefrenceNo" ColumnName="Comp_RefrenceNo" />
+                <ScalarProperty Name="ExpiryTime" ColumnName="ExpiryTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="OTPVerified" ColumnName="OTPVerified" />
+                <ScalarProperty Name="OTPCategory" ColumnName="OTPCategory" />
+                <ScalarProperty Name="EmailOTP" ColumnName="EmailOTP" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="OTPMobile" ColumnName="OTPMobile" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="OtpID" ColumnName="OtpID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetselectedVendors" FunctionName="MODModel.Store.GetselectedVendors">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MODModel.GetselectedVendors_Result">
+                <ScalarProperty Name="vendorid" ColumnName="vendorid" />
+                <ScalarProperty Name="vendorname" ColumnName="vendorname" />
+                <ScalarProperty Name="selected" ColumnName="selected" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,12 +1,19 @@
 ﻿@model MOD.Models.SaveAcqRFPMasterViewModel
 @{
     ViewBag.Title = "StageProgressAcquisitionManager";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutM.cshtml";
 }
 
-<script src="~/assets/js/bootstrap.bundle.min.js"></script>
-<script src="~/assets/js/bootstrap-select.js"></script>
-<script src="~/assets/js/popper.min.js"></script>
+
+<link rel="stylesheet" href="~/assets/css/bootstrap.min.css" >
+<link rel="stylesheet" href="~/assets/css/bootstrap-theme.min.css" >
+<link rel="stylesheet" href="~/assets/css/bootstrap-multiselect.css" type="text/css">
+
+<script src="~/assets/js/jquery-3.2.1.min.js" ></script>
+<script src="~/assets/js/bootstrap.min.js" ></script>
+
+<script type="text/javascript" src="~/assets/js/bootstrap-multiselect.js"></script>
+
 
 <style>
     #normalDropDown_chosen {
@@ -119,7 +126,16 @@
         border-top: 1px solid #c1c1c1;
     }
 </style>
-
+<script>
+    $(function () {
+        $('#multiselect').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            filterPlaceholder: 'Search for something...'
+        });
+    });
+</script>
 <div class="pt-5">
     <div class="row">
         <div class="col-md-12 text-center">
@@ -649,7 +665,36 @@
                                         <label for="birthday">contract Vendor:</label>
                                     </td>
                                     <td class="form-group ">
-                                        @Html.ListBoxFor(model => Model.SelectedIDArray, new MultiSelectList(Model.ContractVendorList, "VendorId", "VendorName"), new { @style = "width: 172px;", @class = " form-control", id = "normalDropDown", multiple = "multiple" })
+                                        @*@Html.ListBoxFor(model => Model.SelectedIDArray, new MultiSelectList(Model.ContractVendorList, "VendorId", "VendorName"), new { @style = "width: 172px;", @class = " form-control", id = "normalDropDown", multiple = "multiple" })*@
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 ml-3">
+
+                                                <select id="multiselect" class="vendorDropDownCls" multiple="multiple" name="SelectedIDArray">
+
+                                                    @foreach (var item in Model.ContractVendorList)
+                                                    {
+
+                                                        <option value="@item.vendorID">
+                                                            @item.VendorName
+                                                        </option>
+
+                                                    }
+
+                                                </select>
+                                                @*<select id="SOCDesription" multiple="multiple" required=required name="SelectedIDArray" class="form-control selectDrp">
+
+                                                        @foreach (var item in Model.VendorList)
+                                                        {
+
+                                                            <option value="@item.vendorID">
+                                                                @item.VendorName
+                                                            </option>
+
+                                                        }
+
+                                                    </select>*@
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -786,7 +831,8 @@
         });
     }
 </script>
-
+<script src="~/assets/js/chosen.jquery.min.js"></script>
+<link href="~/assets/css/chosen.min.css" rel="stylesheet" />
 <script>
     $(document).ready(function () {
         $("#aon_id").chosen({
@@ -853,598 +899,629 @@
         $.get("/MOD/GetRecordById/" + uniqId, function (data, status) {
             var data = JSON.parse(data);
 
+            if (data != null) {
+                var ids = data.ContractVendorList;
+                var maxid = 0;
+                var slectedIds = new Array();
+                for (var i = 0; i < ids.length; i++) {
+                    slectedIds.push(ids[i].vendorID);
+                    maxid = ids[i].type_ID;
+                }
+
+                var mainIds = data.VendorMaster;
+                //var dropDownHtml = '<select class="form-control" id = "normalDropDown" multiple = "multiple" name = "SelectedIDArray" style = "width: 172px; display: none;" >';
+                debugger
+                var dropDownHtml = '';
+                for (var i = 0; i < mainIds.length; i++) {
+                    //console.log(mainIds[i].vendorID);
+                    var id = mainIds[i].vendorID;
+                    if (slectedIds.indexOf(mainIds[i].vendorID) !== -1) {
+                        dropDownHtml += '<option selected value=' + mainIds[i].vendorID + '>' + mainIds[i].VendorName + '</option>';
+                        /*$(".multiselect-container li").find("input[value=" + mainIds[i].vendorID + "]").prop("checked", "checked");*/
+                    } else {
+                        dropDownHtml += '<option  value=' + mainIds[i].vendorID + '>' + mainIds[i].VendorName + '</option>';
+                    }
+                }
+
+                if (data.rfp_id) {
+                    $(".vendorDropDownCls").empty();
+                    $(".vendorDropDownCls").append(dropDownHtml);
+                    $(".vendorDropDownCls").multiselect('rebuild');
 
 
-            // Edit CNC Data
-            $("#cnc_Constitution_Date").val(data.Date_cnc_constitution);
-            $("#Benchmark_Date").val(data.Date_cnc_benchmarking);
-            $("#Commercial_Date_Opening_Date").val(data.Date_commercial_bid_opening);
-            $("#CNC_Conclusion_Date").val(data.Date_cnc_conclusion);
-            $("#CNC_Report_Date").val(data.Date_cnc_report);
+                }
 
-            // CNC Tab
-            $("#rfp_idCNC").val(data.rfp_id);
-            $("#type_CNC").val(data.type_rfp);
-            $("#draftRFPbySHQCNC").val(data.draft_rfp_date);
-            $("#date_submissionto_adgacq_CNC").val(data.date_submissionto_adgacq);
-            $("#date_acceptanceby_adgacq_CNC").val(data.date_acceptanceby_adgacq);
-            $("#date_collegiate_vetting_CNC").val(data.date_collegiate_vetting);
-            $("#date_issue_rfp_CNC").val(data.date_issue_rfp);
-            $("#date_prebid_meeting_CNC").val(data.date_prebid_meeting);
-            $("#date_prebid_replies_CNC").val(data.date_prebid_replies);
-            $("#lastdate_bidsubmission_CNC").val(data.lastdate_bidsubmission);
-            $("#date_bid_opening_CNC").val(data.date_bid_opening);
-            $("#date_rfp_approval_CNC").val(data.date_approval_rfp);
+                // Edit CNC Data
+                $("#cnc_Constitution_Date").val(data.Date_cnc_constitution);
+                $("#Benchmark_Date").val(data.Date_cnc_benchmarking);
+                $("#Commercial_Date_Opening_Date").val(data.Date_commercial_bid_opening);
+                $("#CNC_Conclusion_Date").val(data.Date_cnc_conclusion);
+                $("#CNC_Report_Date").val(data.Date_cnc_report);
 
-            $("#extendedDate_CNC").val(data.ExtendedLastDate_BidSubmission);
+                // CNC Tab
+                $("#rfp_idCNC").val(data.rfp_id);
+                $("#type_CNC").val(data.type_rfp);
+                $("#draftRFPbySHQCNC").val(data.draft_rfp_date);
+                $("#date_submissionto_adgacq_CNC").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacq_CNC").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vetting_CNC").val(data.date_collegiate_vetting);
+                $("#date_issue_rfp_CNC").val(data.date_issue_rfp);
+                $("#date_prebid_meeting_CNC").val(data.date_prebid_meeting);
+                $("#date_prebid_replies_CNC").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmission_CNC").val(data.lastdate_bidsubmission);
+                $("#date_bid_opening_CNC").val(data.date_bid_opening);
+                $("#date_rfp_approval_CNC").val(data.date_approval_rfp);
 
-            $("#date_tec_constitution_CNC").val(data.date_tec_constitution);
-            $("#date_tec_commencement_CNC").val(data.date_tec_commencement);
-            $("#date_tec_completion_CNC").val(data.date_tec_completion);
-            $("#date_tec_reportsubmission_CNC").val(data.date_tec_reportsubmission);
-            $("#date_tec_approval_CNC").val(data.date_tec_approval);
+                $("#extendedDate_CNC").val(data.ExtendedLastDate_BidSubmission);
 
-            $("#Report_Recived_CNC").val(data.Date_received_Fet);
-            $("#Report_Accepted_CNC").val(data.Date_accepted_Fet);
+                $("#date_tec_constitution_CNC").val(data.date_tec_constitution);
+                $("#date_tec_commencement_CNC").val(data.date_tec_commencement);
+                $("#date_tec_completion_CNC").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_CNC").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_CNC").val(data.date_tec_approval);
 
-            $("#Date_toc_Constitution_CNC").val(data.Date_toc_Constitution);
-            $("#Date_toc_report_CNC").val(data.Date_toc_report);
-            $("#Date_toc_acceptance_CompetantAuth_CNC").val(data.Date_toc_acceptance_CompetantAuth);
+                $("#Report_Recived_CNC").val(data.Date_received_Fet);
+                $("#Report_Accepted_CNC").val(data.Date_accepted_Fet);
 
-            // Make-1
-            $("#Eoi_DPRDateIssueMakeI_CNC").val(data.Eoi_DPRDateIssueMakeI);
-            $("#Eoi_DPRReceiptDateMakeI_CNC").val(data.Eoi_DPRReceiptDateMakeI);
-            $("#Eoi_DPRDateCompletionandResponseMakeI_CNC").val(data.Eoi_DPRDateCompletionandResponseMakeI);
-            $("#dtforwardingshortlistedDPMakeI_CNC").val(data.dtforwardingshortlistedDPMakeI);
-            $("#dateapprovalshortlistedvendorsMakeI_CNC").val(data.dateapprovalshortlistedvendorsMakeI);
+                $("#Date_toc_Constitution_CNC").val(data.Date_toc_Constitution);
+                $("#Date_toc_report_CNC").val(data.Date_toc_report);
+                $("#Date_toc_acceptance_CompetantAuth_CNC").val(data.Date_toc_acceptance_CompetantAuth);
 
-            // Make-II
-            $("#DateIssueMake_II_CNC").val(data.DateIssueMake_II);
-            $("#EoiReceiptDateMake_II_CNC").val(data.EoiReceiptDateMake_II);
-            $("#EoiCompletionResponseMake_II_CNC").val(data.EoiCompletionResponseMake_II);
-            $("#dateApprovalEoiMake_II_CNC").val(data.dateApprovalEoiMake_II);
-            $("#dateissueProjectSenctionMake_II_CNC").val(data.dateissueProjectSenctionMake_II);
+                // Make-1
+                $("#Eoi_DPRDateIssueMakeI_CNC").val(data.Eoi_DPRDateIssueMakeI);
+                $("#Eoi_DPRReceiptDateMakeI_CNC").val(data.Eoi_DPRReceiptDateMakeI);
+                $("#Eoi_DPRDateCompletionandResponseMakeI_CNC").val(data.Eoi_DPRDateCompletionandResponseMakeI);
+                $("#dtforwardingshortlistedDPMakeI_CNC").val(data.dtforwardingshortlistedDPMakeI);
+                $("#dateapprovalshortlistedvendorsMakeI_CNC").val(data.dateapprovalshortlistedvendorsMakeI);
 
-            // DD
-            $("#dateFormulationJPMT_DD_CNC").val(data.dateFormulationJPMT_DD);
-            $("#dateFormulationPMT_DD_CNC").val(data.dateFormulationPMT_DD);
-            $("#dateIdentificationDCPP_DD_CNC").val(data.dateIdentificationDCPP_DD);
-            $("#datedetaildesignbySHQ_DD_CNC").val(data.datedetaildesignbySHQ_DD);
-            $("#dateissuetrialdeveiation_DD_CNC").val(data.dateissuetrialdeveiation_DD);
-            $("#dateprojectReview_DD_CNC").val(data.dateprojectReview_DD);
-            $("#daterealisationPrototype_DD_CNC").val(data.daterealisationPrototype_DD);
-            $("#dateCommencementPSQR_CNC").val(data.dateCommencementPSQR);
-            $("#dateCulminationPSQRValid_DD_CNC").val(data.dateCulminationPSQRValid_DD);
+                // Make-II
+                $("#DateIssueMake_II_CNC").val(data.DateIssueMake_II);
+                $("#EoiReceiptDateMake_II_CNC").val(data.EoiReceiptDateMake_II);
+                $("#EoiCompletionResponseMake_II_CNC").val(data.EoiCompletionResponseMake_II);
+                $("#dateApprovalEoiMake_II_CNC").val(data.dateApprovalEoiMake_II);
+                $("#dateissueProjectSenctionMake_II_CNC").val(data.dateissueProjectSenctionMake_II);
 
-            // Selection Of DA
-            $("#dateselectionDasbySHQ_dprbMakeI_CNC").val(data.dateselectionDasbySHQ_dprbMakeI);
-            $("#dateapprovalCFAfundingarrangementissueProjectMakeI_CNC").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
+                // DD
+                $("#dateFormulationJPMT_DD_CNC").val(data.dateFormulationJPMT_DD);
+                $("#dateFormulationPMT_DD_CNC").val(data.dateFormulationPMT_DD);
+                $("#dateIdentificationDCPP_DD_CNC").val(data.dateIdentificationDCPP_DD);
+                $("#datedetaildesignbySHQ_DD_CNC").val(data.datedetaildesignbySHQ_DD);
+                $("#dateissuetrialdeveiation_DD_CNC").val(data.dateissuetrialdeveiation_DD);
+                $("#dateprojectReview_DD_CNC").val(data.dateprojectReview_DD);
+                $("#daterealisationPrototype_DD_CNC").val(data.daterealisationPrototype_DD);
+                $("#dateCommencementPSQR_CNC").val(data.dateCommencementPSQR);
+                $("#dateCulminationPSQRValid_DD_CNC").val(data.dateCulminationPSQRValid_DD);
 
-            // Development of Prototype
+                // Selection Of DA
+                $("#dateselectionDasbySHQ_dprbMakeI_CNC").val(data.dateselectionDasbySHQ_dprbMakeI);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeI_CNC").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
 
-            $("#datecommencementpreliminaryMakeI_CNC").val(data.datecommencementpreliminaryMakeI);
-            $("#datefinalisationdetaileddesign_CNC").val(data.datefinalisationdetaileddesign);
-            $("#datecommencementfabrication_devProMakeI_CNC").val(data.datecommencementfabrication_devProMakeI);
-            $("#datetechnicallimitedfieldstrialsMakeI_CNC").val(data.datetechnicallimitedfieldstrialsMakeI);
-            $("#datefreezingPSQRStoSQRSMakeI_CNC").val(data.datefreezingPSQRStoSQRSMakeI);
-            $("#dateintimationvendorssubmissionrevisedMakeI_CNC").val(data.dateintimationvendorssubmissionrevisedMakeI);
-            $("#datesubmissionrevisedcommercialoffersvendorsMakeI_CNC").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
+                // Development of Prototype
 
-            // Development of Prototype(Make-II)
+                $("#datecommencementpreliminaryMakeI_CNC").val(data.datecommencementpreliminaryMakeI);
+                $("#datefinalisationdetaileddesign_CNC").val(data.datefinalisationdetaileddesign);
+                $("#datecommencementfabrication_devProMakeI_CNC").val(data.datecommencementfabrication_devProMakeI);
+                $("#datetechnicallimitedfieldstrialsMakeI_CNC").val(data.datetechnicallimitedfieldstrialsMakeI);
+                $("#datefreezingPSQRStoSQRSMakeI_CNC").val(data.datefreezingPSQRStoSQRSMakeI);
+                $("#dateintimationvendorssubmissionrevisedMakeI_CNC").val(data.dateintimationvendorssubmissionrevisedMakeI);
+                $("#datesubmissionrevisedcommercialoffersvendorsMakeI_CNC").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
 
-            $("#datecommencementDevPrototypeMakeII_CNC").val(data.datecommencementDevPrototypeMakeII);
-            $("#datecompletionDevPrototypeMakeII_CNC").val(data.datecompletionDevPrototypeMakeII);
-            $("#datecommencementUserTrialsMakeII_CNC").val(data.datecommencementUserTrialsMakeII);
-            $("#datecompletionUserTrialsRedinessReviewMakeII_CNC").val(data.datecompletionUserTrialsRedinessReviewMakeII);
-            $("#dateFreezingPSQRsMakeII_CNC").val(data.dateFreezingPSQRsMakeII);
+                // Development of Prototype(Make-II)
 
-            @* Selection Of DA Make - II *@
-
-            $("#dateselectionDasbySHQ_dprbMakeII_CNC").val(data.dateselectionDasbySHQ_dprbMakeII);
-            $("#dateapprovalCFAfundingarrangementissueProjectMakeII_CNC").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
-
-
-
-
-
-
-
-            // CFA Tab
-            $("#aonid_CFA").val(drpdn)
-            $("#rfp_idCFA").val(data.rfp_id);
-            $("#type_CFA").val(data.type_rfp);
-            $("#draftRFPbySHQCFA").val(data.draft_rfp_date);
-            $("#date_submissionto_adgacq_CFA").val(data.date_submissionto_adgacq);
-            $("#date_acceptanceby_adgacq_CFA").val(data.date_acceptanceby_adgacq);
-            $("#date_collegiate_vetting_CFA").val(data.date_collegiate_vetting);
-            $("#date_issue_rfp_CFA").val(data.date_issue_rfp);
-            $("#date_prebid_meeting_CFA").val(data.date_prebid_meeting);
-            $("#date_prebid_replies_CFA").val(data.date_prebid_replies);
-            $("#lastdate_bidsubmission_CFA").val(data.lastdate_bidsubmission);
-            $("#date_bid_opening_CFA").val(data.date_bid_opening);
-            $("#date_rfp_approval_CFA").val(data.date_approval_rfp);
-
-            $("#extendedDate_CFA").val(data.ExtendedLastDate_BidSubmission);
-
-            $("#date_tec_constitution_CFA").val(data.date_tec_constitution);
-            $("#date_tec_commencement_CFA").val(data.date_tec_commencement);
-            $("#date_tec_completion_CFA").val(data.date_tec_completion);
-            $("#date_tec_reportsubmission_CFA").val(data.date_tec_reportsubmission);
-            $("#date_tec_approval_CFA").val(data.date_tec_approval);
-
-            $("#Report_Recived_CFA").val(data.Date_received_Fet);
-            $("#Report_Accepted_CFA").val(data.Date_accepted_Fet);
-
-            $("#Date_toc_Constitution_CFA").val(data.Date_toc_Constitution);
-            $("#Date_toc_report_CFA").val(data.Date_toc_report);
-            $("#Date_toc_acceptance_CompetantAuth_CFA").val(data.Date_toc_acceptance_CompetantAuth);
-
-            $("#cnc_Constitution_Date_CFA").val(data.Date_cnc_constitution);
-            $("#Benchmark_Date_CFA").val(data.Date_cnc_benchmarking);
-            $("#Commercial_Date_Opening_Date_CFA").val(data.Date_commercial_bid_opening);
-            $("#CNC_Conclusion_Date_CFA").val(data.Date_cnc_conclusion);
-            $("#CNC_Report_Date_CFA").val(data.Date_cnc_report);
-
-            //Edit CFA
-            $("#MoD_Acq_Approval").val(data.date_Submission_CFANote_DGacq);
-            $("#MoD_Fin_Concurrence").val(data.date_Acq_approvalforsending_to_MoDFin);
-            $("#Submmition_Date_to_CFA").val(data.date_submissionto_CFA);
-            $("#Approval_of_CFA_Note_proposal").val(data.date_Approval_CFAnote);
-
-            $("#MoD_Acq_Approval_CNC").val(data.date_Submission_CFANote_DGacq);
-            $("#MoD_Fin_Concurrence_CNC").val(data.date_Acq_approvalforsending_to_MoDFin);
-            $("#Submmition_Date_to_CFA_CNC").val(data.date_submissionto_CFA);
-            $("#Approval_of_CFA_Note_proposal_CNC").val(data.date_Approval_CFAnote);
-
-
-            $("#date_DCN_Sentfor_CNC").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
-            $("#date_MoF_Concurrence_CNC").val(data.date_MoF_Concurrence);
-            $("#date_DCN_submissionto_CCS_CNC").val(data.date_DCN_submissionto_CCS);
-            $("#ApproveToCSS_CFA_CNC").val(data.ApproveToCSS_CFA);
-            $("#DateContractSigning_CNC").val(data.DateContractSigning);
-
-            $("#date_approval_CFA_CCS_CNC").val(data.date_approval_CFA_CCS);
-            $("#date_ContractSigning_CNC").val(data.date_ContractSigning);
-
-            $("#date_DCN_Sentfor_CFA").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
-            $("#date_MoF_Concurrence_CFA").val(data.date_MoF_Concurrence);
-            $("#date_DCN_submissionto_CCS_CFA").val(data.date_DCN_submissionto_CCS);
-            $("#ApproveToCSS_CFA_CFA").val(data.ApproveToCSS_CFA);
-            $("#DateContractSigning_CFA").val(data.DateContractSigning);
-
-            $("#date_approval_CFA_CCS_CFA").val(data.date_approval_CFA_CCS);
-            $("#date_ContractSigning_CFA").val(data.date_ContractSigning);
-
-            // Make-1
-            $("#Eoi_DPRDateIssueMakeI_CFA").val(data.Eoi_DPRDateIssueMakeI);
-            $("#Eoi_DPRReceiptDateMakeI_CFA").val(data.Eoi_DPRReceiptDateMakeI);
-            $("#Eoi_DPRDateCompletionandResponseMakeI_CFA").val(data.Eoi_DPRDateCompletionandResponseMakeI);
-            $("#dtforwardingshortlistedDPMakeI_CFA").val(data.dtforwardingshortlistedDPMakeI);
-            $("#dateapprovalshortlistedvendorsMakeI_CFA").val(data.dateapprovalshortlistedvendorsMakeI);
-
-            // Make-II
-            $("#DateIssueMake_II_CFA").val(data.DateIssueMake_II);
-            $("#EoiReceiptDateMake_II_CFA").val(data.EoiReceiptDateMake_II);
-            $("#EoiCompletionResponseMake_II_CFA").val(data.EoiCompletionResponseMake_II);
-            $("#dateApprovalEoiMake_II_CFA").val(data.dateApprovalEoiMake_II);
-            $("#dateissueProjectSenctionMake_II_CFA").val(data.dateissueProjectSenctionMake_II);
-
-            // DD
-            $("#dateFormulationJPMT_DD_CFA").val(data.dateFormulationJPMT_DD);
-            $("#dateFormulationPMT_DD_CFA").val(data.dateFormulationPMT_DD);
-            $("#dateIdentificationDCPP_DD_CFA").val(data.dateIdentificationDCPP_DD);
-            $("#datedetaildesignbySHQ_DD_CFA").val(data.datedetaildesignbySHQ_DD);
-            $("#dateissuetrialdeveiation_DD_CFA").val(data.dateissuetrialdeveiation_DD);
-            $("#dateprojectReview_DD_CFA").val(data.dateprojectReview_DD);
-            $("#daterealisationPrototype_DD_CFA").val(data.daterealisationPrototype_DD);
-            $("#dateCommencementPSQR_CFA").val(data.dateCommencementPSQR);
-            $("#dateCulminationPSQRValid_DD_CFA").val(data.dateCulminationPSQRValid_DD);
-
-            // Selection Of DA
-            $("#dateselectionDasbySHQ_dprbMakeI_CFA").val(data.dateselectionDasbySHQ_dprbMakeI);
-            $("#dateapprovalCFAfundingarrangementissueProjectMakeI_CFA").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
-
-            // Development of Prototype
-
-            $("#datecommencementpreliminaryMakeI_CFA").val(data.datecommencementpreliminaryMakeI);
-            $("#datefinalisationdetaileddesign_CFA").val(data.datefinalisationdetaileddesign);
-            $("#datecommencementfabrication_devProMakeI_CFA").val(data.datecommencementfabrication_devProMakeI);
-            $("#datetechnicallimitedfieldstrialsMakeI_CFA").val(data.datetechnicallimitedfieldstrialsMakeI);
-            $("#datefreezingPSQRStoSQRSMakeI_CFA").val(data.datefreezingPSQRStoSQRSMakeI);
-            $("#dateintimationvendorssubmissionrevisedMakeI_CFA").val(data.dateintimationvendorssubmissionrevisedMakeI);
-            $("#datesubmissionrevisedcommercialoffersvendorsMakeI_CFA").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
-
-            // Development of Prototype(Make-II)
-
-            $("#datecommencementDevPrototypeMakeII_CFA").val(data.datecommencementDevPrototypeMakeII);
-            $("#datecompletionDevPrototypeMakeII_CFA").val(data.datecompletionDevPrototypeMakeII);
-            $("#datecommencementUserTrialsMakeII_CFA").val(data.datecommencementUserTrialsMakeII);
-            $("#datecompletionUserTrialsRedinessReviewMakeII_CFA").val(data.datecompletionUserTrialsRedinessReviewMakeII);
-            $("#dateFreezingPSQRsMakeII_CFA").val(data.dateFreezingPSQRsMakeII);
+                $("#datecommencementDevPrototypeMakeII_CNC").val(data.datecommencementDevPrototypeMakeII);
+                $("#datecompletionDevPrototypeMakeII_CNC").val(data.datecompletionDevPrototypeMakeII);
+                $("#datecommencementUserTrialsMakeII_CNC").val(data.datecommencementUserTrialsMakeII);
+                $("#datecompletionUserTrialsRedinessReviewMakeII_CNC").val(data.datecompletionUserTrialsRedinessReviewMakeII);
+                $("#dateFreezingPSQRsMakeII_CNC").val(data.dateFreezingPSQRsMakeII);
 
             @* Selection Of DA Make - II *@
 
-            $("#dateselectionDasbySHQ_dprbMakeII_CFA").val(data.dateselectionDasbySHQ_dprbMakeII);
-            $("#dateapprovalCFAfundingarrangementissueProjectMakeII_CFA").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
+                $("#dateselectionDasbySHQ_dprbMakeII_CNC").val(data.dateselectionDasbySHQ_dprbMakeII);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeII_CNC").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
 
 
 
-            // DCN
-            $("#aonid_DCN").val(drpdn)
-            $("#rfp_idDCN").val(data.rfp_id);
-            $("#type_DCN").val(data.type_rfp);
-            $("#draftRFPbySHQDCN").val(data.draft_rfp_date);
-
-            $("#date_submissionto_adgacq_DCN").val(data.date_submissionto_adgacq);
-            $("#date_acceptanceby_adgacq_DCN").val(data.date_acceptanceby_adgacq);
-            $("#date_collegiate_vetting_DCN").val(data.date_collegiate_vetting);
-            $("#date_issue_rfp_DCN").val(data.date_issue_rfp);
-            $("#date_prebid_meeting_DCN").val(data.date_prebid_meeting);
-            $("#date_prebid_replies_DCN").val(data.date_prebid_replies);
-            $("#lastdate_bidsubmission_DCN").val(data.lastdate_bidsubmission);
-            $("#date_bid_opening_DCN").val(data.date_bid_opening);
-            $("#date_rfp_approval_DCN").val(data.date_approval_rfp);
-
-            $("#extendedDate_DCN").val(data.ExtendedLastDate_BidSubmission);
-
-            $("#date_tec_constitution_DCN").val(data.date_tec_constitution);
-            $("#date_tec_commencement_DCN").val(data.date_tec_commencement);
-            $("#date_tec_completion_DCN").val(data.date_tec_completion);
-            $("#date_tec_reportsubmission_DCN").val(data.date_tec_reportsubmission);
-            $("#date_tec_approval_DCN").val(data.date_tec_approval);
-
-            $("#Report_Recived_DCN").val(data.Date_received_Fet);
-            $("#Report_Accepted_DCN").val(data.Date_accepted_Fet);
-
-            $("#Date_toc_Constitution_DCN").val(data.Date_toc_Constitution);
-            $("#Date_toc_report_DCN").val(data.Date_toc_report);
-            $("#Date_toc_acceptance_CompetantAuth_DCN").val(data.Date_toc_acceptance_CompetantAuth);
-
-            $("#cnc_Constitution_Date_DCN").val(data.Date_cnc_constitution);
-            $("#Benchmark_Date_DCN").val(data.Date_cnc_benchmarking);
-            $("#Commercial_Date_Opening_Date_DCN").val(data.Date_commercial_bid_opening);
-            $("#CNC_Conclusion_Date_DCN").val(data.Date_cnc_conclusion);
-            $("#CNC_Report_Date_DCN").val(data.Date_cnc_report);
-
-            $("#MoD_Acq_Approval_DCN").val(data.date_Submission_CFANote_DGacq);
-            $("#MoD_Fin_Concurrence_DCN").val(data.date_Acq_approvalforsending_to_MoDFin);
-            $("#Submmition_Date_to_CFA_DCN").val(data.date_submissionto_CFA);
-            $("#Approval_of_CFA_Note_proposal_DCN").val(data.date_Approval_CFAnote);
-
-            $("#date_approval_CFA_CCS_DCN").val(data.date_approval_CFA_CCS);
-            $("#date_ContractSigning_DCN").val(data.date_ContractSigning);
-
-            // Make-1
-            $("#Eoi_DPRDateIssueMakeI_DCN").val(data.Eoi_DPRDateIssueMakeI);
-            $("#Eoi_DPRReceiptDateMakeI_DCN").val(data.Eoi_DPRReceiptDateMakeI);
-            $("#Eoi_DPRDateCompletionandResponseMakeI_DCN").val(data.Eoi_DPRDateCompletionandResponseMakeI);
-            $("#dtforwardingshortlistedDPMakeI_DCN").val(data.dtforwardingshortlistedDPMakeI);
-            $("#dateapprovalshortlistedvendorsMakeI_DCN").val(data.dateapprovalshortlistedvendorsMakeI);
-
-            // Make-II
-            $("#DateIssueMake_II_DCN").val(data.DateIssueMake_II);
-            $("#EoiReceiptDateMake_II_DCN").val(data.EoiReceiptDateMake_II);
-            $("#EoiCompletionResponseMake_II_DCN").val(data.EoiCompletionResponseMake_II);
-            $("#dateApprovalEoiMake_II_DCN").val(data.dateApprovalEoiMake_II);
-            $("#dateissueProjectSenctionMake_II_DCN").val(data.dateissueProjectSenctionMake_II);
-
-            // DD
-            $("#dateFormulationJPMT_DD_DCN").val(data.dateFormulationJPMT_DD);
-            $("#dateFormulationPMT_DD_DCN").val(data.dateFormulationPMT_DD);
-            $("#dateIdentificationDCPP_DD_DCN").val(data.dateIdentificationDCPP_DD);
-            $("#datedetaildesignbySHQ_DD_DCN").val(data.datedetaildesignbySHQ_DD);
-            $("#dateissuetrialdeveiation_DD_DCN").val(data.dateissuetrialdeveiation_DD);
-            $("#dateprojectReview_DD_DCN").val(data.dateprojectReview_DD);
-            $("#daterealisationPrototype_DD_DCN").val(data.daterealisationPrototype_DD);
-            $("#dateCommencementPSQR_DCN").val(data.dateCommencementPSQR);
-            $("#dateCulminationPSQRValid_DD_DCN").val(data.dateCulminationPSQRValid_DD);
-
-            // Selection Of DA
-            $("#dateselectionDasbySHQ_dprbMakeI_DCN").val(data.dateselectionDasbySHQ_dprbMakeI);
-            $("#dateapprovalCFAfundingarrangementissueProjectMakeI_DCN").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
-
-            // Development of Prototype
-
-            $("#datecommencementpreliminaryMakeI_DCN").val(data.datecommencementpreliminaryMakeI);
-            $("#datefinalisationdetaileddesign_DCN").val(data.datefinalisationdetaileddesign);
-            $("#datecommencementfabrication_devProMakeI_DCN").val(data.datecommencementfabrication_devProMakeI);
-            $("#datetechnicallimitedfieldstrialsMakeI_DCN").val(data.datetechnicallimitedfieldstrialsMakeI);
-            $("#datefreezingPSQRStoSQRSMakeI_DCN").val(data.datefreezingPSQRStoSQRSMakeI);
-            $("#dateintimationvendorssubmissionrevisedMakeI_DCN").val(data.dateintimationvendorssubmissionrevisedMakeI);
-            $("#datesubmissionrevisedcommercialoffersvendorsMakeI_DCN").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
-
-            // Development of Prototype(Make-II)
-
-            $("#datecommencementDevPrototypeMakeII_DCN").val(data.datecommencementDevPrototypeMakeII);
-            $("#datecompletionDevPrototypeMakeII_DCN").val(data.datecompletionDevPrototypeMakeII);
-            $("#datecommencementUserTrialsMakeII_DCN").val(data.datecommencementUserTrialsMakeII);
-            $("#datecompletionUserTrialsRedinessReviewMakeII_DCN").val(data.datecompletionUserTrialsRedinessReviewMakeII);
-            $("#dateFreezingPSQRsMakeII_DCN").val(data.dateFreezingPSQRsMakeII);
-
-            @* Selection Of DA Make - II *@
-
-            $("#dateselectionDasbySHQ_dprbMakeII_DCN").val(data.dateselectionDasbySHQ_dprbMakeII);
-            $("#dateapprovalCFAfundingarrangementissueProjectMakeII_DCN").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
 
 
 
-            //Edit DCN
 
-            $("#date_DCN_Sentfor").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
-            $("#date_MoF_Concurrence").val(data.date_MoF_Concurrence);
-            $("#date_DCN_submissionto_CCS").val(data.date_DCN_submissionto_CCS);
-            $("#ApproveToCSS_CFA").val(data.ApproveToCSS_CFA);
-            $("#DateContractSigning").val(data.DateContractSigning);
+                // CFA Tab
+                $("#aonid_CFA").val(drpdn)
+                $("#rfp_idCFA").val(data.rfp_id);
+                $("#type_CFA").val(data.type_rfp);
+                $("#draftRFPbySHQCFA").val(data.draft_rfp_date);
+                $("#date_submissionto_adgacq_CFA").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacq_CFA").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vetting_CFA").val(data.date_collegiate_vetting);
+                $("#date_issue_rfp_CFA").val(data.date_issue_rfp);
+                $("#date_prebid_meeting_CFA").val(data.date_prebid_meeting);
+                $("#date_prebid_replies_CFA").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmission_CFA").val(data.lastdate_bidsubmission);
+                $("#date_bid_opening_CFA").val(data.date_bid_opening);
+                $("#date_rfp_approval_CFA").val(data.date_approval_rfp);
 
+                $("#extendedDate_CFA").val(data.ExtendedLastDate_BidSubmission);
 
-            //Contract
-            $("#aonid_Cont").val(drpdn)
-            $("#rfp_idCont").val(data.rfp_id);
-            $("#type_Cont").val(data.type_rfp);
-            $("#draftRFPbySHQCont").val(data.draft_rfp_date);
+                $("#date_tec_constitution_CFA").val(data.date_tec_constitution);
+                $("#date_tec_commencement_CFA").val(data.date_tec_commencement);
+                $("#date_tec_completion_CFA").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_CFA").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_CFA").val(data.date_tec_approval);
 
-            $("#date_submissionto_adgacq_Cont").val(data.date_submissionto_adgacq);
-            $("#date_acceptanceby_adgacq_Cont").val(data.date_acceptanceby_adgacq);
-            $("#date_collegiate_vetting_Cont").val(data.date_collegiate_vetting);
-            $("#date_issue_rfp_Cont").val(data.date_issue_rfp);
-            $("#date_prebid_meeting_Cont").val(data.date_prebid_meeting);
-            $("#date_prebid_replies_Cont").val(data.date_prebid_replies);
-            $("#lastdate_bidsubmission_Cont").val(data.lastdate_bidsubmission);
-            $("#date_bid_opening_Cont").val(data.date_bid_opening);
-            $("#date_rfp_approval_Cont").val(data.date_approval_rfp);
+                $("#Report_Recived_CFA").val(data.Date_received_Fet);
+                $("#Report_Accepted_CFA").val(data.Date_accepted_Fet);
 
-            $("#extendedDate_Cont").val(data.ExtendedLastDate_BidSubmission);
+                $("#Date_toc_Constitution_CFA").val(data.Date_toc_Constitution);
+                $("#Date_toc_report_CFA").val(data.Date_toc_report);
+                $("#Date_toc_acceptance_CompetantAuth_CFA").val(data.Date_toc_acceptance_CompetantAuth);
 
-            $("#date_tec_constitution_Cont").val(data.date_tec_constitution);
-            $("#date_tec_commencement_Cont").val(data.date_tec_commencement);
-            $("#date_tec_completion_Cont").val(data.date_tec_completion);
-            $("#date_tec_reportsubmission_Cont").val(data.date_tec_reportsubmission);
-            $("#date_tec_approval_Cont").val(data.date_tec_approval);
+                $("#cnc_Constitution_Date_CFA").val(data.Date_cnc_constitution);
+                $("#Benchmark_Date_CFA").val(data.Date_cnc_benchmarking);
+                $("#Commercial_Date_Opening_Date_CFA").val(data.Date_commercial_bid_opening);
+                $("#CNC_Conclusion_Date_CFA").val(data.Date_cnc_conclusion);
+                $("#CNC_Report_Date_CFA").val(data.Date_cnc_report);
 
-            $("#Report_Recived_Cont").val(data.Date_received_Fet);
-            $("#Report_Accepted_Cont").val(data.Date_accepted_Fet);
+                //Edit CFA
+                $("#MoD_Acq_Approval").val(data.date_Submission_CFANote_DGacq);
+                $("#MoD_Fin_Concurrence").val(data.date_Acq_approvalforsending_to_MoDFin);
+                $("#Submmition_Date_to_CFA").val(data.date_submissionto_CFA);
+                $("#Approval_of_CFA_Note_proposal").val(data.date_Approval_CFAnote);
 
-            $("#Date_toc_Constitution_Cont").val(data.Date_toc_Constitution);
-            $("#Date_toc_report_Cont").val(data.Date_toc_report);
-            $("#Date_toc_acceptance_CompetantAuth_Cont").val(data.Date_toc_acceptance_CompetantAuth);
-
-            $("#cnc_Constitution_Date_Cont").val(data.Date_cnc_constitution);
-            $("#Benchmark_Date_Cont").val(data.Date_cnc_benchmarking);
-            $("#Commercial_Date_Opening_Date_Cont").val(data.Date_commercial_bid_opening);
-            $("#CNC_Conclusion_Date_Cont").val(data.Date_cnc_conclusion);
-            $("#CNC_Report_Date_Cont").val(data.Date_cnc_report);
-
-            $("#MoD_Acq_Approval_Cont").val(data.date_Submission_CFANote_DGacq);
-            $("#MoD_Fin_Concurrence_Cont").val(data.date_Acq_approvalforsending_to_MoDFin);
-            $("#Submmition_Date_to_CFA_Cont").val(data.date_submissionto_CFA);
-            $("#Approval_of_CFA_Note_proposal_Cont").val(data.date_Approval_CFAnote);
-
-            //Contract
-
-            $("#date_DCN_Sentfor_Cont").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
-            $("#date_MoF_Concurrence_Cont").val(data.date_MoF_Concurrence);
-            $("#date_DCN_submissionto_CCS_Cont").val(data.date_DCN_submissionto_CCS);
-            $("#ApproveToCSS_CFA_Cont").val(data.ApproveToCSS_CFA);
-            $("#DateContractSigning_Cont").val(data.DateContractSigning);
-
-            // Make-1
-            $("#Eoi_DPRDateIssueMakeI_Cont").val(data.Eoi_DPRDateIssueMakeI);
-            $("#Eoi_DPRReceiptDateMakeI_Cont").val(data.Eoi_DPRReceiptDateMakeI);
-            $("#Eoi_DPRDateCompletionandResponseMakeI_Cont").val(data.Eoi_DPRDateCompletionandResponseMakeI);
-            $("#dtforwardingshortlistedDPMakeI_Cont").val(data.dtforwardingshortlistedDPMakeI);
-            $("#dateapprovalshortlistedvendorsMakeI_Cont").val(data.dateapprovalshortlistedvendorsMakeI);
-
-            // Make-II
-            $("#DateIssueMake_II_Cont").val(data.DateIssueMake_II);
-            $("#EoiReceiptDateMake_II_Cont").val(data.EoiReceiptDateMake_II);
-            $("#EoiCompletionResponseMake_II_Cont").val(data.EoiCompletionResponseMake_II);
-            $("#dateApprovalEoiMake_II_Cont").val(data.dateApprovalEoiMake_II);
-            $("#dateissueProjectSenctionMake_II_Cont").val(data.dateissueProjectSenctionMake_II);
+                $("#MoD_Acq_Approval_CNC").val(data.date_Submission_CFANote_DGacq);
+                $("#MoD_Fin_Concurrence_CNC").val(data.date_Acq_approvalforsending_to_MoDFin);
+                $("#Submmition_Date_to_CFA_CNC").val(data.date_submissionto_CFA);
+                $("#Approval_of_CFA_Note_proposal_CNC").val(data.date_Approval_CFAnote);
 
 
-            // DD
-            $("#dateFormulationJPMT_DD_Cont").val(data.dateFormulationJPMT_DD);
-            $("#dateFormulationPMT_DD_Cont").val(data.dateFormulationPMT_DD);
-            $("#dateIdentificationDCPP_DD_Cont").val(data.dateIdentificationDCPP_DD);
-            $("#datedetaildesignbySHQ_DD_Cont").val(data.datedetaildesignbySHQ_DD);
-            $("#dateissuetrialdeveiation_DD_Cont").val(data.dateissuetrialdeveiation_DD);
-            $("#dateprojectReview_DD_Cont").val(data.dateprojectReview_DD);
-            $("#daterealisationPrototype_DD_Cont").val(data.daterealisationPrototype_DD);
-            $("#dateCommencementPSQR_Cont").val(data.dateCommencementPSQR);
-            $("#dateCulminationPSQRValid_DD_Cont").val(data.dateCulminationPSQRValid_DD);
+                $("#date_DCN_Sentfor_CNC").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
+                $("#date_MoF_Concurrence_CNC").val(data.date_MoF_Concurrence);
+                $("#date_DCN_submissionto_CCS_CNC").val(data.date_DCN_submissionto_CCS);
+                $("#ApproveToCSS_CFA_CNC").val(data.ApproveToCSS_CFA);
+                $("#DateContractSigning_CNC").val(data.DateContractSigning);
 
-            // Selection Of DA
-            $("#dateselectionDasbySHQ_dprbMakeI_Cont").val(data.dateselectionDasbySHQ_dprbMakeI);
-            $("#dateapprovalCFAfundingarrangementissueProjectMakeI_Cont").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
+                $("#date_approval_CFA_CCS_CNC").val(data.date_approval_CFA_CCS);
+                $("#date_ContractSigning_CNC").val(data.date_ContractSigning);
 
-            // Development of Prototype
+                $("#date_DCN_Sentfor_CFA").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
+                $("#date_MoF_Concurrence_CFA").val(data.date_MoF_Concurrence);
+                $("#date_DCN_submissionto_CCS_CFA").val(data.date_DCN_submissionto_CCS);
+                $("#ApproveToCSS_CFA_CFA").val(data.ApproveToCSS_CFA);
+                $("#DateContractSigning_CFA").val(data.DateContractSigning);
 
-            $("#datecommencementpreliminaryMakeI_Cont").val(data.datecommencementpreliminaryMakeI);
-            $("#datefinalisationdetaileddesign_Cont").val(data.datefinalisationdetaileddesign);
-            $("#datecommencementfabrication_devProMakeI_Cont").val(data.datecommencementfabrication_devProMakeI);
-            $("#datetechnicallimitedfieldstrialsMakeI_Cont").val(data.datetechnicallimitedfieldstrialsMakeI);
-            $("#datefreezingPSQRStoSQRSMakeI_Cont").val(data.datefreezingPSQRStoSQRSMakeI);
-            $("#dateintimationvendorssubmissionrevisedMakeI_Cont").val(data.dateintimationvendorssubmissionrevisedMakeI);
-            $("#datesubmissionrevisedcommercialoffersvendorsMakeI_Cont").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
+                $("#date_approval_CFA_CCS_CFA").val(data.date_approval_CFA_CCS);
+                $("#date_ContractSigning_CFA").val(data.date_ContractSigning);
 
-            // Development of Prototype(Make-II)
+                // Make-1
+                $("#Eoi_DPRDateIssueMakeI_CFA").val(data.Eoi_DPRDateIssueMakeI);
+                $("#Eoi_DPRReceiptDateMakeI_CFA").val(data.Eoi_DPRReceiptDateMakeI);
+                $("#Eoi_DPRDateCompletionandResponseMakeI_CFA").val(data.Eoi_DPRDateCompletionandResponseMakeI);
+                $("#dtforwardingshortlistedDPMakeI_CFA").val(data.dtforwardingshortlistedDPMakeI);
+                $("#dateapprovalshortlistedvendorsMakeI_CFA").val(data.dateapprovalshortlistedvendorsMakeI);
 
-            $("#datecommencementDevPrototypeMakeII_Cont").val(data.datecommencementDevPrototypeMakeII);
-            $("#datecompletionDevPrototypeMakeII_Cont").val(data.datecompletionDevPrototypeMakeII);
-            $("#datecommencementUserTrialsMakeII_Cont").val(data.datecommencementUserTrialsMakeII);
-            $("#datecompletionUserTrialsRedinessReviewMakeII_Cont").val(data.datecompletionUserTrialsRedinessReviewMakeII);
-            $("#dateFreezingPSQRsMakeII_Cont").val(data.dateFreezingPSQRsMakeII);
+                // Make-II
+                $("#DateIssueMake_II_CFA").val(data.DateIssueMake_II);
+                $("#EoiReceiptDateMake_II_CFA").val(data.EoiReceiptDateMake_II);
+                $("#EoiCompletionResponseMake_II_CFA").val(data.EoiCompletionResponseMake_II);
+                $("#dateApprovalEoiMake_II_CFA").val(data.dateApprovalEoiMake_II);
+                $("#dateissueProjectSenctionMake_II_CFA").val(data.dateissueProjectSenctionMake_II);
+
+                // DD
+                $("#dateFormulationJPMT_DD_CFA").val(data.dateFormulationJPMT_DD);
+                $("#dateFormulationPMT_DD_CFA").val(data.dateFormulationPMT_DD);
+                $("#dateIdentificationDCPP_DD_CFA").val(data.dateIdentificationDCPP_DD);
+                $("#datedetaildesignbySHQ_DD_CFA").val(data.datedetaildesignbySHQ_DD);
+                $("#dateissuetrialdeveiation_DD_CFA").val(data.dateissuetrialdeveiation_DD);
+                $("#dateprojectReview_DD_CFA").val(data.dateprojectReview_DD);
+                $("#daterealisationPrototype_DD_CFA").val(data.daterealisationPrototype_DD);
+                $("#dateCommencementPSQR_CFA").val(data.dateCommencementPSQR);
+                $("#dateCulminationPSQRValid_DD_CFA").val(data.dateCulminationPSQRValid_DD);
+
+                // Selection Of DA
+                $("#dateselectionDasbySHQ_dprbMakeI_CFA").val(data.dateselectionDasbySHQ_dprbMakeI);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeI_CFA").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
+
+                // Development of Prototype
+
+                $("#datecommencementpreliminaryMakeI_CFA").val(data.datecommencementpreliminaryMakeI);
+                $("#datefinalisationdetaileddesign_CFA").val(data.datefinalisationdetaileddesign);
+                $("#datecommencementfabrication_devProMakeI_CFA").val(data.datecommencementfabrication_devProMakeI);
+                $("#datetechnicallimitedfieldstrialsMakeI_CFA").val(data.datetechnicallimitedfieldstrialsMakeI);
+                $("#datefreezingPSQRStoSQRSMakeI_CFA").val(data.datefreezingPSQRStoSQRSMakeI);
+                $("#dateintimationvendorssubmissionrevisedMakeI_CFA").val(data.dateintimationvendorssubmissionrevisedMakeI);
+                $("#datesubmissionrevisedcommercialoffersvendorsMakeI_CFA").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
+
+                // Development of Prototype(Make-II)
+
+                $("#datecommencementDevPrototypeMakeII_CFA").val(data.datecommencementDevPrototypeMakeII);
+                $("#datecompletionDevPrototypeMakeII_CFA").val(data.datecompletionDevPrototypeMakeII);
+                $("#datecommencementUserTrialsMakeII_CFA").val(data.datecommencementUserTrialsMakeII);
+                $("#datecompletionUserTrialsRedinessReviewMakeII_CFA").val(data.datecompletionUserTrialsRedinessReviewMakeII);
+                $("#dateFreezingPSQRsMakeII_CFA").val(data.dateFreezingPSQRsMakeII);
 
             @* Selection Of DA Make - II *@
 
-            $("#dateselectionDasbySHQ_dprbMakeII_Cont").val(data.dateselectionDasbySHQ_dprbMakeII);
-            $("#dateapprovalCFAfundingarrangementissueProjectMakeII_Cont").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
+                $("#dateselectionDasbySHQ_dprbMakeII_CFA").val(data.dateselectionDasbySHQ_dprbMakeII);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeII_CFA").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
+
+
+
+                // DCN
+                $("#aonid_DCN").val(drpdn)
+                $("#rfp_idDCN").val(data.rfp_id);
+                $("#type_DCN").val(data.type_rfp);
+                $("#draftRFPbySHQDCN").val(data.draft_rfp_date);
+
+                $("#date_submissionto_adgacq_DCN").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacq_DCN").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vetting_DCN").val(data.date_collegiate_vetting);
+                $("#date_issue_rfp_DCN").val(data.date_issue_rfp);
+                $("#date_prebid_meeting_DCN").val(data.date_prebid_meeting);
+                $("#date_prebid_replies_DCN").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmission_DCN").val(data.lastdate_bidsubmission);
+                $("#date_bid_opening_DCN").val(data.date_bid_opening);
+                $("#date_rfp_approval_DCN").val(data.date_approval_rfp);
+
+                $("#extendedDate_DCN").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#date_tec_constitution_DCN").val(data.date_tec_constitution);
+                $("#date_tec_commencement_DCN").val(data.date_tec_commencement);
+                $("#date_tec_completion_DCN").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_DCN").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_DCN").val(data.date_tec_approval);
+
+                $("#Report_Recived_DCN").val(data.Date_received_Fet);
+                $("#Report_Accepted_DCN").val(data.Date_accepted_Fet);
+
+                $("#Date_toc_Constitution_DCN").val(data.Date_toc_Constitution);
+                $("#Date_toc_report_DCN").val(data.Date_toc_report);
+                $("#Date_toc_acceptance_CompetantAuth_DCN").val(data.Date_toc_acceptance_CompetantAuth);
+
+                $("#cnc_Constitution_Date_DCN").val(data.Date_cnc_constitution);
+                $("#Benchmark_Date_DCN").val(data.Date_cnc_benchmarking);
+                $("#Commercial_Date_Opening_Date_DCN").val(data.Date_commercial_bid_opening);
+                $("#CNC_Conclusion_Date_DCN").val(data.Date_cnc_conclusion);
+                $("#CNC_Report_Date_DCN").val(data.Date_cnc_report);
+
+                $("#MoD_Acq_Approval_DCN").val(data.date_Submission_CFANote_DGacq);
+                $("#MoD_Fin_Concurrence_DCN").val(data.date_Acq_approvalforsending_to_MoDFin);
+                $("#Submmition_Date_to_CFA_DCN").val(data.date_submissionto_CFA);
+                $("#Approval_of_CFA_Note_proposal_DCN").val(data.date_Approval_CFAnote);
+
+                $("#date_approval_CFA_CCS_DCN").val(data.date_approval_CFA_CCS);
+                $("#date_ContractSigning_DCN").val(data.date_ContractSigning);
+
+                // Make-1
+                $("#Eoi_DPRDateIssueMakeI_DCN").val(data.Eoi_DPRDateIssueMakeI);
+                $("#Eoi_DPRReceiptDateMakeI_DCN").val(data.Eoi_DPRReceiptDateMakeI);
+                $("#Eoi_DPRDateCompletionandResponseMakeI_DCN").val(data.Eoi_DPRDateCompletionandResponseMakeI);
+                $("#dtforwardingshortlistedDPMakeI_DCN").val(data.dtforwardingshortlistedDPMakeI);
+                $("#dateapprovalshortlistedvendorsMakeI_DCN").val(data.dateapprovalshortlistedvendorsMakeI);
+
+                // Make-II
+                $("#DateIssueMake_II_DCN").val(data.DateIssueMake_II);
+                $("#EoiReceiptDateMake_II_DCN").val(data.EoiReceiptDateMake_II);
+                $("#EoiCompletionResponseMake_II_DCN").val(data.EoiCompletionResponseMake_II);
+                $("#dateApprovalEoiMake_II_DCN").val(data.dateApprovalEoiMake_II);
+                $("#dateissueProjectSenctionMake_II_DCN").val(data.dateissueProjectSenctionMake_II);
+
+                // DD
+                $("#dateFormulationJPMT_DD_DCN").val(data.dateFormulationJPMT_DD);
+                $("#dateFormulationPMT_DD_DCN").val(data.dateFormulationPMT_DD);
+                $("#dateIdentificationDCPP_DD_DCN").val(data.dateIdentificationDCPP_DD);
+                $("#datedetaildesignbySHQ_DD_DCN").val(data.datedetaildesignbySHQ_DD);
+                $("#dateissuetrialdeveiation_DD_DCN").val(data.dateissuetrialdeveiation_DD);
+                $("#dateprojectReview_DD_DCN").val(data.dateprojectReview_DD);
+                $("#daterealisationPrototype_DD_DCN").val(data.daterealisationPrototype_DD);
+                $("#dateCommencementPSQR_DCN").val(data.dateCommencementPSQR);
+                $("#dateCulminationPSQRValid_DD_DCN").val(data.dateCulminationPSQRValid_DD);
+
+                // Selection Of DA
+                $("#dateselectionDasbySHQ_dprbMakeI_DCN").val(data.dateselectionDasbySHQ_dprbMakeI);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeI_DCN").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
+
+                // Development of Prototype
+
+                $("#datecommencementpreliminaryMakeI_DCN").val(data.datecommencementpreliminaryMakeI);
+                $("#datefinalisationdetaileddesign_DCN").val(data.datefinalisationdetaileddesign);
+                $("#datecommencementfabrication_devProMakeI_DCN").val(data.datecommencementfabrication_devProMakeI);
+                $("#datetechnicallimitedfieldstrialsMakeI_DCN").val(data.datetechnicallimitedfieldstrialsMakeI);
+                $("#datefreezingPSQRStoSQRSMakeI_DCN").val(data.datefreezingPSQRStoSQRSMakeI);
+                $("#dateintimationvendorssubmissionrevisedMakeI_DCN").val(data.dateintimationvendorssubmissionrevisedMakeI);
+                $("#datesubmissionrevisedcommercialoffersvendorsMakeI_DCN").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
+
+                // Development of Prototype(Make-II)
+
+                $("#datecommencementDevPrototypeMakeII_DCN").val(data.datecommencementDevPrototypeMakeII);
+                $("#datecompletionDevPrototypeMakeII_DCN").val(data.datecompletionDevPrototypeMakeII);
+                $("#datecommencementUserTrialsMakeII_DCN").val(data.datecommencementUserTrialsMakeII);
+                $("#datecompletionUserTrialsRedinessReviewMakeII_DCN").val(data.datecompletionUserTrialsRedinessReviewMakeII);
+                $("#dateFreezingPSQRsMakeII_DCN").val(data.dateFreezingPSQRsMakeII);
+
+            @* Selection Of DA Make - II *@
+
+                $("#dateselectionDasbySHQ_dprbMakeII_DCN").val(data.dateselectionDasbySHQ_dprbMakeII);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeII_DCN").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
+
+
+
+                //Edit DCN
+
+                $("#date_DCN_Sentfor").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
+                $("#date_MoF_Concurrence").val(data.date_MoF_Concurrence);
+                $("#date_DCN_submissionto_CCS").val(data.date_DCN_submissionto_CCS);
+                $("#ApproveToCSS_CFA").val(data.ApproveToCSS_CFA);
+                $("#DateContractSigning").val(data.DateContractSigning);
+
+
+                //Contract
+                $("#aonid_Cont").val(drpdn)
+                $("#rfp_idCont").val(data.rfp_id);
+                $("#type_Cont").val(data.type_rfp);
+                $("#draftRFPbySHQCont").val(data.draft_rfp_date);
+
+                $("#date_submissionto_adgacq_Cont").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacq_Cont").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vetting_Cont").val(data.date_collegiate_vetting);
+                $("#date_issue_rfp_Cont").val(data.date_issue_rfp);
+                $("#date_prebid_meeting_Cont").val(data.date_prebid_meeting);
+                $("#date_prebid_replies_Cont").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmission_Cont").val(data.lastdate_bidsubmission);
+                $("#date_bid_opening_Cont").val(data.date_bid_opening);
+                $("#date_rfp_approval_Cont").val(data.date_approval_rfp);
+
+                $("#extendedDate_Cont").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#date_tec_constitution_Cont").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Cont").val(data.date_tec_commencement);
+                $("#date_tec_completion_Cont").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Cont").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Cont").val(data.date_tec_approval);
+
+                $("#Report_Recived_Cont").val(data.Date_received_Fet);
+                $("#Report_Accepted_Cont").val(data.Date_accepted_Fet);
+
+                $("#Date_toc_Constitution_Cont").val(data.Date_toc_Constitution);
+                $("#Date_toc_report_Cont").val(data.Date_toc_report);
+                $("#Date_toc_acceptance_CompetantAuth_Cont").val(data.Date_toc_acceptance_CompetantAuth);
+
+                $("#cnc_Constitution_Date_Cont").val(data.Date_cnc_constitution);
+                $("#Benchmark_Date_Cont").val(data.Date_cnc_benchmarking);
+                $("#Commercial_Date_Opening_Date_Cont").val(data.Date_commercial_bid_opening);
+                $("#CNC_Conclusion_Date_Cont").val(data.Date_cnc_conclusion);
+                $("#CNC_Report_Date_Cont").val(data.Date_cnc_report);
+
+                $("#MoD_Acq_Approval_Cont").val(data.date_Submission_CFANote_DGacq);
+                $("#MoD_Fin_Concurrence_Cont").val(data.date_Acq_approvalforsending_to_MoDFin);
+                $("#Submmition_Date_to_CFA_Cont").val(data.date_submissionto_CFA);
+                $("#Approval_of_CFA_Note_proposal_Cont").val(data.date_Approval_CFAnote);
+
+                //Contract
+
+                $("#date_DCN_Sentfor_Cont").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
+                $("#date_MoF_Concurrence_Cont").val(data.date_MoF_Concurrence);
+                $("#date_DCN_submissionto_CCS_Cont").val(data.date_DCN_submissionto_CCS);
+                $("#ApproveToCSS_CFA_Cont").val(data.ApproveToCSS_CFA);
+                $("#DateContractSigning_Cont").val(data.DateContractSigning);
+
+                // Make-1
+                $("#Eoi_DPRDateIssueMakeI_Cont").val(data.Eoi_DPRDateIssueMakeI);
+                $("#Eoi_DPRReceiptDateMakeI_Cont").val(data.Eoi_DPRReceiptDateMakeI);
+                $("#Eoi_DPRDateCompletionandResponseMakeI_Cont").val(data.Eoi_DPRDateCompletionandResponseMakeI);
+                $("#dtforwardingshortlistedDPMakeI_Cont").val(data.dtforwardingshortlistedDPMakeI);
+                $("#dateapprovalshortlistedvendorsMakeI_Cont").val(data.dateapprovalshortlistedvendorsMakeI);
+
+                // Make-II
+                $("#DateIssueMake_II_Cont").val(data.DateIssueMake_II);
+                $("#EoiReceiptDateMake_II_Cont").val(data.EoiReceiptDateMake_II);
+                $("#EoiCompletionResponseMake_II_Cont").val(data.EoiCompletionResponseMake_II);
+                $("#dateApprovalEoiMake_II_Cont").val(data.dateApprovalEoiMake_II);
+                $("#dateissueProjectSenctionMake_II_Cont").val(data.dateissueProjectSenctionMake_II);
+
+
+                // DD
+                $("#dateFormulationJPMT_DD_Cont").val(data.dateFormulationJPMT_DD);
+                $("#dateFormulationPMT_DD_Cont").val(data.dateFormulationPMT_DD);
+                $("#dateIdentificationDCPP_DD_Cont").val(data.dateIdentificationDCPP_DD);
+                $("#datedetaildesignbySHQ_DD_Cont").val(data.datedetaildesignbySHQ_DD);
+                $("#dateissuetrialdeveiation_DD_Cont").val(data.dateissuetrialdeveiation_DD);
+                $("#dateprojectReview_DD_Cont").val(data.dateprojectReview_DD);
+                $("#daterealisationPrototype_DD_Cont").val(data.daterealisationPrototype_DD);
+                $("#dateCommencementPSQR_Cont").val(data.dateCommencementPSQR);
+                $("#dateCulminationPSQRValid_DD_Cont").val(data.dateCulminationPSQRValid_DD);
+
+                // Selection Of DA
+                $("#dateselectionDasbySHQ_dprbMakeI_Cont").val(data.dateselectionDasbySHQ_dprbMakeI);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeI_Cont").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
+
+                // Development of Prototype
+
+                $("#datecommencementpreliminaryMakeI_Cont").val(data.datecommencementpreliminaryMakeI);
+                $("#datefinalisationdetaileddesign_Cont").val(data.datefinalisationdetaileddesign);
+                $("#datecommencementfabrication_devProMakeI_Cont").val(data.datecommencementfabrication_devProMakeI);
+                $("#datetechnicallimitedfieldstrialsMakeI_Cont").val(data.datetechnicallimitedfieldstrialsMakeI);
+                $("#datefreezingPSQRStoSQRSMakeI_Cont").val(data.datefreezingPSQRStoSQRSMakeI);
+                $("#dateintimationvendorssubmissionrevisedMakeI_Cont").val(data.dateintimationvendorssubmissionrevisedMakeI);
+                $("#datesubmissionrevisedcommercialoffersvendorsMakeI_Cont").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
+
+                // Development of Prototype(Make-II)
+
+                $("#datecommencementDevPrototypeMakeII_Cont").val(data.datecommencementDevPrototypeMakeII);
+                $("#datecompletionDevPrototypeMakeII_Cont").val(data.datecompletionDevPrototypeMakeII);
+                $("#datecommencementUserTrialsMakeII_Cont").val(data.datecommencementUserTrialsMakeII);
+                $("#datecompletionUserTrialsRedinessReviewMakeII_Cont").val(data.datecompletionUserTrialsRedinessReviewMakeII);
+                $("#dateFreezingPSQRsMakeII_Cont").val(data.dateFreezingPSQRsMakeII);
+
+            @* Selection Of DA Make - II *@
+
+                $("#dateselectionDasbySHQ_dprbMakeII_Cont").val(data.dateselectionDasbySHQ_dprbMakeII);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeII_Cont").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
 
 
 
 
-            //Edit
+                //Edit
 
-            $("#date_approval_CFA_CCS").val(data.date_approval_CFA_CCS);
-            $("#date_ContractSigning").val(data.date_ContractSigning);
-
-
-            //$("#SelectedIDArray").val(ids);
-            $("#type_rfp").val(data.type_rfp);
-            $("#draftRFPbySHQ").val(data.draft_rfp_date);
-            $("#collegiatevetting").val(data.date_submissionto_adgacq);
-            $("#approval").val(data.date_acceptanceby_adgacq);
-            $("#issuancevendor").val(data.date_collegiate_vetting);
-            $("#vendors").val(data.date_approval_rfp);
-            $("#dateIssueRFP").val(data.date_issue_rfp);
-            $("#aonid").val(drpdn);
-            $("#PreBidMeetingDate").val(data.date_prebid_meeting);
-            $("#preBidRpyDates").val(data.date_prebid_replies);
-            $("#bidsubmissiondate").val(data.lastdate_bidsubmission);
-            $("#openingDateOffer").val(data.date_bid_opening);
-            $("#vendorID").val(data.vendorID);
-            $("#extendedDateID_Bids").val(data.ExtendedLastDate_BidSubmission);
-
-            $("#Report_Reciveds").val(data.Date_received_Fet);
-            $("#Report_Accepteds").val(data.Date_accepted_Fet);
-
-            $("#Constitution_Date_Tocs").val(data.Date_toc_Constitution);
-            $("#Date_of_Report_Tocs").val(data.Date_toc_report);
-            $("#Date_of_Acceptance_Tocs").val(data.Date_toc_acceptance_CompetantAuth);
+                $("#date_approval_CFA_CCS").val(data.date_approval_CFA_CCS);
+                $("#date_ContractSigning").val(data.date_ContractSigning);
 
 
-            $("#rfp_idExtended").val(data.rfp_id);
-            $("#aonid_Extended").val(drpdn);
-            $("#type_rfpExtended").val(data.type_rfp);
-            $("#draftRFPbySHQExtended").val(data.draft_rfp_date);
-            $("#date_submissionto_adgacqExtended").val(data.date_submissionto_adgacq);
-            $("#date_acceptanceby_adgacqExtended").val(data.date_acceptanceby_adgacq);
-            $("#date_collegiate_vettingExtended").val(data.date_collegiate_vetting);
-            $("#date_issue_rfpExtended").val(data.date_issue_rfp);
-            $("#date_prebid_meetingExtended").val(data.date_prebid_meeting);
-            $("#date_prebid_repliesExtended").val(data.date_prebid_replies);
-            $("#lastdate_bidsubmissionExtended").val(data.lastdate_bidsubmission);
-            $("#date_bid_openingExtended").val(data.date_bid_opening);
-            $("#date_approval_rfpExtended").val(data.date_approval_rfp);
-            $("#extendedDateID").val(data.ExtendedLastDate_BidSubmission);
-            $("#date_tec_constitution_Extended").val(data.date_tec_constitution);
-            $("#date_tec_commencement_Extended").val(data.date_tec_commencement);
-            $("#date_tec_completion_Extended").val(data.date_tec_completion);
-            $("#date_tec_reportsubmission_Extended").val(data.date_tec_reportsubmission);
-            $("#date_tec_approval_Extended").val(data.date_tec_approval);
+                //$("#SelectedIDArray").val(ids);
+                $("#type_rfp").val(data.type_rfp);
+                $("#draftRFPbySHQ").val(data.draft_rfp_date);
+                $("#collegiatevetting").val(data.date_submissionto_adgacq);
+                $("#approval").val(data.date_acceptanceby_adgacq);
+                $("#issuancevendor").val(data.date_collegiate_vetting);
+                $("#vendors").val(data.date_approval_rfp);
+                $("#dateIssueRFP").val(data.date_issue_rfp);
+                $("#aonid").val(drpdn);
+                $("#PreBidMeetingDate").val(data.date_prebid_meeting);
+                $("#preBidRpyDates").val(data.date_prebid_replies);
+                $("#bidsubmissiondate").val(data.lastdate_bidsubmission);
+                $("#openingDateOffer").val(data.date_bid_opening);
+                $("#vendorID").val(data.vendorID);
+                $("#extendedDateID_Bids").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#Report_Reciveds").val(data.Date_received_Fet);
+                $("#Report_Accepteds").val(data.Date_accepted_Fet);
+
+                $("#Constitution_Date_Tocs").val(data.Date_toc_Constitution);
+                $("#Date_of_Report_Tocs").val(data.Date_toc_report);
+                $("#Date_of_Acceptance_Tocs").val(data.Date_toc_acceptance_CompetantAuth);
 
 
-
-            $("#Report_Recived_Extended").val(data.Date_received_Fet);
-            $("#Report_Accepted_Extended").val(data.Date_accepted_Fet);
-
-
-            $("#Constitution_Date_Extended").val(data.Date_toc_Constitution);
-            $("#Date_of_Report_Date_Extended").val(data.Date_toc_report);
-            $("#Date_of_Acceptance_Date_Extended").val(data.Date_toc_acceptance_CompetantAuth);
+                $("#rfp_idExtended").val(data.rfp_id);
+                $("#aonid_Extended").val(drpdn);
+                $("#type_rfpExtended").val(data.type_rfp);
+                $("#draftRFPbySHQExtended").val(data.draft_rfp_date);
+                $("#date_submissionto_adgacqExtended").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacqExtended").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vettingExtended").val(data.date_collegiate_vetting);
+                $("#date_issue_rfpExtended").val(data.date_issue_rfp);
+                $("#date_prebid_meetingExtended").val(data.date_prebid_meeting);
+                $("#date_prebid_repliesExtended").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmissionExtended").val(data.lastdate_bidsubmission);
+                $("#date_bid_openingExtended").val(data.date_bid_opening);
+                $("#date_approval_rfpExtended").val(data.date_approval_rfp);
+                $("#extendedDateID").val(data.ExtendedLastDate_BidSubmission);
+                $("#date_tec_constitution_Extended").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Extended").val(data.date_tec_commencement);
+                $("#date_tec_completion_Extended").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Extended").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Extended").val(data.date_tec_approval);
 
 
 
+                $("#Report_Recived_Extended").val(data.Date_received_Fet);
+                $("#Report_Accepted_Extended").val(data.Date_accepted_Fet);
 
-            // Tec Tab Data
-            $("#date_tec_constitution_Tecs").val(data.date_tec_constitution);
-            $("#date_tec_commencement_Tecs").val(data.date_tec_commencement);
-            $("#date_tec_completion_Tecs").val(data.date_tec_completion);
-            $("#date_tec_reportsubmission_Tecs").val(data.date_tec_reportsubmission);
-            $("#date_tec_approval_Tecs").val(data.date_tec_approval);
 
-            $("#rfp_Tec").val(data.rfp_id);
-            $("#aonid_Tec").val(drpdn);
-            $("#type_Tec").val(data.type_rfp);
-            $("#draftRFPbySHQTec").val(data.draft_rfp_date);
-
-            $("#extendedDateTec").val(data.ExtendedLastDate_BidSubmission);
-            $("#date_submissionto_adgacqTec").val(data.date_submissionto_adgacq);
-            $("#date_acceptanceby_adgacqTec").val(data.date_acceptanceby_adgacq);
-            $("#date_collegiate_vettingTec").val(data.date_collegiate_vetting);
-            $("#date_issue_rfpTec").val(data.date_issue_rfp);
-            $("#date_prebid_meetingTec").val(data.date_prebid_meeting);
-            $("#date_prebid_repliesTec").val(data.date_prebid_replies);
-            $("#lastdate_bidsubmissionTec").val(data.lastdate_bidsubmission);
-            $("#date_bid_openingTec").val(data.date_bid_opening);
-            $("#date_approval_rfpTec").val(data.date_approval_rfp);
-
-            $("#date_tec_constitution_Tec").val(data.date_tec_constitution);
-            $("#date_tec_commencement_Tec").val(data.date_tec_commencement);
-            $("#date_tec_completion_Tec").val(data.date_tec_completion);
-            $("#date_tec_reportsubmission_Tec").val(data.date_tec_reportsubmission);
-            $("#date_tec_approval_Tec").val(data.date_tec_approval);
-
-            $("#Report_Recived_Tec").val(data.Date_received_Fet);
-            $("#Report_Accepted_Tec").val(data.Date_accepted_Fet);
-
-            $("#Constitution_Date_Tec").val(data.Date_toc_Constitution);
-            $("#Date_of_Report_Date_Tec").val(data.Date_toc_report);
-            $("#Date_of_Acceptance_Date_Tec").val(data.Date_toc_acceptance_CompetantAuth);
+                $("#Constitution_Date_Extended").val(data.Date_toc_Constitution);
+                $("#Date_of_Report_Date_Extended").val(data.Date_toc_report);
+                $("#Date_of_Acceptance_Date_Extended").val(data.Date_toc_acceptance_CompetantAuth);
 
 
 
-            // FET Tab
 
-            $("#Report_Recived").val(data.Date_received_Fet);
-            $("#Report_Accepted").val(data.Date_accepted_Fet);
+                // Tec Tab Data
+                $("#date_tec_constitution_Tecs").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Tecs").val(data.date_tec_commencement);
+                $("#date_tec_completion_Tecs").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Tecs").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Tecs").val(data.date_tec_approval);
 
-            $("#rfp_Fet").val(data.rfp_id);
-            $("#aonid_Fet").val(drpdn);
-            $("#type_Fet").val(data.type_rfp);
-            $("#draftRFPbySHQFet").val(data.draft_rfp_date);
+                $("#rfp_Tec").val(data.rfp_id);
+                $("#aonid_Tec").val(drpdn);
+                $("#type_Tec").val(data.type_rfp);
+                $("#draftRFPbySHQTec").val(data.draft_rfp_date);
 
-            $("#extendedDateFet").val(data.ExtendedLastDate_BidSubmission);
+                $("#extendedDateTec").val(data.ExtendedLastDate_BidSubmission);
+                $("#date_submissionto_adgacqTec").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacqTec").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vettingTec").val(data.date_collegiate_vetting);
+                $("#date_issue_rfpTec").val(data.date_issue_rfp);
+                $("#date_prebid_meetingTec").val(data.date_prebid_meeting);
+                $("#date_prebid_repliesTec").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmissionTec").val(data.lastdate_bidsubmission);
+                $("#date_bid_openingTec").val(data.date_bid_opening);
+                $("#date_approval_rfpTec").val(data.date_approval_rfp);
 
-            $("#date_submissionto_adgacqFet").val(data.date_submissionto_adgacq);
-            $("#date_acceptanceby_adgacqFet").val(data.date_acceptanceby_adgacq);
-            $("#date_collegiate_vettingFet").val(data.date_collegiate_vetting);
-            $("#date_issue_rfpFet").val(data.date_issue_rfp);
-            $("#date_prebid_meetingFet").val(data.date_prebid_meeting);
-            $("#date_prebid_repliesFet").val(data.date_prebid_replies);
-            $("#lastdate_bidsubmissionFet").val(data.lastdate_bidsubmission);
-            $("#date_bid_openingFet").val(data.date_bid_opening);
-            $("#date_approval_rfpFet").val(data.date_approval_rfp);
+                $("#date_tec_constitution_Tec").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Tec").val(data.date_tec_commencement);
+                $("#date_tec_completion_Tec").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Tec").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Tec").val(data.date_tec_approval);
 
-            $("#date_tec_constitution_Fet").val(data.date_tec_constitution);
-            $("#date_tec_commencement_Fet").val(data.date_tec_commencement);
-            $("#date_tec_completion_Fet").val(data.date_tec_completion);
-            $("#date_tec_reportsubmission_Fet").val(data.date_tec_reportsubmission);
-            $("#date_tec_approval_Fet").val(data.date_tec_approval);
+                $("#Report_Recived_Tec").val(data.Date_received_Fet);
+                $("#Report_Accepted_Tec").val(data.Date_accepted_Fet);
+
+                $("#Constitution_Date_Tec").val(data.Date_toc_Constitution);
+                $("#Date_of_Report_Date_Tec").val(data.Date_toc_report);
+                $("#Date_of_Acceptance_Date_Tec").val(data.Date_toc_acceptance_CompetantAuth);
 
 
-            // Toc Tab Data
 
-            $("#Constitution_Date").val(data.Date_toc_Constitution);
-            $("#Date_of_Report").val(data.Date_toc_report);
-            $("#Date_of_Acceptance").val(data.Date_toc_acceptance_CompetantAuth);
+                // FET Tab
 
-            // TOC Tab
+                $("#Report_Recived").val(data.Date_received_Fet);
+                $("#Report_Accepted").val(data.Date_accepted_Fet);
 
-            $("#rfp_TOC").val(data.rfp_id);
-            $("#aonid_TOC").val(drpdn);
-            $("#type_TOC").val(data.type_rfp);
-            $("#draftRFPbySHQTOC").val(data.draft_rfp_date);
-            $("#extendedDate_Toc").val(data.ExtendedLastDate_BidSubmission);
+                $("#rfp_Fet").val(data.rfp_id);
+                $("#aonid_Fet").val(drpdn);
+                $("#type_Fet").val(data.type_rfp);
+                $("#draftRFPbySHQFet").val(data.draft_rfp_date);
 
-            $("#date_submissionto_adgacq_Toc").val(data.date_submissionto_adgacq);
-            $("#date_acceptanceby_adgacq_Toc").val(data.date_acceptanceby_adgacq);
-            $("#date_collegiate_vetting_Toc").val(data.date_collegiate_vetting);
-            $("#date_issue_rfp_Toc").val(data.date_issue_rfp);
-            $("#date_prebid_meeting_Toc").val(data.date_prebid_meeting);
-            $("#date_prebid_replies_Toc").val(data.date_prebid_replies);
-            $("#lastdate_bidsubmission_Toc").val(data.lastdate_bidsubmission);
-            $("#date_bid_opening_Toc").val(data.date_bid_opening);
-            $("#date_approval_rfp_Toc").val(data.date_approval_rfp);
+                $("#extendedDateFet").val(data.ExtendedLastDate_BidSubmission);
 
-            $("#Report_Recived_Toc").val(data.Date_received_Fet);
-            $("#Report_Accepted_Toc").val(data.Date_accepted_Fet);
+                $("#date_submissionto_adgacqFet").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacqFet").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vettingFet").val(data.date_collegiate_vetting);
+                $("#date_issue_rfpFet").val(data.date_issue_rfp);
+                $("#date_prebid_meetingFet").val(data.date_prebid_meeting);
+                $("#date_prebid_repliesFet").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmissionFet").val(data.lastdate_bidsubmission);
+                $("#date_bid_openingFet").val(data.date_bid_opening);
+                $("#date_approval_rfpFet").val(data.date_approval_rfp);
 
-            $("#date_tec_constitution_Toc").val(data.date_tec_constitution);
-            $("#date_tec_commencement_Toc").val(data.date_tec_commencement);
-            $("#date_tec_completion_Toc").val(data.date_tec_completion);
-            $("#date_tec_reportsubmission_Toc").val(data.date_tec_reportsubmission);
-            $("#date_tec_approval_Toc").val(data.date_tec_approval);
+                $("#date_tec_constitution_Fet").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Fet").val(data.date_tec_commencement);
+                $("#date_tec_completion_Fet").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Fet").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Fet").val(data.date_tec_approval);
+
+
+                // Toc Tab Data
+
+                $("#Constitution_Date").val(data.Date_toc_Constitution);
+                $("#Date_of_Report").val(data.Date_toc_report);
+                $("#Date_of_Acceptance").val(data.Date_toc_acceptance_CompetantAuth);
+
+                // TOC Tab
+
+                $("#rfp_TOC").val(data.rfp_id);
+                $("#aonid_TOC").val(drpdn);
+                $("#type_TOC").val(data.type_rfp);
+                $("#draftRFPbySHQTOC").val(data.draft_rfp_date);
+                $("#extendedDate_Toc").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#date_submissionto_adgacq_Toc").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacq_Toc").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vetting_Toc").val(data.date_collegiate_vetting);
+                $("#date_issue_rfp_Toc").val(data.date_issue_rfp);
+                $("#date_prebid_meeting_Toc").val(data.date_prebid_meeting);
+                $("#date_prebid_replies_Toc").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmission_Toc").val(data.lastdate_bidsubmission);
+                $("#date_bid_opening_Toc").val(data.date_bid_opening);
+                $("#date_approval_rfp_Toc").val(data.date_approval_rfp);
+
+                $("#Report_Recived_Toc").val(data.Date_received_Fet);
+                $("#Report_Accepted_Toc").val(data.Date_accepted_Fet);
+
+                $("#date_tec_constitution_Toc").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Toc").val(data.date_tec_commencement);
+                $("#date_tec_completion_Toc").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Toc").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Toc").val(data.date_tec_approval);
+            }
         });
     }
 </script>
