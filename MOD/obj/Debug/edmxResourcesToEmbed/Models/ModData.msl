@@ -94,16 +94,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="acq_section_master">
-      <EntityTypeMapping TypeName="MODModel.acq_section_master">
-        <MappingFragment StoreEntitySet="acq_section_master">
-          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-          <ScalarProperty Name="deptt_id" ColumnName="deptt_id" />
-          <ScalarProperty Name="section_descr" ColumnName="section_descr" />
-          <ScalarProperty Name="section_id" ColumnName="section_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tbl_mst_Project">
       <EntityTypeMapping TypeName="MODModel.tbl_mst_Project">
         <MappingFragment StoreEntitySet="tbl_mst_Project">
@@ -653,82 +643,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <EntitySetMapping Name="vw_userDetail">
-      <EntityTypeMapping TypeName="MODModel.vw_userDetail">
-        <MappingFragment StoreEntitySet="vw_userDetail">
-          <ScalarProperty Name="Temp_Number" ColumnName="Temp_Number" />
-          <ScalarProperty Name="DSCSerialno" ColumnName="DSCSerialno" />
-          <ScalarProperty Name="MacAddress" ColumnName="MacAddress" />
-          <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="MemberID" ColumnName="MemberID" />
-          <ScalarProperty Name="SrNo" ColumnName="SrNo" />
-          <ScalarProperty Name="Flag" ColumnName="Flag" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="Pswd_Salt" ColumnName="Pswd_Salt" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="ExternalEmailID" ColumnName="ExternalEmailID" />
-          <ScalarProperty Name="InternalEmailID" ColumnName="InternalEmailID" />
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="section_descr" ColumnName="section_descr" />
-          <ScalarProperty Name="section_id" ColumnName="section_id" />
-          <ScalarProperty Name="deptt_description" ColumnName="deptt_description" />
-          <ScalarProperty Name="deptt_id" ColumnName="deptt_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="acq_project_master">
-      <EntityTypeMapping TypeName="MODModel.acq_project_master">
-        <MappingFragment StoreEntitySet="acq_project_master">
-          <ScalarProperty Name="AovType" ColumnName="AovType" />
-          <ScalarProperty Name="ResponsiblePersonLeve4" ColumnName="ResponsiblePersonLeve4" />
-          <ScalarProperty Name="ResponsiblePersonLeve3" ColumnName="ResponsiblePersonLeve3" />
-          <ScalarProperty Name="ResponsiblePersonLeve2" ColumnName="ResponsiblePersonLeve2" />
-          <ScalarProperty Name="ResponsiblePersonLeve1" ColumnName="ResponsiblePersonLeve1" />
-          <ScalarProperty Name="DirectorateId" ColumnName="DirectorateId" />
-          <ScalarProperty Name="VendorsIDs" ColumnName="VendorsIDs" />
-          <ScalarProperty Name="System_case" ColumnName="System_case" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="AoNForeClosureCreatedBy" ColumnName="AoNForeClosureCreatedBy" />
-          <ScalarProperty Name="AoNClosureRemarks" ColumnName="AoNClosureRemarks" />
-          <ScalarProperty Name="AoNClosureDate" ColumnName="AoNClosureDate" />
-          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-          <ScalarProperty Name="AoN_Foreclosure_meeting_id" ColumnName="AoN_Foreclosure_meeting_id" />
-          <ScalarProperty Name="AoN_validity_extended_till" ColumnName="AoN_validity_extended_till" />
-          <ScalarProperty Name="AoN_revalidation_meeting_id" ColumnName="AoN_revalidation_meeting_id" />
-          <ScalarProperty Name="AoN_validity_unit" ColumnName="AoN_validity_unit" />
-          <ScalarProperty Name="AoN_validity" ColumnName="AoN_validity" />
-          <ScalarProperty Name="Warrenty_Remarks" ColumnName="Warrenty_Remarks" />
-          <ScalarProperty Name="Warrenty_applicable" ColumnName="Warrenty_applicable" />
-          <ScalarProperty Name="AMCRemarks" ColumnName="AMCRemarks" />
-          <ScalarProperty Name="AMC_applicable" ColumnName="AMC_applicable" />
-          <ScalarProperty Name="Offset_applicable" ColumnName="Offset_applicable" />
-          <ScalarProperty Name="Option_clause_applicable" ColumnName="Option_clause_applicable" />
-          <ScalarProperty Name="IC_percentage" ColumnName="IC_percentage" />
-          <ScalarProperty Name="Any_other_aspect" ColumnName="Any_other_aspect" />
-          <ScalarProperty Name="Essential_parameters" ColumnName="Essential_parameters" />
-          <ScalarProperty Name="Trials_Required" ColumnName="Trials_Required" />
-          <ScalarProperty Name="Type_of_Acquisition" ColumnName="Type_of_Acquisition" />
-          <ScalarProperty Name="Tax_Duties" ColumnName="Tax_Duties" />
-          <ScalarProperty Name="Currency" ColumnName="Currency" />
-          <ScalarProperty Name="Cost" ColumnName="Cost" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Service_Lead_Service" ColumnName="Service_Lead_Service" />
-          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
-          <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
-          <ScalarProperty Name="Date_of_Accord_of_AoN" ColumnName="Date_of_Accord_of_AoN" />
-          <ScalarProperty Name="AoN_Accorded_By" ColumnName="AoN_Accorded_By" />
-          <ScalarProperty Name="DPP_DAP" ColumnName="DPP_DAP" />
-          <ScalarProperty Name="item_description" ColumnName="item_description" />
-          <ScalarProperty Name="aon_id" ColumnName="aon_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tbl_Master_Role">
       <EntityTypeMapping TypeName="MODModel.tbl_Master_Role">
         <MappingFragment StoreEntitySet="tbl_Master_Role">
@@ -772,6 +686,102 @@
           <ScalarProperty Name="OTPMobile" ColumnName="OTPMobile" />
           <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
           <ScalarProperty Name="OtpID" ColumnName="OtpID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_audit_trail">
+      <EntityTypeMapping TypeName="MODModel.acq_audit_trail">
+        <MappingFragment StoreEntitySet="acq_audit_trail">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Restime" ColumnName="Restime" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_section_master">
+      <EntityTypeMapping TypeName="MODModel.acq_section_master">
+        <MappingFragment StoreEntitySet="acq_section_master">
+          <ScalarProperty Name="deptt_id" ColumnName="deptt_id" />
+          <ScalarProperty Name="section_descr" ColumnName="section_descr" />
+          <ScalarProperty Name="section_id" ColumnName="section_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_userDetail">
+      <EntityTypeMapping TypeName="MODModel.vw_userDetail">
+        <MappingFragment StoreEntitySet="vw_userDetail">
+          <ScalarProperty Name="DSCSerialno" ColumnName="DSCSerialno" />
+          <ScalarProperty Name="MacAddress" ColumnName="MacAddress" />
+          <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+          <ScalarProperty Name="SrNo" ColumnName="SrNo" />
+          <ScalarProperty Name="Flag" ColumnName="Flag" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Pswd_Salt" ColumnName="Pswd_Salt" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="ExternalEmailID" ColumnName="ExternalEmailID" />
+          <ScalarProperty Name="InternalEmailID" ColumnName="InternalEmailID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="section_descr" ColumnName="section_descr" />
+          <ScalarProperty Name="section_id" ColumnName="section_id" />
+          <ScalarProperty Name="deptt_description" ColumnName="deptt_description" />
+          <ScalarProperty Name="deptt_id" ColumnName="deptt_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_project_master">
+      <EntityTypeMapping TypeName="MODModel.acq_project_master">
+        <MappingFragment StoreEntitySet="acq_project_master">
+          <ScalarProperty Name="System_case" ColumnName="System_case" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ResponsiblePersonLeve4" ColumnName="ResponsiblePersonLeve4" />
+          <ScalarProperty Name="ResponsiblePersonLeve3" ColumnName="ResponsiblePersonLeve3" />
+          <ScalarProperty Name="ResponsiblePersonLeve2" ColumnName="ResponsiblePersonLeve2" />
+          <ScalarProperty Name="ResponsiblePersonLeve1" ColumnName="ResponsiblePersonLeve1" />
+          <ScalarProperty Name="DirectorateId" ColumnName="DirectorateId" />
+          <ScalarProperty Name="VendorsIDs" ColumnName="VendorsIDs" />
+          <ScalarProperty Name="AoNForeClosureCreatedBy" ColumnName="AoNForeClosureCreatedBy" />
+          <ScalarProperty Name="AoNClosureRemarks" ColumnName="AoNClosureRemarks" />
+          <ScalarProperty Name="AoNClosureDate" ColumnName="AoNClosureDate" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="AoN_Foreclosure_meeting_id" ColumnName="AoN_Foreclosure_meeting_id" />
+          <ScalarProperty Name="AoN_validity_extended_till" ColumnName="AoN_validity_extended_till" />
+          <ScalarProperty Name="AoN_revalidation_meeting_id" ColumnName="AoN_revalidation_meeting_id" />
+          <ScalarProperty Name="AoN_validity_unit" ColumnName="AoN_validity_unit" />
+          <ScalarProperty Name="AoN_validity" ColumnName="AoN_validity" />
+          <ScalarProperty Name="Warrenty_Remarks" ColumnName="Warrenty_Remarks" />
+          <ScalarProperty Name="Warrenty_applicable" ColumnName="Warrenty_applicable" />
+          <ScalarProperty Name="AMCRemarks" ColumnName="AMCRemarks" />
+          <ScalarProperty Name="AMC_applicable" ColumnName="AMC_applicable" />
+          <ScalarProperty Name="Offset_applicable" ColumnName="Offset_applicable" />
+          <ScalarProperty Name="Option_clause_applicable" ColumnName="Option_clause_applicable" />
+          <ScalarProperty Name="IC_percentage" ColumnName="IC_percentage" />
+          <ScalarProperty Name="Any_other_aspect" ColumnName="Any_other_aspect" />
+          <ScalarProperty Name="Essential_parameters" ColumnName="Essential_parameters" />
+          <ScalarProperty Name="Trials_Required" ColumnName="Trials_Required" />
+          <ScalarProperty Name="Type_of_Acquisition" ColumnName="Type_of_Acquisition" />
+          <ScalarProperty Name="Tax_Duties" ColumnName="Tax_Duties" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Service_Lead_Service" ColumnName="Service_Lead_Service" />
+          <ScalarProperty Name="Categorisation" ColumnName="Categorisation" />
+          <ScalarProperty Name="meeting_id" ColumnName="meeting_id" />
+          <ScalarProperty Name="Date_of_Accord_of_AoN" ColumnName="Date_of_Accord_of_AoN" />
+          <ScalarProperty Name="AoN_Accorded_By" ColumnName="AoN_Accorded_By" />
+          <ScalarProperty Name="DPP_DAP" ColumnName="DPP_DAP" />
+          <ScalarProperty Name="item_description" ColumnName="item_description" />
+          <ScalarProperty Name="aon_id" ColumnName="aon_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

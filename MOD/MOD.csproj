@@ -1462,6 +1462,9 @@
     <Compile Include="Models\AcqRFPMasterViewModel.cs" />
     <Compile Include="Models\ACQTrialViewModel.cs" />
     <Compile Include="Models\AcquisitionMeetingMasterViewModel.cs" />
+    <Compile Include="Models\acq_audit_trail.cs">
+      <DependentUpon>ModData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\acq_department_master.cs">
       <DependentUpon>ModData.tt</DependentUpon>
     </Compile>
