@@ -1,0 +1,1529 @@
+﻿@model MOD.Models.SaveAcqRFPMasterViewModel
+@{
+    ViewBag.Title = "StageProgressAcquisitionManager";
+    Layout = "~/Views/Shared/_LayoutM.cshtml";
+}
+
+
+<link rel="stylesheet" href="~/assets/css/bootstrap.min.css" >
+<link rel="stylesheet" href="~/assets/css/bootstrap-theme.min.css" >
+<link rel="stylesheet" href="~/assets/css/bootstrap-multiselect.css" type="text/css">
+
+<script src="~/assets/js/jquery-3.2.1.min.js" ></script>
+<script src="~/assets/js/bootstrap.min.js" ></script>
+
+<script type="text/javascript" src="~/assets/js/bootstrap-multiselect.js"></script>
+
+
+<style>
+    #normalDropDown_chosen {
+        width: 100% !important
+    }
+
+    .danger {
+        color: red;
+    }
+
+    #SelectedMultipleVendors_chosen {
+        width: 172px !important;
+    }
+
+    #SelectedTecMultipleVendors_chosen {
+        width: 172px !important;
+    }
+
+    #SelectedFetMultipleVendors_chosen {
+        width: 172px !important;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    /*Dropdown css*/
+    .btn-group > .btn-group:not(:first-child) > .btn, .btn-group > .btn:not(:first-child) {
+        font-size: 12px;
+    }
+
+
+    .btn-group > .btn-group:not(:last-child) > .btn, .btn-group > .btn:not(:last-child):not(.dropdown-toggle) {
+        font-size: 12px;
+    }
+
+    .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+        width: 100% !important;
+    }
+
+    .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+        width: 220px;
+        width: 100% !important;
+        border: 1px solid #d1d1d1;
+    }
+
+    .bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+        color: #444343;
+        background: #fff;
+    }
+
+
+    /*new tab css */
+    .tab-head {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .nav-item a:focus {
+        outline: unset;
+    }
+
+    .nav-item a:hover {
+        border: 1px solid #dedddd !important;
+    }
+
+    .nav-item a {
+        color: black !important;
+        font-weight: 600;
+        padding-left: 28px;
+        padding-right: 28px;
+    }
+
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+        color: #495057;
+        background-color: #72b7a0;
+        border-color: #dee2e6 #dee2e6 #fff;
+    }
+
+    .nav-item .active {
+        color: #ffffff !important;
+        border: none !important;
+        border-bottom: 3px solid #406d5e !important;
+        font-weight: 600;
+    }
+
+        .nav-item .active:hover {
+            border: none !important;
+            border-bottom: 3px solid #406d5e !important;
+        }
+
+    .nav-tabs .nav-link {
+        border: 1px solid #00000029;
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+        margin: 1px;
+    }
+
+    .nav-tabs {
+        border-bottom: none !important;
+        background: #e5e7e8;
+        padding: 8px;
+    }
+
+    .tab-pane h5 {
+        border-left: 4px solid #5741A3;
+    }
+
+    .tab-pane p {
+        border-top: 1px solid #c1c1c1;
+    }
+</style>
+<script>
+    $(function () {
+        $('#multiselect').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+            filterPlaceholder: 'Search for something...'
+        });
+    });
+</script>
+<div class="pt-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <label style="float: left;    font-size: 22px;    font-weight: 700;">Select AoN </label>
+            <select class="form-control" id="aon_id" name="aon_id">
+                <option value="">--Select AoN Name--</option>
+                @foreach (var item in Model.ProjectList)
+                {
+                    <option value="@item.aon_id">@item.item_description</option>
+                }
+            </select>
+            <button type="button" id="btnClick" class="btn btn-primary mt-2" style="font-size: 20px;" onclick="SearchDrop(),GetRecords()">Search</button>
+        </div>
+        <span class="text-danger">@TempData["Message"]</span><br />
+
+        <div class="col-md-12 mt-5" id="displayTab" style="display:none">
+            <div class="tab" role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#Section6" role="tab" aria-controls="home" aria-selected="true">CNC</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#Section8" role="tab" aria-controls="contact" aria-selected="false">DCN</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Section7" role="tab" aria-controls="profile" aria-selected="false">CFA</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#Section9" role="tab" aria-controls="contact" aria-selected="false">Contract</a>
+                    </li>
+
+                    @*<li role="presentation" class="active"><a href="#Section6" aria-controls="settings" role="tab" data-toggle="tab">CNC</a></li>
+                        <li role="presentation"><a href="#Section7" aria-controls="settings" role="tab" data-toggle="tab">CFA</a></li>
+                        <li role="presentation"><a href="#Section8" aria-controls="settings" role="tab" data-toggle="tab">DCN/Approval</a></li>
+                        <li role="presentation"><a href="#Section9" aria-controls="settings" role="tab" data-toggle="tab">Contract</a></li>*@
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="Section6">
+                        @using (Html.BeginForm("StageProgressAcquisitionManager", "MOD", FormMethod.Post))
+                        {
+                            <table class="table">
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">CNC Constitution Date:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,this.value,$('#Commercial_Date_Opening_Date').val());" id="cnc_Constitution_Date" value="@Model.Date_cnc_constitution" name="Date_cnc_constitution" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">Benchmark Date:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#cnc_Constitution_Date').val(),this.value);" id="Benchmark_Date" value="@Model.Date_cnc_benchmarking" name="Date_cnc_benchmarking" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">Commercial Bid Opening Date:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#Benchmark_Date').val(),this.value);" id="Commercial_Date_Opening_Date" value="@Model.Date_commercial_bid_opening" name="Date_commercial_bid_opening" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">CNC Conclusion Date:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#Commercial_Date_Opening_Date').val(),this.value);" id="CNC_Conclusion_Date" value="@Model.Date_cnc_conclusion" name="Date_cnc_conclusion" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">CNC Report Date:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#CNC_Conclusion_Date').val(),this.value);" id="CNC_Report_Date" value="@Model.Date_cnc_report" name="Date_cnc_report" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td />
+                                    <td class="">
+                                        <input type="hidden" id="aonid" name="aon_id" />
+                                        <input type="hidden" id="rfp_idCNC" name="rfp_id" />
+                                        <input type="hidden" id="type_CNC" name="type_rfp" />
+                                        <input type="hidden" id="draftRFPbySHQCNC" name="draft_rfp_date" />
+
+                                        <input type="hidden" id="date_submissionto_adgacq_CNC" name="date_submissionto_adgacq" />
+                                        <input type="hidden" id="date_acceptanceby_adgacq_CNC" name="date_acceptanceby_adgacq" />
+                                        <input type="hidden" id="date_collegiate_vetting_CNC" name="date_collegiate_vetting" />
+                                        <input type="hidden" id="date_issue_rfp_CNC" name="date_issue_rfp" />
+                                        <input type="hidden" id="date_prebid_meeting_CNC" name="date_prebid_meeting" />
+                                        <input type="hidden" id="date_prebid_replies_CNC" name="date_prebid_replies" />
+                                        <input type="hidden" id="lastdate_bidsubmission_CNC" name="lastdate_bidsubmission" />
+                                        <input type="hidden" id="date_bid_opening_CNC" name="date_bid_opening" />
+                                        <input type="hidden" id="date_rfp_approval_CNC" name="date_approval_rfp" />
+
+                                        <input type="hidden" id="extendedDate_CNC" name="ExtendedLastDate_BidSubmission" />
+
+                                        <input type="hidden" id="date_tec_constitution_CNC" name="date_tec_constitution" />
+                                        <input type="hidden" id="date_tec_commencement_CNC" name="date_tec_commencement" />
+                                        <input type="hidden" id="date_tec_completion_CNC" name="date_tec_completion" />
+                                        <input type="hidden" id="date_tec_reportsubmission_CNC" name="date_tec_reportsubmission" />
+                                        <input type="hidden" id="date_tec_approval_CNC" name="date_tec_approval" />
+
+                                        <input type="hidden" id="Report_Recived_CNC" name="Date_received_Fet" />
+                                        <input type="hidden" id="Report_Accepted_CNC" name="Date_accepted_Fet" />
+
+                                        <input type="hidden" id="Date_toc_Constitution_CNC" name="Date_toc_Constitution" />
+                                        <input type="hidden" id="Date_toc_report_CNC" name="Date_toc_report" />
+                                        <input type="hidden" id="Date_toc_acceptance_CompetantAuth_CNC" name="Date_toc_acceptance_CompetantAuth" />
+
+                                        @*CFA*@
+
+                                        <input type="hidden" id="MoD_Acq_Approval_CNC" name="date_Submission_CFANote_DGacq" />
+                                        <input type="hidden" id="MoD_Fin_Concurrence_CNC" name="date_Acq_approvalforsending_to_MoDFin" />
+                                        <input type="hidden" id="Submmition_Date_to_CFA_CNC" name="date_submissionto_CFA" />
+                                        <input type="hidden" id="Approval_of_CFA_Note_proposal_CNC" name="date_Approval_CFAnote" />
+
+                                        @*DCN*@
+                                        <input type="hidden" id="date_DCN_Sentfor_CNC" name="date_DCN_Sentfor_InterMinisterialConsultations" />
+                                        <input type="hidden" id="date_MoF_Concurrence_CNC" name="date_MoF_Concurrence" />
+                                        <input type="hidden" id="date_DCN_submissionto_CCS_CNC" name="date_DCN_submissionto_CCS" />
+                                        <input type="hidden" id="ApproveToCSS_CFA_CNC" name="ApproveToCSS_CFA" />
+                                        @*<input type="hidden" id="DateContractSigning_CNC" name="DateContractSigning" />*@
+
+                                        @*Contract*@
+                                        <input type="hidden" id="date_approval_CFA_CCS_CNC" name="date_approval_CFA_CCS" />
+                                        <input type="hidden" id="date_ContractSigning_CNC" name="date_ContractSigning" />
+
+                                        @*Make-1*@
+                                        <input type="hidden" id="Eoi_DPRDateIssueMakeI_CNC" name="Eoi_DPRDateIssueMakeI" />
+                                        <input type="hidden" id="Eoi_DPRReceiptDateMakeI_CNC" name="Eoi_DPRReceiptDateMakeI" />
+                                        <input type="hidden" id="Eoi_DPRDateCompletionandResponseMakeI_CNC" name="Eoi_DPRDateCompletionandResponseMakeI" />
+                                        <input type="hidden" id="dtforwardingshortlistedDPMakeI_CNC" name="dtforwardingshortlistedDPMakeI" />
+                                        <input type="hidden" id="dateapprovalshortlistedvendorsMakeI_CNC" name="dateapprovalshortlistedvendorsMakeI" />
+
+                                        @*Make-II*@
+                                        <input type="hidden" id="DateIssueMake_II_CNC" name="DateIssueMake_II" />
+                                        <input type="hidden" id="EoiReceiptDateMake_II_CNC" name="EoiReceiptDateMake_II" />
+                                        <input type="hidden" id="EoiCompletionResponseMake_II_CNC" name="EoiCompletionResponseMake_II" />
+                                        <input type="hidden" id="dateApprovalEoiMake_II_CNC" name="dateApprovalEoiMake_II" />
+                                        <input type="hidden" id="dateissueProjectSenctionMake_II_CNC" name="dateissueProjectSenctionMake_II" />
+
+                                        @*DD*@
+                                        <input type="hidden" id="dateFormulationJPMT_DD_CNC" name="dateFormulationJPMT_DD" />
+                                        <input type="hidden" id="dateFormulationPMT_DD_CNC" name="dateFormulationPMT_DD" />
+                                        <input type="hidden" id="dateIdentificationDCPP_DD_CNC" name="dateIdentificationDCPP_DD" />
+                                        <input type="hidden" id="datedetaildesignbySHQ_DD_CNC" name="datedetaildesignbySHQ_DD" />
+                                        <input type="hidden" id="dateissuetrialdeveiation_DD_CNC" name="dateissuetrialdeveiation_DD" />
+                                        <input type="hidden" id="dateprojectReview_DD_CNC" name="dateprojectReview_DD" />
+                                        <input type="hidden" id="daterealisationPrototype_DD_CNC" name="daterealisationPrototype_DD" />
+                                        <input type="hidden" id="dateCommencementPSQR_CNC" name="dateCommencementPSQR" />
+                                        <input type="hidden" id="dateCulminationPSQRValid_DD_CNC" name="dateCulminationPSQRValid_DD" />
+
+                                        @*Selection Of DA*@
+
+                                        <input type="hidden" id="dateselectionDasbySHQ_dprbMakeI_CNC" name="dateselectionDasbySHQ_dprbMakeI" />
+                                        <input type="hidden" id="dateapprovalCFAfundingarrangementissueProjectMakeI_CNC" name="dateapprovalCFAfundingarrangementissueProjectMakeI" />
+
+                                        @*Development Prototype*@
+
+                                        <input type="hidden" id="datecommencementpreliminaryMakeI_CNC" name="datecommencementpreliminaryMakeI" />
+                                        <input type="hidden" id="datefinalisationdetaileddesign_CNC" name="datefinalisationdetaileddesign" />
+                                        <input type="hidden" id="datecommencementfabrication_devProMakeI_CNC" name="datecommencementfabrication_devProMakeI" />
+                                        <input type="hidden" id="datetechnicallimitedfieldstrialsMakeI_CNC" name="datetechnicallimitedfieldstrialsMakeI" />
+                                        <input type="hidden" id="datefreezingPSQRStoSQRSMakeI_CNC" name="datefreezingPSQRStoSQRSMakeI" />
+                                        <input type="hidden" id="dateintimationvendorssubmissionrevisedMakeI_CNC" name="dateintimationvendorssubmissionrevisedMakeI" />
+                                        <input type="hidden" id="datesubmissionrevisedcommercialoffersvendorsMakeI_CNC" name="datesubmissionrevisedcommercialoffersvendorsMakeI" />
+
+                                        @*Development Prototype (Make-II)*@
+
+                                        <input type="hidden" id="datecommencementDevPrototypeMakeII_CNC" name="datecommencementDevPrototypeMakeII" />
+                                        <input type="hidden" id="datecompletionDevPrototypeMakeII_CNC" name="datecompletionDevPrototypeMakeII" />
+                                        <input type="hidden" id="datecommencementUserTrialsMakeII_CNC" name="datecommencementUserTrialsMakeII" />
+                                        <input type="hidden" id="datecompletionUserTrialsRedinessReviewMakeII_CNC" name="datecompletionUserTrialsRedinessReviewMakeII" />
+                                        <input type="hidden" id="dateFreezingPSQRsMakeII_CNC" name="dateFreezingPSQRsMakeII" />
+
+                                        @*Selection Of DA Make-II*@
+
+                                        <input type="hidden" id="dateselectionDasbySHQ_dprbMakeII_CNC" name="dateselectionDasbySHQ_dprbMakeII" />
+                                        <input type="hidden" id="dateapprovalCFAfundingarrangementissueProjectMakeII_CNC" name="dateapprovalCFAfundingarrangementissueProjectMakeII" />
+
+                                        <button type="submit" class="btn btn-primary float-right"><i class="fas fa-save mr-1"></i>Save</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="Section7">
+
+                        @using (Html.BeginForm("StageProgressAcquisitionManager", "MOD", FormMethod.Post))
+                        {
+                            <table class="table">
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">Approval by CFA/CCS:</label>
+                                    </td>
+                                    <td class="form-group" style="width: 170px;">
+                                        @*<input type="date" onchange="compareDate(this,$('#date_DCN_submissionto_CCS').val(),this.value);" id="ApproveToCSS_CFA" value="@Model.ApproveToCSS_CFA" name="ApproveToCSS_CFA" />*@
+                                        @Html.DropDownListFor(model => model.ApproveToCSS_CFA, new List<SelectListItem>
+                                         {
+                                                new SelectListItem{ Text="MoD", Value = "MoD" },
+                                                new SelectListItem{ Text="MoD + MoF", Value = "MoD + MoF" },
+                                                new SelectListItem{ Text="CCS", Value = "CCS" },
+                                         }, "-Select Approval By CFA/CCS-", new { @class = "form-control" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">Submission of CFA Note to DG(Acq):</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#Submmition_Date_to_CFA').val(),this.value);" id="MoD_Acq_Approval" value="@Model.date_Submission_CFANote_DGacq" name="date_Submission_CFANote_DGacq" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">MoD/Acq approval for sending to MoD(Fin):</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#MoD_Acq_Approval').val(),this.value);" id="MoD_Fin_Concurrence" value="@Model.date_Acq_approvalforsending_to_MoDFin" name="date_Acq_approvalforsending_to_MoDFin" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">Submmition Date to CFA:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#MoD_Fin_Concurrence').val(),this.value);" id="Submmition_Date_to_CFA" value="@Model.date_submissionto_CFA" name="date_submissionto_CFA" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">Approval of CFA Note/proposal:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#Submmition_Date_to_CFA').val(),this.value);" id="Approval_of_CFA_Note_proposal" value="@Model.date_Approval_CFAnote" name="date_Approval_CFAnote" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td />
+                                    <td class="">
+                                        <input type="hidden" id="aonid_CFA" name="aon_id" />
+                                        <input type="hidden" id="rfp_idCFA" name="rfp_id" />
+                                        <input type="hidden" id="type_CFA" name="type_rfp" />
+                                        <input type="hidden" id="draftRFPbySHQCFA" name="draft_rfp_date" />
+
+                                        <input type="hidden" id="date_submissionto_adgacq_CFA" name="date_submissionto_adgacq" />
+                                        <input type="hidden" id="date_acceptanceby_adgacq_CFA" name="date_acceptanceby_adgacq" />
+                                        <input type="hidden" id="date_collegiate_vetting_CFA" name="date_collegiate_vetting" />
+                                        <input type="hidden" id="date_issue_rfp_CFA" name="date_issue_rfp" />
+                                        <input type="hidden" id="date_prebid_meeting_CFA" name="date_prebid_meeting" />
+                                        <input type="hidden" id="date_prebid_replies_CFA" name="date_prebid_replies" />
+                                        <input type="hidden" id="lastdate_bidsubmission_CFA" name="lastdate_bidsubmission" />
+                                        <input type="hidden" id="date_bid_opening_CFA" name="date_bid_opening" />
+                                        <input type="hidden" id="date_rfp_approval_CFA" name="date_approval_rfp" />
+
+                                        <input type="hidden" id="extendedDate_CFA" name="ExtendedLastDate_BidSubmission" />
+
+                                        <input type="hidden" id="date_tec_constitution_CFA" name="date_tec_constitution" />
+                                        <input type="hidden" id="date_tec_commencement_CFA" name="date_tec_commencement" />
+                                        <input type="hidden" id="date_tec_completion_CFA" name="date_tec_completion" />
+                                        <input type="hidden" id="date_tec_reportsubmission_CFA" name="date_tec_reportsubmission" />
+                                        <input type="hidden" id="date_tec_approval_CFA" name="date_tec_approval" />
+
+                                        <input type="hidden" id="Report_Recived_CFA" name="Date_received_Fet" />
+                                        <input type="hidden" id="Report_Accepted_CFA" name="Date_accepted_Fet" />
+
+                                        <input type="hidden" id="Date_toc_Constitution_CFA" name="Date_toc_Constitution" />
+                                        <input type="hidden" id="Date_toc_report_CFA" name="Date_toc_report" />
+                                        <input type="hidden" id="Date_toc_acceptance_CompetantAuth_CFA" name="Date_toc_acceptance_CompetantAuth" />
+
+                                        <input type="hidden" id="cnc_Constitution_Date_CFA" name="Date_cnc_constitution" />
+                                        <input type="hidden" id="Benchmark_Date_CFA" name="Date_cnc_benchmarking" />
+                                        <input type="hidden" id="Commercial_Date_Opening_Date_CFA" name="Date_commercial_bid_opening" />
+                                        <input type="hidden" id="CNC_Conclusion_Date_CFA" name="Date_cnc_conclusion" />
+                                        <input type="hidden" id="CNC_Report_Date_CFA" name="Date_cnc_report" />
+
+                                        <input type="hidden" id="date_DCN_Sentfor_CFA" name="date_DCN_Sentfor_InterMinisterialConsultations" />
+                                        <input type="hidden" id="date_MoF_Concurrence_CFA" name="date_MoF_Concurrence" />
+                                        <input type="hidden" id="date_DCN_submissionto_CCS_CFA" name="date_DCN_submissionto_CCS" />
+                                        <input type="hidden" id="ApproveToCSS_CFA_CFA" name="ApproveToCSS_CFA" />
+                                        @*<input type="hidden" id="DateContractSigning_CFA" name="DateContractSigning" />*@
+
+                                        @*Contract*@
+                                        <input type="hidden" id="date_approval_CFA_CCS_CFA" name="date_approval_CFA_CCS" />
+                                        <input type="hidden" id="date_ContractSigning_CFA" name="date_ContractSigning" />
+
+                                        @*Make-1*@
+                                        <input type="hidden" id="Eoi_DPRDateIssueMakeI_CFA" name="Eoi_DPRDateIssueMakeI" />
+                                        <input type="hidden" id="Eoi_DPRReceiptDateMakeI_CFA" name="Eoi_DPRReceiptDateMakeI" />
+                                        <input type="hidden" id="Eoi_DPRDateCompletionandResponseMakeI_CFA" name="Eoi_DPRDateCompletionandResponseMakeI" />
+                                        <input type="hidden" id="dtforwardingshortlistedDPMakeI_CFA" name="dtforwardingshortlistedDPMakeI" />
+                                        <input type="hidden" id="dateapprovalshortlistedvendorsMakeI_CFA" name="dateapprovalshortlistedvendorsMakeI" />
+
+                                        @*Make-II*@
+                                        <input type="hidden" id="DateIssueMake_II_CFA" name="DateIssueMake_II" />
+                                        <input type="hidden" id="EoiReceiptDateMake_II_CFA" name="EoiReceiptDateMake_II" />
+                                        <input type="hidden" id="EoiCompletionResponseMake_II_CFA" name="EoiCompletionResponseMake_II" />
+                                        <input type="hidden" id="dateApprovalEoiMake_II_CFA" name="dateApprovalEoiMake_II" />
+                                        <input type="hidden" id="dateissueProjectSenctionMake_II_CFA" name="dateissueProjectSenctionMake_II" />
+
+                                        @*DD*@
+                                        <input type="hidden" id="dateFormulationJPMT_DD_CFA" name="dateFormulationJPMT_DD" />
+                                        <input type="hidden" id="dateFormulationPMT_DD_CFA" name="dateFormulationPMT_DD" />
+                                        <input type="hidden" id="dateIdentificationDCPP_DD_CFA" name="dateIdentificationDCPP_DD" />
+                                        <input type="hidden" id="datedetaildesignbySHQ_DD_CFA" name="datedetaildesignbySHQ_DD" />
+                                        <input type="hidden" id="dateissuetrialdeveiation_DD_CFA" name="dateissuetrialdeveiation_DD" />
+                                        <input type="hidden" id="dateprojectReview_DD_CFA" name="dateprojectReview_DD" />
+                                        <input type="hidden" id="daterealisationPrototype_DD_CFA" name="daterealisationPrototype_DD" />
+                                        <input type="hidden" id="dateCommencementPSQR_CFA" name="dateCommencementPSQR" />
+                                        <input type="hidden" id="dateCulminationPSQRValid_DD_CFA" name="dateCulminationPSQRValid_DD" />
+
+
+                                        @*Selection Of DA*@
+
+                                        <input type="hidden" id="dateselectionDasbySHQ_dprbMakeI_CFA" name="dateselectionDasbySHQ_dprbMakeI" />
+                                        <input type="hidden" id="dateapprovalCFAfundingarrangementissueProjectMakeI_CFA" name="dateapprovalCFAfundingarrangementissueProjectMakeI" />
+
+                                        @*Development Prototype*@
+
+                                        <input type="hidden" id="datecommencementpreliminaryMakeI_CFA" name="datecommencementpreliminaryMakeI" />
+                                        <input type="hidden" id="datefinalisationdetaileddesign_CFA" name="datefinalisationdetaileddesign" />
+                                        <input type="hidden" id="datecommencementfabrication_devProMakeI_CFA" name="datecommencementfabrication_devProMakeI" />
+                                        <input type="hidden" id="datetechnicallimitedfieldstrialsMakeI_CFA" name="datetechnicallimitedfieldstrialsMakeI" />
+                                        <input type="hidden" id="datefreezingPSQRStoSQRSMakeI_CFA" name="datefreezingPSQRStoSQRSMakeI" />
+                                        <input type="hidden" id="dateintimationvendorssubmissionrevisedMakeI_CFA" name="dateintimationvendorssubmissionrevisedMakeI" />
+                                        <input type="hidden" id="datesubmissionrevisedcommercialoffersvendorsMakeI_CFA" name="datesubmissionrevisedcommercialoffersvendorsMakeI" />
+
+                                        @*Development Prototype (Make-II)*@
+
+                                        <input type="hidden" id="datecommencementDevPrototypeMakeII_CFA" name="datecommencementDevPrototypeMakeII" />
+                                        <input type="hidden" id="datecompletionDevPrototypeMakeII_CFA" name="datecompletionDevPrototypeMakeII" />
+                                        <input type="hidden" id="datecommencementUserTrialsMakeII_CFA" name="datecommencementUserTrialsMakeII" />
+                                        <input type="hidden" id="datecompletionUserTrialsRedinessReviewMakeII_CFA" name="datecompletionUserTrialsRedinessReviewMakeII" />
+                                        <input type="hidden" id="dateFreezingPSQRsMakeII_CFA" name="dateFreezingPSQRsMakeII" />
+
+
+                                        @*Selection Of DA Make-II*@
+
+                                        <input type="hidden" id="dateselectionDasbySHQ_dprbMakeII_CFA" name="dateselectionDasbySHQ_dprbMakeII" />
+                                        <input type="hidden" id="dateapprovalCFAfundingarrangementissueProjectMakeII_CFA" name="dateapprovalCFAfundingarrangementissueProjectMakeII" />
+
+                                        <button type="submit" class="btn btn-primary float-right"><i class="fas fa-save mr-1"></i>Save</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="Section8">
+                        @using (Html.BeginForm("StageProgressAcquisitionManager", "MOD", FormMethod.Post))
+                        {
+                            <table class="table">
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">DCN sent for Inter-Ministerial Constitution:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#date_DCN_submissionto_CCS').val(),this.value);" id="date_DCN_Sentfor" value="@Model.date_DCN_Sentfor_InterMinisterialConsultations" name="date_DCN_Sentfor_InterMinisterialConsultations" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">MOF Concurrence Date:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#date_DCN_Sentfor').val(),this.value);" id="date_MoF_Concurrence" value="@Model.date_MoF_Concurrence" name="date_MoF_Concurrence" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">DCN Submmition to CCS:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#date_MoF_Concurrence').val(),this.value);" id="date_DCN_submissionto_CCS" value="@Model.date_DCN_submissionto_CCS" name="date_DCN_submissionto_CCS" />
+                                    </td>
+                                </tr>
+                                @*<tr>
+                                        <td class="form-group">
+                                            <label for="birthday">Approval by CFA/CCS:</label>
+                                        </td>
+                                        <td class="form-group">
+                                            <input type="date" onchange="compareDate(this,$('#date_DCN_submissionto_CCS').val(),this.value);" id="ApproveToCSS_CFA" value="@Model.ApproveToCSS_CFA" name="ApproveToCSS_CFA" />
+                                        </td>
+                                    </tr>*@
+                                <tr>
+                                    <td />
+                                    <td class="">
+
+                                        <input type="hidden" id="aonid_DCN" name="aon_id" />
+                                        <input type="hidden" id="rfp_idDCN" name="rfp_id" />
+                                        <input type="hidden" id="type_DCN" name="type_rfp" />
+                                        <input type="hidden" id="draftRFPbySHQDCN" name="draft_rfp_date" />
+
+                                        <input type="hidden" id="date_submissionto_adgacq_DCN" name="date_submissionto_adgacq" />
+                                        <input type="hidden" id="date_acceptanceby_adgacq_DCN" name="date_acceptanceby_adgacq" />
+                                        <input type="hidden" id="date_collegiate_vetting_DCN" name="date_collegiate_vetting" />
+                                        <input type="hidden" id="date_issue_rfp_DCN" name="date_issue_rfp" />
+                                        <input type="hidden" id="date_prebid_meeting_DCN" name="date_prebid_meeting" />
+                                        <input type="hidden" id="date_prebid_replies_DCN" name="date_prebid_replies" />
+                                        <input type="hidden" id="lastdate_bidsubmission_DCN" name="lastdate_bidsubmission" />
+                                        <input type="hidden" id="date_bid_opening_DCN" name="date_bid_opening" />
+                                        <input type="hidden" id="date_rfp_approval_DCN" name="date_approval_rfp" />
+
+                                        <input type="hidden" id="extendedDate_DCN" name="ExtendedLastDate_BidSubmission" />
+
+                                        <input type="hidden" id="date_tec_constitution_DCN" name="date_tec_constitution" />
+                                        <input type="hidden" id="date_tec_commencement_DCN" name="date_tec_commencement" />
+                                        <input type="hidden" id="date_tec_completion_DCN" name="date_tec_completion" />
+                                        <input type="hidden" id="date_tec_reportsubmission_DCN" name="date_tec_reportsubmission" />
+                                        <input type="hidden" id="date_tec_approval_DCN" name="date_tec_approval" />
+
+                                        <input type="hidden" id="Report_Recived_DCN" name="Date_received_Fet" />
+                                        <input type="hidden" id="Report_Accepted_DCN" name="Date_accepted_Fet" />
+
+                                        <input type="hidden" id="Date_toc_Constitution_DCN" name="Date_toc_Constitution" />
+                                        <input type="hidden" id="Date_toc_report_DCN" name="Date_toc_report" />
+                                        <input type="hidden" id="Date_toc_acceptance_CompetantAuth_DCN" name="Date_toc_acceptance_CompetantAuth" />
+
+                                        <input type="hidden" id="cnc_Constitution_Date_DCN" name="Date_cnc_constitution" />
+                                        <input type="hidden" id="Benchmark_Date_DCN" name="Date_cnc_benchmarking" />
+                                        <input type="hidden" id="Commercial_Date_Opening_Date_DCN" name="Date_commercial_bid_opening" />
+                                        <input type="hidden" id="CNC_Conclusion_Date_DCN" name="Date_cnc_conclusion" />
+                                        <input type="hidden" id="CNC_Report_Date_DCN" name="Date_cnc_report" />
+
+                                        <input type="hidden" id="MoD_Acq_Approval_DCN" name="date_Submission_CFANote_DGacq" />
+                                        <input type="hidden" id="MoD_Fin_Concurrence_DCN" name="date_Acq_approvalforsending_to_MoDFin" />
+                                        <input type="hidden" id="Submmition_Date_to_CFA_DCN" name="date_submissionto_CFA" />
+                                        <input type="hidden" id="Approval_of_CFA_Note_proposal_DCN" name="date_Approval_CFAnote" />
+
+                                        @*Contract*@
+                                        <input type="hidden" id="date_approval_CFA_CCS_DCN" name="date_approval_CFA_CCS" />
+                                        <input type="hidden" id="date_ContractSigning_DCN" name="date_ContractSigning" />
+
+                                        @*Make-1*@
+                                        <input type="hidden" id="Eoi_DPRDateIssueMakeI_DCN" name="Eoi_DPRDateIssueMakeI" />
+                                        <input type="hidden" id="Eoi_DPRReceiptDateMakeI_DCN" name="Eoi_DPRReceiptDateMakeI" />
+                                        <input type="hidden" id="Eoi_DPRDateCompletionandResponseMakeI_DCN" name="Eoi_DPRDateCompletionandResponseMakeI" />
+                                        <input type="hidden" id="dtforwardingshortlistedDPMakeI_DCN" name="dtforwardingshortlistedDPMakeI" />
+                                        <input type="hidden" id="dateapprovalshortlistedvendorsMakeI_DCN" name="dateapprovalshortlistedvendorsMakeI" />
+
+                                        @*Make-II*@
+                                        <input type="hidden" id="DateIssueMake_II_DCN" name="DateIssueMake_II" />
+                                        <input type="hidden" id="EoiReceiptDateMake_II_DCN" name="EoiReceiptDateMake_II" />
+                                        <input type="hidden" id="EoiCompletionResponseMake_II_DCN" name="EoiCompletionResponseMake_II" />
+                                        <input type="hidden" id="dateApprovalEoiMake_II_DCN" name="dateApprovalEoiMake_II" />
+                                        <input type="hidden" id="dateissueProjectSenctionMake_II_DCN" name="dateissueProjectSenctionMake_II" />
+
+                                        @*DD*@
+                                        <input type="hidden" id="dateFormulationJPMT_DD_DCN" name="dateFormulationJPMT_DD" />
+                                        <input type="hidden" id="dateFormulationPMT_DD_DCN" name="dateFormulationPMT_DD" />
+                                        <input type="hidden" id="dateIdentificationDCPP_DD_DCN" name="dateIdentificationDCPP_DD" />
+                                        <input type="hidden" id="datedetaildesignbySHQ_DD_DCN" name="datedetaildesignbySHQ_DD" />
+                                        <input type="hidden" id="dateissuetrialdeveiation_DD_DCN" name="dateissuetrialdeveiation_DD" />
+                                        <input type="hidden" id="dateprojectReview_DD_DCN" name="dateprojectReview_DD" />
+                                        <input type="hidden" id="daterealisationPrototype_DD_DCN" name="daterealisationPrototype_DD" />
+                                        <input type="hidden" id="dateCommencementPSQR_DCN" name="dateCommencementPSQR" />
+                                        <input type="hidden" id="dateCulminationPSQRValid_DD_DCN" name="dateCulminationPSQRValid_DD" />
+
+                                        @*Selection Of DA*@
+
+                                        <input type="hidden" id="dateselectionDasbySHQ_dprbMakeI_DCN" name="dateselectionDasbySHQ_dprbMakeI" />
+                                        <input type="hidden" id="dateapprovalCFAfundingarrangementissueProjectMakeI_DCN" name="dateapprovalCFAfundingarrangementissueProjectMakeI" />
+
+                                        @*Development Prototype*@
+
+                                        <input type="hidden" id="datecommencementpreliminaryMakeI_DCN" name="datecommencementpreliminaryMakeI" />
+                                        <input type="hidden" id="datefinalisationdetaileddesign_DCN" name="datefinalisationdetaileddesign" />
+                                        <input type="hidden" id="datecommencementfabrication_devProMakeI_DCN" name="datecommencementfabrication_devProMakeI" />
+                                        <input type="hidden" id="datetechnicallimitedfieldstrialsMakeI_DCN" name="datetechnicallimitedfieldstrialsMakeI" />
+                                        <input type="hidden" id="datefreezingPSQRStoSQRSMakeI_DCN" name="datefreezingPSQRStoSQRSMakeI" />
+                                        <input type="hidden" id="dateintimationvendorssubmissionrevisedMakeI_DCN" name="dateintimationvendorssubmissionrevisedMakeI" />
+                                        <input type="hidden" id="datesubmissionrevisedcommercialoffersvendorsMakeI_DCN" name="datesubmissionrevisedcommercialoffersvendorsMakeI" />
+
+                                        @*Development Prototype (Make-II)*@
+
+                                        <input type="hidden" id="datecommencementDevPrototypeMakeII_DCN" name="datecommencementDevPrototypeMakeII" />
+                                        <input type="hidden" id="datecompletionDevPrototypeMakeII_DCN" name="datecompletionDevPrototypeMakeII" />
+                                        <input type="hidden" id="datecommencementUserTrialsMakeII_DCN" name="datecommencementUserTrialsMakeII" />
+                                        <input type="hidden" id="datecompletionUserTrialsRedinessReviewMakeII_DCN" name="datecompletionUserTrialsRedinessReviewMakeII" />
+                                        <input type="hidden" id="dateFreezingPSQRsMakeII_DCN" name="dateFreezingPSQRsMakeII" />
+
+                                        @*Selection Of DA Make-II*@
+
+                                        <input type="hidden" id="dateselectionDasbySHQ_dprbMakeII_DCN" name="dateselectionDasbySHQ_dprbMakeII" />
+                                        <input type="hidden" id="dateapprovalCFAfundingarrangementissueProjectMakeII_DCN" name="dateapprovalCFAfundingarrangementissueProjectMakeII" />
+
+                                        <button type="submit" class="btn btn-primary float-right"><i class="fas fa-save mr-1"></i>Save</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="Section9">
+                        @using (Html.BeginForm("StageProgressAcquisitionManager", "MOD", FormMethod.Post))
+                        {
+                            <table class="table">
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">Approval of CFA/CCS:</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" id="date_approval_CFA_CCS" value="@Model.date_approval_CFA_CCS" name="date_approval_CFA_CCS" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">Date of contract signing :</label>
+                                    </td>
+                                    <td class="form-group">
+                                        <input type="date" onchange="compareDate(this,$('#date_approval_CFA_CCS').val(),this.value);" id="date_ContractSigning" value="@Model.date_ContractSigning" name="date_ContractSigning" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="form-group">
+                                        <label for="birthday">contract Vendor:</label>
+                                    </td>
+                                    <td class="form-group ">
+                                        @*@Html.ListBoxFor(model => Model.SelectedIDArray, new MultiSelectList(Model.ContractVendorList, "VendorId", "VendorName"), new { @style = "width: 172px;", @class = " form-control", id = "normalDropDown", multiple = "multiple" })*@
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 ml-3">
+
+                                                <select id="multiselect" class="vendorDropDownCls" multiple="multiple" name="SelectedIDArray">
+
+                                                    @foreach (var item in Model.ContractVendorList)
+                                                    {
+
+                                                        <option value="@item.vendorID">
+                                                            @item.VendorName
+                                                        </option>
+
+                                                    }
+
+                                                </select>
+                                                @*<select id="SOCDesription" multiple="multiple" required=required name="SelectedIDArray" class="form-control selectDrp">
+
+                                                        @foreach (var item in Model.VendorList)
+                                                        {
+
+                                                            <option value="@item.vendorID">
+                                                                @item.VendorName
+                                                            </option>
+
+                                                        }
+
+                                                    </select>*@
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td />
+                                    <td class="">
+
+                                        <input type="hidden" id="aonid_Cont" name="aon_id" />
+                                        <input type="hidden" id="rfp_idCont" name="rfp_id" />
+                                        <input type="hidden" id="type_Cont" name="type_rfp" />
+                                        <input type="hidden" id="draftRFPbySHQCont" name="draft_rfp_date" />
+
+                                        <input type="hidden" id="date_submissionto_adgacq_Cont" name="date_submissionto_adgacq" />
+                                        <input type="hidden" id="date_acceptanceby_adgacq_Cont" name="date_acceptanceby_adgacq" />
+                                        <input type="hidden" id="date_collegiate_vetting_Cont" name="date_collegiate_vetting" />
+                                        <input type="hidden" id="date_issue_rfp_Cont" name="date_issue_rfp" />
+                                        <input type="hidden" id="date_prebid_meeting_Cont" name="date_prebid_meeting" />
+                                        <input type="hidden" id="date_prebid_replies_Cont" name="date_prebid_replies" />
+                                        <input type="hidden" id="lastdate_bidsubmission_Cont" name="lastdate_bidsubmission" />
+                                        <input type="hidden" id="date_bid_opening_Cont" name="date_bid_opening" />
+                                        <input type="hidden" id="date_rfp_approval_Cont" name="date_approval_rfp" />
+
+                                        <input type="hidden" id="extendedDate_Cont" name="ExtendedLastDate_BidSubmission" />
+
+                                        <input type="hidden" id="date_tec_constitution_Cont" name="date_tec_constitution" />
+                                        <input type="hidden" id="date_tec_commencement_Cont" name="date_tec_commencement" />
+                                        <input type="hidden" id="date_tec_completion_Cont" name="date_tec_completion" />
+                                        <input type="hidden" id="date_tec_reportsubmission_Cont" name="date_tec_reportsubmission" />
+                                        <input type="hidden" id="date_tec_approval_Cont" name="date_tec_approval" />
+
+                                        <input type="hidden" id="Report_Recived_Cont" name="Date_received_Fet" />
+                                        <input type="hidden" id="Report_Accepted_Cont" name="Date_accepted_Fet" />
+
+                                        <input type="hidden" id="Date_toc_Constitution_Cont" name="Date_toc_Constitution" />
+                                        <input type="hidden" id="Date_toc_report_Cont" name="Date_toc_report" />
+                                        <input type="hidden" id="Date_toc_acceptance_CompetantAuth_Cont" name="Date_toc_acceptance_CompetantAuth" />
+
+                                        <input type="hidden" id="cnc_Constitution_Date_Cont" name="Date_cnc_constitution" />
+                                        <input type="hidden" id="Benchmark_Date_Cont" name="Date_cnc_benchmarking" />
+                                        <input type="hidden" id="Commercial_Date_Opening_Date_Cont" name="Date_commercial_bid_opening" />
+                                        <input type="hidden" id="CNC_Conclusion_Date_Cont" name="Date_cnc_conclusion" />
+                                        <input type="hidden" id="CNC_Report_Date_Cont" name="Date_cnc_report" />
+
+                                        <input type="hidden" id="MoD_Acq_Approval_Cont" name="date_Submission_CFANote_DGacq" />
+                                        <input type="hidden" id="MoD_Fin_Concurrence_Cont" name="date_Acq_approvalforsending_to_MoDFin" />
+                                        <input type="hidden" id="Submmition_Date_to_CFA_Cont" name="date_submissionto_CFA" />
+                                        <input type="hidden" id="Approval_of_CFA_Note_proposal_Cont" name="date_Approval_CFAnote" />
+
+                                        <input type="hidden" id="date_DCN_Sentfor_Cont" name="date_DCN_Sentfor_InterMinisterialConsultations" />
+                                        <input type="hidden" id="date_MoF_Concurrence_Cont" name="date_MoF_Concurrence" />
+                                        <input type="hidden" id="date_DCN_submissionto_CCS_Cont" name="date_DCN_submissionto_CCS" />
+                                        <input type="hidden" id="ApproveToCSS_CFA_Cont" name="ApproveToCSS_CFA" />
+                                        <input type="hidden" id="DateContractSigning_Cont" name="DateContractSigning" />
+
+                                        @*Make-1*@
+                                        <input type="hidden" id="Eoi_DPRDateIssueMakeI_Cont" name="Eoi_DPRDateIssueMakeI" />
+                                        <input type="hidden" id="Eoi_DPRReceiptDateMakeI_Cont" name="Eoi_DPRReceiptDateMakeI" />
+                                        <input type="hidden" id="Eoi_DPRDateCompletionandResponseMakeI_Cont" name="Eoi_DPRDateCompletionandResponseMakeI" />
+                                        <input type="hidden" id="dtforwardingshortlistedDPMakeI_Cont" name="dtforwardingshortlistedDPMakeI" />
+                                        <input type="hidden" id="dateapprovalshortlistedvendorsMakeI_Cont" name="dateapprovalshortlistedvendorsMakeI" />
+
+                                        @*Make-II*@
+                                        <input type="hidden" id="DateIssueMake_II_Cont" name="DateIssueMake_II" />
+                                        <input type="hidden" id="EoiReceiptDateMake_II_Cont" name="EoiReceiptDateMake_II" />
+                                        <input type="hidden" id="EoiCompletionResponseMake_II_Cont" name="EoiCompletionResponseMake_II" />
+                                        <input type="hidden" id="dateApprovalEoiMake_II_Cont" name="dateApprovalEoiMake_II" />
+                                        <input type="hidden" id="dateissueProjectSenctionMake_II_Cont" name="dateissueProjectSenctionMake_II" />
+
+                                        @*DD*@
+                                        <input type="hidden" id="dateFormulationJPMT_DD_Cont" name="dateFormulationJPMT_DD" />
+                                        <input type="hidden" id="dateFormulationPMT_DD_Cont" name="dateFormulationPMT_DD" />
+                                        <input type="hidden" id="dateIdentificationDCPP_DD_Cont" name="dateIdentificationDCPP_DD" />
+                                        <input type="hidden" id="datedetaildesignbySHQ_DD_Cont" name="datedetaildesignbySHQ_DD" />
+                                        <input type="hidden" id="dateissuetrialdeveiation_DD_Cont" name="dateissuetrialdeveiation_DD" />
+                                        <input type="hidden" id="dateprojectReview_DD_Cont" name="dateprojectReview_DD" />
+                                        <input type="hidden" id="daterealisationPrototype_DD_Cont" name="daterealisationPrototype_DD" />
+                                        <input type="hidden" id="dateCommencementPSQR_Cont" name="dateCommencementPSQR" />
+                                        <input type="hidden" id="dateCulminationPSQRValid_DD_Cont" name="dateCulminationPSQRValid_DD" />
+
+                                        @*Selection Of DA*@
+
+                                        <input type="hidden" id="dateselectionDasbySHQ_dprbMakeI_Cont" name="dateselectionDasbySHQ_dprbMakeI" />
+                                        <input type="hidden" id="dateapprovalCFAfundingarrangementissueProjectMakeI_Cont" name="dateapprovalCFAfundingarrangementissueProjectMakeI" />
+
+                                        @*Development Prototype*@
+
+                                        <input type="hidden" id="datecommencementpreliminaryMakeI_Cont" name="datecommencementpreliminaryMakeI" />
+                                        <input type="hidden" id="datefinalisationdetaileddesign_Cont" name="datefinalisationdetaileddesign" />
+                                        <input type="hidden" id="datecommencementfabrication_devProMakeI_Cont" name="datecommencementfabrication_devProMakeI" />
+                                        <input type="hidden" id="datetechnicallimitedfieldstrialsMakeI_Cont" name="datetechnicallimitedfieldstrialsMakeI" />
+                                        <input type="hidden" id="datefreezingPSQRStoSQRSMakeI_Cont" name="datefreezingPSQRStoSQRSMakeI" />
+                                        <input type="hidden" id="dateintimationvendorssubmissionrevisedMakeI_Cont" name="dateintimationvendorssubmissionrevisedMakeI" />
+                                        <input type="hidden" id="datesubmissionrevisedcommercialoffersvendorsMakeI_Cont" name="datesubmissionrevisedcommercialoffersvendorsMakeI" />
+
+                                        @*Development Prototype (Make-II)*@
+
+                                        <input type="hidden" id="datecommencementDevPrototypeMakeII_Cont" name="datecommencementDevPrototypeMakeII" />
+                                        <input type="hidden" id="datecompletionDevPrototypeMakeII_Cont" name="datecompletionDevPrototypeMakeII" />
+                                        <input type="hidden" id="datecommencementUserTrialsMakeII_Cont" name="datecommencementUserTrialsMakeII" />
+                                        <input type="hidden" id="datecompletionUserTrialsRedinessReviewMakeII_Cont" name="datecompletionUserTrialsRedinessReviewMakeII" />
+                                        <input type="hidden" id="dateFreezingPSQRsMakeII_Cont" name="dateFreezingPSQRsMakeII" />
+
+                                        @*Selection Of DA Make-II*@
+
+                                        <input type="hidden" id="dateselectionDasbySHQ_dprbMakeII_Cont" name="dateselectionDasbySHQ_dprbMakeII" />
+                                        <input type="hidden" id="dateapprovalCFAfundingarrangementissueProjectMakeII_Cont" name="dateapprovalCFAfundingarrangementissueProjectMakeII" />
+
+
+                                        <button type="submit" class="btn btn-primary float-right"><i class="fas fa-save mr-1"></i>Save</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
+<script src="~/assets/js/chosen.jquery.min.js"></script>
+<link href="~/assets/css/chosen.min.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        $("#aon_id").chosen({
+        });
+            if ('@ViewBag.Message' === "Data Update Successfully") {
+            alert("Data Update Successfully");
+            //$('#lblmsg').html("Data Update Successfully");
+            //$('#myModal2').modal({
+            //    display: 'show',
+            //    backdrop: 'static',
+            //    keyboard: false
+            //});
+        }
+        if ('@ViewBag.Message' === "Data Save Successfully") {
+            alert("Data Update Successfully");
+            //$('#lblmsgName').html("Data Update Successfully");
+            //$('#myModal2').modal({
+            //    display: 'show',
+            //    backdrop: 'static',
+            //    keyboard: false
+            //});
+        }
+        $("#normalDropDown").chosen({
+            //disable_search: true
+            //disable_search: true
+        });
+        $("#aon_id").chosen({
+            //disable_search: true
+            //disable_search: true
+        });
+    })
+
+    function SearchDrop() {
+        var drpdn = $('#aon_id').val();
+        debugger
+        if (drpdn != '') {
+            $('#aonid').val(drpdn);
+            $('#aonid_CFA').val(drpdn);
+            $('#aonid_DCN').val(drpdn);
+            $('#aonid_Cont').val(drpdn);
+            $("#displayTab").show();
+        }
+        else {
+            alert("Select AoN ");
+        }
+    }
+
+    // Compare Date Function
+
+    function compareDate(selfObj, sDate, eDate) {
+
+        if (sDate != '' && eDate != '') {
+            if (Date.parse(sDate) > Date.parse(eDate)) {
+                alert("You Can Not Select Previous Date!");
+                $(selfObj).val('');
+            }
+        }
+    }
+
+    function GetRecords() {
+        var uniqId = $("#aon_id").val();
+        var drpdn = $('#aon_id').val();
+        debugger
+        $.get("/MOD/GetRecordById/" + uniqId, function (data, status) {
+            var data = JSON.parse(data);
+
+            if (data != null) {
+                var ids = data.ContractVendorList;
+                var maxid = 0;
+                var slectedIds = new Array();
+                for (var i = 0; i < ids.length; i++) {
+                    slectedIds.push(ids[i].vendorID);
+                    maxid = ids[i].type_ID;
+                }
+
+                var mainIds = data.VendorMaster;
+                //var dropDownHtml = '<select class="form-control" id = "normalDropDown" multiple = "multiple" name = "SelectedIDArray" style = "width: 172px; display: none;" >';
+                debugger
+                var dropDownHtml = '';
+                for (var i = 0; i < mainIds.length; i++) {
+                    //console.log(mainIds[i].vendorID);
+                    var id = mainIds[i].vendorID;
+                    if (slectedIds.indexOf(mainIds[i].vendorID) !== -1) {
+                        dropDownHtml += '<option selected value=' + mainIds[i].vendorID + '>' + mainIds[i].VendorName + '</option>';
+                        /*$(".multiselect-container li").find("input[value=" + mainIds[i].vendorID + "]").prop("checked", "checked");*/
+                    } else {
+                        dropDownHtml += '<option  value=' + mainIds[i].vendorID + '>' + mainIds[i].VendorName + '</option>';
+                    }
+                }
+
+                if (data.rfp_id) {
+                    $(".vendorDropDownCls").empty();
+                    $(".vendorDropDownCls").append(dropDownHtml);
+                    $(".vendorDropDownCls").multiselect('rebuild');
+
+
+                }
+
+                // Edit CNC Data
+                $("#cnc_Constitution_Date").val(data.Date_cnc_constitution);
+                $("#Benchmark_Date").val(data.Date_cnc_benchmarking);
+                $("#Commercial_Date_Opening_Date").val(data.Date_commercial_bid_opening);
+                $("#CNC_Conclusion_Date").val(data.Date_cnc_conclusion);
+                $("#CNC_Report_Date").val(data.Date_cnc_report);
+
+                // CNC Tab
+                $("#rfp_idCNC").val(data.rfp_id);
+                $("#type_CNC").val(data.type_rfp);
+                $("#draftRFPbySHQCNC").val(data.draft_rfp_date);
+                $("#date_submissionto_adgacq_CNC").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacq_CNC").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vetting_CNC").val(data.date_collegiate_vetting);
+                $("#date_issue_rfp_CNC").val(data.date_issue_rfp);
+                $("#date_prebid_meeting_CNC").val(data.date_prebid_meeting);
+                $("#date_prebid_replies_CNC").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmission_CNC").val(data.lastdate_bidsubmission);
+                $("#date_bid_opening_CNC").val(data.date_bid_opening);
+                $("#date_rfp_approval_CNC").val(data.date_approval_rfp);
+
+                $("#extendedDate_CNC").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#date_tec_constitution_CNC").val(data.date_tec_constitution);
+                $("#date_tec_commencement_CNC").val(data.date_tec_commencement);
+                $("#date_tec_completion_CNC").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_CNC").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_CNC").val(data.date_tec_approval);
+
+                $("#Report_Recived_CNC").val(data.Date_received_Fet);
+                $("#Report_Accepted_CNC").val(data.Date_accepted_Fet);
+
+                $("#Date_toc_Constitution_CNC").val(data.Date_toc_Constitution);
+                $("#Date_toc_report_CNC").val(data.Date_toc_report);
+                $("#Date_toc_acceptance_CompetantAuth_CNC").val(data.Date_toc_acceptance_CompetantAuth);
+
+                // Make-1
+                $("#Eoi_DPRDateIssueMakeI_CNC").val(data.Eoi_DPRDateIssueMakeI);
+                $("#Eoi_DPRReceiptDateMakeI_CNC").val(data.Eoi_DPRReceiptDateMakeI);
+                $("#Eoi_DPRDateCompletionandResponseMakeI_CNC").val(data.Eoi_DPRDateCompletionandResponseMakeI);
+                $("#dtforwardingshortlistedDPMakeI_CNC").val(data.dtforwardingshortlistedDPMakeI);
+                $("#dateapprovalshortlistedvendorsMakeI_CNC").val(data.dateapprovalshortlistedvendorsMakeI);
+
+                // Make-II
+                $("#DateIssueMake_II_CNC").val(data.DateIssueMake_II);
+                $("#EoiReceiptDateMake_II_CNC").val(data.EoiReceiptDateMake_II);
+                $("#EoiCompletionResponseMake_II_CNC").val(data.EoiCompletionResponseMake_II);
+                $("#dateApprovalEoiMake_II_CNC").val(data.dateApprovalEoiMake_II);
+                $("#dateissueProjectSenctionMake_II_CNC").val(data.dateissueProjectSenctionMake_II);
+
+                // DD
+                $("#dateFormulationJPMT_DD_CNC").val(data.dateFormulationJPMT_DD);
+                $("#dateFormulationPMT_DD_CNC").val(data.dateFormulationPMT_DD);
+                $("#dateIdentificationDCPP_DD_CNC").val(data.dateIdentificationDCPP_DD);
+                $("#datedetaildesignbySHQ_DD_CNC").val(data.datedetaildesignbySHQ_DD);
+                $("#dateissuetrialdeveiation_DD_CNC").val(data.dateissuetrialdeveiation_DD);
+                $("#dateprojectReview_DD_CNC").val(data.dateprojectReview_DD);
+                $("#daterealisationPrototype_DD_CNC").val(data.daterealisationPrototype_DD);
+                $("#dateCommencementPSQR_CNC").val(data.dateCommencementPSQR);
+                $("#dateCulminationPSQRValid_DD_CNC").val(data.dateCulminationPSQRValid_DD);
+
+                // Selection Of DA
+                $("#dateselectionDasbySHQ_dprbMakeI_CNC").val(data.dateselectionDasbySHQ_dprbMakeI);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeI_CNC").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
+
+                // Development of Prototype
+
+                $("#datecommencementpreliminaryMakeI_CNC").val(data.datecommencementpreliminaryMakeI);
+                $("#datefinalisationdetaileddesign_CNC").val(data.datefinalisationdetaileddesign);
+                $("#datecommencementfabrication_devProMakeI_CNC").val(data.datecommencementfabrication_devProMakeI);
+                $("#datetechnicallimitedfieldstrialsMakeI_CNC").val(data.datetechnicallimitedfieldstrialsMakeI);
+                $("#datefreezingPSQRStoSQRSMakeI_CNC").val(data.datefreezingPSQRStoSQRSMakeI);
+                $("#dateintimationvendorssubmissionrevisedMakeI_CNC").val(data.dateintimationvendorssubmissionrevisedMakeI);
+                $("#datesubmissionrevisedcommercialoffersvendorsMakeI_CNC").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
+
+                // Development of Prototype(Make-II)
+
+                $("#datecommencementDevPrototypeMakeII_CNC").val(data.datecommencementDevPrototypeMakeII);
+                $("#datecompletionDevPrototypeMakeII_CNC").val(data.datecompletionDevPrototypeMakeII);
+                $("#datecommencementUserTrialsMakeII_CNC").val(data.datecommencementUserTrialsMakeII);
+                $("#datecompletionUserTrialsRedinessReviewMakeII_CNC").val(data.datecompletionUserTrialsRedinessReviewMakeII);
+                $("#dateFreezingPSQRsMakeII_CNC").val(data.dateFreezingPSQRsMakeII);
+
+            @* Selection Of DA Make - II *@
+
+                $("#dateselectionDasbySHQ_dprbMakeII_CNC").val(data.dateselectionDasbySHQ_dprbMakeII);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeII_CNC").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
+
+
+
+
+
+
+
+                // CFA Tab
+                $("#aonid_CFA").val(drpdn)
+                $("#rfp_idCFA").val(data.rfp_id);
+                $("#type_CFA").val(data.type_rfp);
+                $("#draftRFPbySHQCFA").val(data.draft_rfp_date);
+                $("#date_submissionto_adgacq_CFA").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacq_CFA").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vetting_CFA").val(data.date_collegiate_vetting);
+                $("#date_issue_rfp_CFA").val(data.date_issue_rfp);
+                $("#date_prebid_meeting_CFA").val(data.date_prebid_meeting);
+                $("#date_prebid_replies_CFA").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmission_CFA").val(data.lastdate_bidsubmission);
+                $("#date_bid_opening_CFA").val(data.date_bid_opening);
+                $("#date_rfp_approval_CFA").val(data.date_approval_rfp);
+
+                $("#extendedDate_CFA").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#date_tec_constitution_CFA").val(data.date_tec_constitution);
+                $("#date_tec_commencement_CFA").val(data.date_tec_commencement);
+                $("#date_tec_completion_CFA").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_CFA").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_CFA").val(data.date_tec_approval);
+
+                $("#Report_Recived_CFA").val(data.Date_received_Fet);
+                $("#Report_Accepted_CFA").val(data.Date_accepted_Fet);
+
+                $("#Date_toc_Constitution_CFA").val(data.Date_toc_Constitution);
+                $("#Date_toc_report_CFA").val(data.Date_toc_report);
+                $("#Date_toc_acceptance_CompetantAuth_CFA").val(data.Date_toc_acceptance_CompetantAuth);
+
+                $("#cnc_Constitution_Date_CFA").val(data.Date_cnc_constitution);
+                $("#Benchmark_Date_CFA").val(data.Date_cnc_benchmarking);
+                $("#Commercial_Date_Opening_Date_CFA").val(data.Date_commercial_bid_opening);
+                $("#CNC_Conclusion_Date_CFA").val(data.Date_cnc_conclusion);
+                $("#CNC_Report_Date_CFA").val(data.Date_cnc_report);
+
+                //Edit CFA
+                $("#MoD_Acq_Approval").val(data.date_Submission_CFANote_DGacq);
+                $("#MoD_Fin_Concurrence").val(data.date_Acq_approvalforsending_to_MoDFin);
+                $("#Submmition_Date_to_CFA").val(data.date_submissionto_CFA);
+                $("#Approval_of_CFA_Note_proposal").val(data.date_Approval_CFAnote);
+
+                $("#MoD_Acq_Approval_CNC").val(data.date_Submission_CFANote_DGacq);
+                $("#MoD_Fin_Concurrence_CNC").val(data.date_Acq_approvalforsending_to_MoDFin);
+                $("#Submmition_Date_to_CFA_CNC").val(data.date_submissionto_CFA);
+                $("#Approval_of_CFA_Note_proposal_CNC").val(data.date_Approval_CFAnote);
+
+
+                $("#date_DCN_Sentfor_CNC").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
+                $("#date_MoF_Concurrence_CNC").val(data.date_MoF_Concurrence);
+                $("#date_DCN_submissionto_CCS_CNC").val(data.date_DCN_submissionto_CCS);
+                $("#ApproveToCSS_CFA_CNC").val(data.ApproveToCSS_CFA);
+                $("#DateContractSigning_CNC").val(data.DateContractSigning);
+
+                $("#date_approval_CFA_CCS_CNC").val(data.date_approval_CFA_CCS);
+                $("#date_ContractSigning_CNC").val(data.date_ContractSigning);
+
+                $("#date_DCN_Sentfor_CFA").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
+                $("#date_MoF_Concurrence_CFA").val(data.date_MoF_Concurrence);
+                $("#date_DCN_submissionto_CCS_CFA").val(data.date_DCN_submissionto_CCS);
+                $("#ApproveToCSS_CFA_CFA").val(data.ApproveToCSS_CFA);
+                $("#DateContractSigning_CFA").val(data.DateContractSigning);
+
+                $("#date_approval_CFA_CCS_CFA").val(data.date_approval_CFA_CCS);
+                $("#date_ContractSigning_CFA").val(data.date_ContractSigning);
+
+                // Make-1
+                $("#Eoi_DPRDateIssueMakeI_CFA").val(data.Eoi_DPRDateIssueMakeI);
+                $("#Eoi_DPRReceiptDateMakeI_CFA").val(data.Eoi_DPRReceiptDateMakeI);
+                $("#Eoi_DPRDateCompletionandResponseMakeI_CFA").val(data.Eoi_DPRDateCompletionandResponseMakeI);
+                $("#dtforwardingshortlistedDPMakeI_CFA").val(data.dtforwardingshortlistedDPMakeI);
+                $("#dateapprovalshortlistedvendorsMakeI_CFA").val(data.dateapprovalshortlistedvendorsMakeI);
+
+                // Make-II
+                $("#DateIssueMake_II_CFA").val(data.DateIssueMake_II);
+                $("#EoiReceiptDateMake_II_CFA").val(data.EoiReceiptDateMake_II);
+                $("#EoiCompletionResponseMake_II_CFA").val(data.EoiCompletionResponseMake_II);
+                $("#dateApprovalEoiMake_II_CFA").val(data.dateApprovalEoiMake_II);
+                $("#dateissueProjectSenctionMake_II_CFA").val(data.dateissueProjectSenctionMake_II);
+
+                // DD
+                $("#dateFormulationJPMT_DD_CFA").val(data.dateFormulationJPMT_DD);
+                $("#dateFormulationPMT_DD_CFA").val(data.dateFormulationPMT_DD);
+                $("#dateIdentificationDCPP_DD_CFA").val(data.dateIdentificationDCPP_DD);
+                $("#datedetaildesignbySHQ_DD_CFA").val(data.datedetaildesignbySHQ_DD);
+                $("#dateissuetrialdeveiation_DD_CFA").val(data.dateissuetrialdeveiation_DD);
+                $("#dateprojectReview_DD_CFA").val(data.dateprojectReview_DD);
+                $("#daterealisationPrototype_DD_CFA").val(data.daterealisationPrototype_DD);
+                $("#dateCommencementPSQR_CFA").val(data.dateCommencementPSQR);
+                $("#dateCulminationPSQRValid_DD_CFA").val(data.dateCulminationPSQRValid_DD);
+
+                // Selection Of DA
+                $("#dateselectionDasbySHQ_dprbMakeI_CFA").val(data.dateselectionDasbySHQ_dprbMakeI);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeI_CFA").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
+
+                // Development of Prototype
+
+                $("#datecommencementpreliminaryMakeI_CFA").val(data.datecommencementpreliminaryMakeI);
+                $("#datefinalisationdetaileddesign_CFA").val(data.datefinalisationdetaileddesign);
+                $("#datecommencementfabrication_devProMakeI_CFA").val(data.datecommencementfabrication_devProMakeI);
+                $("#datetechnicallimitedfieldstrialsMakeI_CFA").val(data.datetechnicallimitedfieldstrialsMakeI);
+                $("#datefreezingPSQRStoSQRSMakeI_CFA").val(data.datefreezingPSQRStoSQRSMakeI);
+                $("#dateintimationvendorssubmissionrevisedMakeI_CFA").val(data.dateintimationvendorssubmissionrevisedMakeI);
+                $("#datesubmissionrevisedcommercialoffersvendorsMakeI_CFA").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
+
+                // Development of Prototype(Make-II)
+
+                $("#datecommencementDevPrototypeMakeII_CFA").val(data.datecommencementDevPrototypeMakeII);
+                $("#datecompletionDevPrototypeMakeII_CFA").val(data.datecompletionDevPrototypeMakeII);
+                $("#datecommencementUserTrialsMakeII_CFA").val(data.datecommencementUserTrialsMakeII);
+                $("#datecompletionUserTrialsRedinessReviewMakeII_CFA").val(data.datecompletionUserTrialsRedinessReviewMakeII);
+                $("#dateFreezingPSQRsMakeII_CFA").val(data.dateFreezingPSQRsMakeII);
+
+            @* Selection Of DA Make - II *@
+
+                $("#dateselectionDasbySHQ_dprbMakeII_CFA").val(data.dateselectionDasbySHQ_dprbMakeII);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeII_CFA").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
+
+
+
+                // DCN
+                $("#aonid_DCN").val(drpdn)
+                $("#rfp_idDCN").val(data.rfp_id);
+                $("#type_DCN").val(data.type_rfp);
+                $("#draftRFPbySHQDCN").val(data.draft_rfp_date);
+
+                $("#date_submissionto_adgacq_DCN").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacq_DCN").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vetting_DCN").val(data.date_collegiate_vetting);
+                $("#date_issue_rfp_DCN").val(data.date_issue_rfp);
+                $("#date_prebid_meeting_DCN").val(data.date_prebid_meeting);
+                $("#date_prebid_replies_DCN").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmission_DCN").val(data.lastdate_bidsubmission);
+                $("#date_bid_opening_DCN").val(data.date_bid_opening);
+                $("#date_rfp_approval_DCN").val(data.date_approval_rfp);
+
+                $("#extendedDate_DCN").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#date_tec_constitution_DCN").val(data.date_tec_constitution);
+                $("#date_tec_commencement_DCN").val(data.date_tec_commencement);
+                $("#date_tec_completion_DCN").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_DCN").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_DCN").val(data.date_tec_approval);
+
+                $("#Report_Recived_DCN").val(data.Date_received_Fet);
+                $("#Report_Accepted_DCN").val(data.Date_accepted_Fet);
+
+                $("#Date_toc_Constitution_DCN").val(data.Date_toc_Constitution);
+                $("#Date_toc_report_DCN").val(data.Date_toc_report);
+                $("#Date_toc_acceptance_CompetantAuth_DCN").val(data.Date_toc_acceptance_CompetantAuth);
+
+                $("#cnc_Constitution_Date_DCN").val(data.Date_cnc_constitution);
+                $("#Benchmark_Date_DCN").val(data.Date_cnc_benchmarking);
+                $("#Commercial_Date_Opening_Date_DCN").val(data.Date_commercial_bid_opening);
+                $("#CNC_Conclusion_Date_DCN").val(data.Date_cnc_conclusion);
+                $("#CNC_Report_Date_DCN").val(data.Date_cnc_report);
+
+                $("#MoD_Acq_Approval_DCN").val(data.date_Submission_CFANote_DGacq);
+                $("#MoD_Fin_Concurrence_DCN").val(data.date_Acq_approvalforsending_to_MoDFin);
+                $("#Submmition_Date_to_CFA_DCN").val(data.date_submissionto_CFA);
+                $("#Approval_of_CFA_Note_proposal_DCN").val(data.date_Approval_CFAnote);
+
+                $("#date_approval_CFA_CCS_DCN").val(data.date_approval_CFA_CCS);
+                $("#date_ContractSigning_DCN").val(data.date_ContractSigning);
+
+                // Make-1
+                $("#Eoi_DPRDateIssueMakeI_DCN").val(data.Eoi_DPRDateIssueMakeI);
+                $("#Eoi_DPRReceiptDateMakeI_DCN").val(data.Eoi_DPRReceiptDateMakeI);
+                $("#Eoi_DPRDateCompletionandResponseMakeI_DCN").val(data.Eoi_DPRDateCompletionandResponseMakeI);
+                $("#dtforwardingshortlistedDPMakeI_DCN").val(data.dtforwardingshortlistedDPMakeI);
+                $("#dateapprovalshortlistedvendorsMakeI_DCN").val(data.dateapprovalshortlistedvendorsMakeI);
+
+                // Make-II
+                $("#DateIssueMake_II_DCN").val(data.DateIssueMake_II);
+                $("#EoiReceiptDateMake_II_DCN").val(data.EoiReceiptDateMake_II);
+                $("#EoiCompletionResponseMake_II_DCN").val(data.EoiCompletionResponseMake_II);
+                $("#dateApprovalEoiMake_II_DCN").val(data.dateApprovalEoiMake_II);
+                $("#dateissueProjectSenctionMake_II_DCN").val(data.dateissueProjectSenctionMake_II);
+
+                // DD
+                $("#dateFormulationJPMT_DD_DCN").val(data.dateFormulationJPMT_DD);
+                $("#dateFormulationPMT_DD_DCN").val(data.dateFormulationPMT_DD);
+                $("#dateIdentificationDCPP_DD_DCN").val(data.dateIdentificationDCPP_DD);
+                $("#datedetaildesignbySHQ_DD_DCN").val(data.datedetaildesignbySHQ_DD);
+                $("#dateissuetrialdeveiation_DD_DCN").val(data.dateissuetrialdeveiation_DD);
+                $("#dateprojectReview_DD_DCN").val(data.dateprojectReview_DD);
+                $("#daterealisationPrototype_DD_DCN").val(data.daterealisationPrototype_DD);
+                $("#dateCommencementPSQR_DCN").val(data.dateCommencementPSQR);
+                $("#dateCulminationPSQRValid_DD_DCN").val(data.dateCulminationPSQRValid_DD);
+
+                // Selection Of DA
+                $("#dateselectionDasbySHQ_dprbMakeI_DCN").val(data.dateselectionDasbySHQ_dprbMakeI);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeI_DCN").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
+
+                // Development of Prototype
+
+                $("#datecommencementpreliminaryMakeI_DCN").val(data.datecommencementpreliminaryMakeI);
+                $("#datefinalisationdetaileddesign_DCN").val(data.datefinalisationdetaileddesign);
+                $("#datecommencementfabrication_devProMakeI_DCN").val(data.datecommencementfabrication_devProMakeI);
+                $("#datetechnicallimitedfieldstrialsMakeI_DCN").val(data.datetechnicallimitedfieldstrialsMakeI);
+                $("#datefreezingPSQRStoSQRSMakeI_DCN").val(data.datefreezingPSQRStoSQRSMakeI);
+                $("#dateintimationvendorssubmissionrevisedMakeI_DCN").val(data.dateintimationvendorssubmissionrevisedMakeI);
+                $("#datesubmissionrevisedcommercialoffersvendorsMakeI_DCN").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
+
+                // Development of Prototype(Make-II)
+
+                $("#datecommencementDevPrototypeMakeII_DCN").val(data.datecommencementDevPrototypeMakeII);
+                $("#datecompletionDevPrototypeMakeII_DCN").val(data.datecompletionDevPrototypeMakeII);
+                $("#datecommencementUserTrialsMakeII_DCN").val(data.datecommencementUserTrialsMakeII);
+                $("#datecompletionUserTrialsRedinessReviewMakeII_DCN").val(data.datecompletionUserTrialsRedinessReviewMakeII);
+                $("#dateFreezingPSQRsMakeII_DCN").val(data.dateFreezingPSQRsMakeII);
+
+            @* Selection Of DA Make - II *@
+
+                $("#dateselectionDasbySHQ_dprbMakeII_DCN").val(data.dateselectionDasbySHQ_dprbMakeII);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeII_DCN").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
+
+
+
+                //Edit DCN
+
+                $("#date_DCN_Sentfor").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
+                $("#date_MoF_Concurrence").val(data.date_MoF_Concurrence);
+                $("#date_DCN_submissionto_CCS").val(data.date_DCN_submissionto_CCS);
+                $("#ApproveToCSS_CFA").val(data.ApproveToCSS_CFA);
+                $("#DateContractSigning").val(data.DateContractSigning);
+
+
+                //Contract
+                $("#aonid_Cont").val(drpdn)
+                $("#rfp_idCont").val(data.rfp_id);
+                $("#type_Cont").val(data.type_rfp);
+                $("#draftRFPbySHQCont").val(data.draft_rfp_date);
+
+                $("#date_submissionto_adgacq_Cont").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacq_Cont").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vetting_Cont").val(data.date_collegiate_vetting);
+                $("#date_issue_rfp_Cont").val(data.date_issue_rfp);
+                $("#date_prebid_meeting_Cont").val(data.date_prebid_meeting);
+                $("#date_prebid_replies_Cont").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmission_Cont").val(data.lastdate_bidsubmission);
+                $("#date_bid_opening_Cont").val(data.date_bid_opening);
+                $("#date_rfp_approval_Cont").val(data.date_approval_rfp);
+
+                $("#extendedDate_Cont").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#date_tec_constitution_Cont").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Cont").val(data.date_tec_commencement);
+                $("#date_tec_completion_Cont").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Cont").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Cont").val(data.date_tec_approval);
+
+                $("#Report_Recived_Cont").val(data.Date_received_Fet);
+                $("#Report_Accepted_Cont").val(data.Date_accepted_Fet);
+
+                $("#Date_toc_Constitution_Cont").val(data.Date_toc_Constitution);
+                $("#Date_toc_report_Cont").val(data.Date_toc_report);
+                $("#Date_toc_acceptance_CompetantAuth_Cont").val(data.Date_toc_acceptance_CompetantAuth);
+
+                $("#cnc_Constitution_Date_Cont").val(data.Date_cnc_constitution);
+                $("#Benchmark_Date_Cont").val(data.Date_cnc_benchmarking);
+                $("#Commercial_Date_Opening_Date_Cont").val(data.Date_commercial_bid_opening);
+                $("#CNC_Conclusion_Date_Cont").val(data.Date_cnc_conclusion);
+                $("#CNC_Report_Date_Cont").val(data.Date_cnc_report);
+
+                $("#MoD_Acq_Approval_Cont").val(data.date_Submission_CFANote_DGacq);
+                $("#MoD_Fin_Concurrence_Cont").val(data.date_Acq_approvalforsending_to_MoDFin);
+                $("#Submmition_Date_to_CFA_Cont").val(data.date_submissionto_CFA);
+                $("#Approval_of_CFA_Note_proposal_Cont").val(data.date_Approval_CFAnote);
+
+                //Contract
+
+                $("#date_DCN_Sentfor_Cont").val(data.date_DCN_Sentfor_InterMinisterialConsultations);
+                $("#date_MoF_Concurrence_Cont").val(data.date_MoF_Concurrence);
+                $("#date_DCN_submissionto_CCS_Cont").val(data.date_DCN_submissionto_CCS);
+                $("#ApproveToCSS_CFA_Cont").val(data.ApproveToCSS_CFA);
+                $("#DateContractSigning_Cont").val(data.DateContractSigning);
+
+                // Make-1
+                $("#Eoi_DPRDateIssueMakeI_Cont").val(data.Eoi_DPRDateIssueMakeI);
+                $("#Eoi_DPRReceiptDateMakeI_Cont").val(data.Eoi_DPRReceiptDateMakeI);
+                $("#Eoi_DPRDateCompletionandResponseMakeI_Cont").val(data.Eoi_DPRDateCompletionandResponseMakeI);
+                $("#dtforwardingshortlistedDPMakeI_Cont").val(data.dtforwardingshortlistedDPMakeI);
+                $("#dateapprovalshortlistedvendorsMakeI_Cont").val(data.dateapprovalshortlistedvendorsMakeI);
+
+                // Make-II
+                $("#DateIssueMake_II_Cont").val(data.DateIssueMake_II);
+                $("#EoiReceiptDateMake_II_Cont").val(data.EoiReceiptDateMake_II);
+                $("#EoiCompletionResponseMake_II_Cont").val(data.EoiCompletionResponseMake_II);
+                $("#dateApprovalEoiMake_II_Cont").val(data.dateApprovalEoiMake_II);
+                $("#dateissueProjectSenctionMake_II_Cont").val(data.dateissueProjectSenctionMake_II);
+
+
+                // DD
+                $("#dateFormulationJPMT_DD_Cont").val(data.dateFormulationJPMT_DD);
+                $("#dateFormulationPMT_DD_Cont").val(data.dateFormulationPMT_DD);
+                $("#dateIdentificationDCPP_DD_Cont").val(data.dateIdentificationDCPP_DD);
+                $("#datedetaildesignbySHQ_DD_Cont").val(data.datedetaildesignbySHQ_DD);
+                $("#dateissuetrialdeveiation_DD_Cont").val(data.dateissuetrialdeveiation_DD);
+                $("#dateprojectReview_DD_Cont").val(data.dateprojectReview_DD);
+                $("#daterealisationPrototype_DD_Cont").val(data.daterealisationPrototype_DD);
+                $("#dateCommencementPSQR_Cont").val(data.dateCommencementPSQR);
+                $("#dateCulminationPSQRValid_DD_Cont").val(data.dateCulminationPSQRValid_DD);
+
+                // Selection Of DA
+                $("#dateselectionDasbySHQ_dprbMakeI_Cont").val(data.dateselectionDasbySHQ_dprbMakeI);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeI_Cont").val(data.dateapprovalCFAfundingarrangementissueProjectMakeI);
+
+                // Development of Prototype
+
+                $("#datecommencementpreliminaryMakeI_Cont").val(data.datecommencementpreliminaryMakeI);
+                $("#datefinalisationdetaileddesign_Cont").val(data.datefinalisationdetaileddesign);
+                $("#datecommencementfabrication_devProMakeI_Cont").val(data.datecommencementfabrication_devProMakeI);
+                $("#datetechnicallimitedfieldstrialsMakeI_Cont").val(data.datetechnicallimitedfieldstrialsMakeI);
+                $("#datefreezingPSQRStoSQRSMakeI_Cont").val(data.datefreezingPSQRStoSQRSMakeI);
+                $("#dateintimationvendorssubmissionrevisedMakeI_Cont").val(data.dateintimationvendorssubmissionrevisedMakeI);
+                $("#datesubmissionrevisedcommercialoffersvendorsMakeI_Cont").val(data.datesubmissionrevisedcommercialoffersvendorsMakeI);
+
+                // Development of Prototype(Make-II)
+
+                $("#datecommencementDevPrototypeMakeII_Cont").val(data.datecommencementDevPrototypeMakeII);
+                $("#datecompletionDevPrototypeMakeII_Cont").val(data.datecompletionDevPrototypeMakeII);
+                $("#datecommencementUserTrialsMakeII_Cont").val(data.datecommencementUserTrialsMakeII);
+                $("#datecompletionUserTrialsRedinessReviewMakeII_Cont").val(data.datecompletionUserTrialsRedinessReviewMakeII);
+                $("#dateFreezingPSQRsMakeII_Cont").val(data.dateFreezingPSQRsMakeII);
+
+            @* Selection Of DA Make - II *@
+
+                $("#dateselectionDasbySHQ_dprbMakeII_Cont").val(data.dateselectionDasbySHQ_dprbMakeII);
+                $("#dateapprovalCFAfundingarrangementissueProjectMakeII_Cont").val(data.dateapprovalCFAfundingarrangementissueProjectMakeII);
+
+
+
+
+                //Edit
+
+                $("#date_approval_CFA_CCS").val(data.date_approval_CFA_CCS);
+                $("#date_ContractSigning").val(data.date_ContractSigning);
+
+
+                //$("#SelectedIDArray").val(ids);
+                $("#type_rfp").val(data.type_rfp);
+                $("#draftRFPbySHQ").val(data.draft_rfp_date);
+                $("#collegiatevetting").val(data.date_submissionto_adgacq);
+                $("#approval").val(data.date_acceptanceby_adgacq);
+                $("#issuancevendor").val(data.date_collegiate_vetting);
+                $("#vendors").val(data.date_approval_rfp);
+                $("#dateIssueRFP").val(data.date_issue_rfp);
+                $("#aonid").val(drpdn);
+                $("#PreBidMeetingDate").val(data.date_prebid_meeting);
+                $("#preBidRpyDates").val(data.date_prebid_replies);
+                $("#bidsubmissiondate").val(data.lastdate_bidsubmission);
+                $("#openingDateOffer").val(data.date_bid_opening);
+                $("#vendorID").val(data.vendorID);
+                $("#extendedDateID_Bids").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#Report_Reciveds").val(data.Date_received_Fet);
+                $("#Report_Accepteds").val(data.Date_accepted_Fet);
+
+                $("#Constitution_Date_Tocs").val(data.Date_toc_Constitution);
+                $("#Date_of_Report_Tocs").val(data.Date_toc_report);
+                $("#Date_of_Acceptance_Tocs").val(data.Date_toc_acceptance_CompetantAuth);
+
+
+                $("#rfp_idExtended").val(data.rfp_id);
+                $("#aonid_Extended").val(drpdn);
+                $("#type_rfpExtended").val(data.type_rfp);
+                $("#draftRFPbySHQExtended").val(data.draft_rfp_date);
+                $("#date_submissionto_adgacqExtended").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacqExtended").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vettingExtended").val(data.date_collegiate_vetting);
+                $("#date_issue_rfpExtended").val(data.date_issue_rfp);
+                $("#date_prebid_meetingExtended").val(data.date_prebid_meeting);
+                $("#date_prebid_repliesExtended").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmissionExtended").val(data.lastdate_bidsubmission);
+                $("#date_bid_openingExtended").val(data.date_bid_opening);
+                $("#date_approval_rfpExtended").val(data.date_approval_rfp);
+                $("#extendedDateID").val(data.ExtendedLastDate_BidSubmission);
+                $("#date_tec_constitution_Extended").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Extended").val(data.date_tec_commencement);
+                $("#date_tec_completion_Extended").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Extended").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Extended").val(data.date_tec_approval);
+
+
+
+                $("#Report_Recived_Extended").val(data.Date_received_Fet);
+                $("#Report_Accepted_Extended").val(data.Date_accepted_Fet);
+
+
+                $("#Constitution_Date_Extended").val(data.Date_toc_Constitution);
+                $("#Date_of_Report_Date_Extended").val(data.Date_toc_report);
+                $("#Date_of_Acceptance_Date_Extended").val(data.Date_toc_acceptance_CompetantAuth);
+
+
+
+
+                // Tec Tab Data
+                $("#date_tec_constitution_Tecs").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Tecs").val(data.date_tec_commencement);
+                $("#date_tec_completion_Tecs").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Tecs").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Tecs").val(data.date_tec_approval);
+
+                $("#rfp_Tec").val(data.rfp_id);
+                $("#aonid_Tec").val(drpdn);
+                $("#type_Tec").val(data.type_rfp);
+                $("#draftRFPbySHQTec").val(data.draft_rfp_date);
+
+                $("#extendedDateTec").val(data.ExtendedLastDate_BidSubmission);
+                $("#date_submissionto_adgacqTec").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacqTec").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vettingTec").val(data.date_collegiate_vetting);
+                $("#date_issue_rfpTec").val(data.date_issue_rfp);
+                $("#date_prebid_meetingTec").val(data.date_prebid_meeting);
+                $("#date_prebid_repliesTec").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmissionTec").val(data.lastdate_bidsubmission);
+                $("#date_bid_openingTec").val(data.date_bid_opening);
+                $("#date_approval_rfpTec").val(data.date_approval_rfp);
+
+                $("#date_tec_constitution_Tec").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Tec").val(data.date_tec_commencement);
+                $("#date_tec_completion_Tec").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Tec").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Tec").val(data.date_tec_approval);
+
+                $("#Report_Recived_Tec").val(data.Date_received_Fet);
+                $("#Report_Accepted_Tec").val(data.Date_accepted_Fet);
+
+                $("#Constitution_Date_Tec").val(data.Date_toc_Constitution);
+                $("#Date_of_Report_Date_Tec").val(data.Date_toc_report);
+                $("#Date_of_Acceptance_Date_Tec").val(data.Date_toc_acceptance_CompetantAuth);
+
+
+
+                // FET Tab
+
+                $("#Report_Recived").val(data.Date_received_Fet);
+                $("#Report_Accepted").val(data.Date_accepted_Fet);
+
+                $("#rfp_Fet").val(data.rfp_id);
+                $("#aonid_Fet").val(drpdn);
+                $("#type_Fet").val(data.type_rfp);
+                $("#draftRFPbySHQFet").val(data.draft_rfp_date);
+
+                $("#extendedDateFet").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#date_submissionto_adgacqFet").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacqFet").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vettingFet").val(data.date_collegiate_vetting);
+                $("#date_issue_rfpFet").val(data.date_issue_rfp);
+                $("#date_prebid_meetingFet").val(data.date_prebid_meeting);
+                $("#date_prebid_repliesFet").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmissionFet").val(data.lastdate_bidsubmission);
+                $("#date_bid_openingFet").val(data.date_bid_opening);
+                $("#date_approval_rfpFet").val(data.date_approval_rfp);
+
+                $("#date_tec_constitution_Fet").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Fet").val(data.date_tec_commencement);
+                $("#date_tec_completion_Fet").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Fet").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Fet").val(data.date_tec_approval);
+
+
+                // Toc Tab Data
+
+                $("#Constitution_Date").val(data.Date_toc_Constitution);
+                $("#Date_of_Report").val(data.Date_toc_report);
+                $("#Date_of_Acceptance").val(data.Date_toc_acceptance_CompetantAuth);
+
+                // TOC Tab
+
+                $("#rfp_TOC").val(data.rfp_id);
+                $("#aonid_TOC").val(drpdn);
+                $("#type_TOC").val(data.type_rfp);
+                $("#draftRFPbySHQTOC").val(data.draft_rfp_date);
+                $("#extendedDate_Toc").val(data.ExtendedLastDate_BidSubmission);
+
+                $("#date_submissionto_adgacq_Toc").val(data.date_submissionto_adgacq);
+                $("#date_acceptanceby_adgacq_Toc").val(data.date_acceptanceby_adgacq);
+                $("#date_collegiate_vetting_Toc").val(data.date_collegiate_vetting);
+                $("#date_issue_rfp_Toc").val(data.date_issue_rfp);
+                $("#date_prebid_meeting_Toc").val(data.date_prebid_meeting);
+                $("#date_prebid_replies_Toc").val(data.date_prebid_replies);
+                $("#lastdate_bidsubmission_Toc").val(data.lastdate_bidsubmission);
+                $("#date_bid_opening_Toc").val(data.date_bid_opening);
+                $("#date_approval_rfp_Toc").val(data.date_approval_rfp);
+
+                $("#Report_Recived_Toc").val(data.Date_received_Fet);
+                $("#Report_Accepted_Toc").val(data.Date_accepted_Fet);
+
+                $("#date_tec_constitution_Toc").val(data.date_tec_constitution);
+                $("#date_tec_commencement_Toc").val(data.date_tec_commencement);
+                $("#date_tec_completion_Toc").val(data.date_tec_completion);
+                $("#date_tec_reportsubmission_Toc").val(data.date_tec_reportsubmission);
+                $("#date_tec_approval_Toc").val(data.date_tec_approval);
+            }
+        });
+    }
+</script>
+
+

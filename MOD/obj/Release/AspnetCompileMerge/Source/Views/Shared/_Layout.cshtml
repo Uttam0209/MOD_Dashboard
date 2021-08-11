@@ -270,7 +270,38 @@
     <link href="~/assets/css/bootstrap-chosen.css" rel="stylesheet" />
     <script src="~/assets/js/chosen.jquery.js"></script>
 
+    <script nonce="r@nd0m">
+        $(document).ready(function () {
+            function disableBack() { window.history.forward() }
 
+            window.onload = disableBack();
+            window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+
+            window.history.pushState(null, "", window.location.href);
+            window.onpopstate = function () {
+                window.history.pushState(null, "", window.location.href);
+            };
+
+            $("body").on("contextmenu", function (e) {
+                return false;
+            });
+
+            $(window).keydown(function (event) {
+
+                if (event.keyCode == 116) {
+
+                    event.preventDefault();
+
+                    return false;
+
+                }
+
+            });
+
+           
+           
+        });
+    </script>
     <script>
         /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
         var dropdown = document.getElementsByClassName("dropdown-btn");

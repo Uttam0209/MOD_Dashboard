@@ -1,0 +1,68 @@
+﻿@model MOD.Models.VendorSaveViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+
+    <div class="card flex-fill w-100 p-4">
+        <div class="row mb-2 mb-xl-3">
+            <div class="col-auto d-none d-sm-block">
+                <h2 class="mb-0">Create Vendor</h2>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("Create", "Vendor", FormMethod.Post))
+        {
+            <div class="form-row mb-4">
+                <div class="col">
+                    <label class="labeltext font-weight-bold">Vendor Category<span class="danger">*</span>:</label>
+                    @Html.DropDownListFor(m => m.VendorCategory, new SelectList(Model.VendorCategories, "VendorCategoryID", "VendorCategoryName"), "-Select Vendor Category-", new { @class = "form-control" })
+                    @*<select class="form-control" name="VendorCategory">
+                        <option value="0">-Select Vendor Category-</option>
+                        @foreach (var vCategory in Model.VendorCategories)
+                        {
+                            <option value="@vCategory.VendorCategoryID">@vCategory.VendorCategoryName</option>
+                        }
+                    </select>*@
+                    @Html.ValidationMessageFor(x => x.VendorCategory, null, new { @class = "danger" })
+                </div>
+                <div class="col">
+                    <!-- First name -->
+                    <label class="labeltext font-weight-bold">Vendor Name<span class="danger">*</span>:</label>
+                    <input type="text" id="defaultRegisterFormFirstName" name="VendorName" class="form-control" placeholder="Vendor Name">
+                    @Html.ValidationMessageFor(x => x.VendorName, null, new { @class = "danger" })
+                </div>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col">
+                    <!-- Last name -->
+                    <label class="labeltext font-weight-bold">Vendor Address:</label>
+                    <input type="text" name="VendorAddress" class="form-control" placeholder="Vendor Address">
+                </div>
+                <div class="col">
+                    <!-- First name -->
+                    <label class="labeltext font-weight-bold">Vendor ContactName:</label>
+                    <input type="text" name="VendorContactName" class="form-control" placeholder="Vendor ContactName">
+                </div>
+
+            </div>
+            <div class="form-row mb-4">
+                <div class="col">
+                    <!-- Last name -->
+                    <label class="labeltext font-weight-bold">Vendor Phone:</label>
+                    <input type="text" name="VendorPhone" class="form-control" placeholder="Vendor Phone">
+                </div>
+                <div class="col">
+                    <!-- First name -->
+                    <label class="labeltext font-weight-bold">Vendor Email:</label>
+                    <input type="text" name="VendorEmail" class="form-control" placeholder="Vendor Email">
+                </div>
+            </div>
+            <!-- Sign up button -->
+            <button class="btn btn-primary float-right" type="submit">Save Vendor</button>
+        }
+    </div>
+
+ 
+        
+

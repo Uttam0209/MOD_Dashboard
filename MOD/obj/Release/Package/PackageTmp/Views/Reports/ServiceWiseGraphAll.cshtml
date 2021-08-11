@@ -1,0 +1,193 @@
+﻿
+@{
+    ViewBag.Title = "ServiceWiseGraphAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#auth").addClass("show");
+        $("#auth_swc").addClass("active");
+    });
+</script>
+
+<script>
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            title: {
+                text: ""
+            },
+
+            axisY: {
+                title: "Avg time taken in no of weeks",
+
+            },
+            toolTip: {
+                reversed: true
+            },
+
+            dataPointMaxWidth: 20,
+            data: [{
+                click: function (e) {
+                    var stage = e.dataPoint.label;
+                    var service = "AirForce";
+                    var Categorisation = "";
+                    window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+
+                },
+                type: "column",
+                name: "Oil Filter",
+                showInLegend: true,
+                //type: "stackedColumn",
+                color: "Skyblue",
+                indexLabelPlacement: "outside",
+                name: "Air Force",
+                showInLegend: "true",
+                yValueFormatString: "###",
+                indexLabel: "{z}",
+                 dataPoints: @Html.Raw(ViewBag.DataPointsA)
+            },
+                {
+                    click: function (e) {
+                        var stage = e.dataPoint.label;
+                        var service = "Army";
+                        var Categorisation = "";
+                        window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+
+                    },
+                    type: "column",
+                    axisYType: "secondary",
+                    showInLegend: true,
+                    color: "Red",
+                    indexLabelPlacement: "outside",
+                    name: "Army",
+                    showInLegend: "true",
+                    yValueFormatString: "###",
+                    indexLabel: "{z}",
+                    dataPoints: @Html.Raw(ViewBag.DataPointsAr)
+                },
+                {
+                    click: function (e) {
+                        var stage = e.dataPoint.label;
+                        var service = "Navy";
+                        var Categorisation = "";
+                        window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+
+                    },
+                    type: "column",
+                    axisYType: "secondary",
+                    showInLegend: true,
+                    //type: "stackedColumn",
+                    color: "#0066CC",
+                    indexLabelPlacement: "outside",
+                    name: "Navy",
+                    showInLegend: "true",
+                    yValueFormatString: "###",
+                    indexLabel: "{z}",
+                    dataPoints: @Html.Raw(ViewBag.DataPointsNa)
+                },
+            {
+                click: onClick,
+                type: "line",
+                name: "Dap Timeline",
+                showInLegend: "true",
+                yValueFormatString: "###",
+                indexLabel: "{z}",
+                dataPoints: @Html.Raw(ViewBag.DataPoints1)
+            }
+
+            ]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+        }
+        function onClick(e) {
+            //alert(e.dataSeries.type + ", dataPoint { x:" + e.dataPoint.indexLabel + ", y: " + e.dataPoint.label + " }");
+            var stage = e.dataPoint.label;
+            var service = "";
+            var Categorisation ="";
+            window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+        }
+    }
+</script>
+
+<div class="card flex-fill w-100 p-4">
+    <div class="row mb-2 mb-xl-3">
+        <div class="col-auto">
+            <h2 class="mb-0">Stage wise Cycle time analysis (All services)</h2>
+        </div>
+    </div>
+    <div class="tab">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item"><a class="nav-link active" href="#tab-1" data-toggle="tab" role="tab" aria-selected="false">Graph</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tab-2" data-toggle="tab" role="tab" aria-selected="true">Data</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-1" role="tabpanel">
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            </div>
+            <div class="tab-pane" id="tab-2" role="tabpanel">
+                <table class="table table-responsive table-bordered">
+                    @{int count = 1;}
+                    @if (ViewBag.Grid1 != null)
+                    {
+                        <tr>
+                            <th>Sr.No</th>
+                            <th>Stage name</th>
+                            <th>Dap Timeline</th>
+                            <th>Avg time taken in no of weeks(Air Force)</th>
+                            <th>Avg time taken in no of weeks(Army)</th>
+                            <th>Avg time taken in no of weeks(Navy)</th>
+                        </tr>
+
+                        foreach (var iDashboard in ViewBag.Grid1)
+                        {
+                            <tr>
+                                <td>@count</td>
+                                <td>@iDashboard.stage_name</td>
+                                <td>@iDashboard.dap_timeline</td>
+                                <td>@iDashboard.no_of_weeks_airforce</td>
+                                <td>@iDashboard.no_of_weeks_army</td>
+                                <td>@iDashboard.no_of_weeks_navy</td>
+                            </tr>
+                            count++;
+                        }
+                    }
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('ol.tabs li').click(function () {
+            var tab_id = $(this).attr('data-tab');
+
+            $('ol.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $("#" + tab_id).addClass('current');
+        })
+    })
+</script>
+<script src="~/assets/js/canvasjs.min.js"></script>
+<script src="~/assets/js/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+

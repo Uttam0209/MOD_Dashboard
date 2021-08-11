@@ -1,5 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MODModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="acq_audit_trail">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserEmail" Type="nvarchar" MaxLength="50" />
+    <Property Name="IPAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="Action" Type="nvarchar" MaxLength="100" />
+    <Property Name="Status" Type="nvarchar" MaxLength="200" />
+    <Property Name="Restime" Type="datetime" />
+    <Property Name="IsActive" Type="char" MaxLength="1" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="RecordId" Type="int" />
+  </EntityType>
   <EntityType Name="acq_department_master">
     <Key>
       <PropertyRef Name="deptt_id" />
@@ -94,6 +108,7 @@
     <Property Name="ResponsiblePersonLeve4" Type="nvarchar" MaxLength="50" />
     <Property Name="AovType" Type="varchar" MaxLength="255" />
     <Property Name="ref_socId" Type="int" />
+    <Property Name="AoNNumber" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="acq_projectstage_applicability">
     <Key>
@@ -857,18 +872,6 @@ warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a prim
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_acq_rfp_vendors_acq_rfp_master">
-    <End Role="acq_rfp_master" Type="Self.acq_rfp_master" Multiplicity="1" />
-    <End Role="acq_rfp_vendors" Type="Self.acq_rfp_vendors" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_rfp_master">
-        <PropertyRef Name="rfp_id" />
-      </Principal>
-      <Dependent Role="acq_rfp_vendors">
-        <PropertyRef Name="Rfp_fk_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_acq_rfp_VendorsDetails_tbl_tblVendor">
     <End Role="tbl_tblVendor" Type="Self.tbl_tblVendor" Multiplicity="1" />
     <End Role="acq_rfp_VendorsDetails" Type="Self.acq_rfp_VendorsDetails" Multiplicity="*" />
@@ -962,6 +965,7 @@ warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a prim
     <Parameter Name="service" Type="varchar" Mode="In" />
   </Function>
   <EntityContainer Name="MODModelStoreContainer">
+    <EntitySet Name="acq_audit_trail" EntityType="Self.acq_audit_trail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="acq_department_master" EntityType="Self.acq_department_master" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="acq_meeting_master" EntityType="Self.acq_meeting_master" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="acq_policy" EntityType="Self.acq_policy" Schema="dbo" store:Type="Tables" />
@@ -1231,10 +1235,6 @@ warning 6002: The table/view 'mod_db_new.dbo.vw_userDetail' does not have a prim
     <AssociationSet Name="FK_acq_project_master_acq_meeting_master" Association="Self.FK_acq_project_master_acq_meeting_master">
       <End Role="acq_meeting_master" EntitySet="acq_meeting_master" />
       <End Role="acq_project_master" EntitySet="acq_project_master" />
-    </AssociationSet>
-    <AssociationSet Name="FK_acq_rfp_vendors_acq_rfp_master" Association="Self.FK_acq_rfp_vendors_acq_rfp_master">
-      <End Role="acq_rfp_master" EntitySet="acq_rfp_master" />
-      <End Role="acq_rfp_vendors" EntitySet="acq_rfp_vendors" />
     </AssociationSet>
     <AssociationSet Name="FK_acq_rfp_VendorsDetails_tbl_tblVendor" Association="Self.FK_acq_rfp_VendorsDetails_tbl_tblVendor">
       <End Role="tbl_tblVendor" EntitySet="tbl_tblVendor" />

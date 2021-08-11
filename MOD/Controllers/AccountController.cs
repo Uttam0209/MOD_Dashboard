@@ -19,7 +19,6 @@ namespace MOD.Controllers
 
         private static string WebPortalUrl = ConfigurationManager.AppSettings["WebPortalUrl"].ToString();
         private static string WebPortalUrlLogout = ConfigurationManager.AppSettings["WebPortalUrlLogout"].ToString();
-        private readonly MODEntities _entities;
         //[Route("Acq")]
         [HandleError]
         public ActionResult Login()

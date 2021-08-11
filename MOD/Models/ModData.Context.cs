@@ -14,44 +14,14 @@ namespace MOD.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Configuration;
-    using System.Text;
-    using System.Security.Cryptography;
-    using System.IO;
-
+    
     public partial class MODEntities : DbContext
     {
         public MODEntities()
-            //: base(DecryptData(ConfigurationManager.ConnectionStrings["MODEntities"].ConnectionString))
-        : base("name=MODEntities")
+            : base("name=MODEntities")
         {
         }
-        public static string DecryptData(string strData)
-        {
-            byte[] key = { };// Key   
-            byte[] IV = { 10, 20, 30, 40, 50, 60, 70, 80 };
-            byte[] inputByteArray = new byte[strData.Length];
-            strData = strData.Replace("%2b", "+");
-
-            try
-            {
-                key = Encoding.UTF8.GetBytes("W@!dghDW");
-                DESCryptoServiceProvider ObjDES = new DESCryptoServiceProvider();
-                inputByteArray = Convert.FromBase64String(strData);
-
-                MemoryStream Objmst = new MemoryStream();
-                CryptoStream Objcs = new CryptoStream(Objmst, ObjDES.CreateDecryptor(key, IV), CryptoStreamMode.Write);
-                Objcs.Write(inputByteArray, 0, inputByteArray.Length);
-                Objcs.FlushFinalBlock();
-
-                Encoding encoding = Encoding.UTF8;
-                return encoding.GetString(Objmst.ToArray());
-            }
-            catch (System.Exception ex)
-            {
-                throw ex;
-            }
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -90,13 +60,13 @@ namespace MOD.Models
         public virtual DbSet<temp_BF> temp_BF { get; set; }
         public virtual DbSet<acq_policy> acq_policy { get; set; }
         public virtual DbSet<tbl_tbl_User> tbl_tbl_User { get; set; }
-        public virtual DbSet<tbl_Master_Role> tbl_Master_Role { get; set; }
-        public virtual DbSet<tbl_master_formMenu> tbl_master_formMenu { get; set; }
-        public virtual DbSet<tbl_trn_OTP> tbl_trn_OTP { get; set; }
         public virtual DbSet<acq_audit_trail> acq_audit_trail { get; set; }
         public virtual DbSet<acq_section_master> acq_section_master { get; set; }
         public virtual DbSet<vw_userDetail> vw_userDetail { get; set; }
         public virtual DbSet<acq_project_master> acq_project_master { get; set; }
+        public virtual DbSet<tbl_master_formMenu> tbl_master_formMenu { get; set; }
+        public virtual DbSet<tbl_Master_Role> tbl_Master_Role { get; set; }
+        public virtual DbSet<tbl_trn_OTP> tbl_trn_OTP { get; set; }
     
         public virtual ObjectResult<temp_dashboard> PROC_DASHBOARD_DATA(string categorisation, string service)
         {
@@ -179,11 +149,11 @@ namespace MOD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<temp_dashboard>("DASHBOARDDATA", mergeOption, categorisationParameter, serviceParameter);
         }
     
-        public virtual ObjectResult<PROC_DASHBOARD_First_CountGrid_Result> PROC_DASHBOARD_First_CountGrid(Nullable<int> stageid, Nullable<System.DateTime> date, string categorisation, string service)
+        public virtual ObjectResult<PROC_DASHBOARD_First_CountGrid_Result> PROC_DASHBOARD_First_CountGrid(Nullable<decimal> stageid, Nullable<System.DateTime> date, string categorisation, string service)
         {
             var stageidParameter = stageid.HasValue ?
                 new ObjectParameter("stageid", stageid) :
-                new ObjectParameter("stageid", typeof(int));
+                new ObjectParameter("stageid", typeof(decimal));
     
             var dateParameter = date.HasValue ?
                 new ObjectParameter("date", date) :

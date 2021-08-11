@@ -1,0 +1,162 @@
+﻿@*@using Gantt_Chart.Helpers;*@
+@using Syncfusion.EJ2;
+@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <link rel="stylesheet" type="text/css" href="~/assets/css/theme.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/assets/dashbordfont/css/all.min.css">
+    <link href="~/assets/js/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom stylesheet -->
+    <link href="~/assets/js/jquery.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+
+
+    <script src="~/assets/js/dashbordjs.js"></script>
+    <script src="~/assets/js/jquery.dataTables.min.js"></script>
+    <style>
+        .footer-bx {
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            z-index: 11;
+        }
+    </style>
+  
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="author" content="Syncfusion" />
+    @if (IsSectionDefined("Meta"))
+    {
+        @RenderSection("Meta", required: false)
+    }
+    @if (IsSectionDefined("Title"))
+    {
+        @RenderSection("Title", required: false)
+    }
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link href="~/Content/styles/roboto.css" rel="stylesheet">
+    <link href="~/Content/styles/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/styles/highlight.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        function getAbsoluteURL() { return "@Url.Content("~/")"; };
+        var baseurl = window.baseurl = getAbsoluteURL();
+        var themeName = location.hash.split('#/')[1];
+        themeName = themeName ? themeName : 'material';
+        document.write('<link href="' + baseurl + 'Content/styles/' + themeName + '.css" rel="stylesheet" />');
+        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+            document.write('<script src="' + baseurl + 'Scripts/bluebird.min.js"><\/script>');
+            document.write('<script src="~/WJs/shim.min.js"><\/script>');
+             if (window.NodeList && !NodeList.prototype.forEach) {
+                NodeList.prototype.forEach = Array.prototype.forEach;
+            }
+    }
+    </script>
+
+    <script id='sample-datasource' type='text/javascript'></script>
+    <script src="~/Scripts/js-signals.min.js"></script>
+    <script src="~/Scripts/elasticlunr.min.js"></script>
+    <script src="~/Scripts/highlight.min.js"></script>
+    <script src="~/Scripts/samplelist.js"></script>
+    <script src="~/Scripts/search-index.js"></script>
+    <script src="~/Scripts/crossroads.js"></script>
+    <script src="~/Scripts/hasher.min.js"></script>
+    @Scripts.Render("~/bundles/dependencies")
+    <script src="~/Scripts/samplelist.js"></script>
+    <script src="~/Scripts/search-index.js"></script>
+    <script src="~/Scripts/ej2.min.js"></script>
+    <script src="~/Scripts/documenteditor/default-properties.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    @Styles.Render("~/Content/css")
+
+</head>
+<body class="e-view">
+    <div class="body_content">
+        <div id="loader-wrapper" class="hidden">
+            <div id="loadermain">
+                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+
+        </div>
+        <div class="sample-browser e-view">
+
+            <div class="sb-content e-view">
+                <div class='sb-right-pane e-view' id='right-pane'>
+
+                    <div class='sb-desktop-wrapper'>
+
+
+                        <div class='sb-content-tab' id='content-tab'>
+                            <div id="sb-content" class='sb-content-section'>
+
+                                <div class="e-content sb-sample-content-area">
+                                    <div>
+                                        <div class='sb-demo-section'>
+                                            <div class="control-fluid">
+                                                <div class="container-fluid">
+                                                    <div id="control-content">
+                                                        @RenderBody()
+                                                        @if (IsSectionDefined("ControlsSection"))
+                                                        {
+                                                            @RenderSection("ControlsSection", required: false)
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class='sb-source-section'>
+                                            <div id='sb-source-tab' class="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+  
+    <div class="cz-handheld-toolbar">
+        <div class="d-table table-fixed w-100">
+            <a class="d-table-cell cz-handheld-toolbar-item" href="#shop-sidebar" data-toggle="sidebar">
+                <span class="cz-handheld-toolbar-icon"><i class="fas fa-bars"></i></span><span class="cz-handheld-toolbar-label">Menu</span>
+            </a>
+        </div>
+    </div>
+
+    <!-------------footer end-------------->
+    <script src="~/Scripts/index.js"></script>
+
+    @if (IsSectionDefined("PreScripts"))
+    {
+        @RenderSection("PreScripts", required: false)
+    }
+
+    @Html.EJS().ScriptManager()
+
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        var win = window;
+        win.isManualResizeTrigger = true;
+        setTimeout(function () { win.dispatchEvent(new Event('resize')); }, 500);
+    </script>
+</body>
+</html>

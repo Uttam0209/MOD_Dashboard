@@ -32,5 +32,6 @@ namespace MOD.Models
         public string IPAddress { get; set; }
         public string MacAddress { get; set; }
         public string DSCSerialno { get; set; }
+        public string Temp_Number { get; set; }
     }
 }

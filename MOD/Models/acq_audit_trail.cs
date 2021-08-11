@@ -21,5 +21,7 @@ namespace MOD.Models
         public string Status { get; set; }
         public Nullable<System.DateTime> Restime { get; set; }
         public string IsActive { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<int> RecordId { get; set; }
     }
 }

@@ -14,11 +14,6 @@
       <End Role="tbl_tblVendor" EntitySet="tbl_tblVendor" />
     </AssociationSet>
     <EntitySet Name="acq_department_master" EntityType="MODModel.acq_department_master" />
-    <EntitySet Name="acq_section_master" EntityType="MODModel.acq_section_master" />
-    <AssociationSet Name="FK_acq_section_master_acq_department_master" Association="MODModel.FK_acq_section_master_acq_department_master">
-      <End Role="acq_department_master" EntitySet="acq_department_master" />
-      <End Role="acq_section_master" EntitySet="acq_section_master" />
-    </AssociationSet>
     <EntitySet Name="tbl_mst_Project" EntityType="MODModel.tbl_mst_Project" />
     <EntitySet Name="tbl_trn_tryProject" EntityType="MODModel.tbl_trn_tryProject" />
     <EntitySet Name="vw_Chart2" EntityType="MODModel.vw_Chart2" />
@@ -81,16 +76,23 @@
       <End Role="acq_department_master" EntitySet="acq_department_master" />
       <End Role="tbl_tbl_User" EntitySet="tbl_tbl_User" />
     </AssociationSet>
-    <AssociationSet Name="FK_tbl_tbl_User_acq_section_master" Association="MODModel.FK_tbl_tbl_User_acq_section_master">
-      <End Role="acq_section_master" EntitySet="acq_section_master" />
-      <End Role="tbl_tbl_User" EntitySet="tbl_tbl_User" />
-    </AssociationSet>
     <AssociationSet Name="FK_acq_rfp_vendors_acq_rfp_master" Association="MODModel.FK_acq_rfp_vendors_acq_rfp_master">
       <End Role="acq_rfp_master" EntitySet="acq_rfp_master" />
       <End Role="acq_rfp_vendors" EntitySet="acq_rfp_vendors" />
     </AssociationSet>
     <FunctionImport Name="prc_Getvendcatwise_report" ReturnType="Collection(MODModel.prc_Getvendcatwise_report_Result)" />
+    <EntitySet Name="acq_audit_trail" EntityType="MODModel.acq_audit_trail" />
+    <EntitySet Name="acq_section_master" EntityType="MODModel.acq_section_master" />
     <EntitySet Name="vw_userDetail" EntityType="MODModel.vw_userDetail" />
+    <AssociationSet Name="FK_acq_section_master_acq_department_master" Association="MODModel.FK_acq_section_master_acq_department_master">
+      <End Role="acq_department_master" EntitySet="acq_department_master" />
+      <End Role="acq_section_master" EntitySet="acq_section_master" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_tbl_User_acq_section_master" Association="MODModel.FK_tbl_tbl_User_acq_section_master">
+      <End Role="acq_section_master" EntitySet="acq_section_master" />
+      <End Role="tbl_tbl_User" EntitySet="tbl_tbl_User" />
+    </AssociationSet>
+    <FunctionImport Name="GetselectedVendors" ReturnType="Collection(MODModel.GetselectedVendors_Result)" />
     <EntitySet Name="acq_project_master" EntityType="MODModel.acq_project_master" />
     <AssociationSet Name="FK_acq_project_master_acq_meeting_master" Association="MODModel.FK_acq_project_master_acq_meeting_master">
       <End Role="acq_meeting_master" EntitySet="acq_meeting_master" />
@@ -108,10 +110,9 @@
       <End Role="acq_project_master" EntitySet="acq_project_master" />
       <End Role="acq_policy" EntitySet="acq_policy" />
     </AssociationSet>
-    <EntitySet Name="tbl_Master_Role" EntityType="MODModel.tbl_Master_Role" />
     <EntitySet Name="tbl_master_formMenu" EntityType="MODModel.tbl_master_formMenu" />
+    <EntitySet Name="tbl_Master_Role" EntityType="MODModel.tbl_Master_Role" />
     <EntitySet Name="tbl_trn_OTP" EntityType="MODModel.tbl_trn_OTP" />
-    <FunctionImport Name="GetselectedVendors" ReturnType="Collection(MODModel.GetselectedVendors_Result)" />
   </EntityContainer>
   <EntityType Name="tbl_tblAON">
     <Key>
@@ -229,32 +230,9 @@
     </Key>
     <Property Name="deptt_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="deptt_description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="acq_section_master" Relationship="MODModel.FK_acq_section_master_acq_department_master" FromRole="acq_department_master" ToRole="acq_section_master" />
     <NavigationProperty Name="tbl_tbl_User" Relationship="MODModel.FK_tbl_tbl_User_acq_department_master" FromRole="acq_department_master" ToRole="tbl_tbl_User" />
+    <NavigationProperty Name="acq_section_master" Relationship="MODModel.FK_acq_section_master_acq_department_master" FromRole="acq_department_master" ToRole="acq_section_master" />
   </EntityType>
-  <EntityType Name="acq_section_master">
-    <Key>
-      <PropertyRef Name="section_id" />
-    </Key>
-    <Property Name="section_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="section_descr" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="deptt_id" Type="Int32" />
-    <NavigationProperty Name="acq_department_master" Relationship="MODModel.FK_acq_section_master_acq_department_master" FromRole="acq_section_master" ToRole="acq_department_master" />
-    <NavigationProperty Name="tbl_tbl_User" Relationship="MODModel.FK_tbl_tbl_User_acq_section_master" FromRole="acq_section_master" ToRole="tbl_tbl_User" />
-    <Property Name="ServiceType" Type="Int32" />
-  </EntityType>
-  <Association Name="FK_acq_section_master_acq_department_master">
-    <End Type="MODModel.acq_department_master" Role="acq_department_master" Multiplicity="0..1" />
-    <End Type="MODModel.acq_section_master" Role="acq_section_master" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_department_master">
-        <PropertyRef Name="deptt_id" />
-      </Principal>
-      <Dependent Role="acq_section_master">
-        <PropertyRef Name="deptt_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="tbl_mst_Project">
     <Key>
       <PropertyRef Name="ProjectId" />
@@ -811,8 +789,8 @@
     <Property Name="ExpiryTime" Type="DateTime" Precision="0" />
     <Property Name="TokenId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="acq_department_master" Relationship="MODModel.FK_tbl_tbl_User_acq_department_master" FromRole="tbl_tbl_User" ToRole="acq_department_master" />
-    <NavigationProperty Name="acq_section_master" Relationship="MODModel.FK_tbl_tbl_User_acq_section_master" FromRole="tbl_tbl_User" ToRole="acq_section_master" />
     <Property Name="DSCSerialno" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="acq_section_master" Relationship="MODModel.FK_tbl_tbl_User_acq_section_master" FromRole="tbl_tbl_User" ToRole="acq_section_master" />
   </EntityType>
   <Association Name="FK_tbl_tbl_User_acq_department_master">
     <End Type="MODModel.acq_department_master" Role="acq_department_master" Multiplicity="0..1" />
@@ -823,18 +801,6 @@
       </Principal>
       <Dependent Role="tbl_tbl_User">
         <PropertyRef Name="DepartmentID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tbl_tbl_User_acq_section_master">
-    <End Type="MODModel.acq_section_master" Role="acq_section_master" Multiplicity="0..1" />
-    <End Type="MODModel.tbl_tbl_User" Role="tbl_tbl_User" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="acq_section_master">
-        <PropertyRef Name="section_id" />
-      </Principal>
-      <Dependent Role="tbl_tbl_User">
-        <PropertyRef Name="SectionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -859,6 +825,31 @@
     <Property Type="Decimal" Name="Indian_Private__Non_MSME" Nullable="true" Precision="38" Scale="0" />
     <Property Type="Decimal" Name="Other" Nullable="true" Precision="38" Scale="0" />
   </ComplexType>
+  <EntityType Name="acq_audit_trail">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Restime" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="RecordId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="acq_section_master">
+    <Key>
+      <PropertyRef Name="section_id" />
+    </Key>
+    <Property Name="section_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="section_descr" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="deptt_id" Type="Int32" />
+    <NavigationProperty Name="acq_department_master" Relationship="MODModel.FK_acq_section_master_acq_department_master" FromRole="acq_section_master" ToRole="acq_department_master" />
+    <NavigationProperty Name="tbl_tbl_User" Relationship="MODModel.FK_tbl_tbl_User_acq_section_master" FromRole="acq_section_master" ToRole="tbl_tbl_User" />
+    <Property Name="ServiceType" Type="Int32" />
+  </EntityType>
   <EntityType Name="vw_userDetail">
     <Key>
       <PropertyRef Name="deptt_id" />
@@ -883,6 +874,35 @@
     <Property Name="DSCSerialno" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Temp_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
+  <Association Name="FK_acq_section_master_acq_department_master">
+    <End Type="MODModel.acq_department_master" Role="acq_department_master" Multiplicity="0..1" />
+    <End Type="MODModel.acq_section_master" Role="acq_section_master" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_department_master">
+        <PropertyRef Name="deptt_id" />
+      </Principal>
+      <Dependent Role="acq_section_master">
+        <PropertyRef Name="deptt_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_tbl_User_acq_section_master">
+    <End Type="MODModel.acq_section_master" Role="acq_section_master" Multiplicity="0..1" />
+    <End Type="MODModel.tbl_tbl_User" Role="tbl_tbl_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="acq_section_master">
+        <PropertyRef Name="section_id" />
+      </Principal>
+      <Dependent Role="tbl_tbl_User">
+        <PropertyRef Name="SectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="GetselectedVendors_Result">
+    <Property Type="Int32" Name="vendorid" Nullable="false" />
+    <Property Type="String" Name="vendorname" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="selected" Nullable="true" />
+  </ComplexType>
   <EntityType Name="acq_project_master">
     <Key>
       <PropertyRef Name="aon_id" />
@@ -932,11 +952,12 @@
     <Property Name="ResponsiblePersonLeve3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ResponsiblePersonLeve4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="AovType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ref_socId" Type="Int32" />
+    <Property Name="AoNNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="acq_meeting_master" Relationship="MODModel.FK_acq_project_master_acq_meeting_master" FromRole="acq_project_master" ToRole="acq_meeting_master" />
     <NavigationProperty Name="acq_policy" Relationship="MODModel.FK__acq_polic__aon_i__540C7B00" FromRole="acq_project_master" ToRole="acq_policy" />
     <NavigationProperty Name="acq_policy1" Relationship="MODModel.FK__acq_polic__aon_i__55009F39" FromRole="acq_project_master" ToRole="acq_policy" />
     <NavigationProperty Name="acq_policy2" Relationship="MODModel.FK__acq_polic__aon_i__55F4C372" FromRole="acq_project_master" ToRole="acq_policy" />
-    <Property Name="ref_socId" Type="Int32" />
   </EntityType>
   <Association Name="FK_acq_project_master_acq_meeting_master">
     <End Type="MODModel.acq_meeting_master" Role="acq_meeting_master" Multiplicity="0..1" />
@@ -986,6 +1007,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="tbl_master_formMenu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="From_menu" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="RecTime" Type="DateTime" Precision="3" />
+    <Property Name="MenuId" Type="Int32" />
+  </EntityType>
   <EntityType Name="tbl_Master_Role">
     <Key>
       <PropertyRef Name="Id" />
@@ -998,18 +1031,6 @@
     <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="RecTime" Type="DateTime" Precision="3" />
     <Property Name="CreatedBy" Type="Int32" />
-  </EntityType>
-  <EntityType Name="tbl_master_formMenu">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="From_menu" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-    <Property Name="RecTime" Type="DateTime" Precision="3" />
-    <Property Name="MenuId" Type="Int32" />
   </EntityType>
   <EntityType Name="tbl_trn_OTP">
     <Key>
@@ -1029,9 +1050,4 @@
     <Property Name="OtpCount" Type="Int32" />
     <Property Name="ExpiryOtpTime" Type="DateTime" Precision="3" />
   </EntityType>
-  <ComplexType Name="GetselectedVendors_Result">
-    <Property Type="Int32" Name="vendorid" Nullable="false" />
-    <Property Type="String" Name="vendorname" Nullable="false" MaxLength="100" />
-    <Property Type="Int32" Name="selected" Nullable="true" />
-  </ComplexType>
 </Schema>

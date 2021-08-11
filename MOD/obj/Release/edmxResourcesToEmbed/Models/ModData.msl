@@ -94,16 +94,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="acq_section_master">
-      <EntityTypeMapping TypeName="MODModel.acq_section_master">
-        <MappingFragment StoreEntitySet="acq_section_master">
-          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-          <ScalarProperty Name="deptt_id" ColumnName="deptt_id" />
-          <ScalarProperty Name="section_descr" ColumnName="section_descr" />
-          <ScalarProperty Name="section_id" ColumnName="section_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tbl_mst_Project">
       <EntityTypeMapping TypeName="MODModel.tbl_mst_Project">
         <MappingFragment StoreEntitySet="tbl_mst_Project">
@@ -653,6 +643,31 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="acq_audit_trail">
+      <EntityTypeMapping TypeName="MODModel.acq_audit_trail">
+        <MappingFragment StoreEntitySet="acq_audit_trail">
+          <ScalarProperty Name="RecordId" ColumnName="RecordId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Restime" ColumnName="Restime" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="acq_section_master">
+      <EntityTypeMapping TypeName="MODModel.acq_section_master">
+        <MappingFragment StoreEntitySet="acq_section_master">
+          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+          <ScalarProperty Name="deptt_id" ColumnName="deptt_id" />
+          <ScalarProperty Name="section_descr" ColumnName="section_descr" />
+          <ScalarProperty Name="section_id" ColumnName="section_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="vw_userDetail">
       <EntityTypeMapping TypeName="MODModel.vw_userDetail">
         <MappingFragment StoreEntitySet="vw_userDetail">
@@ -678,9 +693,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetselectedVendors" FunctionName="MODModel.Store.GetselectedVendors">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MODModel.GetselectedVendors_Result">
+          <ScalarProperty Name="vendorid" ColumnName="vendorid" />
+          <ScalarProperty Name="vendorname" ColumnName="vendorname" />
+          <ScalarProperty Name="selected" ColumnName="selected" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <EntitySetMapping Name="acq_project_master">
       <EntityTypeMapping TypeName="MODModel.acq_project_master">
         <MappingFragment StoreEntitySet="acq_project_master">
+          <ScalarProperty Name="AoNNumber" ColumnName="AoNNumber" />
           <ScalarProperty Name="ref_socId" ColumnName="ref_socId" />
           <ScalarProperty Name="AovType" ColumnName="AovType" />
           <ScalarProperty Name="ResponsiblePersonLeve4" ColumnName="ResponsiblePersonLeve4" />
@@ -730,6 +755,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tbl_master_formMenu">
+      <EntityTypeMapping TypeName="MODModel.tbl_master_formMenu">
+        <MappingFragment StoreEntitySet="tbl_master_formMenu">
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+          <ScalarProperty Name="RecTime" ColumnName="RecTime" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Controller" ColumnName="Controller" />
+          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+          <ScalarProperty Name="From_menu" ColumnName="From_menu" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tbl_Master_Role">
       <EntityTypeMapping TypeName="MODModel.tbl_Master_Role">
         <MappingFragment StoreEntitySet="tbl_Master_Role">
@@ -741,19 +779,6 @@
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbl_master_formMenu">
-      <EntityTypeMapping TypeName="MODModel.tbl_master_formMenu">
-        <MappingFragment StoreEntitySet="tbl_master_formMenu">
-          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-          <ScalarProperty Name="RecTime" ColumnName="RecTime" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="Controller" ColumnName="Controller" />
-          <ScalarProperty Name="ActionName" ColumnName="ActionName" />
-          <ScalarProperty Name="From_menu" ColumnName="From_menu" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -776,14 +801,5 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="GetselectedVendors" FunctionName="MODModel.Store.GetselectedVendors">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="MODModel.GetselectedVendors_Result">
-          <ScalarProperty Name="vendorid" ColumnName="vendorid" />
-          <ScalarProperty Name="vendorname" ColumnName="vendorname" />
-          <ScalarProperty Name="selected" ColumnName="selected" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

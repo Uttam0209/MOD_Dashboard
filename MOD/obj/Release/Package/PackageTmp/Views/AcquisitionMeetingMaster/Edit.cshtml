@@ -1,0 +1,95 @@
+﻿@model MOD.Models.AcquisitionCreateMasterViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+    <div class="card flex-fill w-100 p-4">
+        <div class="row mb-2 mb-xl-3">
+            <div class="col-auto d-none d-sm-block">
+                <h2 class="mb-0">Edit Acquisition Meeting Master</h2>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("Update", "AcquisitionMeetingMaster", FormMethod.Post))
+        {
+            <div class="form-row mb-4">
+                <input type="hidden" name="meeting_id" value="@Model.meeting_id" />
+                <div class="col">
+                    <label class="labeltext font-weight-bold">Meeting Type<span class="danger">*</span>:</label>
+                    @Html.DropDownListFor(model => model.dac_dpb, new List<SelectListItem>
+                       {
+                          new SelectListItem{ Text="DAC", Value = "DAC" },
+                          new SelectListItem{ Text="DPB", Value = "DPB" },
+                          new SelectListItem{ Text="SPB", Value = "SPB" },
+                       }, "-Select-", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.dac_dpb, null, new { @class = "danger" })
+                </div>
+
+                <div class="col">
+                    <label class="labeltext font-weight-bold">Meeting Date<span class="danger">*</span>:</label>
+                    @*@{
+                        string y = "", m = "", d = "";
+                        string[] date = Model.meeting_date.Value.ToShortDateString().Split('/');
+                        y = date[2];
+                        m = date[0];
+                        d = date[1];
+                        if (Convert.ToInt32(m) < 10)
+                        {
+                            m = "0" + m;
+                        }
+                        if (Convert.ToInt32(d) < 10)
+                        {
+                            d = "0" + d;
+                        }
+                    }*@
+                    <input type="date" id="meeting_date" name="meeting_date" value="@Model.meeting_date.Value.ToString("yyyy-MM-dd")" class="form-control" placeholder="Meeting Date">
+                    @Html.ValidationMessageFor(x => x.meeting_date, null, new { @class = "danger" })
+                </div>
+            </div>
+
+            <div class="form-row mb-4">
+                <div class="col">
+                    <label class="labeltext font-weight-bold">MOM Issue Date:</label>
+                    @*@{
+                        string yy = "", mm = "", dd = "";
+                        string[] date1 = Model.Date_of_Issue_of_Minutes.Value.ToShortDateString().Split('/');
+                        yy = date1[2];
+                        mm = date1[0];
+                        dd = date1[1];
+                        if (Convert.ToInt32(mm) < 10)
+                        {
+                            mm = "0" + mm;
+                        }
+                        if (Convert.ToInt32(dd) < 10)
+                        {
+                            dd = "0" + dd;
+                        }
+                    }*@
+                    <input type="date" id="mom_date" min="@DateTime.Now.Year-@DateTime.Now.Month-@DateTime.Now.Day" name="Date_of_Issue_of_Minutes" value="@Model.Date_of_Issue_of_Minutes.Value.ToString("yyyy-MM-dd")" class="form-control" placeholder="MOM Issue Dates">
+                </div>
+                <div class="col">
+                    <label class="labeltext font-weight-bold mb-0">Remarks:</label>
+                    @Html.TextAreaFor(x => x.Remarks, new { @class = "form-control", @placeholder = "Remarks" })
+                </div>
+            </div>
+
+            <button class="btn btn-info float-right" type="submit">Update</button>
+        }
+
+    </div>
+   
+
+   
+    <script>
+        $(document).ready(function () {
+            $("#meeting_date").change(function () {
+                $("#mom_date").removeAttr("disabled");
+                var meeting_date = $("#meeting_date").val();
+                $("#mom_date").attr("min", meeting_date);
+            });
+        });
+    </script>
+
+
+
+

@@ -1,0 +1,36 @@
+﻿@model MOD.Models.DepartmentSaveViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="row">
+    <div class="col col-lg-12">
+        <h2 class="text-center p-3">Edit Department</h2>
+    </div>
+</div>
+<hr />
+
+@if (Model != null)
+{
+    using (Html.BeginForm("Update", "Department", FormMethod.Post))
+    {
+        <div class="form-row mb-4">
+            <input type="hidden" name="DeptId" value="@Model.DeptId" />
+            <div class="col">
+                <!-- First name -->
+                <label class="font-weight-bold">Department Name:</label>
+                <input type="text" value="@Model.DepartmentName" name="DepartmentName" class="form-control" placeholder="DepartmentName">
+                @Html.ValidationMessageFor(x => x.DepartmentName, null, new { @class = "danger" })
+            </div>
+            <div class="col">
+                <!-- Last name -->
+                <label class="font-weight-bold">Location:</label>
+                <input type="text" value="@Model.Location" name="Location" class="form-control" placeholder="Location">
+                @Html.ValidationMessageFor(x => x.Location, null, new { @class = "danger" })
+            </div>
+        </div>
+        <!-- Sign up button -->
+        <button class="btn btn-info float-right" type="submit">Update Department</button>
+    }
+}
+

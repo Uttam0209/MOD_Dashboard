@@ -1,0 +1,64 @@
+﻿@model MOD.Models.SaveAcqProjectMasterViewModel
+@{
+    ViewBag.Title = "AoNForeClosure";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <script>
+        $(document).ready(function () {
+            $("#pages").addClass("show");
+            $("#AonForC").addClass("active");
+        });
+    </script>
+
+    <div class="card flex-fill w-100 p-4">
+        <div class="row mb-2 mb-xl-3">
+            <div class="col-auto d-none d-sm-block">
+                <h2 class="mb-0">AoN Fore Closure</h2>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("AoNForeClosure", "AoN", FormMethod.Post))
+        {
+            <div>
+                <h4 style="color:red">@TempData["Msg"]</h4>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col">
+                    <label class="labeltext font-weight-bold">AoN</label>
+                    <select class="form-control" name="aon_id" id="aon_id" required>
+                        <option value="0">-Select AoNs-</option>
+                        @foreach (var vCategory in Model.AoNList)
+                        {
+                            <option value="@vCategory.aon_id">@vCategory.item_description</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row mb-4">
+                <div class="col">
+                    <label class="labeltext font-weight-bold mb-0">AoN ForeClosure Date</label>
+                    <input type="date" name="AoNClosureDate" class="form-control" placeholder="AoN Closure Date">
+                </div>
+
+                <div class="col">
+                    <label class="labeltext font-weight-bold mb-0">Remarks</label>
+                    @Html.TextAreaFor(x => x.AoNClosureRemarks, new { @class = "form-control", @placeholder = "AoNFore Closure Remarks" })
+                </div>
+            </div>
+            <!-- Sign up button -->
+            <button class="btn btn-primary float-right" type="submit">Save</button>
+        }
+    </div>  
+
+
+    <script>
+        $(document).ready(function () {
+            $("#aon_id").chosen({
+
+            });
+        });
+    </script>
+
+

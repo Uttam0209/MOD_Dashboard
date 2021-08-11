@@ -1,0 +1,75 @@
+﻿@model MOD.Models.applicabilityViewModel
+@{
+    ViewBag.Title = "projectstageapplicability";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    form{
+        width:100%;
+    }
+</style>
+
+    <div class="card flex-fill w-100 p-4">
+        <div class="row mb-2 mb-xl-3">
+            @using (Html.BeginForm("projectstageapplicability", "MOD", FormMethod.Post))
+            {
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="labeltext font-weight-bold mb-0">Select AoN </label>
+                    <select class="form-control" id="aon_id" name="AoN">
+                        <option value="">--Select AoN Name--</option>
+                        @foreach (var item in Model.ProjectList)
+                        {
+                            <option value="@item.AoN">@item.item_description</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="labeltext font-weight-bold mb-0">Stage</label>
+                    <select class="form-control" id="TaskSlno" name="TaskSlno">
+                        <option value="">--Select Stage--</option>
+                        @foreach (var item1 in Model.StageList)
+                        {
+                            <option value="@item1.TaskSlno">@item1.pending_in_stage</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="labeltext font-weight-bold mb-0">Applicable:</label>
+                    @Html.DropDownListFor(model => model.applicable, new List<SelectListItem>
+                       {
+                        new SelectListItem{ Text="Applicable", Value = "Applicable" },
+                        new SelectListItem{ Text="Not Applicable", Value = "Not Applicable" },
+                       }, "-Select-", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.applicable, null, new { @class = "danger" })
+                </div>
+
+                <div class="col-md-6">
+                    <label class="labeltext font-weight-bold mb-0">Remark/Reason:</label>
+                    @Html.TextBoxFor(x => x.Remarks, new { @class = "form-control", @placeholder = "Remarks" })
+                    @Html.ValidationMessageFor(x => x.Remarks, null, new { @class = "danger" })
+                </div>
+            </div>
+                    
+                    
+                <div class="col-md-12 mt-2">
+                    @ViewBag.Message
+                    <button class="btn btn-primary float-right" type="submit">Save</button>
+                </div>
+
+            }
+        </div>
+    </div>
+
+
+
+    <script>
+    $(document).ready(function () {
+        $("#aon_id").chosen({
+        });
+
+        if ('@ViewBag.Message' === "Data Save Successfully") {
+            alert("Data Update Successfully");
+        }
+    })
+        </script>

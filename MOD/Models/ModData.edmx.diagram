@@ -52,9 +52,11 @@
         <EntityTypeShape EntityType="MODModel.vw_userDetail" Width="1.5" PointX="14.375" PointY="21.75" />
         <AssociationConnector Association="MODModel.FK_acq_section_master_acq_department_master" />
         <AssociationConnector Association="MODModel.FK_tbl_tbl_User_acq_section_master" />
-        <EntityTypeShape EntityType="MODModel.acq_project_master" Width="1.5" PointX="7.625" PointY="17.75" />
+        <EntityTypeShape EntityType="MODModel.acq_project_master" Width="1.5" PointX="7.625" PointY="17.25" />
         <AssociationConnector Association="MODModel.FK_acq_project_master_acq_meeting_master" />
-        <AssociationConnector Association="MODModel.FK_acq_policy_acq_project_master" />
+        <AssociationConnector Association="MODModel.FK__acq_polic__aon_i__540C7B00" />
+        <AssociationConnector Association="MODModel.FK__acq_polic__aon_i__55009F39" />
+        <AssociationConnector Association="MODModel.FK__acq_polic__aon_i__55F4C372" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
