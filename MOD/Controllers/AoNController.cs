@@ -40,6 +40,7 @@ namespace MOD.Controllers
                     System.Web.HttpContext.Current.Response.Redirect("~/LoginBlockMsg");
                 }
             }
+
             BindEncriptData();
             EncriptServicesData();
             BruteForce bruteForce = new BruteForce();

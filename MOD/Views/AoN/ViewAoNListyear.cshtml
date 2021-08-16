@@ -23,6 +23,13 @@
                 title: "Value of AoNs(in Rs Crs)"
             },
             data: [{
+                click: function (e) {
+                    var stage = e.dataPoint.label;
+                    var service = "";
+                    var Categorisation = "";
+                    window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+
+                },
                 type: "column",
                 indexLabel: "{z} AoN Categorization",
                 //indexLabel: "{y:10}",
@@ -37,6 +44,13 @@
                 e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
             }
             e.chart.render();
+        }
+        function onClick(e) {
+            //alert(e.dataSeries.type + ", dataPoint { x:" + e.dataPoint.indexLabel + ", y: " + e.dataPoint.label + " }");
+            var stage = e.dataPoint.label;
+            var service = "";
+            var Categorisation = "";
+            window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
         }
     }
 </script>
