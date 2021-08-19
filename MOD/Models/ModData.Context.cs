@@ -22,8 +22,8 @@ namespace MOD.Models
     public partial class MODEntities : DbContext
     {
         public MODEntities()
-           //: base("name=MODEntities")
-            : base(DecryptData(ConfigurationManager.ConnectionStrings["MODEntities"].ConnectionString))
+           : base("name=MODEntities")
+           // : base(DecryptData(ConfigurationManager.ConnectionStrings["MODEntities"].ConnectionString))
         {
         }
 

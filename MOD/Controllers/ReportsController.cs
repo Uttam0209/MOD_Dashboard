@@ -83,7 +83,7 @@ namespace MOD.Controllers
             EncriptStageData();
             BruteForce bruteForce = new BruteForce();
             BruteForceAttackss.bcontroller = "Reports";
-           // BruteForceAttackss.bcontroller = "User";
+            // BruteForceAttackss.bcontroller = "User";
             if (BruteForceAttackss.bcontroller != "")
             {
                 if (BruteForceAttackss.bcontroller == "Reports")
@@ -220,7 +220,7 @@ namespace MOD.Controllers
                 {
                     if (item.FormName.ToLower() == "Service-Wise Report on the Pending Cases at various Stages".ToLower())
                     {
-                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
                         {
                             isAccessible = true;
                         }
@@ -264,20 +264,28 @@ namespace MOD.Controllers
                 if (_serviceWiseReport != null)
                 {
                     ViewBag.service1 = Service_Lead_Service1;
-
-                    foreach (var item in _serviceWiseReport)
+                    try
                     {
-                        MODListViewModel obj = new MODListViewModel();
-                        obj.Service_Lead_Service = item.Service_Lead_Service;
-                        obj.item_description = Cipher.Decrypt(item.item_description, password);
-                        obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
-                        obj.Cost = item.Cost;
-                        obj.Categorisation = item.Categorisation;
-                        obj.IC_percentage = item.IC_percentage;
-                        obj.Trials_Required = item.Trials_Required;
-                        obj.pending_in_stage = item.pending_in_stage;
-                        obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
-                        list1.Add(obj);
+
+
+                        foreach (var item in _serviceWiseReport)
+                        {
+                            MODListViewModel obj = new MODListViewModel();
+                            obj.Service_Lead_Service = item.Service_Lead_Service;
+                            obj.item_description = Cipher.Decrypt(item.item_description, password);
+                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                            obj.Cost = item.Cost;
+                            obj.Categorisation = item.Categorisation;
+                            obj.IC_percentage = item.IC_percentage;
+                            obj.Trials_Required = item.Trials_Required;
+                            obj.pending_in_stage = item.pending_in_stage;
+                            obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
+                            list1.Add(obj);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Response.Write("Step 1 : " + e.Message);
                     }
                 }
 
@@ -289,20 +297,28 @@ namespace MOD.Controllers
                 {
                     ViewBag.service1 = Service_Lead_Service1;
 
-                    foreach (var item in _serviceWiseReport)
+                    try
                     {
-                        MODListViewModel obj = new MODListViewModel();
-                        obj.Service_Lead_Service = item.Service_Lead_Service;
-                        obj.item_description = Cipher.Decrypt(item.item_description, password);
-                        obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
-                        obj.Cost = item.Cost;
-                        obj.Categorisation = item.Categorisation;
-                        obj.IC_percentage = item.IC_percentage;
-                        obj.Trials_Required = item.Trials_Required;
-                        obj.pending_in_stage = item.pending_in_stage;
-                        obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
-                        list1.Add(obj);
+                        foreach (var item in _serviceWiseReport)
+                        {
+                            MODListViewModel obj = new MODListViewModel();
+                            obj.Service_Lead_Service = item.Service_Lead_Service;
+                            obj.item_description = Cipher.Decrypt(item.item_description, password);
+                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                            obj.Cost = item.Cost;
+                            obj.Categorisation = item.Categorisation;
+                            obj.IC_percentage = item.IC_percentage;
+                            obj.Trials_Required = item.Trials_Required;
+                            obj.pending_in_stage = item.pending_in_stage;
+                            obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
+                            list1.Add(obj);
+                        }
                     }
+                    catch (Exception e)
+                    {
+                        Response.Write("Step 2 : " + e.Message);
+                    }
+
                 }
 
             }
@@ -312,20 +328,27 @@ namespace MOD.Controllers
                 var _serviceWiseReport1 = _entities.acq_project_status_pendingstage.Where(x => x.Service_Lead_Service == struid).ToList();
                 if (_serviceWiseReport1 != null)
                 {
-                    ViewBag.service1 = Service_Lead_Service1;
-                    foreach (var item in _serviceWiseReport1)
+                    try
                     {
-                        MODListViewModel obj = new MODListViewModel();
-                        obj.Service_Lead_Service = item.Service_Lead_Service;
-                        obj.item_description = Cipher.Decrypt(item.item_description, password);
-                        obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
-                        obj.Cost = item.Cost;
-                        obj.Categorisation = item.Categorisation;
-                        obj.IC_percentage = item.IC_percentage;
-                        obj.Trials_Required = item.Trials_Required;
-                        obj.pending_in_stage = item.pending_in_stage;
-                        obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
-                        list1.Add(obj);
+                        ViewBag.service1 = Service_Lead_Service1;
+                        foreach (var item in _serviceWiseReport1)
+                        {
+                            MODListViewModel obj = new MODListViewModel();
+                            obj.Service_Lead_Service = item.Service_Lead_Service;
+                            obj.item_description = Cipher.Decrypt(item.item_description, password);
+                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                            obj.Cost = item.Cost;
+                            obj.Categorisation = item.Categorisation;
+                            obj.IC_percentage = item.IC_percentage;
+                            obj.Trials_Required = item.Trials_Required;
+                            obj.pending_in_stage = item.pending_in_stage;
+                            obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
+                            list1.Add(obj);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Response.Write("Step 2 : " + e.Message);
                     }
                 }
             }
@@ -333,15 +356,22 @@ namespace MOD.Controllers
             {
                 var Stagelist = list1.Select(m => m.pending_in_stage).Distinct();
                 List<Categorisation> Catdata = new List<Categorisation>();
-                foreach (var item in Stagelist)
+                try
                 {
-                    Categorisation cat1 = new Categorisation()
+                    foreach (var item in Stagelist)
                     {
-                        Text = item,
-                        Value = Cipher.Encrypt(item, "")
+                        Categorisation cat1 = new Categorisation()
+                        {
+                            Text = item,
+                            Value = Cipher.Encrypt(item, "")
+                        };
+                        Catdata.Add(cat1);
                     };
-                    Catdata.Add(cat1);
-                };
+                }
+                catch (Exception e)
+                {
+                    Response.Write("Step 2 : " + e.Message);
+                }
                 ViewBag.stage = Catdata;
                 string[] viewdata = { "Navy", "ICG" };
                 ViewBag.Service = viewdata;
@@ -385,19 +415,26 @@ namespace MOD.Controllers
                     if (_serviceWiseReport != null)
                     {
                         ViewBag.service1 = Service_Lead_Service1;
-                        foreach (var item in _serviceWiseReport)
+                        try
                         {
-                            MODListViewModel obj = new MODListViewModel();
-                            obj.Service_Lead_Service = item.Service_Lead_Service;
-                            obj.item_description = Cipher.Decrypt(item.item_description, password);
-                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
-                            obj.Cost = item.Cost;
-                            obj.Categorisation = item.Categorisation;
-                            obj.IC_percentage = item.IC_percentage;
-                            obj.Trials_Required = item.Trials_Required;
-                            obj.pending_in_stage = item.pending_in_stage;
-                            obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
-                            list.Add(obj);
+                            foreach (var item in _serviceWiseReport)
+                            {
+                                MODListViewModel obj = new MODListViewModel();
+                                obj.Service_Lead_Service = item.Service_Lead_Service;
+                                obj.item_description = Cipher.Decrypt(item.item_description, password);
+                                obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                                obj.Cost = item.Cost;
+                                obj.Categorisation = item.Categorisation;
+                                obj.IC_percentage = item.IC_percentage;
+                                obj.Trials_Required = item.Trials_Required;
+                                obj.pending_in_stage = item.pending_in_stage;
+                                obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
+                                list.Add(obj);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Response.Write("Step 2 : " + e.Message);
                         }
                     }
 
@@ -409,20 +446,27 @@ namespace MOD.Controllers
                     if (_serviceWiseReport1 != null)
                     {
                         @ViewBag.service1 = Service_Lead_Service1;
-                        foreach (var item in _serviceWiseReport1)
+                        try
                         {
+                            foreach (var item in _serviceWiseReport1)
+                            {
 
-                            MODListViewModel obj = new MODListViewModel();
-                            obj.Service_Lead_Service = item.Service_Lead_Service;
-                            obj.item_description = Cipher.Decrypt(item.item_description, password);
-                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
-                            obj.Cost = item.Cost;
-                            obj.Categorisation = item.Categorisation;
-                            obj.IC_percentage = item.IC_percentage;
-                            obj.Trials_Required = item.Trials_Required;
-                            obj.pending_in_stage = item.pending_in_stage;
-                            obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
-                            list.Add(obj);
+                                MODListViewModel obj = new MODListViewModel();
+                                obj.Service_Lead_Service = item.Service_Lead_Service;
+                                obj.item_description = Cipher.Decrypt(item.item_description, password);
+                                obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                                obj.Cost = item.Cost;
+                                obj.Categorisation = item.Categorisation;
+                                obj.IC_percentage = item.IC_percentage;
+                                obj.Trials_Required = item.Trials_Required;
+                                obj.pending_in_stage = item.pending_in_stage;
+                                obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
+                                list.Add(obj);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Response.Write("Step 2 : " + e.Message);
                         }
                     }
                 }
@@ -439,21 +483,27 @@ namespace MOD.Controllers
                         var result = _entities.acq_project_status_pendingstage.Where(x => (x.Service_Lead_Service == "Navy" || x.Service_Lead_Service == "ICG" || x.System_case == "Y") && x.pending_in_stage == pending_in_stage1).ToList();
                         if (result != null)
                         {
-
-                            foreach (var item in result)
+                            try
                             {
-                                MODListViewModel obj = new MODListViewModel();
-                                obj.Service_Lead_Service = item.Service_Lead_Service;
-                                obj.item_description = Cipher.Decrypt(item.item_description, password);
-                                obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
-                                obj.Cost = item.Cost;
-                                obj.System_case = item.System_case;
-                                obj.Categorisation = item.Categorisation;
-                                obj.IC_percentage = item.IC_percentage;
-                                obj.Trials_Required = item.Trials_Required;
-                                obj.pending_in_stage = item.pending_in_stage;
-                                obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
-                                list.Add(obj);
+                                foreach (var item in result)
+                                {
+                                    MODListViewModel obj = new MODListViewModel();
+                                    obj.Service_Lead_Service = item.Service_Lead_Service;
+                                    obj.item_description = Cipher.Decrypt(item.item_description, password);
+                                    obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                                    obj.Cost = item.Cost;
+                                    obj.System_case = item.System_case;
+                                    obj.Categorisation = item.Categorisation;
+                                    obj.IC_percentage = item.IC_percentage;
+                                    obj.Trials_Required = item.Trials_Required;
+                                    obj.pending_in_stage = item.pending_in_stage;
+                                    obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
+                                    list.Add(obj);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Response.Write("Step 2 : " + e.Message);
                             }
                         }
                     }
@@ -465,20 +515,26 @@ namespace MOD.Controllers
                     var result = _entities.acq_project_status_pendingstage.Where(x => (x.Service_Lead_Service.Contains(Service_Lead_Service1)) && (x.System_case == "N" || x.System_case == null) && x.pending_in_stage == pending_in_stage1).ToList();
                     if (result != null)
                     {
-
-                        foreach (var item in result)
+                        try
                         {
-                            MODListViewModel obj = new MODListViewModel();
-                            obj.Service_Lead_Service = item.Service_Lead_Service;
-                            obj.item_description = Cipher.Decrypt(item.item_description, password);
-                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
-                            obj.Cost = item.Cost;
-                            obj.Categorisation = item.Categorisation;
-                            obj.IC_percentage = item.IC_percentage;
-                            obj.Trials_Required = item.Trials_Required;
-                            obj.pending_in_stage = item.pending_in_stage;
-                            obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
-                            list.Add(obj);
+                            foreach (var item in result)
+                            {
+                                MODListViewModel obj = new MODListViewModel();
+                                obj.Service_Lead_Service = item.Service_Lead_Service;
+                                obj.item_description = Cipher.Decrypt(item.item_description, password);
+                                obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                                obj.Cost = item.Cost;
+                                obj.Categorisation = item.Categorisation;
+                                obj.IC_percentage = item.IC_percentage;
+                                obj.Trials_Required = item.Trials_Required;
+                                obj.pending_in_stage = item.pending_in_stage;
+                                obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
+                                list.Add(obj);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Response.Write("Step 2 : " + e.Message);
                         }
                     }
                 }
@@ -488,19 +544,26 @@ namespace MOD.Controllers
                     var result = _entities.acq_project_status_pendingstage.Where(x => x.Service_Lead_Service.Contains(Service_Lead_Service)).ToList();
                     if (result != null)
                     {
-                        foreach (var item in result)
+                        try
                         {
-                            MODListViewModel obj = new MODListViewModel();
-                            obj.Service_Lead_Service = item.Service_Lead_Service;
-                            obj.item_description = Cipher.Decrypt(item.item_description, password);
-                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
-                            obj.Cost = item.Cost;
-                            obj.Categorisation = item.Categorisation;
-                            obj.IC_percentage = item.IC_percentage;
-                            obj.Trials_Required = item.Trials_Required;
-                            obj.pending_in_stage = item.pending_in_stage;
-                            obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
-                            list.Add(obj);
+                            foreach (var item in result)
+                            {
+                                MODListViewModel obj = new MODListViewModel();
+                                obj.Service_Lead_Service = item.Service_Lead_Service;
+                                obj.item_description = Cipher.Decrypt(item.item_description, password);
+                                obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                                obj.Cost = item.Cost;
+                                obj.Categorisation = item.Categorisation;
+                                obj.IC_percentage = item.IC_percentage;
+                                obj.Trials_Required = item.Trials_Required;
+                                obj.pending_in_stage = item.pending_in_stage;
+                                obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
+                                list.Add(obj);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Response.Write("Step 2 : " + e.Message);
                         }
                     }
                 }
@@ -510,85 +573,99 @@ namespace MOD.Controllers
                     var result = _entities.acq_project_status_pendingstage.Where(x => x.pending_in_stage == pending_in_stage1).ToList();
                     if (result != null)
                     {
-                        foreach (var item in result)
+                        try
                         {
-                            MODListViewModel obj = new MODListViewModel();
-                            obj.Service_Lead_Service = item.Service_Lead_Service;
-                            obj.item_description = Cipher.Decrypt(item.item_description, password);
-                            obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
-                            obj.Cost = item.Cost;
-                            obj.Categorisation = item.Categorisation;
-                            obj.IC_percentage = item.IC_percentage;
-                            obj.Trials_Required = item.Trials_Required;
-                            obj.pending_in_stage = item.pending_in_stage;
-                            obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
-                            list.Add(obj);
+                            foreach (var item in result)
+                            {
+                                MODListViewModel obj = new MODListViewModel();
+                                obj.Service_Lead_Service = item.Service_Lead_Service;
+                                obj.item_description = Cipher.Decrypt(item.item_description, password);
+                                obj.Date_of_Accord_of_AoN = item.Date_of_Accord_of_AoN;
+                                obj.Cost = item.Cost;
+                                obj.Categorisation = item.Categorisation;
+                                obj.IC_percentage = item.IC_percentage;
+                                obj.Trials_Required = item.Trials_Required;
+                                obj.pending_in_stage = item.pending_in_stage;
+                                obj.date_of_entering_this_stage = item.date_of_entering_this_stage;
+                                list.Add(obj);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Response.Write("Step 2 : " + e.Message);
                         }
                     }
                 }
             }
-            model.AonList = list;
-            string query = "";
-            string msystem_case = "";
-            if (Service_Lead_Service == null || Service_Lead_Service == "")
-                Service_Lead_Service1 = "%";
-
-            if (pending_in_stage == null || pending_in_stage == "")
-                pending_in_stage1 = "%";
-            if (msystem_case == null || msystem_case == "")
-                msystem_case = "%";
-
-
-            if (system_case != null && system_case != "")
-                msystem_case = " and b.System_case=" + "'" + system_case + "'";
-
-            query = "SELECT ISNULL(ROW_NUMBER() OVER (ORDER BY @@identity), - 1) AS Pkey,b.TaskSlno, b.pending_in_stage, count(*) n_projects, " +
-                " isnull(sum(cast(b.cost AS decimal)),'0') total_aon_cost " +
-//" FROM acq_project_status_pendingstage b where b.Service_Lead_Service like '" + Service_Lead_Service1 + "' and b.pending_in_stage like '" + pending_in_stage1 + "' and  isnull(b.System_case,'') like '" + msystem_case + "'" +
-" FROM acq_project_status_pendingstage b where b.Service_Lead_Service like ? and b.pending_in_stage like ? and  isnull(b.System_case,'') like ?" +
-" GROUP BY b.TaskSlno, b.pending_in_stage order by TaskSlno";
-            List<DetailCharts> dataPoints = new List<DetailCharts>();
-            IEnumerable<Service_WiseReport> Badge = null;
-
-
-            DataTable dt = new DataTable();
-            using (OleDbConnection conn = masterService.DB())
+            try
             {
-                OleDbDataAdapter adap = new OleDbDataAdapter();
-                OleDbCommand cmd = new OleDbCommand();
-                cmd.CommandText = query;
-                cmd.CommandType = CommandType.Text;
-                // cmd.Parameters.AddWithValue("@Id", CatID);
-                cmd.Parameters.Add("@Service_Lead_Service", OleDbType.VarChar, 500);
-                cmd.Parameters["@Service_Lead_Service"].Value = Service_Lead_Service1;
-                cmd.Parameters.Add("@pending_in_stage", OleDbType.VarChar, 500);
-                cmd.Parameters["@pending_in_stage"].Value = pending_in_stage1;
-                cmd.Parameters.Add("@msystem_case", OleDbType.VarChar, 500);
-                cmd.Parameters["@msystem_case"].Value = msystem_case;
-                cmd.Connection = conn;              
-                adap.SelectCommand = cmd;
-                adap.Fill(dt);
-                conn.Close();
+                model.AonList = list;
+                string query = "";
+                string msystem_case = "";
+                if (Service_Lead_Service == null || Service_Lead_Service == "")
+                    Service_Lead_Service1 = "%";
+
+                if (pending_in_stage == null || pending_in_stage == "")
+                    pending_in_stage1 = "%";
+                if (msystem_case == null || msystem_case == "")
+                    msystem_case = "%";
+
+
+                if (system_case != null && system_case != "")
+                    msystem_case = " and b.System_case=" + "'" + system_case + "'";
+
+                query = "SELECT ISNULL(ROW_NUMBER() OVER (ORDER BY @@identity), - 1) AS Pkey,b.TaskSlno, b.pending_in_stage, count(*) n_projects, " +
+                    " isnull(sum(cast(b.cost AS decimal)),'0') total_aon_cost " +
+    //" FROM acq_project_status_pendingstage b where b.Service_Lead_Service like '" + Service_Lead_Service1 + "' and b.pending_in_stage like '" + pending_in_stage1 + "' and  isnull(b.System_case,'') like '" + msystem_case + "'" +
+    " FROM acq_project_status_pendingstage b where b.Service_Lead_Service like ? and b.pending_in_stage like ? and  isnull(b.System_case,'') like ?" +
+    " GROUP BY b.TaskSlno, b.pending_in_stage order by TaskSlno";
+                List<DetailCharts> dataPoints = new List<DetailCharts>();
+                IEnumerable<Service_WiseReport> Badge = null;
+
+
+                DataTable dt = new DataTable();
+                using (OleDbConnection conn = masterService.DB())
+                {
+                    OleDbDataAdapter adap = new OleDbDataAdapter();
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = query;
+                    cmd.CommandType = CommandType.Text;
+                    // cmd.Parameters.AddWithValue("@Id", CatID);
+                    cmd.Parameters.Add("@Service_Lead_Service", OleDbType.VarChar, 500);
+                    cmd.Parameters["@Service_Lead_Service"].Value = Service_Lead_Service1;
+                    cmd.Parameters.Add("@pending_in_stage", OleDbType.VarChar, 500);
+                    cmd.Parameters["@pending_in_stage"].Value = pending_in_stage1;
+                    cmd.Parameters.Add("@msystem_case", OleDbType.VarChar, 500);
+                    cmd.Parameters["@msystem_case"].Value = msystem_case;
+                    cmd.Connection = conn;
+                    adap.SelectCommand = cmd;
+                    adap.Fill(dt);
+                    conn.Close();
+                }
+
+
+
+                // DataTable dt = return_datatable(query);
+                int a = dt.Rows.Count;
+                Badge = dt.AsEnumerable().Select(x => new Service_WiseReport
+                {
+                    Pkey = x.Field<long>("Pkey"),
+                    pending_in_stage = x.Field<string>("pending_in_stage"),
+                    n_projects = x.Field<int>("n_projects"),
+                    total_aon_cost = x.Field<decimal>("total_aon_cost")
+
+                });
+                foreach (Service_WiseReport item in Badge)
+                {
+                    dataPoints.Add(new DetailCharts(Convert.ToString(item.pending_in_stage), Convert.ToDouble(item.n_projects), Convert.ToDouble(item.total_aon_cost)));
+                }
+
+                ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
             }
-
-
-
-           // DataTable dt = return_datatable(query);
-            int a = dt.Rows.Count;
-            Badge = dt.AsEnumerable().Select(x => new Service_WiseReport
+            catch (Exception e)
             {
-                Pkey = x.Field<long>("Pkey"),
-                pending_in_stage = x.Field<string>("pending_in_stage"),
-                n_projects = x.Field<int>("n_projects"),
-                total_aon_cost = x.Field<decimal>("total_aon_cost")
-
-            });
-            foreach (Service_WiseReport item in Badge)
-            {
-                dataPoints.Add(new DetailCharts(Convert.ToString(item.pending_in_stage), Convert.ToDouble(item.n_projects), Convert.ToDouble(item.total_aon_cost)));
+                Response.Write("Step 2 : " + e.Message);
             }
-
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
             return View(model);
         }
 
@@ -611,7 +688,7 @@ namespace MOD.Controllers
                 {
                     if (item.FormName.ToLower() == "Stage wise Cycle time analysis (All services)".ToLower())
                     {
-                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
                         {
                             isAccessible = true;
                         }
@@ -693,7 +770,7 @@ namespace MOD.Controllers
                 {
                     if (item.FormName.ToLower() == "Trend analysis for a particular stage".ToLower())
                     {
-                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
                         {
                             isAccessible = true;
                         }
@@ -819,7 +896,7 @@ namespace MOD.Controllers
                 {
                     if (item.FormName.ToLower() == "Stage wise cycle time analysis  (TM)".ToLower())
                     {
-                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
                         {
                             isAccessible = true;
                         }
@@ -899,7 +976,7 @@ namespace MOD.Controllers
                 cmd.Parameters["@Service_Lead_Service"].Value = Service_Lead_Service1;
                 cmd.Parameters.Add("@Categorisation", OleDbType.VarChar, 500);
                 cmd.Parameters["@Categorisation"].Value = Categorisation1;
-               
+
                 cmd.Connection = conn;
                 adap.SelectCommand = cmd;
                 adap.Fill(dt);
@@ -958,10 +1035,10 @@ namespace MOD.Controllers
                // "d.Service_Lead_Service like '" + Service_Lead_Service + "' and d.Categorisation like '" + Categorisation + "' " +
                "d.Service_Lead_Service like ? and d.Categorisation like ? " +
                 "and d.Categorisation not in " +
-               // "('Design & Development','Make-I','Make-II','Make-III') and d.stage_name like '" + stage + "' and d.aon_id=a.aon_id order by " +
+                // "('Design & Development','Make-I','Make-II','Make-III') and d.stage_name like '" + stage + "' and d.aon_id=a.aon_id order by " +
                 "('Design & Development','Make-I','Make-II','Make-III') and d.stage_name like '" + stage + "' and d.aon_id=a.aon_id order by " +
                 "d.stage_name,d.no_of_weeks desc";
-           // DataTable dt = return_datatable(query);
+            // DataTable dt = return_datatable(query);
 
             DataTable dt = new DataTable();
             using (OleDbConnection conn = masterService.DB())
@@ -1014,7 +1091,7 @@ namespace MOD.Controllers
                 {
                     if (item.FormName.ToLower() == "Vendor Category Wise Report".ToLower())
                     {
-                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
                         {
                             isAccessible = true;
                         }
@@ -1075,7 +1152,7 @@ namespace MOD.Controllers
             string query = "select * from (select isnull(g.VendorCategoryName,'Undecided') as vendorcat,sum(cast(t.Cost as numeric)) as total_Cost from (select * from acq_project_master  where DeletedBy is null)t " +
   " left outer join tbl_tblVendor v on t.VendorsIDs=v.vendorid left outer join tbl_tblVendorCategory g on v.VendorCategory=g.VendorCategoryID where t.Service_Lead_Service like ? " +
   "group by isnull(g.VendorCategoryName,'Undecided')) m PIVOT(sum(total_Cost)  FOR vendorcat IN(" + b + "PSU" + b + "," + b + "Indian Private-MSME" + b + ", " + b + "Foreign OEM" + b + "," + b + "Indian Private-Non MSME" + b + "," + b + "Other" + b + " ," + b + "Undecided" + b + ")) AS PivotTable";
-            
+
             DataTable dt = new DataTable();
             using (OleDbConnection conn = masterService.DB())
             {
@@ -1162,18 +1239,18 @@ namespace MOD.Controllers
             DataTable dt = new DataTable();
             using (OleDbConnection conn = masterService.DB())
             {
-               
+
                 OleDbDataAdapter adap = new OleDbDataAdapter();
                 OleDbCommand cmd = new OleDbCommand();
                 cmd.CommandText = query;
                 cmd.CommandType = CommandType.Text;
-               // cmd.Parameters.AddWithValue("@Id", CatID);
-                cmd.Parameters.Add("@Id", OleDbType.VarChar,500);
+                // cmd.Parameters.AddWithValue("@Id", CatID);
+                cmd.Parameters.Add("@Id", OleDbType.VarChar, 500);
                 cmd.Parameters["@Id"].Value = CatID;
                 cmd.Connection = conn;
                 //conn.Open();
-               // OleDbDataReader reader = cmd.ExecuteReader();                
-                adap.SelectCommand = cmd;              
+                // OleDbDataReader reader = cmd.ExecuteReader();                
+                adap.SelectCommand = cmd;
                 adap.Fill(dt);
                 conn.Close();
             }
@@ -1227,6 +1304,6 @@ namespace MOD.Controllers
         }
     }
 
-   
+
 
 }

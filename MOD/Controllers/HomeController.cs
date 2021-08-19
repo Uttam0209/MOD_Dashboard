@@ -158,70 +158,90 @@ namespace MOD.Controllers
         [Route("User")]
         public ActionResult Index()
         {
+            Response.Write("Start");
             String id = "";
             if (Session["UserID"] != null)
             {
-                id = Encryption.Decryptl(Session["UserID"].ToString());
+                try
+                {
+                    id = Encryption.Decryptl(Session["UserID"].ToString());
+                }
+                catch(Exception e)
+                {
+                    Response.Write("Step 1 : "+e.Message);
+                }
               
                 if (id != "")
                 {
-
-                    using (var _context = new MODEntities())
+                    try
                     {
-                        var isValid = _context.tbl_tbl_User.Where(x => x.InternalEmailID == id).FirstOrDefault();
-                        if (isValid != null)
+                        using (var _context = new MODEntities())
                         {
-                            var IsLogout = _context.acq_audit_trail.Where(s => s.UserEmail == id).OrderByDescending(s => s.LogId).FirstOrDefault();
-                            if(IsLogout!=null)
+                            var isValid = _context.tbl_tbl_User.Where(x => x.InternalEmailID == id).FirstOrDefault();
+                            if (isValid != null)
                             {
-                                if(IsLogout.Action!= "Logout")
+                                var IsLogout = _context.acq_audit_trail.Where(s => s.UserEmail == id).OrderByDescending(s => s.LogId).FirstOrDefault();
+                                if (IsLogout != null)
                                 {
-                                    if(IsLogout.IPAddress==isValid.IPAddress)
+                                    if (IsLogout.Action != "Logout")
                                     {
-                                        // int UserId = isValid.UserId;
-                                        FormsAuthentication.SetAuthCookie(isValid.InternalEmailID, false);
-                                        Session["UserID"] = isValid.UserId;
-                                        Session["UserName"] = isValid.UserName;
-                                        Session["SectionID"] = isValid.SectionID;
-                                        Session["WebPortalUrl"] = WebPortalUrl;
-                                        Session["EmailID"] = isValid.InternalEmailID;
+                                        if (IsLogout.IPAddress == isValid.IPAddress)
+                                        {
+                                            // int UserId = isValid.UserId;
+                                            FormsAuthentication.SetAuthCookie(isValid.InternalEmailID, false);
+                                            Session["UserID"] = isValid.UserId;
+                                            Session["UserName"] = isValid.UserName;
+                                            Session["SectionID"] = isValid.SectionID;
+                                            Session["WebPortalUrl"] = WebPortalUrl;
+                                            Session["EmailID"] = isValid.InternalEmailID;
 
-                                        List<tbl_Master_Role> list = _context.tbl_Master_Role.Where(x => x.UserID == isValid.UserId).ToList();
-                                        Session["RoleList"] = list;
-                                        return View();
+                                            List<tbl_Master_Role> list = _context.tbl_Master_Role.Where(x => x.UserID == isValid.UserId).ToList();
+                                            Session["RoleList"] = list;
+                                            return View();
+                                        }
+                                        else
+                                        {
+                                            return Redirect(WebPortalUrlLogout);
+                                        }
                                     }
                                     else
                                     {
                                         return Redirect(WebPortalUrlLogout);
                                     }
+
                                 }
                                 else
                                 {
-                                    return Redirect(WebPortalUrlLogout);
+                                    return RedirectToAction("Login", "Account");
                                 }
-                                
+
                             }
                             else
                             {
-                                return RedirectToAction("Login", "Account");
+                                TempData["Message"] = "Login Failed.User Name or Password Doesn't Exist.";
+                                return Redirect(WebPortalUrlLogout);
                             }
-                           
                         }
-                        else
-                        {
-                            TempData["Message"] = "Login Failed.User Name or Password Doesn't Exist.";
-                            return Redirect(WebPortalUrlLogout);
-                        }
+                    }
+                    catch(Exception e)
+                    {
+                        Response.Write("Step 2 : "+e.Message);
+                        throw e;
                     }
                 }
                 else
                 {
-                    return Redirect(WebPortalUrlLogout);
+                    Response.Write("Step 3 : ");
+                    return View();
+                   
+                    //return Redirect(WebPortalUrlLogout);
                 }
             }
             else
             {
-                return Redirect(WebPortalUrlLogout);
+                Response.Write("Step 4 : ");
+                return View();
+                //return Redirect(WebPortalUrlLogout);
             }
         }
         [SessionExpire]
