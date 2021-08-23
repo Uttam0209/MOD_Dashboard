@@ -13,6 +13,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
 using static MOD.MvcApplication;
@@ -476,6 +477,7 @@ namespace MOD.Controllers
             {
                 if (!string.IsNullOrEmpty(Service_Lead_Service) && !string.IsNullOrEmpty(pending_in_stage))
                 {
+                    
                     @ViewBag.service1 = Service_Lead_Service1;
                     ViewBag.category = pending_in_stage1;
                     if (Service_Lead_Service1 == "Navy" || Service_Lead_Service1 == "ICG")
@@ -510,7 +512,7 @@ namespace MOD.Controllers
                 }
                 if (!string.IsNullOrEmpty(Service_Lead_Service) && !string.IsNullOrEmpty(pending_in_stage))
                 {
-                    @ViewBag.service1 = Service_Lead_Service;
+                    @ViewBag.service1 = Service_Lead_Service1;
                     ViewBag.category = pending_in_stage1;
                     var result = _entities.acq_project_status_pendingstage.Where(x => (x.Service_Lead_Service.Contains(Service_Lead_Service1)) && (x.System_case == "N" || x.System_case == null) && x.pending_in_stage == pending_in_stage1).ToList();
                     if (result != null)
@@ -599,6 +601,7 @@ namespace MOD.Controllers
             }
             try
             {
+
                 model.AonList = list;
                 string query = "";
                 string msystem_case = "";
@@ -1302,8 +1305,227 @@ namespace MOD.Controllers
             ViewBag.CatDataDetails = Catdata;
             return View();
         }
+
+
+        [Route("PReport")]
+        public async Task<JsonResult> PopUpReport(string stage, string Service_Lead_Service, string Categorisation)
+        {
+            List<StageWisePendingReport_N> BadgeChart = new List<StageWisePendingReport_N>() ;
+            if (Service_Lead_Service == null || Service_Lead_Service == "")
+            {
+                Service_Lead_Service = "%";
+            }
+
+            if (Categorisation == null || Categorisation == "")
+            {
+                Categorisation = "%";
+            }
+            string query = "select * from [acq_project_status_pendingstage] where pending_in_stage= '" + stage + "'   ";
+             
+             
+            //string query = "select d.*,a.item_description from acq_project_status_avgdelay d,acq_project_master a where " +
+            //   // "d.Service_Lead_Service like '" + Service_Lead_Service + "' and d.Categorisation like '" + Categorisation + "' " +
+            //   "d.Service_Lead_Service like ? and d.Categorisation like ? " +
+            //    "and d.Categorisation not in " +
+            //    // "('Design & Development','Make-I','Make-II','Make-III') and d.stage_name like '" + stage + "' and d.aon_id=a.aon_id order by " +
+            //    "('Design & Development','Make-I','Make-II','Make-III') and d.stage_name like '" + stage + "' and d.aon_id=a.aon_id order by " +
+            //    "d.stage_name,d.no_of_weeks desc";
+
+
+            // DataTable dt = return_datatable(query);
+
+            DataTable dt = new DataTable();
+            using (OleDbConnection conn = masterService.DB())
+            {
+                OleDbDataAdapter adap = new OleDbDataAdapter();
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+
+                // cmd.Parameters.AddWithValue("@Id", CatID);
+
+                cmd.Parameters.Add("@Service_Lead_Service", OleDbType.VarChar, 500);
+                cmd.Parameters["@Service_Lead_Service"].Value = Service_Lead_Service;
+
+                cmd.Parameters.Add("@Categorisation", OleDbType.VarChar, 500);
+                cmd.Parameters["@Categorisation"].Value = Categorisation;
+
+                //cmd.Parameters.Add("@stage", OleDbType.VarChar, 500);
+                //cmd.Parameters["@stage"].Value = stage;
+                cmd.Connection = conn;
+                adap.SelectCommand = cmd;
+                adap.Fill(dt);
+                conn.Close();
+            }
+
+
+            try
+            {
+
+                DataTable dt1 = dt;
+                for(int i=0;i<dt.Rows.Count;i++)
+                {
+                    StageWisePendingReport_N obj = new StageWisePendingReport_N();
+                    try
+                    {
+                        
+                        obj.Categorisation = dt.Rows[i]["Categorisation"].ToString();
+                        obj.Service_Lead_Service = dt.Rows[i]["Service_Lead_Service"].ToString();
+                        obj.item_description = Cipher.Decrypt(dt.Rows[i]["item_description"].ToString(), password);
+                        obj.Date_of_Accord_of_AoN = Convert.ToDateTime(dt.Rows[i]["Date_of_Accord_of_AoN"].ToString());
+                        obj.Cost = dt.Rows[i]["Cost"].ToString();
+                        obj.IC_percentage = dt.Rows[i]["IC_percentage"].ToString();
+                        obj.Trials_Required = dt.Rows[i]["Trials_Required"].ToString();
+                        obj.TaskSlno = Convert.ToDecimal(dt.Rows[i]["TaskSlno"].ToString());
+                        obj.System_case = dt.Rows[i]["System_case"].ToString();
+                        obj.pending_in_stage = dt.Rows[i]["pending_in_stage"].ToString();
+                        BadgeChart.Add(obj);
+                    }
+                    catch(Exception ex)
+                    {
+                        BadgeChart.Add(obj);
+                        continue;
+                    }
+                    
+                   
+                }
+
+                //BadgeChart = dt.AsEnumerable().Select(x => new StageWisePendingReport_N
+                //{
+                //    Service_Lead_Service = x.Field<string>("Service_Lead_Service"),
+                //    item_description = Cipher.Decrypt(x.Field<string>("item_description"), password),
+
+                //    Date_of_Accord_of_AoN = x.Field<DateTime>("Date_of_Accord_of_AoN"),
+                //    Cost = x.Field<string>("Cost"),
+                //    IC_percentage = x.Field<string>("IC_percentage"),
+                //    Trials_Required = x.Field<string>("Trials_Required"),
+                //    TaskSlno = x.Field<decimal>("TaskSlno"),
+                //    System_case = x.Field<string>("System_case"),
+
+
+
+                //    Categorisation = x.Field<string>("Categorisation"),
+                //    //date_of_entering_this_stage = x.Field<DateTime>("date_of_entering_this_stage"),
+                //    pending_in_stage = x.Field<string>("pending_in_stage"),
+                //    date_of_entering_this_stage = x.Field<DateTime>("date_of_entering_this_stage"),
+                //    Pkey = x.Field<int>("Pkey").ToString(),
+                //});
+                ViewBag.Grid1 = BadgeChart;
+            }
+            catch (Exception e)
+            {
+                
+            }
+           // return View();
+            return Json(new { data = ViewBag.Grid1 }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [Route("ServiceWiseReport1")]
+        public ActionResult ServiceWiseReport1(string Service_Lead_Service, string pending_in_stage, string system_case)
+        {
+
+            if (Convert.ToInt32(Session["SectionID"]) != 13)
+            {
+                List<tbl_Master_Role> RoleList = (List<tbl_Master_Role>)Session["RoleList"];
+                bool isAccessible = false;
+                foreach (var item in RoleList)
+                {
+                    if (item.FormName.ToLower() == "Service-Wise Report on the Pending Cases at various Stages".ToLower())
+                    {
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        {
+                            isAccessible = true;
+                        }
+                    }
+                }
+
+                if (!isAccessible)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            string pending_in_stage1 = null;
+            string Service_Lead_Service1 = null;
+            if (Service_Lead_Service != null & Service_Lead_Service != "")
+            {
+                Service_Lead_Service1 = Cipher.Decrypt(Service_Lead_Service, "");
+            }
+            else
+            {
+                Service_Lead_Service1 = Service_Lead_Service;
+            }
+
+            if (pending_in_stage != null & pending_in_stage != "")
+            {
+                pending_in_stage1 = Cipher.Decrypt(pending_in_stage, "");
+            }
+            else
+            {
+                pending_in_stage1 = pending_in_stage;
+            }
+            var struid = "";
+            if (Session["SectionID"] != null)
+            {
+                struid = mService.SectionID(Session["SectionID"].ToString());
+            }
+            List<MODListViewModel> list1 = new List<MODListViewModel>();
+
+            if (struid == "Navy" || struid == "ICG")
+            {
+                var Stagelist = list1.Select(m => m.pending_in_stage).Distinct();
+                List<Categorisation> Catdata = new List<Categorisation>();
+                try
+                {
+                    foreach (var item in Stagelist)
+                    {
+                        Categorisation cat1 = new Categorisation()
+                        {
+                            Text = item,
+                            Value = Cipher.Encrypt(item, "")
+                        };
+                        Catdata.Add(cat1);
+                    };
+                }
+                catch (Exception e)
+                {
+                    Response.Write("Step 2 : " + e.Message);
+                }
+                ViewBag.stage1 = Catdata;
+                string[] viewdata = { "Navy", "ICG" };
+                ViewBag.Service = viewdata;
+            }
+            else
+            {
+                var Stagelist = list1.Select(m => m.pending_in_stage).Distinct();
+                List<Categorisation> Catdata = new List<Categorisation>();
+                foreach (var item in Stagelist)
+                {
+                    Categorisation cat1 = new Categorisation()
+                    {
+                        Text = item,
+                        Value = Cipher.Encrypt(item, "")
+                    };
+                    Catdata.Add(cat1);
+                };
+                ViewBag.stage1 = Catdata;
+                // ViewBag.stage = list1.Select(m => m.pending_in_stage).Distinct();
+                ViewBag.Service = list1.Select(m => m.Service_Lead_Service).Distinct();
+            }
+            if (Service_Lead_Service == null && pending_in_stage == null)
+            {
+                ViewBag.stage1 = "";
+                ViewBag.Service1 = "";
+            }
+            else
+            {
+                ViewBag.stage1 = pending_in_stage1;
+                ViewBag.Service1 = Service_Lead_Service1;
+            }
+            return View();
+        }
+
     }
+    
 
-
-
-}
+ }

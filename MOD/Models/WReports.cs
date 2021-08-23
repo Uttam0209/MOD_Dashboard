@@ -58,4 +58,26 @@ namespace MOD.Models
         public string stage_name { get; set; }
         public string aon_id { get; set; }
     }
+
+
+    public class StageWisePendingReport_N
+    {
+        public string Service_Lead_Service { get; set; }
+        public string item_description { get; set; }
+        
+        public DateTime Date_of_Accord_of_AoN { get; set; }
+        public string Cost { get; set; }
+        public string Categorisation { get; set; }
+
+        public string IC_percentage { get; set; }
+
+        public string Trials_Required { get; set; }
+        public decimal TaskSlno { get; set; }
+
+        public string System_case { get; set; }
+        public string pending_in_stage { get; set; }
+        public DateTime date_of_entering_this_stage { get; set; }
+
+        public string Pkey { get; set; }
+    }
 }

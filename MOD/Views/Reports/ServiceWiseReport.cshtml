@@ -13,7 +13,7 @@
 
 <script>
     window.onload = function () {
-        var chart = new CanvasJS.Chart("chartContainer1", {
+        debugger;     var chart = new CanvasJS.Chart("chartContainer1", {
             animationEnabled: true,
             theme: "light2", // "light1", "light2", "dark1", "dark2"
             title: {
@@ -27,7 +27,9 @@
                     var stage = e.dataPoint.label;
                     var service = "";
                     var Categorisation = "";
-                    window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+                    debugger;                LoadData(stage, service, Categorisation);
+
+                  //  window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
 
                 },
                 type: "column",
@@ -45,12 +47,14 @@
             }
             e.chart.render();
         }
-        function onClick(e) {
+        debugger;    function onClick(e) {
             //alert(e.dataSeries.type + ", dataPoint { x:" + e.dataPoint.indexLabel + ", y: " + e.dataPoint.label + " }");
-            var stage = e.dataPoint.label;
+            debugger;        var stage = e.dataPoint.label;
             var service = "";
             var Categorisation = "";
-            window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+            var myWindow = window.open("", "MsgWindow", "width=200,height=100");
+            myWindow.document.write("<p>This window's name is: " + myWindow.name + "</p>");
+           // window.location.href = "/RReport?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
         }
     }
 </script>
@@ -59,44 +63,90 @@
     <div class="mb-2 mb-xl-3">
         <h2 class="mb-0">Service-Wise Report on the Pending Cases at various Stages (@ViewBag.service1-@ViewBag.Category) </h2>
     </div>
-
+  
     <form>
         <div class="d-flex">
             <div class="col-md-3 pl-0">
-                <div class="mb-1"><b>Service/Lead Service</b></div>
+                <div class="mb-1"><b>Service/Lead Service</b><span style="color:red;">*</span></div>
                 @*<select class="form-control" id="Service_Lead_Service" name="Service_Lead_Service">
-            <option value="">--Select Service--</option>
-            @foreach (var item1 in @ViewBag.Service)
-            {
-                <option value="@item1">@item1</option>
-            }
-        </select>*@
-           
-                @Html.DropDownList("Service_Lead_Service", new SelectList(ViewBag.ServicesData, "Value", "Text"), "-Select Services-", new { @class = "form-control" })
+                    <option value="">--Select Service--</option>
+                    @foreach (var item1 in @ViewBag.Service)
+                    {
+                        <option value="@item1">@item1</option>
+                    }
+                </select>*@
+
+                @Html.DropDownList("Service_Lead_Service", new SelectList(ViewBag.ServicesData, "Value", "Text"), "-Select Services-", new { @class = "form-control", required = "required" })
             </div>
             <div class="col-md-3 pl-0">
-                <div class="mb-1"><b>System Case</b></div>
+                <div class="mb-1"><b>System Case</b><span style="color:red;">*</span></div>
                 @Html.DropDownListFor(model => model.System_case, new List<SelectListItem>
                    {
                     new SelectListItem{ Text="Y", Value = "Y" },
                     new SelectListItem{ Text="N", Value = "N" },
-                   }, "-Select Type-", new { @class = "form-control" })
-                @Html.ValidationMessageFor(x => x.System_case, null, new { @class = "danger" })
+                   }, "-Select Type-", new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(x => x.System_case, null, new { @class = "danger", required = "required" })
             </div>
             <div class="col-md-3 pl-0">
-                <div class="mb-1"><b>Stages</b></div>
-                @Html.DropDownList("pending_in_stage", new SelectList(ViewBag.stage, "Value", "Text"), "-Select stage-", new { @class = "form-control" })
+                <div class="mb-1"><b>Stages</b><span style="color:red;">*</span></div>
+                @Html.DropDownList("pending_in_stage", new SelectList(ViewBag.stage, "Value", "Text"), "-Select stage-", new { @class = "form-control", required = "required" })
                 @*<select class="form-control" id="pending_in_stage" name="pending_in_stage">
-            <option value="">--Select stage--</option>
-            @foreach (var item in @ViewBag.stage)
-            {
-                <option value="@item">@item</option>
-            }
-        </select>*@
+                    <option value="">--Select stage--</option>
+                    @foreach (var item in @ViewBag.stage)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>*@
             </div>
             <div class="pt-3 d-flex justify-content-end">
                 <div class="pl-3 d-flex pr-3"><button type="submit" class="btn btn-primary btnFCs">Search</button></div>
                 @*<div class="pl-3 pr-3"><a type="button" href="@Url.Action("ServiceWiseReport","Reports")" class="btn btn-primary btnFCs">Reset</a></div>*@
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*<h5 class="modal-title" id="exampleModalLabel">Stage</h5>*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="well text-capitalize p-3 text-center">Stage wise cycle time analysis</h3>
+                                <hr />
+                               
+                                    <table id="CasesTable1" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr.No.</th>
+                                                <th>Description</th>
+                                                <th>Service Lead</th>
+                                                <th>Categorisation</th>
+                                                <th>System Case</th>
+                                                <th>Cost</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                          
+                                           
+                                              
+                                        </tbody>
+                                    </table>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                    </div>
+                </div>
             </div>
         </div>
     </form>
@@ -112,7 +162,7 @@
             </div>
 
             <div class="tab-pane " id="tab-2" role="tabpanel">
-                @if (Model != null && Model.AonList.Count() > 0)
+                @if ( (Model != null && Model.AonList.Count() > 0 ))
                 {
                     <div class="table-responsive p-4">
                         <table id="example" class="table table-striped table-bordered" style="width:100%; overflow-y:scroll;">
@@ -190,6 +240,45 @@
     $(document).ready(function () {
         $('#example').DataTable();
     });
+
+    $(document).ready(function () {
+
+    });
+
+    function LoadData(stage, Service_Lead_Service, Categorisation)
+    {
+        $("#CasesTable1 tbody tr").remove();
+        $.ajax({
+            type: 'POST',
+            url: "/PReport",
+            dataType: 'json',
+            data: { stage: stage, Service_Lead_Service: Service_Lead_Service, Categorisation: Categorisation },
+            success: function (data) {
+                var tbody = '', j = 0, item = '', k = 1;
+
+                for (i = 0; i < data.data.length; i++)
+                {
+                    var d1 = data.data[i].item_description;
+                    tbody = '<tr>'; tbody = tbody + ' <td>' + k + '</td>';
+                    debugger;                 tbody = tbody + ' <td>' + data.data[i].item_description + '</td>';
+                    tbody = tbody + ' <td>' + data.data[i].Service_Lead_Service + '</td>';
+                    tbody = tbody + ' <td>' + data.data[i].Categorisation + '</td>';
+                    tbody = tbody + ' <td>' + data.data[i].System_case + '</td>';
+                    tbody = tbody + ' <td>' + data.data[i].Cost + '</td>';
+                    tbody = tbody + ' </td>';
+                    $('#CasesTable1 tbody').append(tbody);
+
+                    k = k + 1;
+                }
+              
+                $('#exampleModal').modal('show');
+            }
+            
+        });
+       
+    }
+
+
 </script>
 
 

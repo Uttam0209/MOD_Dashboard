@@ -30,7 +30,7 @@ namespace Gantt_Chart.Service
         public static OleDbConnection DB()
         {
             //OleDbConnection conn = new OleDbConnection(DecryptData(ConString));
-            OleDbConnection conn = new OleDbConnection(ConString);
+           OleDbConnection conn = new OleDbConnection(ConString);
             conn.Open();
             return conn;
         }
@@ -246,7 +246,8 @@ namespace Gantt_Chart.Service
             }
             List<CaseViewModel> Mmodel = new List<CaseViewModel>();
             SqlParameter param1 = new SqlParameter("@stageid", id);
-            SqlParameter param2 = new SqlParameter("@date", myDate);
+            //SqlParameter param2 = new SqlParameter("@date", myDate);
+            SqlParameter param2 = new SqlParameter("@date", "");
             SqlParameter param3 = new SqlParameter("@categorisation", Categorisation);
             SqlParameter param4 = new SqlParameter("@service", Service_Lead_Service);
             var _isUserExdfxists = _entities.Database.SqlQuery<temp_BF>("exec PROC_DASHBOARD_First_CountGrid @stageid,@date,@categorisation,@service", param1, param2, param3, param4).SingleOrDefault();
