@@ -1,0 +1,35 @@
+﻿@model MOD.Models.MODListViewModel
+@{
+    ViewBag.Title = "ServiceWiseReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card flex-fill w-100 p-4">
+    <div class="mb-2 mb-xl-3">
+        <h2 class="mb-0">Service-Wise Report on the Pending Cases at various Stages (@ViewBag.service1-@ViewBag.Category) </h2>
+    </div>
+
+    <div class="d-flex">
+        <div class="col-md-3 pl-0">
+            <div class="mb-1"><b>Service/Lead Service</b></div>
+            @Html.DropDownList("Service_Lead_Service", new SelectList(ViewBag.ServicesData, "Value", "Text"), "-Select Services-", new { @class = "form-control" })
+        </div>
+        <div class="col-md-3 pl-0">
+            <div class="mb-1"><b>System Case</b></div>
+            @Html.DropDownListFor(model => model.System_case, new List<SelectListItem>
+               {
+                new SelectListItem{ Text="Y", Value = "Y" },
+                new SelectListItem{ Text="N", Value = "N" },
+               }, "-Select Type-", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.System_case, null, new { @class = "danger" })
+        </div>
+        <div class="col-md-3 pl-0">
+            <div class="mb-1"><b>Stages</b></div>
+            Html.DropDownList("pending_in_stage", new SelectList(ViewBag.stage1, "Value", "Text"), "-Select stage-", new { @class = "form-control" })
+        </div>
+        <div class="pt-3 d-flex justify-content-end">
+            <div class="pl-3 d-flex pr-3"><button type="submit" class="btn btn-primary btnFCs">Search</button></div>
+        </div>
+    </div>
+
+ </div>

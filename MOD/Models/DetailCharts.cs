@@ -9,21 +9,25 @@ namespace Gantt_Chart.Models
     [DataContract]
     public class DetailCharts
     {
-		public DetailCharts(string label, double y , double z)
-		{
-			this.Label = label;
-			this.Y = y;
+        public DetailCharts(string label, double y, double z, string aonid = "")
+        {
+            this.Label = label;
+            this.Y = y;
             this.Z = z;
+            this.aonid = aonid.ToString();
         }
-		//Explicitly setting the name to be used while serializing to JSON.
-		[DataMember(Name = "label")]
-		public string Label = "";
-		//Explicitly setting the name to be used while serializing to JSON.
-		[DataMember(Name = "y")]
-		public Nullable<double> Y = null;
+        //Explicitly setting the name to be used while serializing to JSON.
+        [DataMember(Name = "label")]
+        public string Label = "";
+        //Explicitly setting the name to be used while serializing to JSON.
+        [DataMember(Name = "y")]
+        public Nullable<double> Y = null;
 
         [DataMember(Name = "z")]
         public Nullable<double> Z = null;
+
+        [DataMember(Name = "aonid")]
+        public string aonid = null;
 
 
         public DetailCharts(string label, double y)

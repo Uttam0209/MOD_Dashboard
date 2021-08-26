@@ -29,8 +29,7 @@
 
             dataPointWidth: 10,
             data: [{
-                 //click: onClick,
-
+                 click: onClick,
                  type: "column",
                 indexLabel: "{x}",
                 indexLabel: "{z}",
@@ -49,10 +48,12 @@
         }
         function onClick(e) {
             //alert(e.dataSeries.type + ", dataPoint { x:" + e.dataPoint.x + ", y: " + e.dataPoint.y + " }");
+      
             var stage = e.dataPoint.label;
             var service = $("#Service_Lead_Service").val();
             var Categorisation = $("#Categorisation").val();
-            window.location.href = "/Reports/ReportOnClick?stage=" + stage + "&Service_Lead_Service=" + service + "&Categorisation=" + Categorisation;
+
+            window.location.href = "/WReports/NewReports?id=" +  e.dataPoint.aonid ;
         }
     }
 </script>

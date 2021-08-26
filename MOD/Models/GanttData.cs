@@ -74,11 +74,12 @@ namespace Gantt_Chart.Models
             public string name { get; set; }
             public string tooltip { get; set; }
         }
-        public List<GanttDataSource> BaselineData(int Id)
+        public List<GanttDataSource> BaselineData(string Id)
         {
+            int mId = Convert.ToInt16(Id);
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
             GanttDataSource list;
-            var _isUserExdfxists = _entities.tbl_trn_tryProject1.Where(x => x.ProjectId == Id).ToList();
+            var _isUserExdfxists = _entities.tbl_trn_tryProject1.Where(x => x.ProjectId == mId).ToList();
             if (_isUserExdfxists != null)
             {
                 foreach (tbl_trn_tryProject1 item in _isUserExdfxists)

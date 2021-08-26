@@ -1,4 +1,5 @@
 ﻿@model MOD.Models.TimeLineReport1
+    @using DDPAdmin.Services.Master
 @{
 }
 
@@ -27,7 +28,22 @@
                     <option value="" id="maon">--Select AoN Name--</option>
                     @foreach (var item in @ViewBag.item_description)
                     {
-                        <option value="@item.aon_id">@item.item_description</option>
+                        if (ViewBag.SelectedAon != null)
+                        {
+                            if (ViewBag.SelectedAon.ToString() == item.aon_id.ToString())
+                            {
+                                <option selected value="@item.aon_id" so-ency="@Cipher.Encrypt(item.aon_id.ToString(),"")">@item.item_description</option>
+                            }
+                            else
+                            {
+                                <option value="@item.aon_id" so-ency="@Cipher.Encrypt(item.aon_id.ToString(),"")">@item.item_description</option>
+                            }
+                           
+                        }
+                        else
+                        {
+                            <option value="@item.aon_id" so-ency="@Cipher.Encrypt(item.aon_id.ToString(),"")">@item.item_description</option>
+                        }
                     }
                 </select>
             </div>
@@ -87,6 +103,7 @@
 
 <script>
     $(document).ready(function () {
+        SearchDrop();
         $("#loader-wrapper").hide();
         $.fn.dataTable.ext.errMode = 'none';
 
@@ -179,7 +196,7 @@
 
             $('#btnsavedetails').click(function () {
 
-                var mid = $("#item_description").val();
+                var mid = $("#item_description :selected").attr('so-ency');
                 window.location.href = "/HBaseline?Id=" + mid;
 
             });

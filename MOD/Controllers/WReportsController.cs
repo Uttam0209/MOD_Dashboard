@@ -241,11 +241,18 @@ namespace MOD.Controllers
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                
+
             }
             else
             {
-                id = Cipher.Decrypt_Portal(id);
+                try
+                {
+                    id = Cipher.Decrypt_Portal(id);
+                }
+                catch
+                {
+                }
+                ViewBag.SelectedAon = id;
             }
             if (Convert.ToInt32(Session["SectionID"]) != 13)
             {
@@ -381,7 +388,7 @@ namespace MOD.Controllers
             
             return View();
         }
-        // [Route("WRReport")]
+        [HttpPost]
         public ActionResult ReportOnClick(string id, string Service_Lead_Service)
         {
             if (Service_Lead_Service == null || Service_Lead_Service == "")
@@ -452,8 +459,10 @@ namespace MOD.Controllers
 
             });
             ViewBag.Grid1 = BadgeChart;
-            return View();
-            //return Json(new { data = ViewBag.Grid1 }, JsonRequestBehavior.AllowGet);
+            //return View("ChartReport1");
+            return Json(new { data = ViewBag.Grid1 }, JsonRequestBehavior.AllowGet);
         }
+
+
     }
 }

@@ -15,6 +15,7 @@ using Ganss.XSS;
 using static MOD.MvcApplication;
 using MOD.Service;
 using System.Configuration;
+using System.Threading.Tasks;
 
 namespace MOD.Controllers
 {
@@ -192,7 +193,7 @@ namespace MOD.Controllers
                 {
                     if (item.FormName.ToLower() == "AON Registration".ToLower())
                     {
-                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
                         {
                             isAccessible = true;
                         }
@@ -242,7 +243,7 @@ namespace MOD.Controllers
                 {
                     if (item.FormName.ToLower() == "AON Registration".ToLower())
                     {
-                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
                         {
                             isAccessible = true;
                         }
@@ -377,7 +378,7 @@ namespace MOD.Controllers
                 {
                     if (item.FormName.ToLower() == "AON Registration".ToLower())
                     {
-                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
                         {
                             isAccessible = true;
                         }
@@ -518,7 +519,7 @@ namespace MOD.Controllers
                 {
                     if (item.FormName.ToLower().Contains("AON Registration"))
                     {
-                       // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
+                        // if (Convert.ToInt32(Session["SectionID"]) == 13 || Convert.ToInt32(Session["SectionID"]) == 1)
                         {
                             isAccessible = true;
                         }
@@ -877,7 +878,7 @@ namespace MOD.Controllers
             {
                 var AonList = _entities.acq_project_master.Where(x => x.IsDeleted == false).ToList();
                 List<MODListViewModel> list = new List<MODListViewModel>();
-                if (Categorisation == null && Service_Lead_Service == null)
+                if (string.IsNullOrEmpty(Categorisation) && string.IsNullOrEmpty(Service_Lead_Service))
                 {
                     if (AonList != null)
                     {
@@ -987,34 +988,49 @@ namespace MOD.Controllers
             if (Categorisation1 == "" || Categorisation1 == null)
                 Categorisation1 = "%";
 
-            query = "select Financial_year," +
+            if (StartDate== null && EndDate == null)
+            {
+                query = "select Financial_year," +
 " count(*) no_of_aons,sum(cast(y.cost as decimal(16, 2))) total_cost_in_crs from" +
 " (select y.*,concat('FY', CASE WHEN MONTH(y.date_of_accord_of_aon) < 4 THEN YEAR(y.date_of_accord_of_aon) - 1 ELSE" +
 " YEAR(y.date_of_accord_of_aon) END) Financial_year from acq_project_master y )y" +
-//" where y.Service_Lead_Service like '" + Service_Lead_Service1 + "' and y.categorisation like '" + Categorisation1 + "'" +
-" where y.Service_Lead_Service like ? and y.categorisation like ? " +
+" where y.Service_Lead_Service like '" + Service_Lead_Service1 + "' and y.categorisation like '" + Categorisation1 + "'" +
+//" where y.Service_Lead_Service like ? and y.categorisation like ? " +
 
 " and  y.DeletedBy is null group by Financial_year";
-
-            //DataTable dt = return_datatable(query);
-
-            DataTable dt = new DataTable();
-            using (OleDbConnection conn = masterService.DB())
-            {
-                OleDbDataAdapter adap = new OleDbDataAdapter();
-                OleDbCommand cmd = new OleDbCommand();
-                cmd.CommandText = query;
-                cmd.CommandType = CommandType.Text;
-                // cmd.Parameters.AddWithValue("@Id", CatID);
-                cmd.Parameters.Add("@Service_Lead_Service", OleDbType.VarChar, 500);
-                cmd.Parameters["@Service_Lead_Service"].Value = Service_Lead_Service1;
-                cmd.Parameters.Add("@Categorisation", OleDbType.VarChar, 500);
-                cmd.Parameters["@Categorisation"].Value = Categorisation1;
-                cmd.Connection = conn;
-                adap.SelectCommand = cmd;
-                adap.Fill(dt);
-                conn.Close();
             }
+            else
+            {
+                query = "select Financial_year," +
+" count(*) no_of_aons,sum(cast(y.cost as decimal(16, 2))) total_cost_in_crs from" +
+" (select y.*,concat('FY', CASE WHEN MONTH(y.date_of_accord_of_aon) < 4 THEN YEAR(y.date_of_accord_of_aon) - 1 ELSE" +
+" YEAR(y.date_of_accord_of_aon) END) Financial_year from acq_project_master y )y" +
+" where y.Service_Lead_Service like '" + Service_Lead_Service1 + "' and y.categorisation like '" + Categorisation1 + "' and (y.Date_of_Accord_of_AoN >= '" + StartDate.Value.ToString("yyyy-MM-dd") + "' and y.Date_of_Accord_of_AoN <= '" + EndDate.Value.ToString("yyyy-MM-dd") + "' )" +
+//" where y.Service_Lead_Service like ? and y.categorisation like ? " +
+
+" and  y.DeletedBy is null group by Financial_year";
+            }
+                
+
+            DataTable dt = return_datatable(query);
+
+            //DataTable dt = new DataTable();
+            //using (OleDbConnection conn = masterService.DB())
+            //{
+            //    OleDbDataAdapter adap = new OleDbDataAdapter();
+            //    OleDbCommand cmd = new OleDbCommand();
+            //    cmd.CommandText = query;
+            //    cmd.CommandType = CommandType.Text;
+            //    // cmd.Parameters.AddWithValue("@Id", CatID);
+            //    cmd.Parameters.Add("@Service_Lead_Service", OleDbType.VarChar, 500);
+            //    cmd.Parameters["@Service_Lead_Service"].Value = Service_Lead_Service1;
+            //    cmd.Parameters.Add("@Categorisation", OleDbType.VarChar, 500);
+            //    cmd.Parameters["@Categorisation"].Value = Categorisation1;
+            //    cmd.Connection = conn;
+            //    adap.SelectCommand = cmd;
+            //    adap.Fill(dt);
+            //    conn.Close();
+            //}
 
             //            if (Service_Lead_Service == "" && Categorisation == null)
             //            {
@@ -1258,7 +1274,7 @@ namespace MOD.Controllers
                         var objAonLst = new List<acq_project_master>();
                         if (!string.IsNullOrEmpty(Financial_year))
                             objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Financial_year1) && x.Service_Lead_Service.Contains(Service_Lead_Service1)).ToList());
-                        
+
                         foreach (var item in objAonLst)
                         {
                             MODListViewModel obj = new MODListViewModel();
@@ -1347,7 +1363,7 @@ namespace MOD.Controllers
                         var objAonLst = new List<acq_project_master>();
                         if (!string.IsNullOrEmpty(Financial_year))
                             objAonLst.AddRange(AonList.Where(x => x.Categorisation.Contains(Financial_year1) && x.Service_Lead_Service.Contains(Service_Lead_Service1)).ToList());
-                        
+
                         foreach (var item in objAonLst)
                         {
                             MODListViewModel obj = new MODListViewModel();
@@ -1447,7 +1463,7 @@ namespace MOD.Controllers
                             {
                                 objAonLst.AddRange(AonList.Where(x => x.Service_Lead_Service == Service_Lead_Service1).ToList());
                             }
-                            
+
 
                             foreach (var item in objAonLst)
                             {
@@ -1519,7 +1535,7 @@ namespace MOD.Controllers
                 conn.Close();
             }
 
-           
+
             List<DetailCharts> dataPoints = new List<DetailCharts>();
             IEnumerable<AoNsGranted_WiseReport> Badge = null;
 
@@ -1729,6 +1745,178 @@ namespace MOD.Controllers
             }
             TempData["Msg"] = "Data Saved Successfully";
             return View(model1);
+        }
+
+
+
+        [Route("CWReport")]
+        public async Task<JsonResult> PopUpReport(string stage, string Service_Lead_Service, string Categorisation)
+        {
+            string FYyear = string.Join(string.Empty, stage.Skip(2));
+
+            List<PeriodWiseCategoryReport> BadgeChart = new List<PeriodWiseCategoryReport>();
+            if (Service_Lead_Service == null || Service_Lead_Service == "")
+            {
+                Service_Lead_Service = "%";
+            }
+            else
+            {
+                Service_Lead_Service = Cipher.Decrypt(Service_Lead_Service, "");
+            }
+
+            if (Categorisation == null || Categorisation == "")
+            {
+                Categorisation = "%";
+            }
+
+            string query = "";
+
+            if (Service_Lead_Service == "%" && Categorisation == "%")
+            {
+                query = "select * from [acq_project_master] where YEAR(Date_of_Accord_of_AoN)= '" + FYyear + "' and IsDeleted='false'";
+            }
+            else if (Service_Lead_Service != "%" && Categorisation == "%")
+            {
+                query = "select * from [acq_project_master] where YEAR(Date_of_Accord_of_AoN)= '" + FYyear + "' and Service_Lead_Service='" + Service_Lead_Service + "' and IsDeleted='false' ";
+            }
+            else if (Service_Lead_Service == "%" && Categorisation != "%")
+            {
+                query = "select * from [acq_project_master] where YEAR(Date_of_Accord_of_AoN)= '" + FYyear + "' and Categorisation='" + Categorisation + "' and IsDeleted='false' ";
+            }
+            else if (Service_Lead_Service != "%" && Categorisation != "%" && stage != "")
+            {
+                query = "select * from [acq_project_master] whereYEAR(Date_of_Accord_of_AoN)= '" + FYyear + "' and Service_Lead_Service='" + Service_Lead_Service + "' and Categorisation='" + Categorisation + "' and IsDeleted='false'";
+            }
+
+            DataTable dt = return_datatable(query);
+            try
+            {
+
+                DataTable dt1 = dt;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    PeriodWiseCategoryReport obj = new PeriodWiseCategoryReport();
+                    try
+                    {
+                        obj.item_description = Cipher.Decrypt(dt.Rows[i]["item_description"].ToString(), password);
+
+                        obj.DPP_DAP = dt.Rows[i]["DPP_DAP"].ToString();
+                        obj.AoN_Accorded_By = dt.Rows[i]["AoN_Accorded_By"].ToString();
+                        obj.Date_of_Accord_of_AoN =Convert.ToDateTime(dt.Rows[i]["Date_of_Accord_of_AoN"]).ToString("dd-MM-yyyy");
+                        obj.meeting_id = dt.Rows[i]["meeting_id"].ToString();
+                        obj.Categorisation = dt.Rows[i]["Categorisation"].ToString();
+                        obj.Service_Lead_Service = dt.Rows[i]["Service_Lead_Service"].ToString();
+                        obj.Quantity = (dt.Rows[i]["Quantity"].ToString());
+                        obj.Cost = dt.Rows[i]["Cost"].ToString();
+                        obj.Currency = dt.Rows[i]["Currency"].ToString();
+                        BadgeChart.Add(obj);
+                    }
+                    catch (Exception ex)
+                    {
+                        BadgeChart.Add(obj);
+                        continue;
+                    }
+
+
+                }
+
+
+                ViewBag.Grid1 = BadgeChart;
+            }
+            catch (Exception e)
+            {
+
+            }
+            // return View();
+            return Json(new { data = ViewBag.Grid1 }, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        [Route("CReport")]
+        public async Task<JsonResult> PopUpCategoryReport(string stage, string Service_Lead_Service, string Categorisation)
+        {
+            string FYyear = "";
+            List<PeriodWiseCategoryReport> BadgeChart = new List<PeriodWiseCategoryReport>();
+            if (Service_Lead_Service == null || Service_Lead_Service == "")
+            {
+                Service_Lead_Service = "%";
+            }
+            else
+            {
+                Service_Lead_Service = Cipher.Decrypt(Service_Lead_Service, "");
+            }
+
+            if (Categorisation == null || Categorisation == "")
+            {
+                Categorisation = "%";
+            }
+            else
+            {
+                Categorisation = Cipher.Decrypt(Categorisation, "");
+                FYyear = string.Join(string.Empty, Categorisation.Skip(2));
+            }
+
+            string query = "";
+
+            if (Service_Lead_Service == "%" && Categorisation == "%")
+            {
+                query = "select * from [acq_project_master] where Categorisation= '" + stage + "' and IsDeleted='false'";
+            }
+            else if (Service_Lead_Service != "%" && Categorisation == "%")
+            {
+                query = "select * from [acq_project_master] where Categorisation= '" + stage + "' and Service_Lead_Service='" + Service_Lead_Service + "' and IsDeleted='false' ";
+            }
+            else if (Service_Lead_Service == "%" && Categorisation != "%")
+            {
+                query = "select * from [acq_project_master] where Categorisation= '" + stage + "' and YEAR(Date_of_Accord_of_AoN)='" + FYyear + "' and IsDeleted='false'  ";
+            }
+            else if (Service_Lead_Service != "%" && Categorisation != "%" && stage != "")
+            {
+                query = "select * from [acq_project_master] where Categorisation= '" + stage + "' and Service_Lead_Service='" + Service_Lead_Service + "' and YEAR(Date_of_Accord_of_AoN)='" + FYyear + "' and IsDeleted='false'";
+            }
+
+            DataTable dt = return_datatable(query);
+            try
+            {
+
+                DataTable dt1 = dt;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    PeriodWiseCategoryReport obj = new PeriodWiseCategoryReport();
+                    try
+                    {
+                        obj.item_description = Cipher.Decrypt(dt.Rows[i]["item_description"].ToString(), password);
+
+                        obj.DPP_DAP = dt.Rows[i]["DPP_DAP"].ToString();
+                        obj.AoN_Accorded_By = dt.Rows[i]["AoN_Accorded_By"].ToString();
+                        obj.Date_of_Accord_of_AoN = Convert.ToDateTime(dt.Rows[i]["Date_of_Accord_of_AoN"]).ToString("dd-MM-yyyy");
+                        obj.meeting_id = dt.Rows[i]["meeting_id"].ToString();
+                        obj.Categorisation = dt.Rows[i]["Categorisation"].ToString();
+                        obj.Service_Lead_Service = dt.Rows[i]["Service_Lead_Service"].ToString();
+                        obj.Quantity = (dt.Rows[i]["Quantity"].ToString());
+                        obj.Cost = dt.Rows[i]["Cost"].ToString();
+                        obj.Currency = dt.Rows[i]["Currency"].ToString();
+                        BadgeChart.Add(obj);
+                    }
+                    catch (Exception ex)
+                    {
+                        BadgeChart.Add(obj);
+                        continue;
+                    }
+
+
+                }
+
+
+                ViewBag.Grid1 = BadgeChart;
+            }
+            catch (Exception e)
+            {
+
+            }
+            // return View();
+            return Json(new { data = ViewBag.Grid1 }, JsonRequestBehavior.AllowGet);
         }
     }
 }

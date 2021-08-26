@@ -158,7 +158,7 @@ namespace MOD.Controllers
         [Route("User")]
         public ActionResult Index()
         {
-            Response.Write("Start");
+           // Response.Write("Start");
             String id = "";
             if (Session["UserID"] != null)
             {
@@ -185,8 +185,8 @@ namespace MOD.Controllers
                                 {
                                     if (IsLogout.Action != "Logout")
                                     {
-                                        if (IsLogout.IPAddress == isValid.IPAddress)
-                                        {
+                                        //if (IsLogout.IPAddress == isValid.IPAddress)
+                                        //{
                                             // int UserId = isValid.UserId;
                                             FormsAuthentication.SetAuthCookie(isValid.InternalEmailID, false);
                                             Session["UserID"] = isValid.UserId;
@@ -198,11 +198,11 @@ namespace MOD.Controllers
                                             List<tbl_Master_Role> list = _context.tbl_Master_Role.Where(x => x.UserID == isValid.UserId).ToList();
                                             Session["RoleList"] = list;
                                             return View();
-                                        }
-                                        else
-                                        {
-                                            return Redirect(WebPortalUrlLogout);
-                                        }
+                                        //}
+                                        //else
+                                        //{
+                                        //    return Redirect(WebPortalUrlLogout);
+                                        //}
                                     }
                                     else
                                     {
@@ -255,9 +255,9 @@ namespace MOD.Controllers
         [SessionExpire]
         [SessionExpireRefNo]
         [Route("HBaseline")]
-        public ActionResult Baseline(int Id)
+        public ActionResult Baseline(string Id)
         {
-            ViewBag.DataSource = ganttData.BaselineData(Id);
+            ViewBag.DataSource = ganttData.BaselineData(Cipher.Decrypt(Id,""));
             return View();
         }
 
@@ -285,6 +285,17 @@ namespace MOD.Controllers
         {
             List<CaseViewModel> list = new List<CaseViewModel>();
             IEnumerable<CaseViewModel> Badge = null;
+
+            if (String.IsNullOrEmpty(Service_Lead_Service))
+            {
+                Service_Lead_Service = "";
+            }
+            
+            if (String.IsNullOrEmpty(Categorisation))
+            {
+                Categorisation = "";
+            }
+            
             Badge = mService.GetCasesTable(id, Categorisation, Service_Lead_Service, myDate);
             foreach (CaseViewModel item in Badge)
             {

@@ -29,8 +29,8 @@ namespace Gantt_Chart.Service
         }
         public static OleDbConnection DB()
         {
-            //OleDbConnection conn = new OleDbConnection(DecryptData(ConString));
-           OleDbConnection conn = new OleDbConnection(ConString);
+           //OleDbConnection conn = new OleDbConnection(DecryptData(ConString));
+          OleDbConnection conn = new OleDbConnection(ConString);
             conn.Open();
             return conn;
         }
@@ -228,26 +228,26 @@ namespace Gantt_Chart.Service
         //}
         public List<CaseViewModel> GetCasesTable(decimal id, string Categorisation, string Service_Lead_Service, DateTime myDate)
         {
-            if(Service_Lead_Service!=null || Service_Lead_Service!="")
+            if(String.IsNullOrEmpty(Service_Lead_Service))
             {
-
+                Service_Lead_Service = "";
             }
             else
             {
-                Service_Lead_Service = "''";
+                Service_Lead_Service = Cipher.Decrypt(Service_Lead_Service, "");
             }
-            if (Categorisation != null || Categorisation != "")
+            if (String.IsNullOrEmpty(Categorisation))
             {
-
+                Categorisation = "";
             }
             else
             {
-                Categorisation = "''";
+                Categorisation = Cipher.Decrypt(Categorisation, "");
             }
+           
             List<CaseViewModel> Mmodel = new List<CaseViewModel>();
             SqlParameter param1 = new SqlParameter("@stageid", id);
-            //SqlParameter param2 = new SqlParameter("@date", myDate);
-            SqlParameter param2 = new SqlParameter("@date", "");
+            SqlParameter param2 = new SqlParameter("@date", myDate.ToString("yyyy-MM-dd"));
             SqlParameter param3 = new SqlParameter("@categorisation", Categorisation);
             SqlParameter param4 = new SqlParameter("@service", Service_Lead_Service);
             var _isUserExdfxists = _entities.Database.SqlQuery<temp_BF>("exec PROC_DASHBOARD_First_CountGrid @stageid,@date,@categorisation,@service", param1, param2, param3, param4).SingleOrDefault();

@@ -96,7 +96,7 @@
 
 
 
-                                        <li class="sidebar-item">
+                                        <li class="sidebar-item" id="auth_dashboard">
                                             <a href="@Url.Action("Dashboard","Home")" class="sidebar-link collapsed" aria-expanded="false">
                                                 <span class="align-middle"> <i class="fas fa-tachometer-alt sidebar_icon"></i>Dashboard</span>
                                             </a>
@@ -113,7 +113,7 @@
                                                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
                                                         <li class="sidebar-item"><a class="sidebar-link" id="auth_sw" href="@Url.Action("ServiceWiseReport","Reports")">Service-Wise Report on the Pending Cases at various Stages</a> </li>
                                                         <li class="sidebar-item"><a class="sidebar-link" id="auth_gd" href="@Url.Action("ViewAoNList","AoN")">AoN Granted During a Given Period Category-wise Alongwith Costs</a></li>
-                                                        <li class="sidebar-item"><a class="sidebar-link" id="auth_gd" href="@Url.Action("ViewAoNListyear","AoN")">AoNs Granted - Categorization wise</a></li>
+                                                        <li class="sidebar-item"><a class="sidebar-link" id="auth_gds" href="@Url.Action("ViewAoNListyear","AoN")">AoNs Granted - Categorization wise</a></li>
                                                         <li class="sidebar-item"><a class="sidebar-link" id="auth_cw" href="@Url.Action("NewReports","WReports")">Case wise report indicating timelines at various stages and current status</a></li>
                                                         <li class="sidebar-item"><a class="sidebar-link" id="auth_ma" href="@Url.Action("ChartReport1","WReports")">Milestones achieved during a period</a></li>
                                                         <li class="sidebar-item"><a class="sidebar-link" id="auth_ta" href="@Url.Action("particularstage","Reports")">Trend analysis for a particular stage</a></li>
@@ -123,7 +123,7 @@
                                                         <li class="sidebar-item"><a class="sidebar-link" href="/RStageWiseDelay?Categorisation=&amp;Service_Lead_Service=&amp;stage=TM">Stage wise cycle time analysis (TM)</a></li>
                                                         <li class="sidebar-item"><a class="sidebar-link" href="/RStageWiseDelay?Categorisation=&amp;Service_Lead_Service=&amp;stage=AM">Stage wise cycle time analysis (AM)</a></li>
 
-                                                        <li class="sidebar-item"><a class="sidebar-link" id="auth_swcta" href="@Url.Action("VendcatwiseReport","Reports")">Vendor category wise cost breakup</a></li>
+                                                        <li class="sidebar-item"><a class="sidebar-link" id="auth_swctv" href="@Url.Action("VendcatwiseReport","Reports")">Vendor category wise cost breakup</a></li>
                                                     </ul>
                                                 </li>
                                             }
